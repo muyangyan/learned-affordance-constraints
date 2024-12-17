@@ -1,0 +1,18 @@
+13:00:47 Generating programs of size: 2
+13:00:47 ********************
+13:00:47 New best hypothesis:
+13:00:47 tp:519 fn:0 tn:0 fp:47 size:2 mdl:49
+13:00:47 move_to_affd(A):- player(A).
+13:00:47 ********************
+13:00:47 Generating programs of size: 3
+13:00:49 ********************
+13:00:49 New best hypothesis:
+13:00:49 tp:519 fn:0 tn:7 fp:40 size:3 mdl:43
+13:00:49 move_to_affd(A):- empty_square(B),near(A,B).
+13:00:49 ********************
+13:00:50 Generating programs of size: 4
+13:01:47 TIMEOUT OF 60 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.93 Recall:1.00 TP:519 FN:0 TN:7 FP:40 Size:3 MDL:43
+move_to_affd(A):- empty_square(B),near(A,B).
+******************************
