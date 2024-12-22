@@ -23,7 +23,7 @@ from sklearn.metrics import multilabel_confusion_matrix, accuracy_score, precisi
 
 from game.header import *
 from models.model import RGCN, LabelEstimator
-from data.dataset import ToyDataset
+from data.toy_dataset import ToyDataset
 
 class WeightedCELoss(_WeightedLoss):
     __constants__ = ["ignore_index", "reduction", "label_smoothing"]
@@ -97,8 +97,8 @@ def metrics(y_true, y_pred):
     print(f"Mean Avg Precision: {precision}")
     print(f"Mean Avg Recall: {recall}")
 
-def train(model, loader, weight, device, label_model=None, epochs=1, 
-          action_pred=False, multi_label=False, use_role=False, affd_cons=None):
+def train(model, loader, weight, device, epochs=1, 
+          action_pred=False, multi_label=False, affd_cons=None):
     if affd_cons is not None:
         criterion = WeightedCELoss(weight=weight)
         #criterion = torch.nn.CrossEntropyLoss(reduction='none')
@@ -108,11 +108,7 @@ def train(model, loader, weight, device, label_model=None, epochs=1,
         else:
             criterion = torch.nn.CrossEntropyLoss(weight=weight)
 
-    if use_role:
-        assert label_model is not None
-        P = list(model.parameters()) + list(label_model.parameters())
-    else:
-        P = model.parameters()
+    P = model.parameters()
 
     optimizer = torch.optim.Adam(P, lr=1e-3)
 
@@ -125,10 +121,7 @@ def train(model, loader, weight, device, label_model=None, epochs=1,
             out = model(data)
 
             if multi_label:
-                if use_role:
-                    label = label_model(data.idx)
-                else:
-                    label = data.z.view(out.size()).float()
+                label = data.z.view(out.size()).float()
             else:
                 if action_pred:
                     label = data.w
@@ -224,11 +217,8 @@ def main(args):
     use_gnn_train = args.use_gnn_train
     multi_label_train = args.multi_label_train
     multi_label_test = args.multi_label_test
-    use_role = args.use_role
     batch_size = args.batch_size
     threshold = args.threshold
-
-    assert (not use_role or multi_label_train) #use_role implies multi_label
 
     device = torch.device('cpu')
     #device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -252,22 +242,12 @@ def main(args):
 
         print('train size:', len(trainset))
 
-        if use_role:
-            print('using ROLE')
-            idxs = [d.idx for d in trainset]
-            idx_map = {idx: i for i, idx in enumerate(idxs)}
-            observed_label_matrix = torch.stack([F.one_hot(d.y, num_affd_classes).squeeze() for d in trainset])
-            label_model = LabelEstimator(num_affd_classes, observed_label_matrix, None, idx_map)
-            label_model.to(device)
-        else:
-            label_model = None
-
         # TRAINING============================================
         if train_affd:
             weight = len(trainset) / (num_affd_classes * trainset.verb_label_counts)
             weight = torch.tensor(weight, dtype=torch.float).to(device)
 
-            train(affd_model, train_loader, weight, device, label_model=label_model, epochs=15, action_pred=False, multi_label=multi_label_train, use_role=use_role)
+            train(affd_model, train_loader, weight, device, epochs=15, action_pred=False, multi_label=multi_label_train)
 
             torch.save(affd_model.state_dict(), affd_model_path)
         if train_action:
@@ -284,7 +264,7 @@ def main(args):
             else:
                 affd_cons = None
 
-            train(action_model, train_loader, weight, device, label_model=label_model, epochs=15, action_pred=True, multi_label=multi_label_train, use_role=use_role, affd_cons=affd_cons)
+            train(action_model, train_loader, weight, device, epochs=15, action_pred=True, multi_label=multi_label_train, affd_cons=affd_cons)
 
             torch.save(action_model.state_dict(), action_model_path)
 

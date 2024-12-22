@@ -16,17 +16,21 @@ body_pred(cut_able, 1).
 body_pred(put_down_able, 1).
 body_pred(whole_attr, 1).
 body_pred(sliced_attr, 1).
-23:20:54 Generating programs of size: 2
-23:20:54 Generating programs of size: 3
-23:20:54 Generating programs of size: 4
-23:20:56 ********************
-23:20:56 New best hypothesis:
-23:20:56 tp:55 fn:0 tn:460 fp:3 size:4 mdl:7
-23:20:56 cut_affd(A):- near(A,C),whole_attr(B),on_top_of(B,C).
-23:20:56 ********************
-23:20:56 Generating programs of size: 5
-23:21:56 Generating programs of size: 6
+Warning: /home/muyang/learned-affordance-constraints/prolog/bk.pl:9:
+Warning:    Singleton variables: [Y]
+Warning: /home/muyang/learned-affordance-constraints/prolog/bk.pl:9:
+Warning:    Singleton variable in \+: Y
+15:09:11 Generating programs of size: 2
+15:09:11 Generating programs of size: 3
+15:09:12 Generating programs of size: 4
+15:09:13 ********************
+15:09:13 New best hypothesis:
+15:09:13 tp:55 fn:0 tn:460 fp:3 size:4 mdl:7
+15:09:13 cut_affd(A):- whole_attr(B),on_top_of(B,C),near(A,C).
+15:09:13 ********************
+15:09:13 Generating programs of size: 5
+15:10:30 Generating programs of size: 6
 ********** SOLUTION **********
 Precision:1.00 Recall:1.00 TP:55 FN:0 TN:463 FP:0 Size:6 MDL:6
-cut_affd(A):- on_top_of(C,D),near(A,D),tomato(C),knife(B),holding(A,B).
+cut_affd(A):- on_top_of(C,D),near(A,D),cut_able(C),knife(B),holding(A,B).
 ******************************

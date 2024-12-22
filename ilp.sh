@@ -3,7 +3,7 @@
 VERB=$1
 TIMEOUT=$2
 HOME_PATH="/home/muyang/"
-REPO_PATH="${HOME_PATH}EASG/affordance-reasoning/"
+REPO_PATH="${HOME_PATH}learned-affordance-constraints/"
 PROLOG_PATH="${REPO_PATH}prolog/"
 LOG_PATH="${REPO_PATH}logs/${VERB}_log.txt"
 
