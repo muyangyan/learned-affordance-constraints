@@ -7,13 +7,12 @@ import networkx as nx
 import argparse
 
 import torch
-from torch.utils.data import random_split
 from torch_geometric.loader import DataLoader
 import torch.nn.functional as F
 from torch.nn.modules.loss import _WeightedLoss
 
 from torch import Tensor
-from typing import Callable, Optional
+from typing import Optional
 
 from pyswip import Prolog
 
