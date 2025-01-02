@@ -10,6 +10,7 @@ from difflogic.nn.neural_logic.modules._utils import exclude_mask, mask_value
 from difflogic.nn.dlm.neural_logic import DLMInferenceBase
 import itertools
 import numpy as np
+import math
 
 __all__ = ['DLMLayer', 'DifferentiableLogicMachine']
 
@@ -247,11 +248,11 @@ class DLMLayer(nn.Module):
                         n = inputs[i].size(1) if i == 1 else None
                         if n is None:
                             n = inputs[i - 1].size()[-2]
-                        size = inputs[i - 1].size()[:-1] + (n,) + ((sizeExpand + sizeInput + sizeReduce) * np.math.factorial(i),)
+                        size = inputs[i - 1].size()[:-1] + (n,) + ((sizeExpand + sizeInput + sizeReduce) * math.factorial(i),)
                     elif isInput:
-                        size = inputs[i].size()[:-1] + ((sizeExpand + sizeInput + sizeReduce) * np.math.factorial(i),)
+                        size = inputs[i].size()[:-1] + ((sizeExpand + sizeInput + sizeReduce) * math.factorial(i),)
                     else:
-                        size = inputs[i + 1].size()[:-2] + ((sizeExpand + sizeInput + sizeReduce) * np.math.factorial(i),)
+                        size = inputs[i + 1].size()[:-2] + ((sizeExpand + sizeInput + sizeReduce) * math.factorial(i),)
                     f = torch.zeros(size, device=input_device, dtype=torch.bool if useBooleanRepresentation else torch.float32, requires_grad=False)
 
                     pset = set(path.cpu().numpy().flatten())
