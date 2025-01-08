@@ -218,7 +218,7 @@ class DLMLayer(nn.Module):
                     break
             for i in range(self.max_order + 1):
                 if extract_rule:
-                    print("breadth", i)
+                    print("breadth", i, '=========================')
                 if self.logic[i] is None:
                     outputs.append(None)
                 else:
@@ -270,8 +270,8 @@ class DLMLayer(nn.Module):
                     # back propagation: current layer set p --> modify previous
                     if len(pset)>0:
                         if extract_rule:
-                            print(pset)
-                            print(path)
+                            print('PSET:', pset)
+                            print('PATH:', path)
                     for p in pset:
                         if extract_rule:
                             print('predicate',p)
@@ -314,7 +314,7 @@ class DLMLayer(nn.Module):
                         #else:
                         f[..., index] = predicate.permute((0,) + perm)
                         if extract_rule:
-                            print("permute",(0,) + perm)
+                            print("permute",(0,) + perm, "-------------")
 
                         # give f [4,10,16], path [8,2], calcullate self.logic[i]([f,1-f]) [8,2,4,10] -->
                     # output=torch.zeros(path.size()+f.size()[:-1])
