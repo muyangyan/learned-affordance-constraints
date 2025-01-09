@@ -13,16 +13,12 @@ from util.box_ops import box_xywh_to_xyxy
 
 class AG(Dataset):
 
-    def __init__(self, config, transforms, mode, datasize, data_path=None, single_frame=False, filter_nonperson_box_frame=True, filter_small_box=False):
+    def __init__(self, transforms, mode, datasize, data_path=None, single_frame=False, filter_nonperson_box_frame=True, filter_small_box=False):
 
         root_path = data_path
         self.single_frame = single_frame
 
         self.transforms = transforms
-        self.BOX_SCALE = config.DATA.BOX_SCALE
-        self.num_classes = config.MODEL.NUM_OBJ_CLS+1
-        self.num_predicates = config.MODEL.NUM_REL_CLS+1
-        self.n_queries = config.MODEL.DECODER.NUM_QUERIES
         
         self.frames_path = os.path.join(root_path, 'frames/')
 
