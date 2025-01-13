@@ -58,8 +58,6 @@ def string_to_action_triple(action_string, video_id):
         return None
     return action_triple
 
-
-
 class AG(Dataset):
     
     def __init__(self, root, threshold=1, fps=24):
@@ -222,16 +220,3 @@ class AG(Dataset):
     @staticmethod
     def get_id(video_id, frame_idx):
         return "%s.mp4/%06d.png" % (video_id, frame_idx)
-
-
-root = '/data/Datasets/ag/'
-actions = []
-
-
-
-
-
-
-
-
-

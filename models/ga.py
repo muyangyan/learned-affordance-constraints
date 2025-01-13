@@ -1,6 +1,8 @@
 import random
 from itertools import permutations
 #TODO: add some prolog engine like pyswip. Assuming you dont want to write evaluatiion code yourself. Which would be a big pain.
+from pyswip import Prolog
+
 
 
 class GAConstraintLearner:
@@ -29,7 +31,7 @@ class GAConstraintLearner:
                  beta=1.0):
         """
             :param library_of_predicates: List of possible predicates (strings) to use in constraints.
-            :param background_knowledge: Data structure (e.g., list of facts) for the Prolog environment.
+            :param background_knowledge: Data structure (e.g., list of facts) OR filename for the Prolog environment.
             :param pos_examples: List of 'player' entities or contexts that should yield True.
             :param neg_examples: List of 'player' entities or contexts that should yield False.
             :param population_size: Number of genes in the population.
@@ -53,6 +55,21 @@ class GAConstraintLearner:
         self.beta = beta
         self.population = []   # Internal placeholders.
         self.fitness_scores = []
+
+        self.init_prolog()
+    
+    def init_prolog(self):
+        self.prolog = Prolog()
+        self.eval_id = 0
+
+        # Initialize Prolog environment with background knowledge.
+        if type(self.background) is str:
+            self.prolog.consult(self.background)
+            print('consult done')
+        else:
+            # background knowledge is a list of strings
+            for fact in self.background:
+                self.prolog.assertz(fact)
 
     def init_population(self):
         new_pop = []
@@ -86,13 +103,19 @@ class GAConstraintLearner:
         total_neg = len(self.neg)
         total = total_pos + total_neg
         for ex in self.pos:
-            is_true = self.evaluate_gene(gene, ex, pos_example=True)   # Evaluate classification: does 'gene' say "True" for this ex?
+            try:
+                is_true = self.evaluate_gene(gene, ex)   # Evaluate classification: does 'gene' say "True" for this ex?
+            except AssertionError as e:
+                print('invalid gene, skipping')
+                return -float('inf')
             if is_true:
                 tp += 1
             else:
                 fn += 1
         for ex in self.neg:
-            is_true = self.evaluate_gene(gene, ex, pos_example=False)   # Evaluate classification: does 'gene' say "False" for this ex?
+            is_true = self.evaluate_gene(gene, ex)   # Evaluate classification: does 'gene' say "False" for this ex?
+            if is_true == 'invalid': 
+                return -float('inf')
             if is_true:
                 fp += 1
             else:
@@ -102,13 +125,59 @@ class GAConstraintLearner:
         score = ((tp + tn) / total) - self.alpha * (fn / total_pos) - self.beta * (fp / total_neg)
         return score
 
-    def evaluate_gene(self, gene, example, pos_example=True):
+    def evaluate_gene(self, gene, example):
         """
             Placeholder for applying 'gene' (logical expression) to a given example.
             Interpret 'gene' in the context of 'background_knowledge'.
+            background knowledge should already be consulted upon initialization.
         """
-        # TODO: Replace with Prolog engine calls.
-        return random.random() > 0.5
+
+        print(gene)
+
+        #parsing loop:
+
+        exp = []
+        clause = []
+        pred = None
+        exp_str = None
+
+
+        for tok in gene:
+            if type(tok) == list:
+                if not tok[0]:
+                    pred = f"\\+ {tok[1]}"
+                else:
+                    pred = tok[1]
+                clause.append(pred)
+                pred = None
+            elif tok == "<RULE>":
+                if len(clause) > 0:
+                    clause_str = "; ".join(clause)
+                    exp.append(f'({clause_str})')
+                    clause = []
+                if len(exp) > 0:
+                    exp_str = ", ".join(exp)
+                    break
+            elif tok == "AND":
+                assert len(clause) > 0
+                clause_str = "; ".join(clause)
+                exp.append(f'({clause_str})')
+                clause = []
+            elif tok == "OR":
+                continue
+            else:
+                print('invalid token')
+                assert False
+        
+        assert exp_str is not None
+        
+        rule = f'eval_%d(A) :- {exp_str}' % self.eval_id
+        print(rule)
+        self.prolog.assertz(rule)
+        truth = self.prolog.query(f'eval_%d({example})' % self.eval_id)
+        self.eval_id += 1
+
+        return truth
 
     def selection(self, population, fitness_scores):
         sorted_pop = sorted(zip(population, fitness_scores), key=lambda x: x[1], reverse=True)   # Sort by fitness descending.
@@ -137,12 +206,15 @@ class GAConstraintLearner:
         mutated = gene[:]
         pred_indices = [i for i in range(1, len(mutated) - 1) if isinstance(mutated[i], list) and len(mutated[i]) == 2]
         logic_indices = [i for i in range(1, len(mutated) - 1) if mutated[i] in ["AND", "OR"]]
+
         if mutate_type == "change_pred" and pred_indices:
             idx = random.choice(pred_indices)
             mutated[idx] = [mutated[idx][0], random.choice(self.library)]
+
         elif mutate_type == "negate" and pred_indices:
             idx = random.choice(pred_indices)
             mutated[idx][0] = not mutated[idx][0]
+
         elif mutate_type == "insert_pred":
             insert_idx = random.randint(1, len(mutated) - 1)
             new_token = [random.choice([True, False]), random.choice(self.library)]
@@ -151,6 +223,7 @@ class GAConstraintLearner:
                 mutated.insert(insert_idx + 1, random.choice(["AND", "OR"]))
             elif insert_idx > 0 and mutated[insert_idx - 1] not in ["AND", "OR"]:
                 mutated.insert(insert_idx, random.choice(["AND", "OR"]))
+
         elif mutate_type == "delete_pred" and len(mutated) > 3:
             valid_remove_indices = [i for i in range(1, len(mutated) - 1) if isinstance(mutated[i], list)]
             if valid_remove_indices:
@@ -160,9 +233,11 @@ class GAConstraintLearner:
                     mutated.pop(idx)
                 elif idx > 0 and mutated[idx - 1] in ["AND", "OR"]:
                     mutated.pop(idx - 1)
+
         elif mutate_type == "swap_logic" and logic_indices:
             idx = random.choice(logic_indices)
             mutated[idx] = "AND" if mutated[idx] == "OR" else "OR"
+
         return mutated
 
     def __call__(self):
@@ -191,9 +266,6 @@ class GAConstraintLearner:
 
 
 
-
-
-
 def iterate_vars(pred_str, vars, num_args):
     results = []
     for combo in permutations(vars, num_args):
@@ -205,26 +277,24 @@ def iterate_vars(pred_str, vars, num_args):
 
 
 
-
-
 def main():
     library_of_predicates = []
     library_of_predicates += iterate_vars("left_of", ['A', 'B'], 2)
     library_of_predicates += iterate_vars("right_of", ['A', 'B'], 2)
     library_of_predicates += iterate_vars("above", ['A', 'B'], 2)
     library_of_predicates += iterate_vars("below", ['A', 'B'], 2)
+    print(library_of_predicates)
 
-    
     # Example background knowledge (unused placeholder for now)
     background_knowledge = [
         "wall(x0_1)",
         "empty_square(x0_2)"
     ]
-    
+
     # Example positive and negative sets (player contexts)
     pos_examples = ["x0_0", "x1_0"]
     neg_examples = ["x2_0", "x3_0"]
-    
+
     # Create and run GA
     ga = GAConstraintLearner(
         library_of_predicates=library_of_predicates,
@@ -232,7 +302,7 @@ def main():
         pos_examples=pos_examples,
         neg_examples=neg_examples,
         population_size=5,
-        generations=3,
+        generations=9,
         elite_fraction=0.1,
         crossover_rate=0.8,
         mutation_rate=0.2,
