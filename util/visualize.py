@@ -39,5 +39,5 @@ def show_pyg_graph(graph, nodes, rels, layout='circular', curve=None):
         connectionstyle = 'arc3'
     
     
-    nx.draw(G, pos, with_labels=True, labels=labels, node_color='lightblue', node_size=500, font_size=10, font_color='black', font_weight='bold', arrows=True, connectionstyle=connectionstyle)
-    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_color='red', horizontalalignment='center', verticalalignment='center')
+    nx.draw(G, pos, with_labels=True, labels=labels, node_color='lightblue', node_size=2000, font_size=20, font_color='black', font_weight='bold', arrows=True, connectionstyle=connectionstyle)
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_color='red', horizontalalignment='center', verticalalignment='center', font_size=20)

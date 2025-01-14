@@ -2,6 +2,17 @@ import random
 from itertools import permutations
 #TODO: add some prolog engine like pyswip. Assuming you dont want to write evaluatiion code yourself. Which would be a big pain.
 from pyswip import Prolog
+from pyswip.prolog import PrologError
+
+
+
+from func_timeout import func_timeout, FunctionTimedOut
+
+import copy
+
+import warnings
+warnings.filterwarnings("ignore")
+
 
 
 
@@ -56,16 +67,16 @@ class GAConstraintLearner:
         self.population = []   # Internal placeholders.
         self.fitness_scores = []
 
+        self.rule_id = 0
         self.init_prolog()
     
     def init_prolog(self):
         self.prolog = Prolog()
-        self.eval_id = 0
 
         # Initialize Prolog environment with background knowledge.
         if type(self.background) is str:
             self.prolog.consult(self.background)
-            print('consult done')
+            #print('consult done')
         else:
             # background knowledge is a list of strings
             for fact in self.background:
@@ -89,58 +100,14 @@ class GAConstraintLearner:
                 gene.append(random.choice(["AND", "OR"]))
         gene.append("<RULE>")
         return gene
-
-    def fitness_function(self, gene):
-        """
-            Computes the fitness of a gene by counting TP, TN, FP, FN, then applying the chosen scoring formula:
-            fitness = (TP + TN) / Total - alpha*(FN/TotalPos) - beta*(FP/TotalNeg).
-        """
-        tp = 0
-        tn = 0
-        fp = 0
-        fn = 0
-        total_pos = len(self.pos)
-        total_neg = len(self.neg)
-        total = total_pos + total_neg
-        for ex in self.pos:
-            try:
-                is_true = self.evaluate_gene(gene, ex)   # Evaluate classification: does 'gene' say "True" for this ex?
-            except AssertionError as e:
-                print('invalid gene, skipping')
-                return -float('inf')
-            if is_true:
-                tp += 1
-            else:
-                fn += 1
-        for ex in self.neg:
-            is_true = self.evaluate_gene(gene, ex)   # Evaluate classification: does 'gene' say "False" for this ex?
-            if is_true == 'invalid': 
-                return -float('inf')
-            if is_true:
-                fp += 1
-            else:
-                tn += 1
-        if total_pos == 0 or total_neg == 0 or total == 0:
-            return 0.0
-        score = ((tp + tn) / total) - self.alpha * (fn / total_pos) - self.beta * (fp / total_neg)
-        return score
-
-    def evaluate_gene(self, gene, example):
-        """
-            Placeholder for applying 'gene' (logical expression) to a given example.
-            Interpret 'gene' in the context of 'background_knowledge'.
-            background knowledge should already be consulted upon initialization.
-        """
-
-        print(gene)
-
+    
+    def gene_to_prolog(self, gene):
         #parsing loop:
 
         exp = []
         clause = []
         pred = None
         exp_str = None
-
 
         for tok in gene:
             if type(tok) == list:
@@ -166,18 +133,74 @@ class GAConstraintLearner:
             elif tok == "OR":
                 continue
             else:
-                print('invalid token')
+                print('invalid token:', tok)
                 assert False
-        
+
         assert exp_str is not None
         
-        rule = f'eval_%d(A) :- {exp_str}' % self.eval_id
-        print(rule)
-        self.prolog.assertz(rule)
-        truth = self.prolog.query(f'eval_%d({example})' % self.eval_id)
-        self.eval_id += 1
+        rule = f'rule_%d(A) :- {exp_str}' % self.rule_id
+        return rule
 
-        return truth
+    def fitness_function(self, gene):
+        """
+            Computes the fitness of a gene by counting TP, TN, FP, FN, then applying the chosen scoring formula:
+            fitness = (TP + TN) / Total - alpha*(FN/TotalPos) - beta*(FP/TotalNeg).
+        """
+
+        try:
+            rule_str = self.gene_to_prolog(gene)
+        except AssertionError as e:
+            print('invalid gene, skipping')
+            return -float('inf')
+
+        # Add the rule to the prolog environment
+        print(rule_str)
+        self.prolog.assertz(rule_str)
+
+        tp = 0
+        tn = 0
+        fp = 0
+        fn = 0
+        total_pos = len(self.pos)
+        total_neg = len(self.neg)
+        total = total_pos + total_neg
+        for ex in self.pos:
+            is_true = self.evaluate_gene(self.rule_id, ex)   # Evaluate classification: does 'gene' say "True" for this ex?
+            if is_true:
+                tp += 1
+            else:
+                fn += 1
+        for ex in self.neg:
+            is_true = self.evaluate_gene(self.rule_id, ex)   # Evaluate classification: does 'gene' say "True" for this ex?
+            if is_true:
+                fp += 1
+            else:
+                tn += 1
+        if total_pos == 0 or total_neg == 0 or total == 0:
+            return 0.0
+        print(f"TP: {tp}, TN: {tn}, FP: {fp}, FN: {fn}")
+        score = ((tp + tn) / total) - self.alpha * (fn / total_pos) - self.beta * (fp / total_neg)
+
+        self.rule_id += 1
+        return score
+
+
+    def evaluate_gene(self, rule_id, example):
+        """
+            Placeholder for applying 'gene' (logical expression) to a given example.
+            Interpret 'gene' in the context of 'background_knowledge'.
+            background knowledge should already be consulted upon initialization.
+        """
+
+        #q = self.prolog.query(f'rule_%d({example})' % rule_id, maxresult=1)
+        #for solution in q:
+        #    q.close()
+        #    return True
+
+        q = self.prolog.query(f'rule_%d({example})' % rule_id, maxresult=1)
+        for solution in q:
+            return True
+        return False
 
     def selection(self, population, fitness_scores):
         sorted_pop = sorted(zip(population, fitness_scores), key=lambda x: x[1], reverse=True)   # Sort by fitness descending.
@@ -193,10 +216,15 @@ class GAConstraintLearner:
     def crossover(self, parent_a, parent_b):
         if random.random() > self.crossover_rate:
             return parent_a, parent_b
-        cut_a = random.randint(0, len(parent_a) - 1)
-        cut_b = random.randint(0, len(parent_b) - 1)
+        cut_a = random.randint(1, len(parent_a) - 1)
+        cut_b = random.randint(1, len(parent_b) - 1)
         child_a = parent_a[:cut_a] + parent_b[cut_b:]
         child_b = parent_b[:cut_b] + parent_a[cut_a:]
+        if (child_a.count("<RULE>") != 2) or (child_b.count("<RULE>") != 2):
+            print("Crossover failed: invalid number of <RULE> tokens")
+            print('cut a:', cut_a, 'cut b:', cut_b)
+            print(f"Parent A: {parent_a}\nParent B: {parent_b}\nChild A: {child_a}\nChild B: {child_b}")
+            assert False
         return child_a, child_b
 
     def mutation(self, gene):
@@ -216,7 +244,10 @@ class GAConstraintLearner:
             mutated[idx][0] = not mutated[idx][0]
 
         elif mutate_type == "insert_pred":
-            insert_idx = random.randint(1, len(mutated) - 1)
+            if len(mutated) < 2:
+                insert_idx = 0
+            else:
+                insert_idx = random.randint(1, len(mutated) - 1)
             new_token = [random.choice([True, False]), random.choice(self.library)]
             mutated.insert(insert_idx, new_token)
             if insert_idx + 1 < len(mutated) and mutated[insert_idx + 1] not in ["AND", "OR"]:
@@ -238,6 +269,12 @@ class GAConstraintLearner:
             idx = random.choice(logic_indices)
             mutated[idx] = "AND" if mutated[idx] == "OR" else "OR"
 
+        if (mutated.count("<RULE>") != 2) or (mutated[0] != "<RULE>") or (mutated[-1] != "<RULE>"):
+            print("Mutate failed: invalid <RULE> token positions")
+            print("Type:", mutate_type)
+            print(f"Original {gene}\nMutated: {mutated}")
+            assert False
+
         return mutated
 
     def __call__(self):
@@ -248,7 +285,7 @@ class GAConstraintLearner:
             best_gene = self.population[best_idx]
             best_fit = self.fitness_scores[best_idx]
             elites, parents = self.selection(self.population, self.fitness_scores)                  # Select parents.
-            new_pop = elites[:]                                                                     # Produce next generation. Start with elites.
+            new_pop = copy.deepcopy(elites)                                                                     # Produce next generation. Start with elites.
             while len(new_pop) < self.population_size:
                 pa, pb = random.sample(parents, 2)
                 ca, cb = self.crossover(pa, pb)                                                     # Crossover.
@@ -258,7 +295,7 @@ class GAConstraintLearner:
                 if len(new_pop) < self.population_size:
                     new_pop.append(cb)
             self.population = new_pop
-            print(f"Gen {gen}: Best Fit = {best_fit:.3f}, Best Gene = {best_gene}.")
+            print(f"======Gen {gen}: Best Fit = {best_fit:.3f}, Best Gene = {best_gene}.")
         self.fitness_scores = [self.fitness_function(g) for g in self.population]
         best_idx = max(range(len(self.population)), key=lambda i: self.fitness_scores[i])
         return self.population[best_idx], self.fitness_scores[best_idx]
@@ -274,6 +311,24 @@ def iterate_vars(pred_str, vars, num_args):
     return results
 
 
+def generate_library(bias_file, max_vars):
+    vars = ['A', 'B', 'C', 'D', 'E', 'F']
+    assert max_vars <= len(vars) 
+
+    library_of_predicates = []
+
+    with open(bias_file, 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            if line[0] == '%':
+                continue
+            pred_str, remainder = line.split('(')
+            pred_name, remainder = remainder.split(', ')
+            num_args = remainder.split(')')[0]
+            if pred_str == 'body_pred':
+                print(pred_name, num_args)
+                library_of_predicates += iterate_vars(pred_name, vars[:max_vars], int(num_args))
+    return library_of_predicates
 
 
 

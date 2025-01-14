@@ -217,6 +217,12 @@ class AG(Dataset):
         self.spatial_relationships = self.relationship_classes[3:9]
         self.contacting_relationships = self.relationship_classes[9:]
 
+        self.action_classes = []
+        with open(os.path.join(self.root, 'annotations/Charades/Charades_v1_classes.txt'), 'r') as f:
+            for line in f.readlines():
+                line = line.strip('\n')
+                self.action_classes.append(line)
+
     @staticmethod
     def get_id(video_id, frame_idx):
         return "%s.mp4/%06d.png" % (video_id, frame_idx)

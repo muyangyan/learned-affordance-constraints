@@ -6,7 +6,7 @@ cut_able(X) :- afford(Y, X), cut(Y).
 put_down_able(X) :- afford(Y, X), put_down(Y).
 whole_attr(X) :- attr(X, Y), whole(Y).
 sliced_attr(X) :- attr(X, Y), sliced(Y).
-not_holding(X) :- player(X),\+ holding(X, Y).
+not_holding(X) :- player(X),\+ holding(X, _).
 %train example 0
 player(x0_0).
 move_to(x0_1).
