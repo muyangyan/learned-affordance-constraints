@@ -3,7 +3,7 @@ warnings.filterwarnings("ignore")
 
 from pyswip import Prolog
 
-from data.toy_dataset import ToyDataset
+from data.toy.toy_dataset import ToyDataset
 import torch
 from models.model import RGCN
 from game.header import *

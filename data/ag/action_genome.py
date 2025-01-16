@@ -130,7 +130,7 @@ class AG(Dataset):
 
         scene_graph = self.scene_graphs[id]
 
-        return image, scene_graph, action_class
+        return id, image, scene_graph, action_class
         
 
     # Load all actions from the dataset

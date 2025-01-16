@@ -15,7 +15,7 @@ import jactorch.nn as jacnn
 
 from difflogic.cli import format_args
 #from difflogic.dataset.graph import 
-from data.toy_dataset import ToyDataset
+from data.toy.toy_dataset import ToyDataset
 
 from difflogic.myutils import update_dict_list
 from difflogic.nn.neural_logic import LogicMachine, LogicInference
@@ -36,7 +36,7 @@ from jactorch.train.env import TrainerEnv
 from jactorch.utils.meta import as_cuda, as_numpy, as_tensor
 
 from game.header import *
-from data.toy_dataset import ToyDataset
+from data.toy.toy_dataset import ToyDataset
 
 dataset = ToyDataset('data', mode='graph', split=None)
 len(dataset)

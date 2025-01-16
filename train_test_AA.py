@@ -22,7 +22,7 @@ from sklearn.metrics import multilabel_confusion_matrix, accuracy_score, precisi
 
 from game.header import *
 from models.model import RGCN
-from data.toy_dataset import ToyDataset
+from data.toy.toy_dataset import ToyDataset
 
 class WeightedCELoss(_WeightedLoss):
     __constants__ = ["ignore_index", "reduction", "label_smoothing"]

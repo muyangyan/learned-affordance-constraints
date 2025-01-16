@@ -93,20 +93,49 @@ class GAConstraintLearner:
     def _random_expression(self, num_preds):
         gene = ["<RULE>"]
         for i in range(num_preds):
+            neg = bool(random.getrandbits(1))
             pred = random.choice(self.library)
-            gene.append(pred)
+            gene.append([neg, pred])
+            if i < num_preds - 1:
+                gene.append(random.choice(["AND", "OR"]))
         gene.append("<RULE>")
         return gene
     
     def gene_to_prolog(self, gene):
-        exp = gene[1:-1]
-        assert len(exp) > 0
+        #parsing loop:
 
-        try:
-            exp_str = ", ".join(exp)
-        except TypeError as e:
-            print('TYPE ERROR:', exp)
-            assert False
+        exp = []
+        clause = []
+        pred = None
+        exp_str = None
+
+        for tok in gene:
+            if type(tok) == list:
+                if not tok[0]:
+                    pred = f"\\+ {tok[1]}"
+                else:
+                    pred = tok[1]
+                clause.append(pred)
+                pred = None
+            elif tok == "<RULE>":
+                if len(clause) > 0:
+                    clause_str = "; ".join(clause)
+                    exp.append(f'({clause_str})')
+                    clause = []
+                if len(exp) > 0:
+                    exp_str = ", ".join(exp)
+                    break
+            elif tok == "AND":
+                assert len(clause) > 0
+                clause_str = "; ".join(clause)
+                exp.append(f'({clause_str})')
+                clause = []
+            elif tok == "OR":
+                continue
+            else:
+                print('invalid token:', tok)
+                assert False
+
         assert exp_str is not None
         
         rule = f'rule_%d(A) :- {exp_str}' % self.rule_id
@@ -201,32 +230,44 @@ class GAConstraintLearner:
     def mutation(self, gene):
         if random.random() > self.mutation_rate:
             return gene
-        mutate_type = random.choice(["change_pred", "insert_pred", "delete_pred"])#, "permute_pred"])
+        mutate_type = random.choice(["change_pred", "negate", "insert_pred", "delete_pred", "swap_logic"])
         mutated = gene[:]
-        #pred_indices = [i for i in range(1, len(mutated) - 1) if isinstance(mutated[i], list) and len(mutated[i]) == 2]
-        #logic_indices = [i for i in range(1, len(mutated) - 1) if mutated[i] in ["AND", "OR"]]
+        pred_indices = [i for i in range(1, len(mutated) - 1) if isinstance(mutated[i], list) and len(mutated[i]) == 2]
+        logic_indices = [i for i in range(1, len(mutated) - 1) if mutated[i] in ["AND", "OR"]]
 
-        if mutate_type == "change_pred" and len(mutated) > 3:
-            idx = random.choice(range(1, len(mutated) - 2))
-            mutated[idx] = random.choice(self.library)
+        if mutate_type == "change_pred" and pred_indices:
+            idx = random.choice(pred_indices)
+            mutated[idx] = [mutated[idx][0], random.choice(self.library)]
+
+        elif mutate_type == "negate" and pred_indices:
+            idx = random.choice(pred_indices)
+            mutated[idx][0] = not mutated[idx][0]
 
         elif mutate_type == "insert_pred":
             if len(mutated) < 2:
                 insert_idx = 0
             else:
                 insert_idx = random.randint(1, len(mutated) - 1)
-            new_token = random.choice(self.library)
+            new_token = [random.choice([True, False]), random.choice(self.library)]
             mutated.insert(insert_idx, new_token)
+            if insert_idx + 1 < len(mutated) and mutated[insert_idx + 1] not in ["AND", "OR"]:
+                mutated.insert(insert_idx + 1, random.choice(["AND", "OR"]))
+            elif insert_idx > 0 and mutated[insert_idx - 1] not in ["AND", "OR"]:
+                mutated.insert(insert_idx, random.choice(["AND", "OR"]))
 
         elif mutate_type == "delete_pred" and len(mutated) > 3:
-            valid_remove_indices = range(1, len(mutated) - 1)
+            valid_remove_indices = [i for i in range(1, len(mutated) - 1) if isinstance(mutated[i], list)]
             if valid_remove_indices:
                 idx = random.choice(valid_remove_indices)
                 mutated.pop(idx)
+                if idx < len(mutated) and mutated[idx] in ["AND", "OR"]:
+                    mutated.pop(idx)
+                elif idx > 0 and mutated[idx - 1] in ["AND", "OR"]:
+                    mutated.pop(idx - 1)
 
-        #elif mutate_type == "permute_pred":
-        #    idx = random.choice(range(1, len(mutated) - 2))
-        #    mutated[idx] = random.choice(self.library)
+        elif mutate_type == "swap_logic" and logic_indices:
+            idx = random.choice(logic_indices)
+            mutated[idx] = "AND" if mutated[idx] == "OR" else "OR"
 
         if (mutated.count("<RULE>") != 2) or (mutated[0] != "<RULE>") or (mutated[-1] != "<RULE>"):
             print("Mutate failed: invalid <RULE> token positions")
