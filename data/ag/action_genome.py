@@ -63,6 +63,7 @@ class AG(Dataset):
     def __init__(self, root, threshold=1, fps=24):
         super().__init__()
         self.root = root
+        self.threshold = threshold
 
         self.init_vocab()
 
@@ -225,6 +226,23 @@ class AG(Dataset):
             for line in f.readlines():
                 line = line.strip('\n')
                 self.action_classes.append(line)
+
+        self.verb_classes = []
+        with open(os.path.join(self.root, 'annotations/Charades/Charades_v1_verbclasses.txt'), 'r') as f:
+            for line in f.readlines():
+                line = line.strip('\n')
+                self.verb_classes.append(line)
+
+        self.action_verb_map = {}
+        with open(os.path.join(self.root, 'annotations/Charades/Charades_v1_mapping.txt'), 'r') as f:
+            for line in f.readlines():
+                line = line.strip('\n')
+                action, obj, verb = line.split(' ')
+                action = int(action[1:])
+                verb = int(verb[1:])
+                obj = int(obj[1:])
+                obj = self.charades_ag_obj_map[obj]
+                self.action_verb_map[action] = verb
 
     @staticmethod
     def get_id(video_id, frame_idx):
