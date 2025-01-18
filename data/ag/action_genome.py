@@ -183,17 +183,29 @@ class AG(Dataset):
 
     def init_vocab(self):
         # collect the object classes
-        self.object_classes = ['__background__']
+        #self.object_classes = ['__background__']
+        self.object_classes = []
         with open(os.path.join(self.root, 'annotations/object_classes.txt'), 'r') as f:
             for line in f.readlines():
                 line = line.strip('\n')
                 self.object_classes.append(line)
         f.close()
+
+        '''
         self.object_classes[9] = 'closet/cabinet'
         self.object_classes[11] = 'cup/glass/bottle'
         self.object_classes[23] = 'paper/notebook'
         self.object_classes[24] = 'phone/camera'
         self.object_classes[31] = 'sofa/couch'
+        '''
+        
+        self.object_classes[8] = 'closet/cabinet'
+        self.object_classes[10] = 'cup/glass/bottle'
+        self.object_classes[22] = 'paper/notebook'
+        self.object_classes[23] = 'phone/camera'
+        self.object_classes[30] = 'sofa/couch'
+
+        print(self.object_classes)
 
         # collect relationship classes
         self.relationship_classes = []
@@ -202,6 +214,7 @@ class AG(Dataset):
                 line = line.strip('\n')
                 self.relationship_classes.append(line)
         f.close()
+        
         self.relationship_classes[0] = 'looking_at'
         self.relationship_classes[1] = 'not_looking_at'
         self.relationship_classes[5] = 'in_front_of'
@@ -221,6 +234,19 @@ class AG(Dataset):
         self.spatial_relationships = self.relationship_classes[3:9]
         self.contacting_relationships = self.relationship_classes[9:]
 
+        #hardcoded mapping
+        self.charades_ag_obj_map = {}
+        with open(os.path.join(self.root, 'annotations/charades_to_ag_obj_map.txt'), 'r') as f:
+            for line in f.readlines():
+                line = line.strip('\n')
+                charades_idx, ag_idx = line.split(' ')
+                if ag_idx != 'None':
+                    self.charades_ag_obj_map[int(charades_idx)] = int(ag_idx)
+                else:
+                    self.charades_ag_obj_map[int(charades_idx)] = None
+        
+        print(self.charades_ag_obj_map)
+
         self.action_classes = []
         with open(os.path.join(self.root, 'annotations/Charades/Charades_v1_classes.txt'), 'r') as f:
             for line in f.readlines():
@@ -233,7 +259,7 @@ class AG(Dataset):
                 line = line.strip('\n')
                 self.verb_classes.append(line)
 
-        self.action_verb_map = {}
+        self.action_verb_obj_map = {}
         with open(os.path.join(self.root, 'annotations/Charades/Charades_v1_mapping.txt'), 'r') as f:
             for line in f.readlines():
                 line = line.strip('\n')
@@ -242,8 +268,161 @@ class AG(Dataset):
                 verb = int(verb[1:])
                 obj = int(obj[1:])
                 obj = self.charades_ag_obj_map[obj]
-                self.action_verb_map[action] = verb
+                self.action_verb_obj_map[action] = (verb, obj)
 
     @staticmethod
     def get_id(video_id, frame_idx):
         return "%s.mp4/%06d.png" % (video_id, frame_idx)
+
+
+import os
+import csv
+import json
+import shelve
+
+from PIL import Image
+import matplotlib.pyplot as plt
+from util.visualize import show_pyg_graph
+import networkx as nx
+from IPython.display import clear_output
+from tqdm import tqdm
+
+'''
+used for annotating the dataset
+'''
+class AGViewer:
+    def __init__(self, ag, subset_dict):
+        self.ag = ag
+        self.subset_dict = subset_dict
+        self.index = 0
+        self.key = None
+        self.id = None
+        self.message = "Enter/space : navigate by search key | \
+                n/p : sequential navigation | \
+                j : jump to index | \
+                g/b/f/u : label GOOD, BAD, FLAGGED, UNMARKED | \
+                k : change search key | \
+                q : quit | "
+
+    def view(self, index):
+        #check index
+        if index < 0:
+            _ = input('first index reached, enter to continue')
+            index = 0
+        elif index >= len(self.ag):
+            _ = input('max index reached, enter to continue')
+            index = len(self.ag) - 1
+
+        id, img, sg, action = self.ag[index]
+        verb, obj = self.ag.action_verb_obj_map[action]
+
+        self.index = index
+        self.id = id
+
+        clear_output(wait=True)
+
+        print('INDEX:', index)
+        print('LABEL:', self.subset_dict[id] if id in self.subset_dict else 'ABSENT')
+        print('ACTION:', self.ag.action_classes[action])
+        print('VERB-OBJ:', self.ag.verb_classes[verb], None if obj is None else self.ag.object_classes[obj])
+        print('VIDEO-FRAME-ACTION ID:', id)
+        nodes = [self.ag.object_classes[t] for t in sg.node_type]
+        print([ (nodes[sg.edge_index[0][i].item()], \
+                self.ag.relationship_classes[t], \
+                nodes[sg.edge_index[1][i].item()], \
+                ) for i,t in enumerate(sg.edge_type)])
+
+        fig, axs = plt.subplots(1, 2, figsize=(15, 5))
+
+        show_pyg_graph(sg, self.ag.object_classes, self.ag.relationship_classes, layout='circular', curve=0.1, ax=axs[0])
+        axs[1].imshow(img)
+        plt.show(fig)
+    
+    def find_next(self, key, prev=False):
+        index = self.index
+        print(index)
+
+        if prev:
+            index -= 1
+        else:
+            index += 1
+
+        while index <= len(self.ag) - 1 and index >= 0:
+
+            id, img, sg, action = self.ag[index]
+            if type(key) is str and self.subset_dict[id] == key:
+                return index
+            elif type(key) is str and key in id:
+                return index
+            elif type(key) is int and action == key:
+                return index
+
+            if prev:
+                index -= 1
+            else:
+                index += 1
+
+        return None
+    
+    def next(self, prev=False):
+        if self.key is not None:
+            next_idx = self.find_next(self.key, prev=prev)
+            if next_idx is not None:
+                return next_idx
+            else:
+                _ = input('key not found')
+                return self.index
+        else:
+            return self.index + 1
+
+    def process_command(self, option):
+        if option == 'q':
+            return None
+        
+        #navigation
+        elif option == '': #next by key
+            return self.next()
+        elif option == ' ': #previous by key
+            return self.next(prev=True)
+        elif option == 'n': #immediate next
+            return self.index + 1
+        elif option == 'p': #immediate prev
+            return self.index - 1
+        elif option == 'j':
+            jump_idx = input('enter index to jump to')
+            try:
+                jump_idx = int(jump_idx)
+                return jump_idx
+            except:
+                _ = input('invalid index')
+                return self.index
+        
+        #change key
+        elif option == 'k':
+            new_key = input('enter new key')
+            if new_key == '':
+                self.key = None
+            else:
+                try:
+                    new_key_int = int(new_key)
+                    self.key = new_key_int #setting key to be a certain action class
+                except ValueError:
+                    self.key = str(new_key) #setting key to be string label
+            return self.index
+
+        #labeling
+        elif option == 'g': #good
+            self.subset_dict[self.id] = 'True'
+            return self.next()
+        elif option == 'b': #bad
+            self.subset_dict[self.id] = 'False'
+            return self.next()
+        elif option == 'f': #flag
+            self.subset_dict[self.id] = 'FLAGGED'
+            return self.next()
+        elif option == 'u': #flag
+            self.subset_dict[self.id] = 'UNMARKED'
+            return self.next()
+        else:
+            _ = input('invalid command')
+            return self.index
