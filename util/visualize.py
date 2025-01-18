@@ -5,7 +5,7 @@ import itertools as it
 def show_pyg_graph(graph, nodes, rels, layout='circular', curve=None, ax=None):
 
     # Create an empty NetworkX directed graph
-    G = nx.DiGraph()
+    G = nx.MultiDiGraph()
     
     # Add nodes with their features
     for i in range(graph.num_nodes):
