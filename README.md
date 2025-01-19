@@ -12,7 +12,8 @@ edge-type: integer idx of edge type
 
 y: verb label
 z: multiple affordance label
-w: full action label (verb-noun)
+w: full action label (verb-noun), may just be a string/description
+o: object/noun label
 
 idx: index of this Data object in the dataset
 

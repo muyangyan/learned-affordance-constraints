@@ -5,7 +5,7 @@ from pyswip import Prolog
 
 from data.toy.toy_dataset import ToyDataset
 import torch
-from models.model import RGCN
+from models.rgcn import RGCN
 from game.header import *
 import argparse
 
@@ -137,13 +137,15 @@ def main(args):
 
     print('DONE')
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--affd_verb', type=str, default=None)
-parser.add_argument('--threshold', type=float, default=0.5)
-parser.add_argument('--max_vars', type=int, default=6)
-parser.add_argument('--max_body', type=int, default=6)
-parser.add_argument('--data_path', type=str, default='data')
-parser.add_argument('--model_path', type=str, default='models/affd_model.pth')
+if __name__ == '__main__':
 
-args = parser.parse_args()
-main(args)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--affd_verb', type=str, default=None)
+    parser.add_argument('--threshold', type=float, default=0.5)
+    parser.add_argument('--max_vars', type=int, default=6)
+    parser.add_argument('--max_body', type=int, default=6)
+    parser.add_argument('--data_path', type=str, default='data')
+    parser.add_argument('--model_path', type=str, default='models/affd_model.pth')
+
+    args = parser.parse_args()
+    main(args)

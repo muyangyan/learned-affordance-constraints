@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 
 def find_last_frame_idx(directory):
     if not os.path.exists(directory):
-        print('folder %s does not exist' % directory)
+        #print('folder %s does not exist' % directory)
         return None
     highest_number = -float('inf')  # Start with a very low number
     for file_name in os.listdir(directory):
@@ -30,7 +30,7 @@ def find_last_frame_idx(directory):
 
 def find_closest_frame_idx(directory, frame_number):
     if not os.path.exists(directory):
-        print('folder %s does not exist' % directory)
+        #print('folder %s does not exist' % directory)
         return None
     closest_number = None
     smallest_diff = float('inf')  # Start with a very low number
@@ -112,10 +112,14 @@ class AG(Dataset):
 
             edge_attr = F.one_hot(edge_type, num_classes=len(self.relationship_classes)).float()
 
-            y = torch.tensor([action_class], dtype=torch.long) # only the specific action taken
+            verb_class, obj_class = self.action_verb_obj_map[action_class]
+
+            w = torch.tensor([action_class], dtype=torch.long) # only the specific action taken
+            y = torch.tensor([verb_class], dtype=torch.long)
+            o = None if obj_class is None else torch.tensor([obj_class], dtype=torch.long)
 
             data = Data(x, edge_index=edge_index, edge_attr=edge_attr, \
-                        node_type=node_type, edge_type=edge_type, y=y, id=id)
+                        node_type=node_type, edge_type=edge_type, y=y, w=w, o=o, id=id)
 
             self.scene_graphs[id] = data
 
@@ -205,8 +209,6 @@ class AG(Dataset):
         self.object_classes[23] = 'phone/camera'
         self.object_classes[30] = 'sofa/couch'
 
-        print(self.object_classes)
-
         # collect relationship classes
         self.relationship_classes = []
         with open(os.path.join(self.root, 'annotations/relationship_classes.txt'), 'r') as f:
@@ -245,8 +247,6 @@ class AG(Dataset):
                 else:
                     self.charades_ag_obj_map[int(charades_idx)] = None
         
-        print(self.charades_ag_obj_map)
-
         self.action_classes = []
         with open(os.path.join(self.root, 'annotations/Charades/Charades_v1_classes.txt'), 'r') as f:
             for line in f.readlines():
