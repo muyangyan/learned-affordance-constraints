@@ -81,3 +81,11 @@ body_pred(writing_on, 2).
 00:03:54 cook_target(A):- food(B),touching(A,B).
 00:03:54 cook_target(A):- food(B),not_contacting(A,B).
 00:03:54 ********************
+00:10:26 Generating programs of size: 5
+07:02:03 TIMEOUT OF 25000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.75 Recall:0.50 TP:38 FN:38 TN:371 FP:13 Size:9 MDL:60
+cook_target(A):- food(B),beneath(B,A).
+cook_target(A):- food(B),touching(A,B).
+cook_target(A):- food(B),not_contacting(A,B).
+******************************

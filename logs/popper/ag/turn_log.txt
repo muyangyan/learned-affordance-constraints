@@ -80,3 +80,10 @@ body_pred(writing_on, 2).
 00:03:53 turn_target(A):- not_contacting(A,B),light(B).
 00:03:53 turn_target(A):- light(B),in_front_of(B,A).
 00:03:53 ********************
+00:10:56 Generating programs of size: 5
+07:04:05 TIMEOUT OF 25000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:1.00 Recall:0.95 TP:37 FN:2 TN:161 FP:0 Size:6 MDL:8
+turn_target(A):- not_contacting(A,B),light(B).
+turn_target(A):- light(B),in_front_of(B,A).
+******************************

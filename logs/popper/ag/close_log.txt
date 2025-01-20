@@ -63,3 +63,36 @@ body_pred(wiping, 2).
 body_pred(writing_on, 2).
 00:03:39 Generating programs of size: 2
 00:03:40 Generating programs of size: 3
+00:04:14 ********************
+00:04:14 New best hypothesis:
+00:04:14 tp:95 fn:598 tn:2522 fp:46 size:3 mdl:647
+00:04:14 close_target(A):- on_the_side_of(B,A),door(B).
+00:04:14 ********************
+00:04:16 ********************
+00:04:16 New best hypothesis:
+00:04:16 tp:139 fn:554 tn:2494 fp:74 size:3 mdl:631
+00:04:16 close_target(A):- in_front_of(B,A),door(B).
+00:04:16 ********************
+00:04:17 ********************
+00:04:17 New best hypothesis:
+00:04:17 tp:163 fn:530 tn:2473 fp:95 size:3 mdl:628
+00:04:17 close_target(A):- not_contacting(A,B),door(B).
+00:04:17 ********************
+00:04:54 Generating programs of size: 4
+00:05:02 ********************
+00:05:02 New best hypothesis:
+00:05:02 tp:295 fn:398 tn:2429 fp:139 size:12 mdl:549
+00:05:02 close_target(A):- on_the_side_of(B,A),door(B).
+00:05:02 close_target(A):- on_the_side_of(B,A),refrigerator(B).
+00:05:02 close_target(A):- in_front_of(B,A),door(B).
+00:05:02 close_target(A):- in_front_of(B,A),refrigerator(B).
+00:05:02 ********************
+00:27:26 Generating programs of size: 5
+07:10:14 TIMEOUT OF 25000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.68 Recall:0.43 TP:295 FN:398 TN:2429 FP:139 Size:12 MDL:549
+close_target(A):- on_the_side_of(B,A),door(B).
+close_target(A):- on_the_side_of(B,A),refrigerator(B).
+close_target(A):- in_front_of(B,A),door(B).
+close_target(A):- in_front_of(B,A),refrigerator(B).
+******************************

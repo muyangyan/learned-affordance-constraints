@@ -63,3 +63,33 @@ body_pred(wiping, 2).
 body_pred(writing_on, 2).
 00:03:39 Generating programs of size: 2
 00:03:40 Generating programs of size: 3
+00:04:00 ********************
+00:04:00 New best hypothesis:
+00:04:00 tp:92 fn:2400 tn:6192 fp:62 size:3 mdl:2465
+00:04:00 put_target(A):- in_front_of(B,A),groceries(B).
+00:04:00 ********************
+00:07:33 Generating programs of size: 4
+00:07:45 ********************
+00:07:45 New best hypothesis:
+00:07:45 tp:215 fn:2277 tn:6107 fp:147 size:21 mdl:2445
+00:07:45 put_target(A):- in_front_of(B,A),groceries(B).
+00:07:45 put_target(A):- other_relationship(A,B),clothes(B).
+00:07:45 put_target(A):- behind(B,A),broom(B).
+00:07:45 put_target(A):- shelf(B),above(B,A).
+00:07:45 put_target(A):- shoe(B),above(B,A).
+00:07:45 put_target(A):- drinking_from(A,B),in_front_of(B,A).
+00:07:45 put_target(A):- touching(A,B),picture(B).
+00:07:45 ********************
+01:41:16 Generating programs of size: 5
+01:41:28 ********************
+01:41:28 New best hypothesis:
+01:41:28 tp:224 fn:2268 tn:6108 fp:146 size:26 mdl:2440
+01:41:28 put_target(A):- in_front_of(B,A),groceries(B).
+01:41:28 put_target(A):- behind(B,A),broom(B).
+01:41:28 put_target(A):- shelf(B),above(B,A).
+01:41:28 put_target(A):- shoe(B),above(B,A).
+01:41:28 put_target(A):- drinking_from(A,B),in_front_of(B,A).
+01:41:28 put_target(A):- touching(A,B),picture(B).
+01:41:28 put_target(A):- other_relationship(A,B),in_front_of(B,A),clothes(B).
+01:41:28 put_target(A):- touching(A,B),on_the_side_of(B,C),holding(C,B).
+01:41:28 ********************

@@ -68,3 +68,21 @@ body_pred(writing_on, 2).
 00:03:57 tp:10 fn:741 tn:2634 fp:2 size:3 mdl:746
 00:03:57 smile_target(A):- blanket(B),other_relationship(A,B).
 00:03:57 ********************
+00:05:37 Generating programs of size: 4
+00:05:48 ********************
+00:05:48 New best hypothesis:
+00:05:48 tp:44 fn:707 tn:2616 fp:20 size:12 mdl:739
+00:05:48 smile_target(A):- blanket(B),other_relationship(A,B).
+00:05:48 smile_target(A):- touching(A,B),broom(B).
+00:05:48 smile_target(A):- holding(A,B),mirror(B).
+00:05:48 smile_target(A):- not_contacting(A,B),picture(B).
+00:05:48 ********************
+00:36:47 Generating programs of size: 5
+07:09:43 TIMEOUT OF 25000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.69 Recall:0.06 TP:44 FN:707 TN:2616 FP:20 Size:12 MDL:739
+smile_target(A):- blanket(B),other_relationship(A,B).
+smile_target(A):- touching(A,B),broom(B).
+smile_target(A):- holding(A,B),mirror(B).
+smile_target(A):- not_contacting(A,B),picture(B).
+******************************

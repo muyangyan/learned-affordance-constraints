@@ -73,3 +73,54 @@ body_pred(writing_on, 2).
 00:03:51 tp:91 fn:437 tn:1815 fp:33 size:3 mdl:473
 00:03:51 tidy_target(A):- holding(A,B),broom(B).
 00:03:51 ********************
+00:04:32 ********************
+00:04:32 New best hypothesis:
+00:04:32 tp:169 fn:359 tn:1740 fp:108 size:3 mdl:470
+00:04:32 tidy_target(A):- floor(B),beneath(B,A).
+00:04:32 ********************
+00:05:07 ********************
+00:05:07 New best hypothesis:
+00:05:07 tp:133 fn:395 tn:1800 fp:48 size:3 mdl:446
+00:05:07 tidy_target(A):- beneath(B,A),standing_on(A,B).
+00:05:07 ********************
+00:05:10 ********************
+00:05:10 New best hypothesis:
+00:05:10 tp:133 fn:395 tn:1802 fp:46 size:3 mdl:444
+00:05:10 tidy_target(A):- floor(B),standing_on(A,B).
+00:05:10 ********************
+00:05:47 Generating programs of size: 4
+00:05:59 ********************
+00:05:59 New best hypothesis:
+00:05:59 tp:262 fn:266 tn:1730 fp:118 size:24 mdl:408
+00:05:59 tidy_target(A):- holding(A,B),broom(B).
+00:05:59 tidy_target(A):- not_contacting(A,B),broom(B).
+00:05:59 tidy_target(A):- medicine(B),touching(A,B).
+00:05:59 tidy_target(A):- shelf(B),touching(A,B).
+00:05:59 tidy_target(A):- on_the_side_of(B,A),vacuum(B).
+00:05:59 tidy_target(A):- in_front_of(B,A),shelf(B).
+00:05:59 tidy_target(A):- beneath(B,A),standing_on(A,B).
+00:05:59 tidy_target(A):- blanket(B),standing_on(A,B).
+00:05:59 ********************
+00:40:54 Generating programs of size: 5
+00:41:12 ********************
+00:41:12 New best hypothesis:
+00:41:12 tp:263 fn:265 tn:1735 fp:113 size:25 mdl:403
+00:41:12 tidy_target(A):- not_contacting(A,B),broom(B).
+00:41:12 tidy_target(A):- medicine(B),touching(A,B).
+00:41:12 tidy_target(A):- shelf(B),touching(A,B).
+00:41:12 tidy_target(A):- person(B),standing_on(B,C),standing_on(A,C).
+00:41:12 tidy_target(A):- in_front_of(B,A),holding(A,B),broom(B).
+00:41:12 tidy_target(A):- clothes(B),not_contacting(A,B),behind(B,A).
+00:41:12 tidy_target(A):- in_front_of(B,A),shelf(B),not_contacting(A,B).
+00:41:12 ********************
+07:39:56 TIMEOUT OF 25000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.70 Recall:0.50 TP:263 FN:265 TN:1735 FP:113 Size:25 MDL:403
+tidy_target(A):- not_contacting(A,B),broom(B).
+tidy_target(A):- medicine(B),touching(A,B).
+tidy_target(A):- shelf(B),touching(A,B).
+tidy_target(A):- person(B),standing_on(B,C),standing_on(A,C).
+tidy_target(A):- in_front_of(B,A),holding(A,B),broom(B).
+tidy_target(A):- clothes(B),not_contacting(A,B),behind(B,A).
+tidy_target(A):- in_front_of(B,A),shelf(B),not_contacting(A,B).
+******************************

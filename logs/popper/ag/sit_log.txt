@@ -68,3 +68,27 @@ body_pred(writing_on, 2).
 00:03:40 tp:71 fn:1134 tn:3404 fp:37 size:3 mdl:1174
 00:03:40 sit_target(A):- not_contacting(A,B),chair(B).
 00:03:40 ********************
+00:05:46 Generating programs of size: 4
+00:05:58 ********************
+00:05:58 New best hypothesis:
+00:05:58 tp:133 fn:1072 tn:3376 fp:65 size:21 mdl:1158
+00:05:58 sit_target(A):- not_contacting(A,B),chair(B).
+00:05:58 sit_target(A):- touching(A,B),chair(B).
+00:05:58 sit_target(A):- other_relationship(A,B),bed(B).
+00:05:58 sit_target(A):- other_relationship(A,B),vacuum(B).
+00:05:58 sit_target(A):- bed(B),not_contacting(A,B).
+00:05:58 sit_target(A):- touching(A,B),lying_on(A,B).
+00:05:58 sit_target(A):- lying_on(A,B),table(B).
+00:05:58 ********************
+00:40:05 Generating programs of size: 5
+07:04:17 TIMEOUT OF 25000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.67 Recall:0.11 TP:133 FN:1072 TN:3376 FP:65 Size:21 MDL:1158
+sit_target(A):- not_contacting(A,B),chair(B).
+sit_target(A):- touching(A,B),chair(B).
+sit_target(A):- other_relationship(A,B),bed(B).
+sit_target(A):- other_relationship(A,B),vacuum(B).
+sit_target(A):- bed(B),not_contacting(A,B).
+sit_target(A):- touching(A,B),lying_on(A,B).
+sit_target(A):- lying_on(A,B),table(B).
+******************************

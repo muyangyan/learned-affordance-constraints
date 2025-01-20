@@ -64,3 +64,6 @@ body_pred(writing_on, 2).
 00:03:39 Generating programs of size: 2
 00:03:43 Generating programs of size: 3
 00:03:57 Generating programs of size: 4
+00:04:28 Generating programs of size: 5
+00:49:48 Generating programs of size: 6
+05:57:35 Generating programs of size: 7

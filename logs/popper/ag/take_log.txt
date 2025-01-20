@@ -63,3 +63,45 @@ body_pred(wiping, 2).
 body_pred(writing_on, 2).
 00:03:39 Generating programs of size: 2
 00:03:40 Generating programs of size: 3
+00:03:59 ********************
+00:03:59 New best hypothesis:
+00:03:59 tp:5 fn:1385 tn:3755 fp:1 size:3 mdl:1389
+00:03:59 take_target(A):- light(B),holding(A,B).
+00:03:59 ********************
+00:04:21 ********************
+00:04:21 New best hypothesis:
+00:04:21 tp:69 fn:1321 tn:3714 fp:42 size:3 mdl:1366
+00:04:21 take_target(A):- box(B),touching(A,B).
+00:04:21 ********************
+00:05:06 Generating programs of size: 4
+00:05:18 ********************
+00:05:18 New best hypothesis:
+00:05:18 tp:131 fn:1259 tn:3678 fp:78 size:12 mdl:1349
+00:05:18 take_target(A):- light(B),holding(A,B).
+00:05:18 take_target(A):- other_relationship(A,B),book(B).
+00:05:18 take_target(A):- box(B),touching(A,B).
+00:05:18 take_target(A):- box(B),not_contacting(A,B).
+00:05:18 ********************
+00:46:10 Generating programs of size: 5
+00:47:19 ********************
+00:47:19 New best hypothesis:
+00:47:19 tp:173 fn:1217 tn:3656 fp:100 size:24 mdl:1341
+00:47:19 take_target(A):- light(B),holding(A,B).
+00:47:19 take_target(A):- other_relationship(A,B),book(B).
+00:47:19 take_target(A):- box(B),touching(A,B).
+00:47:19 take_target(A):- box(B),not_contacting(A,B).
+00:47:19 take_target(A):- blanket(B),in_front_of(B,A),not_contacting(A,B).
+00:47:19 take_target(A):- in_front_of(B,A),clothes(B),touching(A,B).
+00:47:19 take_target(A):- on_the_side_of(B,A),holding(A,B),food(B).
+00:47:19 ********************
+07:02:40 TIMEOUT OF 25000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.63 Recall:0.12 TP:173 FN:1217 TN:3656 FP:100 Size:24 MDL:1341
+take_target(A):- light(B),holding(A,B).
+take_target(A):- other_relationship(A,B),book(B).
+take_target(A):- box(B),touching(A,B).
+take_target(A):- box(B),not_contacting(A,B).
+take_target(A):- blanket(B),in_front_of(B,A),not_contacting(A,B).
+take_target(A):- in_front_of(B,A),clothes(B),touching(A,B).
+take_target(A):- on_the_side_of(B,A),holding(A,B),food(B).
+******************************

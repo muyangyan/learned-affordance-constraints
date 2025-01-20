@@ -78,3 +78,21 @@ body_pred(writing_on, 2).
 00:03:51 tp:86 fn:49 tn:637 fp:20 size:3 mdl:72
 00:03:51 undress_target(A):- clothes(B),wearing(A,B).
 00:03:51 ********************
+00:04:02 Generating programs of size: 4
+00:04:06 ********************
+00:04:06 New best hypothesis:
+00:04:06 tp:96 fn:39 tn:631 fp:26 size:6 mdl:71
+00:04:06 undress_target(A):- clothes(B),wearing(A,B).
+00:04:06 undress_target(A):- wearing(A,B),shoe(B).
+00:04:06 ********************
+00:06:26 ********************
+00:06:26 New best hypothesis:
+00:06:26 tp:96 fn:39 tn:631 fp:26 size:4 mdl:69
+00:06:26 undress_target(A):- person(B),wearing(B,C),wearing(A,C).
+00:06:26 ********************
+00:12:49 Generating programs of size: 5
+07:06:34 TIMEOUT OF 25000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.79 Recall:0.71 TP:96 FN:39 TN:631 FP:26 Size:4 MDL:69
+undress_target(A):- person(B),wearing(B,C),wearing(A,C).
+******************************

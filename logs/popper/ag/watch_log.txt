@@ -68,3 +68,34 @@ body_pred(writing_on, 2).
 00:03:50 tp:84 fn:414 tn:2067 fp:49 size:3 mdl:466
 00:03:50 watch_target(A):- not_contacting(A,B),mirror(B).
 00:03:50 ********************
+00:04:07 ********************
+00:04:07 New best hypothesis:
+00:04:07 tp:60 fn:438 tn:2102 fp:14 size:3 mdl:455
+00:04:07 watch_target(A):- not_contacting(A,B),window(B).
+00:04:07 ********************
+00:05:06 Generating programs of size: 4
+00:05:17 ********************
+00:05:17 New best hypothesis:
+00:05:17 tp:245 fn:253 tn:1991 fp:125 size:24 mdl:402
+00:05:17 watch_target(A):- not_contacting(A,B),mirror(B).
+00:05:17 watch_target(A):- not_contacting(A,B),picture(B).
+00:05:17 watch_target(A):- holding(A,B),picture(B).
+00:05:17 watch_target(A):- not_contacting(A,B),television(B).
+00:05:17 watch_target(A):- laptop(B),other_relationship(A,B).
+00:05:17 watch_target(A):- window(B),on_the_side_of(B,A).
+00:05:17 watch_target(A):- writing_on(A,B),touching(A,B).
+00:05:17 watch_target(A):- window(B),in_front_of(B,A).
+00:05:17 ********************
+00:32:49 Generating programs of size: 5
+08:19:18 TIMEOUT OF 25000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.66 Recall:0.49 TP:245 FN:253 TN:1991 FP:125 Size:24 MDL:402
+watch_target(A):- not_contacting(A,B),mirror(B).
+watch_target(A):- not_contacting(A,B),picture(B).
+watch_target(A):- holding(A,B),picture(B).
+watch_target(A):- not_contacting(A,B),television(B).
+watch_target(A):- laptop(B),other_relationship(A,B).
+watch_target(A):- window(B),on_the_side_of(B,A).
+watch_target(A):- writing_on(A,B),touching(A,B).
+watch_target(A):- window(B),in_front_of(B,A).
+******************************

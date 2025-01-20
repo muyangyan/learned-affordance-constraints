@@ -78,3 +78,21 @@ body_pred(writing_on, 2).
 00:03:53 tp:49 fn:98 tn:574 fp:17 size:3 mdl:118
 00:03:53 fix_target(A):- mirror(B),in_front_of(B,A).
 00:03:53 ********************
+00:03:59 Generating programs of size: 4
+00:04:03 ********************
+00:04:03 New best hypothesis:
+00:04:03 tp:68 fn:79 tn:569 fp:22 size:12 mdl:113
+00:04:03 fix_target(A):- mirror(B),holding(A,B).
+00:04:03 fix_target(A):- mirror(B),not_contacting(A,B).
+00:04:03 fix_target(A):- vacuum(B),in_front_of(B,A).
+00:04:03 fix_target(A):- light(B),above(B,A).
+00:04:03 ********************
+00:13:36 Generating programs of size: 5
+07:08:41 TIMEOUT OF 25000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.76 Recall:0.46 TP:68 FN:79 TN:569 FP:22 Size:12 MDL:113
+fix_target(A):- mirror(B),holding(A,B).
+fix_target(A):- mirror(B),not_contacting(A,B).
+fix_target(A):- vacuum(B),in_front_of(B,A).
+fix_target(A):- light(B),above(B,A).
+******************************

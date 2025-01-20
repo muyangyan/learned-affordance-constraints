@@ -88,3 +88,24 @@ body_pred(writing_on, 2).
 00:03:57 tp:111 fn:100 tn:864 fp:17 size:3 mdl:120
 00:03:57 awaken_target(A):- behind(B,A),lying_on(A,B).
 00:03:57 ********************
+00:03:59 Generating programs of size: 4
+00:04:03 ********************
+00:04:03 New best hypothesis:
+00:04:03 tp:174 fn:37 tn:856 fp:25 size:9 mdl:71
+00:04:03 awaken_target(A):- bed(B),leaning_on(A,B).
+00:04:03 awaken_target(A):- behind(B,A),lying_on(A,B).
+00:04:03 awaken_target(A):- lying_on(A,B),on_the_side_of(B,A).
+00:04:03 ********************
+00:18:20 Generating programs of size: 5
+00:18:26 ********************
+00:18:26 New best hypothesis:
+00:18:26 tp:182 fn:29 tn:849 fp:32 size:7 mdl:68
+00:18:26 awaken_target(A):- bed(B),leaning_on(A,B).
+00:18:26 awaken_target(A):- lying_on(B,C),lying_on(A,C),person(B).
+00:18:26 ********************
+07:57:20 TIMEOUT OF 25000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.85 Recall:0.86 TP:182 FN:29 TN:849 FP:32 Size:7 MDL:68
+awaken_target(A):- bed(B),leaning_on(A,B).
+awaken_target(A):- lying_on(B,C),lying_on(A,C),person(B).
+******************************

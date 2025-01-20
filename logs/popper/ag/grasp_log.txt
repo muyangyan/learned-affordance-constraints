@@ -86,3 +86,11 @@ body_pred(writing_on, 2).
 00:03:52 grasp_target(A):- on_the_side_of(B,A),door(B).
 00:03:52 grasp_target(A):- door(B),in_front_of(B,A).
 00:03:52 ********************
+00:09:44 Generating programs of size: 5
+07:17:52 TIMEOUT OF 25000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.87 Recall:0.86 TP:67 FN:11 TN:136 FP:10 Size:9 MDL:30
+grasp_target(A):- doorknob(B),not_contacting(A,B).
+grasp_target(A):- on_the_side_of(B,A),door(B).
+grasp_target(A):- door(B),in_front_of(B,A).
+******************************

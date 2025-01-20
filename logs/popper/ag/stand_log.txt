@@ -63,3 +63,40 @@ body_pred(wiping, 2).
 body_pred(writing_on, 2).
 00:03:39 Generating programs of size: 2
 00:03:40 Generating programs of size: 3
+00:04:20 ********************
+00:04:20 New best hypothesis:
+00:04:20 tp:6 fn:887 tn:3327 fp:1 size:3 mdl:891
+00:04:20 stand_target(A):- other_relationship(A,B),touching(A,B).
+00:04:20 ********************
+00:05:26 Generating programs of size: 4
+00:05:37 ********************
+00:05:37 New best hypothesis:
+00:05:37 tp:23 fn:870 tn:3315 fp:13 size:6 mdl:889
+00:05:37 stand_target(A):- other_relationship(A,B),touching(A,B).
+00:05:37 stand_target(A):- shoe(B),touching(A,B).
+00:05:37 ********************
+00:28:04 ********************
+00:28:04 New best hypothesis:
+00:28:04 tp:20 fn:873 tn:3317 fp:11 size:4 mdl:888
+00:28:04 stand_target(A):- in_front_of(B,C),beneath(B,C),wearing(A,B).
+00:28:04 ********************
+00:47:04 ********************
+00:47:04 New best hypothesis:
+00:47:04 tp:24 fn:869 tn:3314 fp:14 size:4 mdl:887
+00:47:04 stand_target(A):- shoe(B),in_front_of(B,A),wearing(A,B).
+00:47:04 ********************
+00:47:54 Generating programs of size: 5
+00:48:05 ********************
+00:48:05 New best hypothesis:
+00:48:05 tp:36 fn:857 tn:3311 fp:17 size:11 mdl:885
+00:48:05 stand_target(A):- other_relationship(A,B),touching(A,B).
+00:48:05 stand_target(A):- pillow(B),behind(B,A),lying_on(A,B).
+00:48:05 stand_target(A):- shoe(B),in_front_of(B,A),wearing(A,B).
+00:48:05 ********************
+07:16:04 TIMEOUT OF 25000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.68 Recall:0.04 TP:36 FN:857 TN:3311 FP:17 Size:11 MDL:885
+stand_target(A):- other_relationship(A,B),touching(A,B).
+stand_target(A):- pillow(B),behind(B,A),lying_on(A,B).
+stand_target(A):- shoe(B),in_front_of(B,A),wearing(A,B).
+******************************

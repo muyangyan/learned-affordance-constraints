@@ -91,3 +91,11 @@ body_pred(writing_on, 2).
 00:03:58 dress_target(A):- wearing(A,B),clothes(B).
 00:03:58 dress_target(A):- clothes(B),holding(A,B).
 00:03:58 ********************
+00:10:56 Generating programs of size: 5
+07:24:15 TIMEOUT OF 25000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.63 Recall:0.79 TP:104 FN:27 TN:600 FP:62 Size:9 MDL:98
+dress_target(A):- beneath(B,A),shoe(B).
+dress_target(A):- wearing(A,B),clothes(B).
+dress_target(A):- clothes(B),holding(A,B).
+******************************

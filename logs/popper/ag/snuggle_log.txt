@@ -94,3 +94,20 @@ body_pred(writing_on, 2).
 00:03:51 snuggle_target(A):- covered_by(A,B),blanket(B).
 00:03:51 ********************
 00:03:57 Generating programs of size: 4
+00:04:01 ********************
+00:04:01 New best hypothesis:
+00:04:01 tp:132 fn:17 tn:526 fp:42 size:12 mdl:71
+00:04:01 snuggle_target(A):- blanket(B),in_front_of(B,A).
+00:04:01 snuggle_target(A):- pillow(B),in_front_of(B,A).
+00:04:01 snuggle_target(A):- pillow(B),above(B,A).
+00:04:01 snuggle_target(A):- blanket(B),in(B,A).
+00:04:01 ********************
+00:17:03 Generating programs of size: 5
+07:59:30 TIMEOUT OF 25000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.76 Recall:0.89 TP:132 FN:17 TN:526 FP:42 Size:12 MDL:71
+snuggle_target(A):- blanket(B),in_front_of(B,A).
+snuggle_target(A):- pillow(B),in_front_of(B,A).
+snuggle_target(A):- pillow(B),above(B,A).
+snuggle_target(A):- blanket(B),in(B,A).
+******************************

@@ -68,3 +68,26 @@ body_pred(writing_on, 2).
 00:03:52 tp:54 fn:143 tn:801 fp:28 size:3 mdl:174
 00:03:52 wash_target(A):- towel(B),holding(A,B).
 00:03:52 ********************
+00:04:02 ********************
+00:04:02 New best hypothesis:
+00:04:02 tp:67 fn:130 tn:801 fp:28 size:3 mdl:161
+00:04:02 wash_target(A):- towel(B),in_front_of(B,A).
+00:04:02 ********************
+00:04:48 Generating programs of size: 4
+00:04:54 ********************
+00:04:54 New best hypothesis:
+00:04:54 tp:93 fn:104 tn:792 fp:37 size:12 mdl:153
+00:04:54 wash_target(A):- towel(B),covered_by(A,B).
+00:04:54 wash_target(A):- towel(B),in_front_of(B,A).
+00:04:54 wash_target(A):- wiping(A,B),in_front_of(B,A).
+00:04:54 wash_target(A):- towel(B),on_the_side_of(B,A).
+00:04:54 ********************
+00:27:38 Generating programs of size: 5
+07:01:56 TIMEOUT OF 25000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.72 Recall:0.47 TP:93 FN:104 TN:792 FP:37 Size:12 MDL:153
+wash_target(A):- towel(B),covered_by(A,B).
+wash_target(A):- towel(B),in_front_of(B,A).
+wash_target(A):- wiping(A,B),in_front_of(B,A).
+wash_target(A):- towel(B),on_the_side_of(B,A).
+******************************

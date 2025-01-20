@@ -73,3 +73,10 @@ body_pred(writing_on, 2).
 00:03:53 tp:117 fn:33 tn:449 fp:77 size:3 mdl:113
 00:03:53 work_target(A):- table(B),in_front_of(B,A).
 00:03:53 ********************
+00:04:15 Generating programs of size: 4
+00:21:16 Generating programs of size: 5
+07:25:40 TIMEOUT OF 25000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.60 Recall:0.78 TP:117 FN:33 TN:449 FP:77 Size:3 MDL:113
+work_target(A):- table(B),in_front_of(B,A).
+******************************

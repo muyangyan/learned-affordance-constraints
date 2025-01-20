@@ -63,3 +63,20 @@ body_pred(wiping, 2).
 body_pred(writing_on, 2).
 00:03:39 Generating programs of size: 2
 00:03:40 Generating programs of size: 3
+00:04:03 ********************
+00:04:03 New best hypothesis:
+00:04:03 tp:32 fn:217 tn:964 fp:26 size:3 mdl:246
+00:04:03 play_target(A):- touching(A,B),laptop(B).
+00:04:03 ********************
+00:04:05 ********************
+00:04:05 New best hypothesis:
+00:04:05 tp:83 fn:166 tn:924 fp:66 size:3 mdl:235
+00:04:05 play_target(A):- in_front_of(B,A),laptop(B).
+00:04:05 ********************
+00:04:34 Generating programs of size: 4
+00:26:33 Generating programs of size: 5
+07:06:37 TIMEOUT OF 25000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.56 Recall:0.33 TP:83 FN:166 TN:924 FP:66 Size:3 MDL:235
+play_target(A):- in_front_of(B,A),laptop(B).
+******************************
