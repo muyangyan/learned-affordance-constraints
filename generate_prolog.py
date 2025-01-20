@@ -6,7 +6,7 @@ from pyswip import Prolog
 from data.toy.toy_dataset import ToyDataset
 import torch
 from models.rgcn import RGCN
-from game.header import *
+from data.toy.game.header import *
 import argparse
 
 def add_clause(clause, filename=None, mode='example', example=None):

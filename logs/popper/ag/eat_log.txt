@@ -1,0 +1,124 @@
+%%no negative model used
+max_vars(6).
+max_body(6).
+head_pred(eat_target, 1).
+body_pred(person, 1).
+body_pred(bag, 1).
+body_pred(bed, 1).
+body_pred(blanket, 1).
+body_pred(book, 1).
+body_pred(box, 1).
+body_pred(broom, 1).
+body_pred(chair, 1).
+body_pred(closet/cabinet, 1).
+body_pred(clothes, 1).
+body_pred(cup/glass/bottle, 1).
+body_pred(dish, 1).
+body_pred(door, 1).
+body_pred(doorknob, 1).
+body_pred(doorway, 1).
+body_pred(floor, 1).
+body_pred(food, 1).
+body_pred(groceries, 1).
+body_pred(laptop, 1).
+body_pred(light, 1).
+body_pred(medicine, 1).
+body_pred(mirror, 1).
+body_pred(paper/notebook, 1).
+body_pred(phone/camera, 1).
+body_pred(picture, 1).
+body_pred(pillow, 1).
+body_pred(refrigerator, 1).
+body_pred(sandwich, 1).
+body_pred(shelf, 1).
+body_pred(shoe, 1).
+body_pred(sofa/couch, 1).
+body_pred(table, 1).
+body_pred(television, 1).
+body_pred(towel, 1).
+body_pred(vacuum, 1).
+body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
+body_pred(above, 2).
+body_pred(beneath, 2).
+body_pred(in_front_of, 2).
+body_pred(behind, 2).
+body_pred(on_the_side_of, 2).
+body_pred(in, 2).
+body_pred(carrying, 2).
+body_pred(covered_by, 2).
+body_pred(drinking_from, 2).
+body_pred(eating, 2).
+body_pred(have_it_on_the_back, 2).
+body_pred(holding, 2).
+body_pred(leaning_on, 2).
+body_pred(lying_on, 2).
+body_pred(not_contacting, 2).
+body_pred(other_relationship, 2).
+body_pred(sitting_on, 2).
+body_pred(standing_on, 2).
+body_pred(touching, 2).
+body_pred(twisting, 2).
+body_pred(wearing, 2).
+body_pred(wiping, 2).
+body_pred(writing_on, 2).
+21:54:47 Generating programs of size: 2
+21:54:47 Generating programs of size: 3
+21:54:47 ********************
+21:54:47 New best hypothesis:
+21:54:47 tp:5 fn:371 tn:1465 fp:0 size:3 mdl:374
+21:54:47 eat_target(A):- other_relationship(A,B),broom(B).
+21:54:47 ********************
+21:54:53 ********************
+21:54:53 New best hypothesis:
+21:54:53 tp:17 fn:359 tn:1456 fp:9 size:3 mdl:371
+21:54:53 eat_target(A):- food(B),on_the_side_of(B,A).
+21:54:53 ********************
+21:54:56 ********************
+21:54:56 New best hypothesis:
+21:54:56 tp:85 fn:291 tn:1419 fp:46 size:3 mdl:340
+21:54:56 eat_target(A):- food(B),unsure(A,B).
+21:54:56 ********************
+21:55:03 ********************
+21:55:03 New best hypothesis:
+21:55:03 tp:116 fn:260 tn:1395 fp:70 size:3 mdl:333
+21:55:03 eat_target(A):- food(B),not_looking_at(A,B).
+21:55:03 ********************
+21:55:29 ********************
+21:55:29 New best hypothesis:
+21:55:29 tp:128 fn:248 tn:1409 fp:56 size:3 mdl:307
+21:55:29 eat_target(A):- sandwich(B),in_front_of(B,A).
+21:55:29 ********************
+21:55:30 ********************
+21:55:30 New best hypothesis:
+21:55:30 tp:276 fn:100 tn:1301 fp:164 size:3 mdl:267
+21:55:30 eat_target(A):- food(B),in_front_of(B,A).
+21:55:30 ********************
+21:55:35 ********************
+21:55:35 New best hypothesis:
+21:55:35 tp:263 fn:113 tn:1327 fp:138 size:3 mdl:254
+21:55:35 eat_target(A):- food(B),holding(A,B).
+21:55:35 ********************
+21:55:38 Generating programs of size: 4
+21:55:46 ********************
+21:55:46 New best hypothesis:
+21:55:46 tp:331 fn:45 tn:1303 fp:162 size:15 mdl:222
+21:55:46 eat_target(A):- on_the_side_of(B,A),sandwich(B).
+21:55:46 eat_target(A):- food(B),looking_at(A,B).
+21:55:46 eat_target(A):- sandwich(B),holding(A,B).
+21:55:46 eat_target(A):- medicine(B),holding(A,B).
+21:55:46 eat_target(A):- food(B),holding(A,B).
+21:55:46 ********************
+22:25:34 Generating programs of size: 5
+22:25:47 ********************
+22:25:47 New best hypothesis:
+22:25:47 tp:347 fn:29 tn:1293 fp:172 size:19 mdl:220
+22:25:47 eat_target(A):- on_the_side_of(B,A),sandwich(B).
+22:25:47 eat_target(A):- food(B),looking_at(A,B).
+22:25:47 eat_target(A):- sandwich(B),holding(A,B).
+22:25:47 eat_target(A):- medicine(B),holding(A,B).
+22:25:47 eat_target(A):- food(B),holding(A,B).
+22:25:47 eat_target(A):- food(B),in_front_of(B,A),unsure(A,B).
+22:25:47 ********************

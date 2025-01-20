@@ -58,12 +58,20 @@ def string_to_action_triple(action_string, video_id):
         return None
     return action_triple
 
+def get_id(video_id, frame_idx):
+    return "%s.mp4/%06d.png" % (video_id, frame_idx)
+
+def remove_id_prefix(s):
+    return s[5:]
+
+
 class AG(Dataset):
     
-    def __init__(self, root, threshold=1, fps=24):
+    def __init__(self, root, threshold=1, fps=24, no_img=False):
         super().__init__()
         self.root = root
         self.threshold = threshold
+        self.no_img = no_img
 
         self.init_vocab()
 
@@ -82,7 +90,7 @@ class AG(Dataset):
         self.scene_graphs = {}
 
         for video_id, frame_idx, action_class in self.data_list:
-            id = self.get_id(video_id, frame_idx)
+            id = get_id(video_id, frame_idx)
             objects = [obj for obj in self.object_annotations[id] if obj['visible']] # visible objects only
 
             # unpack dict into nodes and edges
@@ -128,15 +136,19 @@ class AG(Dataset):
 
     def __getitem__(self, index):
         video_id, frame_idx, action_class = self.data_list[index]
-        id = self.get_id(video_id, frame_idx)
+        id = get_id(video_id, frame_idx)
+
+        #full id is necessary since some actions start on the same frame
+        full_id = id + '_' + str(action_class)
+
+        scene_graph = self.scene_graphs[id]
+
+        if self.no_img:
+            return full_id, scene_graph, action_class
 
         image_path = os.path.join(self.root, 'frames', id)
         image = Image.open(image_path).convert('RGB')
 
-        scene_graph = self.scene_graphs[id]
-
-        #full id is necessary since some actions start on the same frame
-        full_id = id + '_' + str(action_class)
 
         return full_id, image, scene_graph, action_class
         
@@ -170,7 +182,7 @@ class AG(Dataset):
 
                 deviation = abs((frame_idx / fps) - start_time)
 
-                if deviation < threshold and self.get_id(video_id, frame_idx) in self.object_annotations:
+                if deviation < threshold and get_id(video_id, frame_idx) in self.object_annotations:
                     data_list.append((video_id, frame_idx, action_class))
 
                 if plot:
@@ -251,12 +263,16 @@ class AG(Dataset):
         with open(os.path.join(self.root, 'annotations/Charades/Charades_v1_classes.txt'), 'r') as f:
             for line in f.readlines():
                 line = line.strip('\n')
+                line = remove_id_prefix(line)
+
                 self.action_classes.append(line)
 
         self.verb_classes = []
         with open(os.path.join(self.root, 'annotations/Charades/Charades_v1_verbclasses.txt'), 'r') as f:
             for line in f.readlines():
                 line = line.strip('\n')
+                line = remove_id_prefix(line)
+
                 self.verb_classes.append(line)
 
         self.action_verb_obj_map = {}
@@ -270,9 +286,19 @@ class AG(Dataset):
                 obj = self.charades_ag_obj_map[obj]
                 self.action_verb_obj_map[action] = (verb, obj)
 
-    @staticmethod
-    def get_id(video_id, frame_idx):
-        return "%s.mp4/%06d.png" % (video_id, frame_idx)
+        '''
+        a dict mapping verbs to the corresponding relationship that they form
+        used to check if the verb has already been taken in the frame, so that we may prune invalid preconditions
+        '''
+        self.verb_result_rel_map = {
+            'drink' : 'drinking_from',
+            'eat' : 'eating',
+            'grasp' : 'holding',
+            'hold' : 'holding',
+            'sit' : 'sitting_on',
+            'stand' : 'standing_on',
+        }
+    
 
 
 import os
@@ -288,7 +314,9 @@ from IPython.display import clear_output
 from tqdm import tqdm
 
 '''
+interface/visualizer for AG
 used for annotating the dataset
+can also be used to analyze the dataset in relation to a subset
 '''
 class AGViewer:
     def __init__(self, ag, subset_dict):
@@ -350,7 +378,11 @@ class AGViewer:
         while index <= len(self.ag) - 1 and index >= 0:
 
             id, img, sg, action = self.ag[index]
-            if type(key) is str and self.subset_dict[id] == key:
+            verb, obj = self.ag.action_verb_obj_map[action]
+            strings = [self.subset_dict[id], self.ag.action_classes[action], \
+                       self.ag.verb_classes[verb], \
+                       None if obj is None else self.ag.object_classes[obj]]
+            if type(key) is str and key in strings:
                 return index
             elif type(key) is str and key in id:
                 return index
@@ -426,3 +458,34 @@ class AGViewer:
         else:
             _ = input('invalid command')
             return self.index
+    
+    def analyze_vocab_frequencies(self):
+        action_freq = {}
+        verb_freq = {}
+        obj_freq = {}
+        for idx in range(len(self.ag)):
+            if self.ag.no_img:
+                id, sg, action = self.ag[idx]
+            else:
+                id, img, sg, action = self.ag[idx]
+            
+            if self.subset_dict[id] == 'False':
+                continue
+
+            verb, obj = self.ag.action_verb_obj_map[action]
+
+            if action not in action_freq:
+                action_freq[action] = 0
+            action_freq[action]+=1
+
+            if verb not in verb_freq:
+                verb_freq[verb] = 0
+            verb_freq[verb]+=1
+
+            if obj not in obj_freq:
+                obj_freq[obj] = 0
+            obj_freq[obj]+=1
+        
+        return action_freq, verb_freq
+
+

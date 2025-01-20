@@ -6,7 +6,7 @@ import os
 from torch_geometric.loader import DataLoader
 from torch_geometric.data import Data, Dataset
 
-from game.header import *
+from data.toy.game.header import *
 
 import torch.nn.functional as F
 

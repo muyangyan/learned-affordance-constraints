@@ -1,0 +1,117 @@
+%%no negative model used
+max_vars(6).
+max_body(6).
+head_pred(hold_target, 1).
+body_pred(person, 1).
+body_pred(bag, 1).
+body_pred(bed, 1).
+body_pred(blanket, 1).
+body_pred(book, 1).
+body_pred(box, 1).
+body_pred(broom, 1).
+body_pred(chair, 1).
+body_pred(closet/cabinet, 1).
+body_pred(clothes, 1).
+body_pred(cup/glass/bottle, 1).
+body_pred(dish, 1).
+body_pred(door, 1).
+body_pred(doorknob, 1).
+body_pred(doorway, 1).
+body_pred(floor, 1).
+body_pred(food, 1).
+body_pred(groceries, 1).
+body_pred(laptop, 1).
+body_pred(light, 1).
+body_pred(medicine, 1).
+body_pred(mirror, 1).
+body_pred(paper/notebook, 1).
+body_pred(phone/camera, 1).
+body_pred(picture, 1).
+body_pred(pillow, 1).
+body_pred(refrigerator, 1).
+body_pred(sandwich, 1).
+body_pred(shelf, 1).
+body_pred(shoe, 1).
+body_pred(sofa/couch, 1).
+body_pred(table, 1).
+body_pred(television, 1).
+body_pred(towel, 1).
+body_pred(vacuum, 1).
+body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
+body_pred(above, 2).
+body_pred(beneath, 2).
+body_pred(in_front_of, 2).
+body_pred(behind, 2).
+body_pred(on_the_side_of, 2).
+body_pred(in, 2).
+body_pred(carrying, 2).
+body_pred(covered_by, 2).
+body_pred(drinking_from, 2).
+body_pred(eating, 2).
+body_pred(have_it_on_the_back, 2).
+body_pred(holding, 2).
+body_pred(leaning_on, 2).
+body_pred(lying_on, 2).
+body_pred(not_contacting, 2).
+body_pred(other_relationship, 2).
+body_pred(sitting_on, 2).
+body_pred(standing_on, 2).
+body_pred(touching, 2).
+body_pred(twisting, 2).
+body_pred(wearing, 2).
+body_pred(wiping, 2).
+body_pred(writing_on, 2).
+22:34:14 Generating programs of size: 2
+22:34:14 Generating programs of size: 3
+22:34:14 ********************
+22:34:14 New best hypothesis:
+22:34:14 tp:8 fn:2516 tn:3024 fp:1 size:3 mdl:2520
+22:34:14 hold_target(A):- in(B,A),other_relationship(A,B).
+22:34:14 ********************
+22:34:21 ********************
+22:34:21 New best hypothesis:
+22:34:21 tp:68 fn:2456 tn:2969 fp:56 size:3 mdl:2515
+22:34:21 hold_target(A):- touching(A,B),unsure(A,B).
+22:34:21 ********************
+22:34:21 ********************
+22:34:21 New best hypothesis:
+22:34:21 tp:135 fn:2389 tn:2911 fp:114 size:3 mdl:2506
+22:34:21 hold_target(A):- touching(A,B),holding(A,B).
+22:34:21 ********************
+22:34:28 ********************
+22:34:28 New best hypothesis:
+22:34:28 tp:97 fn:2427 tn:2984 fp:41 size:3 mdl:2471
+22:34:28 hold_target(A):- eating(A,B),in_front_of(B,A).
+22:34:28 ********************
+22:34:28 ********************
+22:34:28 New best hypothesis:
+22:34:28 tp:1760 fn:764 tn:1401 fp:1624 size:3 mdl:2391
+22:34:28 hold_target(A):- in_front_of(B,A),holding(A,B).
+22:34:28 ********************
+22:34:32 ********************
+22:34:32 New best hypothesis:
+22:34:32 tp:300 fn:2224 tn:2874 fp:151 size:3 mdl:2378
+22:34:32 hold_target(A):- in_front_of(B,A),sandwich(B).
+22:34:32 ********************
+22:34:36 ********************
+22:34:36 New best hypothesis:
+22:34:36 tp:629 fn:1895 tn:2577 fp:448 size:3 mdl:2346
+22:34:36 hold_target(A):- food(B),in_front_of(B,A).
+22:34:36 ********************
+Traceback (most recent call last):
+  File "/home/muyang//Popper/popper.py", line 8, in <module>
+    prog, score, stats = learn_solution(settings)
+  File "/home/muyang/Popper/popper/loop.py", line 1090, in learn_solution
+    timeout(settings, popper, (settings,), timeout_duration=int(settings.timeout),)
+  File "/home/muyang/Popper/popper/util.py", line 84, in timeout
+    result = func(*args, **kwargs)
+  File "/home/muyang/Popper/popper/loop.py", line 665, in popper
+    pos_covered = tester.test_single_rule_pos(prog)
+  File "/home/muyang/Popper/popper/tester.py", line 200, in test_single_rule_pos
+    xs = next(self.prolog.query(q))
+  File "/home/muyang/miniconda3/envs/ilp/lib/python3.9/site-packages/pyswip/prolog.py", line 152, in __call__
+    while maxresult and PL_next_solution(swipl_qid):
+KeyboardInterrupt

@@ -1,0 +1,11 @@
+usage: popper.py [-h] [--kbpath KBPATH] [--ex_file EX_FILE]
+                 [--bk_file BK_FILE] [--bias_file BIAS_FILE] [--noisy]
+                 [--bkcons] [--timeout TIMEOUT] [--max-literals MAX_LITERALS]
+                 [--max-body MAX_BODY] [--max-vars MAX_VARS]
+                 [--max-rules MAX_RULES] [--eval-timeout EVAL_TIMEOUT]
+                 [--stats] [--quiet] [--debug] [--showcons]
+                 [--solver {clingo,rc2,uwr,wmaxcdcl}]
+                 [--anytime-solver {wmaxcdcl,nuwls}]
+                 [--anytime-timeout ANYTIME_TIMEOUT] [--batch-size BATCH_SIZE]
+                 [--functional-test] [--datalog] [--no-bias] [--order-space]
+popper.py: error: argument --timeout: expected one argument

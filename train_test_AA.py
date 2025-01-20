@@ -20,7 +20,7 @@ from sklearn.metrics import multilabel_confusion_matrix, accuracy_score, precisi
 
 # constants and mappings
 
-from game.header import *
+from data.toy.game.header import *
 from models.rgcn import RGCN
 from data.toy.toy_dataset import ToyDataset
 

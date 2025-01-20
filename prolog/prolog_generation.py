@@ -1,4 +1,10 @@
 import os
+import shelve
+import random
+from data.ag.action_genome import AG
+from data.toy.toy_dataset import ToyDataset
+
+
 '''
 for ILP
 '''
@@ -7,7 +13,7 @@ class PrologData:
     '''
     initialize vocabulary
     '''
-    def __init__(self, prolog_root, name, dataset, node_vocab, edge_vocab, verb_vocab, model=None, ):
+    def __init__(self, prolog_root, name, dataset, node_vocab, edge_vocab, verb_vocab, model=None, subset_file=None):
         self.root = os.path.join(prolog_root, name)
         self.name = name
         self.node_vocab = node_vocab
@@ -16,6 +22,11 @@ class PrologData:
 
         self.model = model 
         self.dataset = dataset
+        self.subset_file = subset_file
+
+        self.bk_filename = os.path.join(self.root, 'bk.pl')
+        self.general_bk_filename = os.path.join(self.root, 'general_bk.pl')
+        self.general_bias_filename = os.path.join(self.root, 'general_bias.pl')
     
     '''
     convert a pyg data object to prolog
@@ -43,32 +54,58 @@ class PrologData:
     '''
     write the prolog data for a specific target verb
     '''
-    def write_verb(self, target_verb, threshold, max_vars, max_body):
-        target_verb_name = self.verb_vocab[target_verb]
+    def write_verb(self, target_verb, threshold=0.5, max_vars=6, max_body=6, keep_prob=1.0):
+        if type(target_verb) is int:
+            target_verb_idx = target_verb
+            target_verb_name = self.verb_vocab[target_verb]
+        elif type(target_verb) is str:
+            target_verb_idx = self.verb_vocab.index(target_verb)
+            target_verb_name = target_verb
+
         exs_filename = os.path.join(self.root, 'examples', f'{target_verb_name}.pl', )
         bias_filename = os.path.join(self.root, 'biases', f'{target_verb_name}.pl')
-        general_bias_filename = os.path.join(self.root, 'general_bias.pl')
 
-        for idx, data in enumerate(self.dataset):
+        if type(self.dataset) is AG and self.subset_file is not None:
+            subset_dict = shelve.open(self.subset_file)
+
+        with(open(exs_filename, 'w+')) as f:
+            f.write(':- style_check(-discontiguous).\n')
+        for idx, inputs in enumerate(self.dataset):
+
+            if type(self.dataset) is AG:
+                id, data, _ = inputs
+                if self.subset_file is not None and subset_dict[id] == 'False':
+                    continue
+            elif type(self.dataset) is ToyDataset:
+                data = inputs
+            else:
+                raise ValueError('Invalid dataset type')
+
             player_var = f'x{idx}_0'
-            verb = data.y
+            verb = data.y.item()
 
             with(open(exs_filename, 'a')) as f:
-                if verb == target_verb:
-                    f.write(f'pos({verb}_affd({player_var})).\n')
+                if verb == target_verb_idx:
+                    f.write(f'pos({target_verb_name}_target({player_var})).\n')
                 else:
+                    if random.random() > keep_prob:
+                        continue
                     if self.model is not None:
                         pred = self.model.predict(data, threshold=threshold, multi_label=True)
-                        if pred[target_verb] == 1:
+                        if pred[target_verb_idx] == 1:
                             continue
                     f.write(f'neg({target_verb_name}_target({player_var})).\n')
 
         #generate bias file
-        with open(bias_filename, 'w') as f, open(general_bias_filename, 'r') as g:
-            f.write('%%threshold: %f\n' % threshold)
+        with open(bias_filename, 'w+') as f, open(self.general_bias_filename, 'r') as g:
+            if self.model is not None:
+                f.write('%%threshold: %f\n' % threshold)
+            else:
+                f.write('%%no negative model used\n')
+                
             f.write(f'max_vars({max_vars}).\n')
             f.write(f'max_body({max_body}).\n')
-            f.write(f'head_pred({target_verb_name}_affd, 1).\n')
+            f.write(f'head_pred({target_verb_name}_target, 1).\n')
             general_bias = g.read()
             f.write(general_bias)
         
@@ -76,55 +113,30 @@ class PrologData:
     write the prolog background knowledge for the dataset in general
     '''
     def write_bk(self):
-        general_bk_filename = os.path.join(self.root, 'general_bk.pl')
-        bk_filename = os.path.join(self.root, 'bk.pl')
-
-        with open(bk_filename, 'w') as f, open(general_bk_filename, 'r') as g:
+        with open(self.bk_filename, 'w') as f, open(self.general_bk_filename, 'r') as g:
             general_bk = g.read()
             f.write(general_bk)
             f.write('\n')
 
-        for idx, data in enumerate(self.dataset):
+        for idx, inputs in enumerate(self.dataset):
+            if type(self.dataset) is AG:
+                id, data, _ = inputs
+            elif type(self.dataset) is ToyDataset:
+                data = inputs
+            else:
+                raise ValueError('Invalid dataset type')
+
             example = self.pyg_to_prolog(idx, data)
 
-            with(open(bk_filename, 'a')) as f:
+            with(open(self.bk_filename, 'a')) as f:
                 f.write('%%train example %d\n' % idx)
                 f.write(f'{example}\n')
 
         #test_bk_filename = 'prolog/test_bk.pl'
 
-
-
-
-
-
-
-
-if __name__ == '__main__':
-    import argparse
-    import torch
-    from torch_geometric.data import DataLoader
-    from data import CharadesDataset
-    from model import AffordanceModel
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--affd_verb', type=str, default=None)
-    parser.add_argument('--threshold', type=float, default=0.5)
-    parser.add_argument('--max_vars', type=int, default=6)
-    parser.add_argument('--max_body', type=int, default=6)
-    parser.add_argument('--data_path', type=str, default='data')
-    parser.add_argument('--model_path', type=str, default='models/affd_model.pth')
-
-    args = parser.parse_args()
-
-    dataset = CharadesDataset(root=args.data_path, split='train')
-    model = AffordanceModel()
-    model.load_state_dict(torch.load(args.model_path))
-    model.eval()
-
-    prolog_data = PrologData('prolog', 'charades', dataset, node_vocab, edge_vocab, verb_vocab, model=model)
-    prolog_data.write_bk()
-    if args.affd_verb is not None:
-        prolog_data.write_verb(args.affd_verb, args.threshold, args.max_vars, args.max_body)
-    print('DONE')
-        
+    def init_general_bias(self):
+        with open(self.general_bias_filename, 'w') as f:
+            for node in self.node_vocab:
+                f.write(f'body_pred({node}, 1).\n')
+            for edge in self.edge_vocab:
+                f.write(f'body_pred({edge}, 2).\n')

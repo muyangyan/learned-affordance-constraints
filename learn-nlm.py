@@ -35,7 +35,7 @@ from jactorch.optim.quickaccess import get_optimizer
 from jactorch.train.env import TrainerEnv
 from jactorch.utils.meta import as_cuda, as_numpy, as_tensor
 
-from game.header import *
+from data.toy.game.header import *
 from data.toy.toy_dataset import ToyDataset
 
 dataset = ToyDataset('data', mode='graph', split=None)
