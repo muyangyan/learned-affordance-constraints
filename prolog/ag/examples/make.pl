@@ -1,0 +1,36 @@
+%%keep negative probability: 0.0021172415001607936
+:- style_check(-discontiguous).
+neg(make_target(x3636_0)).
+neg(make_target(x4672_0)).
+neg(make_target(x4805_0)).
+neg(make_target(x8509_0)).
+neg(make_target(x9716_0)).
+neg(make_target(x10007_0)).
+neg(make_target(x10049_0)).
+neg(make_target(x10145_0)).
+neg(make_target(x11899_0)).
+neg(make_target(x11983_0)).
+neg(make_target(x12203_0)).
+neg(make_target(x12676_0)).
+neg(make_target(x13656_0)).
+neg(make_target(x14984_0)).
+neg(make_target(x15175_0)).
+neg(make_target(x15760_0)).
+neg(make_target(x16409_0)).
+pos(make_target(x16706_0)).
+pos(make_target(x18171_0)).
+pos(make_target(x19315_0)).
+neg(make_target(x19359_0)).
+neg(make_target(x19906_0)).
+neg(make_target(x21151_0)).
+neg(make_target(x21233_0)).
+neg(make_target(x21467_0)).
+neg(make_target(x23558_0)).
+neg(make_target(x25698_0)).
+neg(make_target(x26108_0)).
+pos(make_target(x28524_0)).
+neg(make_target(x32591_0)).
+neg(make_target(x32655_0)).
+neg(make_target(x32812_0)).
+neg(make_target(x33107_0)).
+neg(make_target(x33338_0)).

@@ -1,0 +1,93 @@
+%%no negative model used
+max_vars(6).
+max_body(8).
+head_pred(dress_target, 1).
+body_pred(person, 1).
+body_pred(bag, 1).
+body_pred(bed, 1).
+body_pred(blanket, 1).
+body_pred(book, 1).
+body_pred(box, 1).
+body_pred(broom, 1).
+body_pred(chair, 1).
+body_pred(closet/cabinet, 1).
+body_pred(clothes, 1).
+body_pred(cup/glass/bottle, 1).
+body_pred(dish, 1).
+body_pred(door, 1).
+body_pred(doorknob, 1).
+body_pred(doorway, 1).
+body_pred(floor, 1).
+body_pred(food, 1).
+body_pred(groceries, 1).
+body_pred(laptop, 1).
+body_pred(light, 1).
+body_pred(medicine, 1).
+body_pred(mirror, 1).
+body_pred(paper/notebook, 1).
+body_pred(phone/camera, 1).
+body_pred(picture, 1).
+body_pred(pillow, 1).
+body_pred(refrigerator, 1).
+body_pred(sandwich, 1).
+body_pred(shelf, 1).
+body_pred(shoe, 1).
+body_pred(sofa/couch, 1).
+body_pred(table, 1).
+body_pred(television, 1).
+body_pred(towel, 1).
+body_pred(vacuum, 1).
+body_pred(window, 1).
+body_pred(above, 2).
+body_pred(beneath, 2).
+body_pred(in_front_of, 2).
+body_pred(behind, 2).
+body_pred(on_the_side_of, 2).
+body_pred(in, 2).
+body_pred(carrying, 2).
+body_pred(covered_by, 2).
+body_pred(drinking_from, 2).
+body_pred(eating, 2).
+body_pred(have_it_on_the_back, 2).
+body_pred(holding, 2).
+body_pred(leaning_on, 2).
+body_pred(lying_on, 2).
+body_pred(not_contacting, 2).
+body_pred(other_relationship, 2).
+body_pred(sitting_on, 2).
+body_pred(standing_on, 2).
+body_pred(touching, 2).
+body_pred(twisting, 2).
+body_pred(wearing, 2).
+body_pred(wiping, 2).
+body_pred(writing_on, 2).
+00:03:39 Generating programs of size: 2
+00:03:40 Generating programs of size: 3
+00:03:45 ********************
+00:03:45 New best hypothesis:
+00:03:45 tp:52 fn:79 tn:616 fp:46 size:3 mdl:128
+00:03:45 dress_target(A):- in_front_of(B,A),clothes(B).
+00:03:45 ********************
+00:03:45 ********************
+00:03:45 New best hypothesis:
+00:03:45 tp:23 fn:108 tn:654 fp:8 size:3 mdl:119
+00:03:45 dress_target(A):- in_front_of(B,A),shoe(B).
+00:03:45 ********************
+00:03:47 ********************
+00:03:47 New best hypothesis:
+00:03:47 tp:24 fn:107 tn:655 fp:7 size:3 mdl:117
+00:03:47 dress_target(A):- beneath(B,A),shoe(B).
+00:03:47 ********************
+00:03:50 ********************
+00:03:50 New best hypothesis:
+00:03:50 tp:55 fn:76 tn:625 fp:37 size:3 mdl:116
+00:03:50 dress_target(A):- clothes(B),holding(A,B).
+00:03:50 ********************
+00:03:53 Generating programs of size: 4
+00:03:58 ********************
+00:03:58 New best hypothesis:
+00:03:58 tp:104 fn:27 tn:600 fp:62 size:9 mdl:98
+00:03:58 dress_target(A):- beneath(B,A),shoe(B).
+00:03:58 dress_target(A):- wearing(A,B),clothes(B).
+00:03:58 dress_target(A):- clothes(B),holding(A,B).
+00:03:58 ********************

@@ -460,6 +460,7 @@ class AGViewer:
             return self.index
     
     def analyze_vocab_frequencies(self):
+        total = 0
         action_freq = {}
         verb_freq = {}
         obj_freq = {}
@@ -471,6 +472,8 @@ class AGViewer:
             
             if self.subset_dict[id] == 'False':
                 continue
+                
+            total+=1
 
             verb, obj = self.ag.action_verb_obj_map[action]
 
@@ -486,6 +489,6 @@ class AGViewer:
                 obj_freq[obj] = 0
             obj_freq[obj]+=1
         
-        return action_freq, verb_freq
+        return total, action_freq, verb_freq, obj_freq
 
 

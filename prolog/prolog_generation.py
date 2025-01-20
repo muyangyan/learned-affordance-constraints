@@ -54,7 +54,7 @@ class PrologData:
     '''
     write the prolog data for a specific target verb
     '''
-    def write_verb(self, target_verb, threshold=0.5, max_vars=6, max_body=6, keep_prob=1.0):
+    def write_verb(self, target_verb, threshold=0.5, max_vars=6, max_body=8, keep_prob=1.0):
         if type(target_verb) is int:
             target_verb_idx = target_verb
             target_verb_name = self.verb_vocab[target_verb]
@@ -69,9 +69,10 @@ class PrologData:
             subset_dict = shelve.open(self.subset_file)
 
         with(open(exs_filename, 'w+')) as f:
+            f.write(f'%%keep negative probability: {keep_prob}\n')
             f.write(':- style_check(-discontiguous).\n')
         for idx, inputs in enumerate(self.dataset):
-
+            
             if type(self.dataset) is AG:
                 id, data, _ = inputs
                 if self.subset_file is not None and subset_dict[id] == 'False':
@@ -139,4 +140,6 @@ class PrologData:
             for node in self.node_vocab:
                 f.write(f'body_pred({node}, 1).\n')
             for edge in self.edge_vocab:
-                f.write(f'body_pred({edge}, 2).\n')
+                #disallow use of attentional relationships
+                if edge not in ['looking_at', 'not_looking_at', 'unsure']:
+                    f.write(f'body_pred({edge}, 2).\n')
