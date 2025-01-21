@@ -93,3 +93,15 @@ body_pred(writing_on, 2).
 01:41:28 put_target(A):- other_relationship(A,B),in_front_of(B,A),clothes(B).
 01:41:28 put_target(A):- touching(A,B),on_the_side_of(B,C),holding(C,B).
 01:41:28 ********************
+09:47:07 TIMEOUT OF 25000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.61 Recall:0.09 TP:224 FN:2268 TN:6108 FP:146 Size:26 MDL:2440
+put_target(A):- in_front_of(B,A),groceries(B).
+put_target(A):- behind(B,A),broom(B).
+put_target(A):- shelf(B),above(B,A).
+put_target(A):- shoe(B),above(B,A).
+put_target(A):- drinking_from(A,B),in_front_of(B,A).
+put_target(A):- touching(A,B),picture(B).
+put_target(A):- other_relationship(A,B),in_front_of(B,A),clothes(B).
+put_target(A):- touching(A,B),on_the_side_of(B,C),holding(C,B).
+******************************

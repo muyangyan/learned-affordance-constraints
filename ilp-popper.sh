@@ -6,7 +6,7 @@ TIMEOUT=$3
 HOME_PATH="/home/muyang/"
 REPO_PATH="${HOME_PATH}learned-affordance-constraints/"
 PROLOG_PATH="${REPO_PATH}prolog/${DATANAME}/"
-LOG_PATH="${REPO_PATH}logs/popper/${DATANAME}/${VERB}_log.txt"
+LOG_PATH="${REPO_PATH}outputs/${DATANAME}/popper_logs/${VERB}"
 
 #echo $LOG_PATH
 #echo ${PROLOG_PATH}biases/${VERB}.pl\n

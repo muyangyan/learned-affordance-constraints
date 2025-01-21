@@ -1,6 +1,8 @@
 import os
 import csv
 import pickle
+import shelve
+
 from PIL import Image
 
 import torch
@@ -58,8 +60,12 @@ def string_to_action_triple(action_string, video_id):
         return None
     return action_triple
 
-def get_id(video_id, frame_idx):
-    return "%s.mp4/%06d.png" % (video_id, frame_idx)
+def get_id(video_id, frame_idx, action_class=None):
+    id = "%s.mp4/%06d.png" % (video_id, frame_idx)
+    if action_class is not None:
+        full_id = id + '_' + str(action_class)
+        return id, full_id
+    return id
 
 def remove_id_prefix(s):
     return s[5:]
@@ -67,13 +73,13 @@ def remove_id_prefix(s):
 
 class AG(Dataset):
     
-    def __init__(self, root, threshold=1, fps=24, no_img=False):
+    def __init__(self, root, threshold=1, fps=24, no_img=False, split=None, subset_file=None):
         super().__init__()
         self.root = root
         self.threshold = threshold
         self.no_img = no_img
-
-        self.init_vocab()
+        self.split = split
+        self.subset_file = subset_file
 
         with open(root + 'annotations/person_bbox.pkl', 'rb') as f:
             self.person_annotations = pickle.load(f)
@@ -82,15 +88,40 @@ class AG(Dataset):
             self.object_annotations = pickle.load(f)
         f.close()
 
+        self.init_vocab()
         actions = self.load_actions()
-        self.data_list = self.extract_usable_frames(actions, threshold, fps)
+        usable_list = self.extract_usable_frames(actions, threshold, fps)
 
+        split_ids = None
+        assert split in ['train', 'test', None]
+
+        if split is not None:
+            split_ids = []
+            with open(f'data/ag/split.json') as f:
+                split_dict = json.load(f)
+                split_ids = split_dict[split]
+            print('split:', split, 'length:', len(split_ids))
 
         #create pyg scene graphs
+        self.data_list = []
         self.scene_graphs = {}
+        
+        if subset_file is not None:
+            subset = shelve.open(subset_file)
+        
+        for video_id, frame_idx, action_class in usable_list:
+            id, full_id = get_id(video_id, frame_idx, action_class=action_class)
 
-        for video_id, frame_idx, action_class in self.data_list:
-            id = get_id(video_id, frame_idx)
+            # only use videos in the split
+            if split_ids is not None and video_id not in split_ids:
+                continue
+            # only use examples in the subset
+            if self.subset_file is not None and subset[full_id] == 'False':
+                continue
+
+            #now we know we can include in our dataset
+            self.data_list.append((video_id, frame_idx, action_class))
+
             objects = [obj for obj in self.object_annotations[id] if obj['visible']] # visible objects only
 
             # unpack dict into nodes and edges
@@ -130,16 +161,18 @@ class AG(Dataset):
                         node_type=node_type, edge_type=edge_type, y=y, w=w, o=o, id=id)
 
             self.scene_graphs[id] = data
+        
+        if subset_file is not None:
+            subset.close()
 
     def __len__(self):
         return len(self.data_list)
 
     def __getitem__(self, index):
         video_id, frame_idx, action_class = self.data_list[index]
-        id = get_id(video_id, frame_idx)
 
         #full id is necessary since some actions start on the same frame
-        full_id = id + '_' + str(action_class)
+        id, full_id = get_id(video_id, frame_idx, action_class=action_class)
 
         scene_graph = self.scene_graphs[id]
 
@@ -297,9 +330,16 @@ class AG(Dataset):
             'hold' : 'holding',
             'sit' : 'sitting_on',
             'stand' : 'standing_on',
+            'dress' : 'wearing',
+            'lie' : 'lying',
         }
-    
 
+
+def ag_collate_fn(batch):
+    print(batch)
+
+    ids, images, scene_graphs, actions = zip(*batch)
+    return ids, images, scene_graphs, actions
 
 import os
 import csv
