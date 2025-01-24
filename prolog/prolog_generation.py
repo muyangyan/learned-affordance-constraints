@@ -74,7 +74,7 @@ class PrologData:
         for idx, inputs in enumerate(self.dataset):
             
             if type(self.dataset) is AG:
-                id, data, _ = inputs
+                id, _, data, _ = inputs
                 if self.subset_file is not None and subset_dict[id] == 'False':
                     continue
             elif type(self.dataset) is ToyDataset:
@@ -121,7 +121,7 @@ class PrologData:
 
         for idx, inputs in enumerate(self.dataset):
             if type(self.dataset) is AG:
-                id, data, _ = inputs
+                id, _, data, _ = inputs
             elif type(self.dataset) is ToyDataset:
                 data = inputs
             else:

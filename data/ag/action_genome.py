@@ -5,11 +5,14 @@ import shelve
 
 from PIL import Image
 
+import numpy as np
+
 import torch
 import torch.nn.functional as F
+import torchvision.transforms as T
 from torch.utils.data import Dataset, DataLoader
 import torch_geometric
-from torch_geometric.data import Data
+from torch_geometric.data import Data, Batch
 
 import matplotlib.pyplot as plt
 
@@ -105,6 +108,7 @@ class AG(Dataset):
         #create pyg scene graphs
         self.data_list = []
         self.scene_graphs = {}
+        self.verb_label_counts = []
         
         if subset_file is not None:
             subset = shelve.open(subset_file)
@@ -155,15 +159,19 @@ class AG(Dataset):
 
             w = torch.tensor([action_class], dtype=torch.long) # only the specific action taken
             y = torch.tensor([verb_class], dtype=torch.long)
-            o = None if obj_class is None else torch.tensor([obj_class], dtype=torch.long)
+            o = torch.tensor([]) if obj_class is None else torch.tensor([obj_class], dtype=torch.long)
 
             data = Data(x, edge_index=edge_index, edge_attr=edge_attr, \
                         node_type=node_type, edge_type=edge_type, y=y, w=w, o=o, id=id)
 
             self.scene_graphs[id] = data
+            self.verb_label_counts.append(verb_class)
+
         
         if subset_file is not None:
             subset.close()
+
+        self.verb_label_counts = np.bincount(self.verb_label_counts)
 
     def __len__(self):
         return len(self.data_list)
@@ -177,7 +185,7 @@ class AG(Dataset):
         scene_graph = self.scene_graphs[id]
 
         if self.no_img:
-            return full_id, scene_graph, action_class
+            return full_id, None, scene_graph, action_class
 
         image_path = os.path.join(self.root, 'frames', id)
         image = Image.open(image_path).convert('RGB')
@@ -332,14 +340,31 @@ class AG(Dataset):
             'stand' : 'standing_on',
             'dress' : 'wearing',
             'lie' : 'lying',
+            'take' : 'holding'
         }
 
 
-def ag_collate_fn(batch):
-    print(batch)
+    def verb_pred_collate(self, batch):
+        ids, images, scene_graphs, actions = zip(*batch)
+        sg_batch = Batch.from_data_list(scene_graphs)
+        
+        verbs = torch.tensor([self.action_verb_obj_map[a][0] for a in actions])
+        labels = F.one_hot(verbs, len(self.verb_classes)).float()
+        
+        if self.no_img:
+            return ids, None, sg_batch, verbs, labels
+        
+        transform = T.Compose([
+            T.Resize(size=(224, 224)),
+            T.ToTensor(),
+            T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+        ])
+        resized_images = [transform(img) for img in images]
+        resized_images = torch.stack(resized_images)
 
-    ids, images, scene_graphs, actions = zip(*batch)
-    return ids, images, scene_graphs, actions
+        return ids, resized_images, sg_batch, verbs, labels
+
+
 
 import os
 import csv
@@ -400,7 +425,7 @@ class AGViewer:
                 nodes[sg.edge_index[1][i].item()], \
                 ) for i,t in enumerate(sg.edge_type)])
 
-        fig, axs = plt.subplots(1, 2, figsize=(15, 5))
+        fig, axs = plt.subplots(1, 2, figsize=(20, 10))
 
         show_pyg_graph(sg, self.ag.object_classes, self.ag.relationship_classes, layout='circular', curve=0.1, ax=axs[0])
         axs[1].imshow(img)
