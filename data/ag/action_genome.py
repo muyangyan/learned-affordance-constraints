@@ -171,7 +171,7 @@ class AG(Dataset):
         if subset_file is not None:
             subset.close()
 
-        self.verb_label_counts = np.bincount(self.verb_label_counts)
+        self.verb_label_counts = np.resize(np.bincount(self.verb_label_counts), len(self.verb_classes))
 
     def __len__(self):
         return len(self.data_list)
@@ -339,7 +339,7 @@ class AG(Dataset):
             'sit' : 'sitting_on',
             'stand' : 'standing_on',
             'dress' : 'wearing',
-            'lie' : 'lying',
+            'lie' : 'lying_on',
             'take' : 'holding'
         }
 
