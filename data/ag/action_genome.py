@@ -183,6 +183,8 @@ class AG(Dataset):
         id, full_id = get_id(video_id, frame_idx, action_class=action_class)
 
         scene_graph = self.scene_graphs[id]
+        scene_graph.edge_index = scene_graph.edge_index.to(dtype=torch.long)
+        scene_graph.edge_type = scene_graph.edge_type.to(dtype=torch.long)
 
         if self.no_img:
             return full_id, None, scene_graph, action_class
@@ -190,9 +192,7 @@ class AG(Dataset):
         image_path = os.path.join(self.root, 'frames', id)
         image = Image.open(image_path).convert('RGB')
 
-
         return full_id, image, scene_graph, action_class
-        
 
     # Load all actions from the dataset
     def load_actions(self):
