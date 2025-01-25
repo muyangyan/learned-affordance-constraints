@@ -1,1 +1,2 @@
-third_party/
+checkpoints/
+lightning_logs/
