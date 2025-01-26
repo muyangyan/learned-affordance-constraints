@@ -11,9 +11,10 @@ def inverse_sigmoid(p):
     return np.log(p / (1-p))
 
 class RGCN(torch.nn.Module):
-    def __init__(self, num_node_types, num_node_features, num_classes, num_relations):
+    def __init__(self, num_node_types, num_node_features, num_classes, num_relations, head=True):
         super(RGCN, self).__init__()
-        
+        self.head = head
+
         self.num_node_types = num_node_types
 
         self.node_embedding = torch.nn.Linear(num_node_types, num_node_features)
@@ -28,6 +29,11 @@ class RGCN(torch.nn.Module):
         #assume x is a one-hot tensor encoding the node type
         x = self.node_embedding(x)
 
+        if edge_index.size()[0] != 2:
+            print("edge_index:", edge_index.shape)
+            print("edge_type:", edge_type.shape)
+            print("x:", x.shape)
+            print("batch:", batch.shape)
         x = self.conv1(x, edge_index, edge_type)
         x = F.relu(x)
         x = self.conv2(x, edge_index, edge_type)
@@ -39,6 +45,8 @@ class RGCN(torch.nn.Module):
         x = self.fc1(x)
         x = F.relu(x)
         x = self.fc2(x)
+        if self.head:
+            return F.softmax(x, dim=-1)
         return x
 
     def predict(self, data, threshold=0.5, multi_label=False, mask=None):

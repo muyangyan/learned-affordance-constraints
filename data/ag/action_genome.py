@@ -183,8 +183,10 @@ class AG(Dataset):
         id, full_id = get_id(video_id, frame_idx, action_class=action_class)
 
         scene_graph = self.scene_graphs[id]
-        scene_graph.edge_index = scene_graph.edge_index.to(dtype=torch.long)
-        scene_graph.edge_type = scene_graph.edge_type.to(dtype=torch.long)
+        #scene_graph.edge_index = scene_graph.edge_index.to(torch.float)
+        #scene_graph.edge_type = scene_graph.edge_type.to(torch.float)
+        #scene_graph.edge_index = scene_graph.edge_index.to(dtype=torch.long)
+        #scene_graph.edge_type = scene_graph.edge_type.to(dtype=torch.long)
 
         if self.no_img:
             return full_id, None, scene_graph, action_class
@@ -346,7 +348,8 @@ class AG(Dataset):
 
     def verb_pred_collate(self, batch):
         ids, images, scene_graphs, actions = zip(*batch)
-        sg_batch = Batch.from_data_list(scene_graphs)
+        sg_batch = Batch.from_data_list(scene_graphs, exclude_keys=['o'])
+        #sg_batch = Batch.from_data_list(scene_graphs)
         
         verbs = torch.tensor([self.action_verb_obj_map[a][0] for a in actions])
         labels = F.one_hot(verbs, len(self.verb_classes)).float()
@@ -363,7 +366,6 @@ class AG(Dataset):
         resized_images = torch.stack(resized_images)
 
         return ids, resized_images, sg_batch, verbs, labels
-
 
 
 import os
