@@ -76,7 +76,7 @@ def remove_id_prefix(s):
 
 class AG(Dataset):
     
-    def __init__(self, root, threshold=1, fps=24, no_img=False, split=None, subset_file=None):
+    def __init__(self, root, threshold=1, fps=24, no_img=False, split=None, split_file='data/ag/split_train_val_test.json', subset_file=None):
         super().__init__()
         self.root = root
         self.threshold = threshold
@@ -96,11 +96,11 @@ class AG(Dataset):
         usable_list = self.extract_usable_frames(actions, threshold, fps)
 
         split_ids = None
-        assert split in ['train', 'test', None]
+        assert split in ['train', 'val', 'test', None]
 
         if split is not None:
             split_ids = []
-            with open(f'data/ag/split.json') as f:
+            with open(split_file) as f:
                 split_dict = json.load(f)
                 split_ids = split_dict[split]
             print('split:', split, 'length:', len(split_ids))
@@ -183,10 +183,6 @@ class AG(Dataset):
         id, full_id = get_id(video_id, frame_idx, action_class=action_class)
 
         scene_graph = self.scene_graphs[id]
-        #scene_graph.edge_index = scene_graph.edge_index.to(torch.float)
-        #scene_graph.edge_type = scene_graph.edge_type.to(torch.float)
-        #scene_graph.edge_index = scene_graph.edge_index.to(dtype=torch.long)
-        #scene_graph.edge_type = scene_graph.edge_type.to(dtype=torch.long)
 
         if self.no_img:
             return full_id, None, scene_graph, action_class
@@ -349,7 +345,6 @@ class AG(Dataset):
     def verb_pred_collate(self, batch):
         ids, images, scene_graphs, actions = zip(*batch)
         sg_batch = Batch.from_data_list(scene_graphs, exclude_keys=['o'])
-        #sg_batch = Batch.from_data_list(scene_graphs)
         
         verbs = torch.tensor([self.action_verb_obj_map[a][0] for a in actions])
         labels = F.one_hot(verbs, len(self.verb_classes)).float()
