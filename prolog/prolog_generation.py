@@ -13,7 +13,7 @@ class PrologData:
     '''
     initialize vocabulary
     '''
-    def __init__(self, prolog_root, name, dataset, node_vocab, edge_vocab, verb_vocab, model=None, split=None, split_file=None, subset_file=None):
+    def __init__(self, prolog_root, name, dataset, node_vocab, edge_vocab, verb_vocab, model=None, split=None):
         self.root = os.path.join(prolog_root, name)
         self.name = name
         self.node_vocab = node_vocab
@@ -22,13 +22,11 @@ class PrologData:
 
         self.model = model 
         self.dataset = dataset
-        self.split_file = split_file
-        self.subset_file = subset_file
+        self.split = split
 
         assert split in ['train', 'val', 'test', None]
-        self.split = split #train, val, test
 
-        self.bk_filename = os.path.join(self.root, 'bk.pl')
+        self.bk_filename = os.path.join(self.root, f'{split}_bk.pl')
         self.general_bk_filename = os.path.join(self.root, 'general_bk.pl')
         self.general_bias_filename = os.path.join(self.root, 'general_bias.pl')
     
@@ -69,9 +67,6 @@ class PrologData:
         exs_filename = os.path.join(self.root, 'examples', f'{target_verb_name}.pl', )
         bias_filename = os.path.join(self.root, 'biases', f'{target_verb_name}.pl')
 
-        if type(self.dataset) is AG and self.subset_file is not None:
-            subset_dict = shelve.open(self.subset_file)
-
         with(open(exs_filename, 'w+')) as f:
             f.write(f'%%keep negative probability: {keep_prob}\n')
             f.write(':- style_check(-discontiguous).\n')
@@ -79,8 +74,6 @@ class PrologData:
             
             if type(self.dataset) is AG:
                 id, _, data, _ = inputs
-                if self.subset_file is not None and subset_dict[id] == 'False':
-                    continue
             elif type(self.dataset) is ToyDataset:
                 data = inputs
             else:

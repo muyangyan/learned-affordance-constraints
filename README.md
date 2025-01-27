@@ -36,14 +36,11 @@ it should work at the frame level as well as the video level.
 
 
 # TODO:
-modularization
 
-generate_prolog should work for any PyG object
+current rules are learned from the whole dataset, and did not have proper causal masking
+rules need to be re-learned from new train split with proper causal masking
 
-
-
-action anticipation backbone should take in graphs
-
+test and val bks have been generated anyway to get greedy results
 
 
 

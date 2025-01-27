@@ -3,6 +3,7 @@ sneeze_target(A):- touching(A,B),mirror(B).
 
 %%pour
 %%No solution
+pour_target(_).
 
 %%undress
 undress_target(A):- person(B),wearing(B,C),wearing(A,C).
@@ -23,6 +24,7 @@ work_target(A):- table(B),in_front_of(B,A).
 
 %%drink
 %%No solution
+drink_target(_).
 
 %%close
 close_target(A):- in_front_of(B,A),refrigerator(B).
@@ -41,6 +43,7 @@ take_target(A):- light(B),holding(A,B).
 
 %%make
 %%No solution
+make_target(_).
 
 %%lie
 lie_target(A):- floor(B),lying_on(A,B).
@@ -92,6 +95,7 @@ fix_target(A):- mirror(B),holding(A,B).
 
 %%laugh
 %%No solution
+laugh_target(_).
 
 %%walk
 walk_target(A):- doorway(B),not_contacting(A,B).
@@ -109,7 +113,14 @@ watch_target(A):- not_contacting(A,B),picture(B).
 watch_target(A):- not_contacting(A,B),mirror(B).
 
 %%put
-%%No solution
+put_target(A):- touching(A,B),on_the_side_of(B,C),holding(C,B).
+put_target(A):- other_relationship(A,B),in_front_of(B,A),clothes(B).
+put_target(A):- touching(A,B),picture(B).
+put_target(A):- drinking_from(A,B),in_front_of(B,A).
+put_target(A):- shoe(B),above(B,A).
+put_target(A):- shelf(B),above(B,A).
+put_target(A):- behind(B,A),broom(B).
+put_target(A):- in_front_of(B,A),groceries(B).
 
 %%snuggle
 snuggle_target(A):- blanket(B),in(B,A).
@@ -119,6 +130,7 @@ snuggle_target(A):- blanket(B),in_front_of(B,A).
 
 %%run
 %%No solution
+run_target(_).
 
 %%dress
 dress_target(A):- clothes(B),holding(A,B).
@@ -141,6 +153,7 @@ cook_target(A):- food(B),beneath(B,A).
 
 %%talk
 %%No solution
+talk_target(_).
 
 %%open
 open_target(A):- other_relationship(A,B),bed(B),on_the_side_of(B,A).
@@ -173,4 +186,5 @@ sit_target(A):- not_contacting(A,B),chair(B).
 
 %%photograph
 %%No solution
+photograph_target(_).
 

@@ -83,6 +83,7 @@ class AG(Dataset):
         self.no_img = no_img
         self.split = split
         self.subset_file = subset_file
+        self.constraints = None
 
         with open(root + 'annotations/person_bbox.pkl', 'rb') as f:
             self.person_annotations = pickle.load(f)
@@ -185,12 +186,17 @@ class AG(Dataset):
         scene_graph = self.scene_graphs[id]
 
         if self.no_img:
-            return full_id, None, scene_graph, action_class
+            image = None
+        else:
+            image_path = os.path.join(self.root, 'frames', id)
+            image = Image.open(image_path).convert('RGB')
 
-        image_path = os.path.join(self.root, 'frames', id)
-        image = Image.open(image_path).convert('RGB')
+        if self.constraints is not None:
+            constraints = self.constraints[index]
+        else:
+            constraints = None
 
-        return full_id, image, scene_graph, action_class
+        return full_id, image, scene_graph, action_class, constraints
 
     # Load all actions from the dataset
     def load_actions(self):
@@ -341,27 +347,28 @@ class AG(Dataset):
             'take' : 'holding'
         }
 
-
     def verb_pred_collate(self, batch):
-        ids, images, scene_graphs, actions = zip(*batch)
+        ids, images, scene_graphs, actions, constraints = zip(*batch)
         sg_batch = Batch.from_data_list(scene_graphs, exclude_keys=['o'])
         
         verbs = torch.tensor([self.action_verb_obj_map[a][0] for a in actions])
         labels = F.one_hot(verbs, len(self.verb_classes)).float()
         
         if self.no_img:
-            return ids, None, sg_batch, verbs, labels
+            resized_images = None
+        else:
+            transform = T.Compose([
+                T.Resize(size=(224, 224)),
+                T.ToTensor(),
+                T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+            ])
+            resized_images = [transform(img) for img in images]
+            resized_images = torch.stack(resized_images)
         
-        transform = T.Compose([
-            T.Resize(size=(224, 224)),
-            T.ToTensor(),
-            T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-        ])
-        resized_images = [transform(img) for img in images]
-        resized_images = torch.stack(resized_images)
+        if self.constraints is None:
+            constraints = None
 
-        return ids, resized_images, sg_batch, verbs, labels
-
+        return ids, resized_images, sg_batch, verbs, labels, constraints
 
 import os
 import csv
