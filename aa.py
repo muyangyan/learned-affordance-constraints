@@ -26,7 +26,7 @@ warnings.filterwarnings("ignore")
 #warnings.filterwarnings("default")
 
 class JointModelLightning(L.LightningModule):
-    def __init__(self, model_params, weight, model_type='joint'):
+    def __init__(self, model_params, weight, model_type='joint', lr=1e-3):
 
         super().__init__()
         self.model_type = model_type
@@ -43,7 +43,10 @@ class JointModelLightning(L.LightningModule):
         #epoch metrics
         self.train_accuracy = torchmetrics.Accuracy(task='multiclass', num_classes=num_classes)
         self.val_accuracy = torchmetrics.Accuracy(task='multiclass', num_classes=num_classes)
+
         self.test_accuracy = torchmetrics.Accuracy(task='multiclass', num_classes=num_classes)
+        self.test_mAP = torchmetrics.MeanAveragePrecision(task='multiclass', num_classes=num_classes)
+        self.test_mAR = torchmetrics.MeanAverageRecall(task='multiclass', num_classes=num_classes)
         
         self.save_hyperparameters()
         
@@ -74,10 +77,8 @@ class JointModelLightning(L.LightningModule):
         out, labels = torch.argmax(out, dim=1), torch.argmax(labels, dim=1)
         val_acc = self.val_accuracy(out, labels) 
         
-        #self.log('val_loss', val_loss, on_step=True, on_epoch=True, prog_bar=True)
         self.log('val_acc', val_acc, on_step=False, on_epoch=True, prog_bar=True)
             
-        #return val_loss
     
     def test_step(self, batch, batch_idx):
         ids, imgs, sgs, verbs, labels, constraints = batch
@@ -86,17 +87,18 @@ class JointModelLightning(L.LightningModule):
         if constraints is not None:
             out = out * constraints
 
-        test_loss = F.cross_entropy(out, labels, weight=self.weight)
         out, labels = torch.argmax(out, dim=1), torch.argmax(labels, dim=1)
         test_acc = self.test_accuracy(out, labels) 
-        
-        self.log('test_loss', test_loss, on_step=True, on_epoch=True, prog_bar=True)
+        test_mAP = self.test_mAP(out, labels)
+        test_mAR = self.test_mAR(out, labels)
+
         self.log('test_acc', test_acc, on_step=False, on_epoch=True, prog_bar=True)
+        self.log('test_mAP', test_mAP, on_step=False, on_epoch=True, prog_bar=True)
+        self.log('test_mAR', test_mAR, on_step=False, on_epoch=True, prog_bar=True)
             
-        return test_loss
 
     def configure_optimizers(self):
-        return torch.optim.Adam(self.parameters(), lr=1e-2)
+        return torch.optim.Adam(self.parameters(), lr=self.lr)
 
 def test_rules(rules_file, bk_file, test_size, targets, labels=None):
     print('Testing learned rules=====================')
@@ -144,6 +146,7 @@ def main(args):
     model_type = args.model_type
     epochs = args.epochs
     devices = args.devices
+    lr = args.lr
 
     node_feature_size = 32
     rgcn_hidden_dim, vit_hidden_dim = 32, 32
@@ -155,28 +158,36 @@ def main(args):
     weight = weight.to(devices[0])
 
     # Initialize model and trainer
-    lightning_model = JointModelLightning(model_params, weight, model_type=model_type)
+    if not args.train:
+        lightning_model = JointModelLightning.load_from_checkpoint(args.checkpoint, model_params=model_params, weight=weight, model_type=model_type, lr=lr)
 
-    # Setup callbacks and logger
-    checkpoint_callback = ModelCheckpoint(
-        monitor='val_acc',
-        dirpath='checkpoints/',
-        filename='joint-model-{epoch:02d}-{val_acc:.2f}',
-        save_top_k=3,
-        mode='max',
-    )
+        trainer = L.Trainer(
+            max_epochs=epochs,
+            accelerator='gpu',
+            devices=devices,
+        )
 
-    logger = TensorBoardLogger("lightning_logs", name=f"{model_type}_model")
+    else:
+        lightning_model = JointModelLightning(model_params, weight, model_type=model_type, lr=lr)
+        # Setup callbacks and logger
+        checkpoint_callback = ModelCheckpoint(
+            monitor='val_acc',
+            dirpath=f'checkpoints/ag/{model_type}/',
+            filename='{epoch:02d}-{val_acc:.2f}',
+            save_top_k=3,
+            mode='max',
+        )
 
-    trainer = L.Trainer(
-        max_epochs=epochs,
-        accelerator='gpu',
-        devices=devices,
-        callbacks=[checkpoint_callback],
-        logger=logger,
-    )
+        logger = TensorBoardLogger("lightning_logs", name=f"{model_type}_model")
 
-    if args.train:
+        trainer = L.Trainer(
+            max_epochs=epochs,
+            accelerator='gpu',
+            devices=devices,
+            callbacks=[checkpoint_callback],
+            logger=logger,
+        )
+
         # Train the model
         print('Training the model=====================')
         trainer.fit(lightning_model, train_dataloaders=train_loader, val_dataloaders=val_loader)
@@ -205,11 +216,11 @@ if __name__ == '__main__':
     parser.add_argument('--epochs', type=int, default=10, help='Number of epochs to train')
     parser.add_argument('--batch-size', type=int, default=16, help='Batch size')
     parser.add_argument('--devices', type=int, nargs='+', default=[0], help='List of GPU device IDs to use')
-
+    parser.add_argument('--lr', type=float, default=1e-3, help='Learning rate')
     #task
     parser.add_argument('--train', action='store_true', help='Train the model')
     parser.add_argument('--test', action='store_true', help='Test the dataset')
-
+    parser.add_argument('--checkpoint', type=str, default=None, help='Checkpoint file to load')
 
     args = parser.parse_args()
 

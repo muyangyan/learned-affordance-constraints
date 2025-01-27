@@ -192,7 +192,7 @@ class AG(Dataset):
             image = Image.open(image_path).convert('RGB')
 
         if self.constraints is not None:
-            constraints = self.constraints[index]
+            constraints = torch.tensor(self.constraints[index]).float()
         else:
             constraints = None
 
@@ -367,6 +367,8 @@ class AG(Dataset):
         
         if self.constraints is None:
             constraints = None
+        else:
+            constraints = torch.stack(constraints)
 
         return ids, resized_images, sg_batch, verbs, labels, constraints
 
