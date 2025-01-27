@@ -13,7 +13,7 @@ class PrologData:
     '''
     initialize vocabulary
     '''
-    def __init__(self, prolog_root, name, dataset, node_vocab, edge_vocab, verb_vocab, model=None, subset_file=None):
+    def __init__(self, prolog_root, name, dataset, node_vocab, edge_vocab, verb_vocab, model=None, split=None, split_file=None, subset_file=None):
         self.root = os.path.join(prolog_root, name)
         self.name = name
         self.node_vocab = node_vocab
@@ -22,7 +22,11 @@ class PrologData:
 
         self.model = model 
         self.dataset = dataset
+        self.split_file = split_file
         self.subset_file = subset_file
+
+        assert split in ['train', 'val', 'test', None]
+        self.split = split #train, val, test
 
         self.bk_filename = os.path.join(self.root, 'bk.pl')
         self.general_bk_filename = os.path.join(self.root, 'general_bk.pl')
