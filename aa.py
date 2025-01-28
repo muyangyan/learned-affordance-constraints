@@ -25,11 +25,14 @@ import warnings
 warnings.filterwarnings("ignore")
 #warnings.filterwarnings("default")
 
+torch.set_float32_matmul_precision('medium')
+
 class JointModelLightning(L.LightningModule):
     def __init__(self, model_params, weight, model_type='joint', lr=1e-3):
 
         super().__init__()
         self.model_type = model_type
+        self.lr = lr
         rgcn_params, vit_hidden_dim, num_classes = model_params 
         if model_type == 'joint':
             self.model = JointModel(rgcn_params, vit_hidden_dim, num_classes)
@@ -38,15 +41,17 @@ class JointModelLightning(L.LightningModule):
             self.model = RGCN(num_obj_classes, node_feature_size, num_classes, num_rel_classes, head=True)
         elif model_type == 'vit':
             self.model = ViT(num_classes, head=True)
-        self.weight = weight
+        
+        # Move weight to correct device and store it only once
+        self.weight = weight.to(self.device)
         
         #epoch metrics
         self.train_accuracy = torchmetrics.Accuracy(task='multiclass', num_classes=num_classes)
         self.val_accuracy = torchmetrics.Accuracy(task='multiclass', num_classes=num_classes)
 
         self.test_accuracy = torchmetrics.Accuracy(task='multiclass', num_classes=num_classes)
-        self.test_mAP = torchmetrics.MeanAveragePrecision(task='multiclass', num_classes=num_classes)
-        self.test_mAR = torchmetrics.MeanAverageRecall(task='multiclass', num_classes=num_classes)
+        self.test_mAP = torchmetrics.AveragePrecision(task='multiclass', num_classes=num_classes)
+        self.test_mAR = torchmetrics.AveragePrecision(task='multiclass', num_classes=num_classes)
         
         self.save_hyperparameters()
         
@@ -155,7 +160,6 @@ def main(args):
 
     weight = len(train_set) / (num_verb_classes * train_set.verb_label_counts)
     weight = torch.tensor(weight, dtype=torch.float)
-    weight = weight.to(devices[0])
 
     # Initialize model and trainer
     if not args.train:
