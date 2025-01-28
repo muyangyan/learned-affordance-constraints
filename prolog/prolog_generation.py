@@ -73,7 +73,7 @@ class PrologData:
         for idx, inputs in enumerate(self.dataset):
             
             if type(self.dataset) is AG:
-                id, _, data, _ = inputs
+                id, _, data, _, _ = inputs
             elif type(self.dataset) is ToyDataset:
                 data = inputs
             else:
@@ -118,7 +118,7 @@ class PrologData:
 
         for idx, inputs in enumerate(self.dataset):
             if type(self.dataset) is AG:
-                id, _, data, _ = inputs
+                id, _, data, _, _ = inputs
             elif type(self.dataset) is ToyDataset:
                 data = inputs
             else:

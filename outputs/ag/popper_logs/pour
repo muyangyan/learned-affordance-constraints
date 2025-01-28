@@ -61,9 +61,17 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-00:03:39 Generating programs of size: 2
-00:03:40 Generating programs of size: 3
-00:03:53 Generating programs of size: 4
-00:11:14 Generating programs of size: 5
-07:01:55 TIMEOUT OF 25000 SECONDS EXCEEDED
-NO SOLUTION
+10:30:51 Generating programs of size: 2
+10:30:53 Generating programs of size: 3
+10:30:58 ********************
+10:30:58 New best hypothesis:
+10:30:58 tp:10 fn:78 tn:318 fp:6 size:3 mdl:87
+10:30:58 pour_target(A):- holding(A,B),touching(A,B).
+10:30:58 ********************
+10:31:00 Generating programs of size: 4
+10:35:38 Generating programs of size: 5
+10:58:17 ********************
+10:58:17 New best hypothesis:
+10:58:17 tp:7 fn:81 tn:324 fp:0 size:5 mdl:86
+10:58:17 pour_target(A):- in_front_of(C,A),on_the_side_of(C,A),table(B),on_the_side_of(B,A).
+10:58:17 ********************

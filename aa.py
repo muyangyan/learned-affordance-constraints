@@ -227,6 +227,9 @@ def main(args):
 
         print('Testing the model with constraints=====================')
         masks = test_rules('outputs/ag/rules_learned.pl', 'prolog/ag/test_bk.pl', len(test_set), test_set.verb_classes)
+
+        print(f'Average number of feasible actions per instance: {masks.sum(axis=1).mean():.2f}')
+
         test_set.constraints = masks
         trainer.test(lightning_model, dataloaders=test_loader)
 

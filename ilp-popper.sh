@@ -16,5 +16,5 @@ python "${HOME_PATH}/Popper/popper.py"\
     --timeout $TIMEOUT\
     --anytime-solver nuwls\
     --ex_file "${PROLOG_PATH}examples/${VERB}.pl"\
-    --bk_file "${PROLOG_PATH}bk.pl"\
+    --bk_file "${PROLOG_PATH}train_bk.pl"\
     --bias_file "${PROLOG_PATH}biases/${VERB}.pl" >> $LOG_PATH 2>&1

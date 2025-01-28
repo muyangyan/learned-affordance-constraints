@@ -61,41 +61,51 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-00:03:39 Generating programs of size: 2
-00:03:40 Generating programs of size: 3
-00:03:50 ********************
-00:03:50 New best hypothesis:
-00:03:50 tp:84 fn:414 tn:2067 fp:49 size:3 mdl:466
-00:03:50 watch_target(A):- not_contacting(A,B),mirror(B).
-00:03:50 ********************
-00:04:07 ********************
-00:04:07 New best hypothesis:
-00:04:07 tp:60 fn:438 tn:2102 fp:14 size:3 mdl:455
-00:04:07 watch_target(A):- not_contacting(A,B),window(B).
-00:04:07 ********************
-00:05:06 Generating programs of size: 4
-00:05:17 ********************
-00:05:17 New best hypothesis:
-00:05:17 tp:245 fn:253 tn:1991 fp:125 size:24 mdl:402
-00:05:17 watch_target(A):- not_contacting(A,B),mirror(B).
-00:05:17 watch_target(A):- not_contacting(A,B),picture(B).
-00:05:17 watch_target(A):- holding(A,B),picture(B).
-00:05:17 watch_target(A):- not_contacting(A,B),television(B).
-00:05:17 watch_target(A):- laptop(B),other_relationship(A,B).
-00:05:17 watch_target(A):- window(B),on_the_side_of(B,A).
-00:05:17 watch_target(A):- writing_on(A,B),touching(A,B).
-00:05:17 watch_target(A):- window(B),in_front_of(B,A).
-00:05:17 ********************
-00:32:49 Generating programs of size: 5
-08:19:18 TIMEOUT OF 25000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.66 Recall:0.49 TP:245 FN:253 TN:1991 FP:125 Size:24 MDL:402
-watch_target(A):- not_contacting(A,B),mirror(B).
-watch_target(A):- not_contacting(A,B),picture(B).
-watch_target(A):- holding(A,B),picture(B).
-watch_target(A):- not_contacting(A,B),television(B).
-watch_target(A):- laptop(B),other_relationship(A,B).
-watch_target(A):- window(B),on_the_side_of(B,A).
-watch_target(A):- writing_on(A,B),touching(A,B).
-watch_target(A):- window(B),in_front_of(B,A).
-******************************
+10:30:51 Generating programs of size: 2
+10:30:53 Generating programs of size: 3
+10:31:01 ********************
+10:31:01 New best hypothesis:
+10:31:01 tp:22 fn:430 tn:1668 fp:8 size:3 mdl:441
+10:31:01 watch_target(A):- on_the_side_of(B,A),mirror(B).
+10:31:01 ********************
+10:31:01 ********************
+10:31:01 New best hypothesis:
+10:31:01 tp:76 fn:376 tn:1639 fp:37 size:3 mdl:416
+10:31:01 watch_target(A):- mirror(B),in_front_of(B,A).
+10:31:01 ********************
+10:31:05 ********************
+10:31:05 New best hypothesis:
+10:31:05 tp:51 fn:401 tn:1666 fp:10 size:3 mdl:414
+10:31:05 watch_target(A):- window(B),not_contacting(A,B).
+10:31:05 ********************
+10:31:06 ********************
+10:31:06 New best hypothesis:
+10:31:06 tp:75 fn:377 tn:1644 fp:32 size:3 mdl:412
+10:31:06 watch_target(A):- mirror(B),not_contacting(A,B).
+10:31:06 ********************
+10:31:16 Generating programs of size: 4
+10:31:26 ********************
+10:31:26 New best hypothesis:
+10:31:26 tp:329 fn:123 tn:1502 fp:174 size:24 mdl:321
+10:31:26 watch_target(A):- window(B),on_the_side_of(B,A).
+10:31:26 watch_target(A):- window(B),in_front_of(B,A).
+10:31:26 watch_target(A):- picture(B),not_contacting(A,B).
+10:31:26 watch_target(A):- mirror(B),not_contacting(A,B).
+10:31:26 watch_target(A):- television(B),not_contacting(A,B).
+10:31:26 watch_target(A):- holding(A,B),picture(B).
+10:31:26 watch_target(A):- holding(A,B),book(B).
+10:31:26 watch_target(A):- other_relationship(A,B),laptop(B).
+10:31:26 ********************
+10:41:09 Generating programs of size: 5
+10:41:19 ********************
+10:41:19 New best hypothesis:
+10:41:19 tp:327 fn:125 tn:1506 fp:170 size:25 mdl:320
+10:41:19 watch_target(A):- window(B),on_the_side_of(B,A).
+10:41:19 watch_target(A):- window(B),in_front_of(B,A).
+10:41:19 watch_target(A):- picture(B),not_contacting(A,B).
+10:41:19 watch_target(A):- mirror(B),not_contacting(A,B).
+10:41:19 watch_target(A):- television(B),not_contacting(A,B).
+10:41:19 watch_target(A):- holding(A,B),picture(B).
+10:41:19 watch_target(A):- other_relationship(A,B),laptop(B).
+10:41:19 watch_target(A):- holding(A,B),in_front_of(B,A),book(B).
+10:41:19 ********************

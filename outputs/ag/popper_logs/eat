@@ -61,26 +61,26 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-00:03:39 Generating programs of size: 2
-00:03:40 Generating programs of size: 3
-00:03:59 ********************
-00:03:59 New best hypothesis:
-00:03:59 tp:263 fn:113 tn:1601 fp:189 size:3 mdl:305
-00:03:59 eat_target(A):- food(B),holding(A,B).
-00:03:59 ********************
-00:05:00 Generating programs of size: 4
-00:05:09 ********************
-00:05:09 New best hypothesis:
-00:05:09 tp:309 fn:67 tn:1578 fp:212 size:9 mdl:288
-00:05:09 eat_target(A):- food(B),holding(A,B).
-00:05:09 eat_target(A):- in_front_of(B,A),medicine(B).
-00:05:09 eat_target(A):- on_the_side_of(B,A),sandwich(B).
-00:05:09 ********************
-00:18:53 Generating programs of size: 5
-07:16:44 TIMEOUT OF 25000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.59 Recall:0.82 TP:309 FN:67 TN:1578 FP:212 Size:9 MDL:288
-eat_target(A):- food(B),holding(A,B).
-eat_target(A):- in_front_of(B,A),medicine(B).
-eat_target(A):- on_the_side_of(B,A),sandwich(B).
-******************************
+10:30:51 Generating programs of size: 2
+10:30:53 Generating programs of size: 3
+10:31:00 ********************
+10:31:00 New best hypothesis:
+10:31:00 tp:18 fn:330 tn:1442 fp:7 size:3 mdl:340
+10:31:00 eat_target(A):- beneath(B,A),food(B).
+10:31:00 ********************
+10:31:01 ********************
+10:31:01 New best hypothesis:
+10:31:01 tp:253 fn:95 tn:1307 fp:142 size:3 mdl:240
+10:31:01 eat_target(A):- holding(A,B),food(B).
+10:31:01 ********************
+10:31:11 Generating programs of size: 4
+10:31:19 ********************
+10:31:19 New best hypothesis:
+10:31:19 tp:326 fn:22 tn:1276 fp:173 size:15 mdl:210
+10:31:19 eat_target(A):- holding(A,B),food(B).
+10:31:19 eat_target(A):- touching(A,B),food(B).
+10:31:19 eat_target(A):- sandwich(B),in_front_of(B,A).
+10:31:19 eat_target(A):- medicine(B),in_front_of(B,A).
+10:31:19 eat_target(A):- not_contacting(A,B),sandwich(B).
+10:31:19 ********************
+10:48:02 Generating programs of size: 5

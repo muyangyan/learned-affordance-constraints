@@ -61,38 +61,17 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-00:03:39 Generating programs of size: 2
-00:03:40 Generating programs of size: 3
-00:03:49 ********************
-00:03:49 New best hypothesis:
-00:03:49 tp:28 fn:107 tn:650 fp:7 size:3 mdl:117
-00:03:49 undress_target(A):- touching(A,B),clothes(B).
-00:03:49 ********************
-00:03:50 ********************
-00:03:50 New best hypothesis:
-00:03:50 tp:76 fn:59 tn:641 fp:16 size:3 mdl:78
-00:03:50 undress_target(A):- clothes(B),in(B,A).
-00:03:50 ********************
-00:03:51 ********************
-00:03:51 New best hypothesis:
-00:03:51 tp:86 fn:49 tn:637 fp:20 size:3 mdl:72
-00:03:51 undress_target(A):- clothes(B),wearing(A,B).
-00:03:51 ********************
-00:04:02 Generating programs of size: 4
-00:04:06 ********************
-00:04:06 New best hypothesis:
-00:04:06 tp:96 fn:39 tn:631 fp:26 size:6 mdl:71
-00:04:06 undress_target(A):- clothes(B),wearing(A,B).
-00:04:06 undress_target(A):- wearing(A,B),shoe(B).
-00:04:06 ********************
-00:06:26 ********************
-00:06:26 New best hypothesis:
-00:06:26 tp:96 fn:39 tn:631 fp:26 size:4 mdl:69
-00:06:26 undress_target(A):- person(B),wearing(B,C),wearing(A,C).
-00:06:26 ********************
-00:12:49 Generating programs of size: 5
-07:06:34 TIMEOUT OF 25000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.79 Recall:0.71 TP:96 FN:39 TN:631 FP:26 Size:4 MDL:69
-undress_target(A):- person(B),wearing(B,C),wearing(A,C).
-******************************
+10:30:51 Generating programs of size: 2
+10:30:53 Generating programs of size: 3
+10:30:57 ********************
+10:30:57 New best hypothesis:
+10:30:57 tp:62 fn:44 tn:458 fp:12 size:3 mdl:59
+10:30:57 undress_target(A):- in(B,A),clothes(B).
+10:30:57 ********************
+10:30:58 ********************
+10:30:58 New best hypothesis:
+10:30:58 tp:72 fn:34 tn:452 fp:18 size:3 mdl:55
+10:30:58 undress_target(A):- wearing(A,B),clothes(B).
+10:30:58 ********************
+10:31:10 Generating programs of size: 4
+10:40:42 Generating programs of size: 5

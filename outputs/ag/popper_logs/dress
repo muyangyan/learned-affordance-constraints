@@ -61,41 +61,35 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-00:03:39 Generating programs of size: 2
-00:03:40 Generating programs of size: 3
-00:03:45 ********************
-00:03:45 New best hypothesis:
-00:03:45 tp:52 fn:79 tn:616 fp:46 size:3 mdl:128
-00:03:45 dress_target(A):- in_front_of(B,A),clothes(B).
-00:03:45 ********************
-00:03:45 ********************
-00:03:45 New best hypothesis:
-00:03:45 tp:23 fn:108 tn:654 fp:8 size:3 mdl:119
-00:03:45 dress_target(A):- in_front_of(B,A),shoe(B).
-00:03:45 ********************
-00:03:47 ********************
-00:03:47 New best hypothesis:
-00:03:47 tp:24 fn:107 tn:655 fp:7 size:3 mdl:117
-00:03:47 dress_target(A):- beneath(B,A),shoe(B).
-00:03:47 ********************
-00:03:50 ********************
-00:03:50 New best hypothesis:
-00:03:50 tp:55 fn:76 tn:625 fp:37 size:3 mdl:116
-00:03:50 dress_target(A):- clothes(B),holding(A,B).
-00:03:50 ********************
-00:03:53 Generating programs of size: 4
-00:03:58 ********************
-00:03:58 New best hypothesis:
-00:03:58 tp:104 fn:27 tn:600 fp:62 size:9 mdl:98
-00:03:58 dress_target(A):- beneath(B,A),shoe(B).
-00:03:58 dress_target(A):- wearing(A,B),clothes(B).
-00:03:58 dress_target(A):- clothes(B),holding(A,B).
-00:03:58 ********************
-00:10:56 Generating programs of size: 5
-07:24:15 TIMEOUT OF 25000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.63 Recall:0.79 TP:104 FN:27 TN:600 FP:62 Size:9 MDL:98
-dress_target(A):- beneath(B,A),shoe(B).
-dress_target(A):- wearing(A,B),clothes(B).
-dress_target(A):- clothes(B),holding(A,B).
-******************************
+10:30:51 Generating programs of size: 2
+10:30:53 Generating programs of size: 3
+10:30:56 ********************
+10:30:56 New best hypothesis:
+10:30:56 tp:9 fn:78 tn:370 fp:2 size:3 mdl:83
+10:30:56 dress_target(A):- clothes(B),not_contacting(A,B).
+10:30:56 ********************
+10:30:56 ********************
+10:30:56 New best hypothesis:
+10:30:56 tp:9 fn:78 tn:371 fp:1 size:3 mdl:82
+10:30:56 dress_target(A):- not_contacting(A,B),shoe(B).
+10:30:56 ********************
+10:30:57 ********************
+10:30:57 New best hypothesis:
+10:30:57 tp:56 fn:31 tn:359 fp:13 size:3 mdl:47
+10:30:57 dress_target(A):- holding(A,B),clothes(B).
+10:30:57 ********************
+10:30:57 ********************
+10:30:57 New best hypothesis:
+10:30:57 tp:58 fn:29 tn:359 fp:13 size:3 mdl:45
+10:30:57 dress_target(A):- in_front_of(B,A),clothes(B).
+10:30:57 ********************
+10:30:58 Generating programs of size: 4
+10:31:01 ********************
+10:31:01 New best hypothesis:
+10:31:01 tp:86 fn:1 tn:352 fp:20 size:12 mdl:33
+10:31:01 dress_target(A):- not_contacting(A,B),shoe(B).
+10:31:01 dress_target(A):- holding(A,B),shoe(B).
+10:31:01 dress_target(A):- in_front_of(B,A),clothes(B).
+10:31:01 dress_target(A):- clothes(B),on_the_side_of(B,A).
+10:31:01 ********************
+10:38:28 Generating programs of size: 5

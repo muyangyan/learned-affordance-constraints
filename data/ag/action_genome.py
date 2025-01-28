@@ -336,15 +336,15 @@ class AG(Dataset):
         used to check if the verb has already been taken in the frame, so that we may prune invalid preconditions
         '''
         self.verb_result_rel_map = {
-            'drink' : 'drinking_from',
-            'eat' : 'eating',
-            'grasp' : 'holding',
-            'hold' : 'holding',
-            'sit' : 'sitting_on',
-            'stand' : 'standing_on',
-            'dress' : 'wearing',
-            'lie' : 'lying_on',
-            'take' : 'holding'
+            'drink' : ['drinking_from'],
+            'eat' : ['eating'],
+            'grasp' : ['holding'],
+            'hold' : ['holding', 'carrying', 'touching'],
+            'sit' : ['sitting_on'],
+            'stand' : ['standing_on'],
+            'dress' : ['wearing'],
+            'lie' : ['lying_on'],
+            'take' : ['holding', 'carrying', 'touching'],
         }
 
     def verb_pred_collate(self, batch):
@@ -537,9 +537,9 @@ class AGViewer:
         obj_freq = {}
         for idx in range(len(self.ag)):
             if self.ag.no_img:
-                id, sg, action = self.ag[idx]
+                id, _, sg, action, _ = self.ag[idx]
             else:
-                id, img, sg, action = self.ag[idx]
+                id, img, sg, action, _ = self.ag[idx]
             
             if self.subset_dict[id] == 'False':
                 continue

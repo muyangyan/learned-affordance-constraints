@@ -61,31 +61,24 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-00:03:39 Generating programs of size: 2
-00:03:40 Generating programs of size: 3
-00:03:46 ********************
-00:03:46 New best hypothesis:
-00:03:46 tp:5 fn:71 tn:384 fp:0 size:3 mdl:74
-00:03:46 cook_target(A):- food(B),beneath(B,A).
-00:03:46 ********************
-00:03:51 ********************
-00:03:51 New best hypothesis:
-00:03:51 tp:28 fn:48 tn:371 fp:13 size:3 mdl:64
-00:03:51 cook_target(A):- food(B),not_contacting(A,B).
-00:03:51 ********************
-00:03:51 Generating programs of size: 4
-00:03:54 ********************
-00:03:54 New best hypothesis:
-00:03:54 tp:38 fn:38 tn:371 fp:13 size:9 mdl:60
-00:03:54 cook_target(A):- food(B),beneath(B,A).
-00:03:54 cook_target(A):- food(B),touching(A,B).
-00:03:54 cook_target(A):- food(B),not_contacting(A,B).
-00:03:54 ********************
-00:10:26 Generating programs of size: 5
-07:02:03 TIMEOUT OF 25000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.75 Recall:0.50 TP:38 FN:38 TN:371 FP:13 Size:9 MDL:60
-cook_target(A):- food(B),beneath(B,A).
-cook_target(A):- food(B),touching(A,B).
-cook_target(A):- food(B),not_contacting(A,B).
-******************************
+10:30:52 Generating programs of size: 2
+10:30:53 Generating programs of size: 3
+10:30:57 ********************
+10:30:57 New best hypothesis:
+10:30:57 tp:8 fn:60 tn:285 fp:4 size:3 mdl:67
+10:30:57 cook_target(A):- food(B),beneath(B,A).
+10:30:57 ********************
+10:30:58 ********************
+10:30:58 New best hypothesis:
+10:30:58 tp:53 fn:15 tn:255 fp:34 size:3 mdl:52
+10:30:58 cook_target(A):- food(B),in_front_of(B,A).
+10:30:58 ********************
+10:31:07 Generating programs of size: 4
+10:31:09 ********************
+10:31:09 New best hypothesis:
+10:31:09 tp:67 fn:1 tn:250 fp:39 size:9 mdl:49
+10:31:09 cook_target(A):- food(B),beneath(B,A).
+10:31:09 cook_target(A):- food(B),in_front_of(B,A).
+10:31:09 cook_target(A):- not_contacting(A,B),food(B).
+10:31:09 ********************
+10:42:11 Generating programs of size: 5

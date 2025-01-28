@@ -61,47 +61,40 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-00:03:39 Generating programs of size: 2
-00:03:40 Generating programs of size: 3
-00:04:00 ********************
-00:04:00 New best hypothesis:
-00:04:00 tp:92 fn:2400 tn:6192 fp:62 size:3 mdl:2465
-00:04:00 put_target(A):- in_front_of(B,A),groceries(B).
-00:04:00 ********************
-00:07:33 Generating programs of size: 4
-00:07:45 ********************
-00:07:45 New best hypothesis:
-00:07:45 tp:215 fn:2277 tn:6107 fp:147 size:21 mdl:2445
-00:07:45 put_target(A):- in_front_of(B,A),groceries(B).
-00:07:45 put_target(A):- other_relationship(A,B),clothes(B).
-00:07:45 put_target(A):- behind(B,A),broom(B).
-00:07:45 put_target(A):- shelf(B),above(B,A).
-00:07:45 put_target(A):- shoe(B),above(B,A).
-00:07:45 put_target(A):- drinking_from(A,B),in_front_of(B,A).
-00:07:45 put_target(A):- touching(A,B),picture(B).
-00:07:45 ********************
-01:41:16 Generating programs of size: 5
-01:41:28 ********************
-01:41:28 New best hypothesis:
-01:41:28 tp:224 fn:2268 tn:6108 fp:146 size:26 mdl:2440
-01:41:28 put_target(A):- in_front_of(B,A),groceries(B).
-01:41:28 put_target(A):- behind(B,A),broom(B).
-01:41:28 put_target(A):- shelf(B),above(B,A).
-01:41:28 put_target(A):- shoe(B),above(B,A).
-01:41:28 put_target(A):- drinking_from(A,B),in_front_of(B,A).
-01:41:28 put_target(A):- touching(A,B),picture(B).
-01:41:28 put_target(A):- other_relationship(A,B),in_front_of(B,A),clothes(B).
-01:41:28 put_target(A):- touching(A,B),on_the_side_of(B,C),holding(C,B).
-01:41:28 ********************
-09:47:07 TIMEOUT OF 25000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.61 Recall:0.09 TP:224 FN:2268 TN:6108 FP:146 Size:26 MDL:2440
-put_target(A):- in_front_of(B,A),groceries(B).
-put_target(A):- behind(B,A),broom(B).
-put_target(A):- shelf(B),above(B,A).
-put_target(A):- shoe(B),above(B,A).
-put_target(A):- drinking_from(A,B),in_front_of(B,A).
-put_target(A):- touching(A,B),picture(B).
-put_target(A):- other_relationship(A,B),in_front_of(B,A),clothes(B).
-put_target(A):- touching(A,B),on_the_side_of(B,C),holding(C,B).
-******************************
+10:30:52 Generating programs of size: 2
+10:30:53 Generating programs of size: 3
+10:31:02 ********************
+10:31:02 New best hypothesis:
+10:31:02 tp:6 fn:2052 tn:4846 fp:2 size:3 mdl:2057
+10:31:02 put_target(A):- other_relationship(A,B),clothes(B).
+10:31:02 ********************
+10:31:04 ********************
+10:31:04 New best hypothesis:
+10:31:04 tp:14 fn:2044 tn:4843 fp:5 size:3 mdl:2052
+10:31:04 put_target(A):- shelf(B),above(B,A).
+10:31:04 ********************
+10:31:17 ********************
+10:31:17 New best hypothesis:
+10:31:17 tp:80 fn:1978 tn:4806 fp:42 size:3 mdl:2023
+10:31:17 put_target(A):- in_front_of(B,A),groceries(B).
+10:31:17 ********************
+10:31:55 ********************
+10:31:55 New best hypothesis:
+10:31:55 tp:76 fn:1982 tn:4815 fp:33 size:3 mdl:2018
+10:31:55 put_target(A):- holding(A,B),groceries(B).
+10:31:55 ********************
+10:31:56 ********************
+10:31:56 New best hypothesis:
+10:31:56 tp:269 fn:1789 tn:4641 fp:207 size:3 mdl:1999
+10:31:56 put_target(A):- dish(B),holding(A,B).
+10:31:56 ********************
+10:32:46 Generating programs of size: 4
+10:32:57 ********************
+10:32:57 New best hypothesis:
+10:32:57 tp:514 fn:1544 tn:4469 fp:379 size:15 mdl:1938
+10:32:57 put_target(A):- other_relationship(A,B),clothes(B).
+10:32:57 put_target(A):- holding(A,B),groceries(B).
+10:32:57 put_target(A):- dish(B),holding(A,B).
+10:32:57 put_target(A):- box(B),holding(A,B).
+10:32:57 put_target(A):- shelf(B),not_contacting(A,B).
+10:32:57 ********************

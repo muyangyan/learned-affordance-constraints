@@ -61,38 +61,20 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-00:03:39 Generating programs of size: 2
-00:03:40 Generating programs of size: 3
-00:03:50 ********************
-00:03:50 New best hypothesis:
-00:03:50 tp:7 fn:140 tn:590 fp:1 size:3 mdl:144
-00:03:50 fix_target(A):- mirror(B),holding(A,B).
-00:03:50 ********************
-00:03:51 ********************
-00:03:51 New best hypothesis:
-00:03:51 tp:47 fn:100 tn:575 fp:16 size:3 mdl:119
-00:03:51 fix_target(A):- mirror(B),not_contacting(A,B).
-00:03:51 ********************
-00:03:53 ********************
-00:03:53 New best hypothesis:
-00:03:53 tp:49 fn:98 tn:574 fp:17 size:3 mdl:118
-00:03:53 fix_target(A):- mirror(B),in_front_of(B,A).
-00:03:53 ********************
-00:03:59 Generating programs of size: 4
-00:04:03 ********************
-00:04:03 New best hypothesis:
-00:04:03 tp:68 fn:79 tn:569 fp:22 size:12 mdl:113
-00:04:03 fix_target(A):- mirror(B),holding(A,B).
-00:04:03 fix_target(A):- mirror(B),not_contacting(A,B).
-00:04:03 fix_target(A):- vacuum(B),in_front_of(B,A).
-00:04:03 fix_target(A):- light(B),above(B,A).
-00:04:03 ********************
-00:13:36 Generating programs of size: 5
-07:08:41 TIMEOUT OF 25000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.76 Recall:0.46 TP:68 FN:79 TN:569 FP:22 Size:12 MDL:113
-fix_target(A):- mirror(B),holding(A,B).
-fix_target(A):- mirror(B),not_contacting(A,B).
-fix_target(A):- vacuum(B),in_front_of(B,A).
-fix_target(A):- light(B),above(B,A).
-******************************
+10:30:51 Generating programs of size: 2
+10:30:53 Generating programs of size: 3
+10:30:59 ********************
+10:30:59 New best hypothesis:
+10:30:59 tp:41 fn:85 tn:450 fp:17 size:3 mdl:105
+10:30:59 fix_target(A):- mirror(B),in_front_of(B,A).
+10:30:59 ********************
+10:31:04 Generating programs of size: 4
+10:31:07 ********************
+10:31:07 New best hypothesis:
+10:31:07 tp:58 fn:68 tn:447 fp:20 size:12 mdl:100
+10:31:07 fix_target(A):- mirror(B),in_front_of(B,A).
+10:31:07 fix_target(A):- holding(A,B),vacuum(B).
+10:31:07 fix_target(A):- light(B),above(B,A).
+10:31:07 fix_target(A):- not_contacting(A,B),mirror(B).
+10:31:07 ********************
+10:50:35 Generating programs of size: 5
