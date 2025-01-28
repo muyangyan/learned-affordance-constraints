@@ -61,23 +61,32 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:30:51 Generating programs of size: 2
-10:30:53 Generating programs of size: 3
-10:30:58 ********************
-10:30:58 New best hypothesis:
-10:30:58 tp:11 fn:215 tn:914 fp:7 size:3 mdl:225
-10:30:58 play_target(A):- laptop(B),on_the_side_of(B,A).
-10:30:58 ********************
-10:30:59 ********************
-10:30:59 New best hypothesis:
-10:30:59 tp:84 fn:142 tn:878 fp:43 size:3 mdl:188
-10:30:59 play_target(A):- in_front_of(B,A),laptop(B).
-10:30:59 ********************
-10:31:22 Generating programs of size: 4
-10:31:28 ********************
-10:31:28 New best hypothesis:
-10:31:28 tp:88 fn:138 tn:878 fp:43 size:6 mdl:187
-10:31:28 play_target(A):- in_front_of(B,A),laptop(B).
-10:31:28 play_target(A):- on_the_side_of(B,A),covered_by(A,B).
-10:31:28 ********************
-10:45:41 Generating programs of size: 5
+11:52:12 Generating programs of size: 2
+11:52:14 Generating programs of size: 3
+11:52:20 ********************
+11:52:20 New best hypothesis:
+11:52:20 tp:15 fn:200 tn:854 fp:9 size:3 mdl:212
+11:52:20 play_target(A):- laptop(B),holding(A,B).
+11:52:20 ********************
+11:52:20 ********************
+11:52:20 New best hypothesis:
+11:52:20 tp:9 fn:206 tn:861 fp:2 size:3 mdl:211
+11:52:20 play_target(A):- laptop(B),on_the_side_of(B,A).
+11:52:20 ********************
+11:52:23 ********************
+11:52:23 New best hypothesis:
+11:52:23 tp:34 fn:181 tn:842 fp:21 size:3 mdl:205
+11:52:23 play_target(A):- laptop(B),not_contacting(A,B).
+11:52:23 ********************
+11:52:25 ********************
+11:52:25 New best hypothesis:
+11:52:25 tp:82 fn:133 tn:807 fp:56 size:3 mdl:192
+11:52:25 play_target(A):- laptop(B),in_front_of(B,A).
+11:52:25 ********************
+11:52:44 Generating programs of size: 4
+11:59:07 Generating programs of size: 5
+14:06:56 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.59 Recall:0.38 TP:82 FN:133 TN:807 FP:56 Size:3 MDL:192
+play_target(A):- laptop(B),in_front_of(B,A).
+******************************

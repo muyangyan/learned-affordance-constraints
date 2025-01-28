@@ -61,36 +61,32 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:30:51 Generating programs of size: 2
-10:30:53 Generating programs of size: 3
-10:30:54 ********************
-10:30:54 New best hypothesis:
-10:30:54 tp:68 fn:822 tn:2702 fp:19 size:3 mdl:844
-10:30:54 sit_target(A):- chair(B),not_contacting(A,B).
-10:30:54 ********************
-10:32:05 Generating programs of size: 4
-10:32:19 ********************
-10:32:19 New best hypothesis:
-10:32:19 tp:142 fn:748 tn:2676 fp:45 size:24 mdl:817
-10:32:19 sit_target(A):- chair(B),not_contacting(A,B).
-10:32:19 sit_target(A):- chair(B),touching(A,B).
-10:32:19 sit_target(A):- table(B),beneath(B,A).
-10:32:19 sit_target(A):- bed(B),not_contacting(A,B).
-10:32:19 sit_target(A):- bed(B),other_relationship(A,B).
-10:32:19 sit_target(A):- sandwich(B),eating(A,B).
-10:32:19 sit_target(A):- touching(A,B),lying_on(A,B).
-10:32:19 sit_target(A):- table(B),lying_on(A,B).
-10:32:19 ********************
-10:59:22 Generating programs of size: 5
-10:59:35 ********************
-10:59:35 New best hypothesis:
-10:59:35 tp:154 fn:736 tn:2669 fp:52 size:26 mdl:814
-10:59:35 sit_target(A):- chair(B),not_contacting(A,B).
-10:59:35 sit_target(A):- chair(B),touching(A,B).
-10:59:35 sit_target(A):- bed(B),not_contacting(A,B).
-10:59:35 sit_target(A):- bed(B),other_relationship(A,B).
-10:59:35 sit_target(A):- touching(A,B),lying_on(A,B).
-10:59:35 sit_target(A):- table(B),lying_on(A,B).
-10:59:35 sit_target(A):- behind(B,A),on_the_side_of(B,A),lying_on(A,B).
-10:59:35 sit_target(A):- table(B),beneath(B,A),not_contacting(A,B).
-10:59:35 ********************
+11:52:12 Generating programs of size: 2
+11:52:14 Generating programs of size: 3
+11:52:15 ********************
+11:52:15 New best hypothesis:
+11:52:15 tp:61 fn:804 tn:2686 fp:18 size:3 mdl:825
+11:52:15 sit_target(A):- chair(B),not_contacting(A,B).
+11:52:15 ********************
+11:52:53 Generating programs of size: 4
+11:53:04 ********************
+11:53:04 New best hypothesis:
+11:53:04 tp:115 fn:750 tn:2664 fp:40 size:18 mdl:808
+11:53:04 sit_target(A):- chair(B),not_contacting(A,B).
+11:53:04 sit_target(A):- touching(A,B),chair(B).
+11:53:04 sit_target(A):- on_the_side_of(B,A),light(B).
+11:53:04 sit_target(A):- bed(B),not_contacting(A,B).
+11:53:04 sit_target(A):- in_front_of(B,A),lying_on(A,B).
+11:53:04 sit_target(A):- lying_on(A,B),floor(B).
+11:53:04 ********************
+12:20:18 Generating programs of size: 5
+14:06:02 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.74 Recall:0.13 TP:115 FN:750 TN:2664 FP:40 Size:18 MDL:808
+sit_target(A):- chair(B),not_contacting(A,B).
+sit_target(A):- touching(A,B),chair(B).
+sit_target(A):- on_the_side_of(B,A),light(B).
+sit_target(A):- bed(B),not_contacting(A,B).
+sit_target(A):- in_front_of(B,A),lying_on(A,B).
+sit_target(A):- lying_on(A,B),floor(B).
+******************************

@@ -61,29 +61,28 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:30:51 Generating programs of size: 2
-10:30:53 Generating programs of size: 3
-10:30:57 ********************
-10:30:57 New best hypothesis:
-10:30:57 tp:12 fn:48 tn:228 fp:7 size:3 mdl:58
-10:30:57 lie_target(A):- sitting_on(A,B),bed(B).
-10:30:57 ********************
-10:30:57 ********************
-10:30:57 New best hypothesis:
-10:30:57 tp:14 fn:46 tn:232 fp:3 size:3 mdl:52
-10:30:57 lie_target(A):- sitting_on(A,B),floor(B).
-10:30:57 ********************
-10:30:59 ********************
-10:30:59 New best hypothesis:
-10:30:59 tp:27 fn:33 tn:221 fp:14 size:3 mdl:50
-10:30:59 lie_target(A):- beneath(B,A),floor(B).
-10:30:59 ********************
-10:31:01 Generating programs of size: 4
-10:31:03 ********************
-10:31:03 New best hypothesis:
-10:31:03 tp:48 fn:12 tn:213 fp:22 size:9 mdl:43
-10:31:03 lie_target(A):- other_relationship(A,B),bed(B).
-10:31:03 lie_target(A):- beneath(B,A),bed(B).
-10:31:03 lie_target(A):- beneath(B,A),floor(B).
-10:31:03 ********************
-10:40:38 Generating programs of size: 5
+11:52:12 Generating programs of size: 2
+11:52:14 Generating programs of size: 3
+11:52:18 ********************
+11:52:18 New best hypothesis:
+11:52:18 tp:6 fn:41 tn:290 fp:2 size:3 mdl:46
+11:52:18 lie_target(A):- bed(B),leaning_on(A,B).
+11:52:18 ********************
+11:52:35 Generating programs of size: 4
+11:52:36 ********************
+11:52:36 New best hypothesis:
+11:52:36 tp:11 fn:36 tn:290 fp:2 size:6 mdl:44
+11:52:36 lie_target(A):- bed(B),leaning_on(A,B).
+11:52:36 lie_target(A):- touching(A,B),pillow(B).
+11:52:36 ********************
+11:56:50 Generating programs of size: 5
+13:29:17 ********************
+13:29:17 New best hypothesis:
+13:29:17 tp:12 fn:35 tn:290 fp:2 size:5 mdl:42
+13:29:17 lie_target(A):- holding(A,B),beneath(D,C),on_the_side_of(B,C),beneath(D,A).
+13:29:17 ********************
+14:05:43 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.86 Recall:0.26 TP:12 FN:35 TN:290 FP:2 Size:5 MDL:42
+lie_target(A):- holding(A,B),beneath(D,C),on_the_side_of(B,C),beneath(D,A).
+******************************

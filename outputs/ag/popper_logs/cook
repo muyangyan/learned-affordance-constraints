@@ -61,24 +61,26 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:30:52 Generating programs of size: 2
-10:30:53 Generating programs of size: 3
-10:30:57 ********************
-10:30:57 New best hypothesis:
-10:30:57 tp:8 fn:60 tn:285 fp:4 size:3 mdl:67
-10:30:57 cook_target(A):- food(B),beneath(B,A).
-10:30:57 ********************
-10:30:58 ********************
-10:30:58 New best hypothesis:
-10:30:58 tp:53 fn:15 tn:255 fp:34 size:3 mdl:52
-10:30:58 cook_target(A):- food(B),in_front_of(B,A).
-10:30:58 ********************
-10:31:07 Generating programs of size: 4
-10:31:09 ********************
-10:31:09 New best hypothesis:
-10:31:09 tp:67 fn:1 tn:250 fp:39 size:9 mdl:49
-10:31:09 cook_target(A):- food(B),beneath(B,A).
-10:31:09 cook_target(A):- food(B),in_front_of(B,A).
-10:31:09 cook_target(A):- not_contacting(A,B),food(B).
-10:31:09 ********************
-10:42:11 Generating programs of size: 5
+11:52:12 Generating programs of size: 2
+11:52:14 Generating programs of size: 3
+11:52:19 ********************
+11:52:19 New best hypothesis:
+11:52:19 tp:54 fn:12 tn:76 fp:13 size:3 mdl:28
+11:52:19 cook_target(A):- food(B),in_front_of(B,A).
+11:52:19 ********************
+11:52:23 Generating programs of size: 4
+11:52:25 ********************
+11:52:25 New best hypothesis:
+11:52:25 tp:66 fn:0 tn:76 fp:13 size:9 mdl:22
+11:52:25 cook_target(A):- food(B),in_front_of(B,A).
+11:52:25 cook_target(A):- food(B),on_the_side_of(B,A).
+11:52:25 cook_target(A):- food(B),beneath(B,A).
+11:52:25 ********************
+11:59:56 Generating programs of size: 5
+14:05:31 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.84 Recall:1.00 TP:66 FN:0 TN:76 FP:13 Size:9 MDL:22
+cook_target(A):- food(B),in_front_of(B,A).
+cook_target(A):- food(B),on_the_side_of(B,A).
+cook_target(A):- food(B),beneath(B,A).
+******************************

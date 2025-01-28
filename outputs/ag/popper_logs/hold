@@ -61,55 +61,78 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:30:51 Generating programs of size: 2
-10:30:53 Generating programs of size: 3
-10:30:58 ********************
-10:30:58 New best hypothesis:
-10:30:58 tp:19 fn:594 tn:2220 fp:15 size:3 mdl:612
-10:30:58 hold_target(A):- touching(A,B),bag(B).
-10:30:58 ********************
-10:30:59 ********************
-10:30:59 New best hypothesis:
-10:30:59 tp:8 fn:605 tn:2232 fp:3 size:3 mdl:611
-10:30:59 hold_target(A):- carrying(A,B),towel(B).
-10:30:59 ********************
-10:31:10 ********************
-10:31:10 New best hypothesis:
-10:31:10 tp:39 fn:574 tn:2208 fp:27 size:3 mdl:604
-10:31:10 hold_target(A):- not_contacting(A,B),bag(B).
-10:31:10 ********************
-10:31:10 ********************
-10:31:10 New best hypothesis:
-10:31:10 tp:57 fn:556 tn:2206 fp:29 size:3 mdl:588
-10:31:10 hold_target(A):- not_contacting(A,B),dish(B).
-10:31:10 ********************
-10:31:23 Generating programs of size: 4
-10:31:33 ********************
-10:31:33 New best hypothesis:
-10:31:33 tp:210 fn:403 tn:2100 fp:135 size:27 mdl:565
-10:31:33 hold_target(A):- touching(A,B),bag(B).
-10:31:33 hold_target(A):- carrying(A,B),towel(B).
-10:31:33 hold_target(A):- not_contacting(A,B),bag(B).
-10:31:33 hold_target(A):- not_contacting(A,B),towel(B).
-10:31:33 hold_target(A):- not_contacting(A,B),broom(B).
-10:31:33 hold_target(A):- not_contacting(A,B),blanket(B).
-10:31:33 hold_target(A):- not_contacting(A,B),sandwich(B).
-10:31:33 hold_target(A):- not_contacting(A,B),dish(B).
-10:31:33 hold_target(A):- wearing(A,B),on_the_side_of(B,A).
-10:31:33 ********************
-10:46:40 Generating programs of size: 5
-10:46:51 ********************
-10:46:51 New best hypothesis:
-10:46:51 tp:222 fn:391 tn:2103 fp:132 size:36 mdl:559
-10:46:51 hold_target(A):- touching(A,B),bag(B).
-10:46:51 hold_target(A):- carrying(A,B),towel(B).
-10:46:51 hold_target(A):- not_contacting(A,B),bag(B).
-10:46:51 hold_target(A):- not_contacting(A,B),towel(B).
-10:46:51 hold_target(A):- not_contacting(A,B),broom(B).
-10:46:51 hold_target(A):- not_contacting(A,B),blanket(B).
-10:46:51 hold_target(A):- not_contacting(A,B),dish(B).
-10:46:51 hold_target(A):- wearing(A,B),on_the_side_of(B,A).
-10:46:51 hold_target(A):- not_contacting(A,B),clothes(B),on_the_side_of(B,A).
-10:46:51 hold_target(A):- clothes(B),touching(A,B),in_front_of(B,A).
-10:46:51 hold_target(A):- not_contacting(A,B),in_front_of(B,A),shoe(B).
-10:46:51 ********************
+11:52:12 Generating programs of size: 2
+11:52:14 Generating programs of size: 3
+11:52:25 ********************
+11:52:25 New best hypothesis:
+11:52:25 tp:6 fn:437 tn:1579 fp:2 size:3 mdl:442
+11:52:25 hold_target(A):- towel(B),behind(B,A).
+11:52:25 ********************
+11:52:31 ********************
+11:52:31 New best hypothesis:
+11:52:31 tp:23 fn:420 tn:1565 fp:16 size:3 mdl:439
+11:52:31 hold_target(A):- clothes(B),on_the_side_of(B,A).
+11:52:31 ********************
+11:52:33 ********************
+11:52:33 New best hypothesis:
+11:52:33 tp:23 fn:420 tn:1566 fp:15 size:3 mdl:438
+11:52:33 hold_target(A):- box(B),not_contacting(A,B).
+11:52:33 ********************
+11:52:33 ********************
+11:52:33 New best hypothesis:
+11:52:33 tp:54 fn:389 tn:1566 fp:15 size:3 mdl:407
+11:52:33 hold_target(A):- not_contacting(A,B),dish(B).
+11:52:33 ********************
+11:52:49 Generating programs of size: 4
+11:53:00 ********************
+11:53:00 New best hypothesis:
+11:53:00 tp:286 fn:157 tn:1433 fp:148 size:39 mdl:344
+11:53:00 hold_target(A):- clothes(B),behind(B,A).
+11:53:00 hold_target(A):- on_the_side_of(B,A),wearing(A,B).
+11:53:00 hold_target(A):- box(B),not_contacting(A,B).
+11:53:00 hold_target(A):- not_contacting(A,B),vacuum(B).
+11:53:00 hold_target(A):- not_contacting(A,B),dish(B).
+11:53:00 hold_target(A):- not_contacting(A,B),food(B).
+11:53:00 hold_target(A):- blanket(B),not_contacting(A,B).
+11:53:00 hold_target(A):- not_contacting(A,B),shoe(B).
+11:53:00 hold_target(A):- towel(B),not_contacting(A,B).
+11:53:00 hold_target(A):- not_contacting(A,B),broom(B).
+11:53:00 hold_target(A):- not_contacting(A,B),book(B).
+11:53:00 hold_target(A):- not_contacting(A,B),bag(B).
+11:53:00 hold_target(A):- not_contacting(A,B),pillow(B).
+11:53:00 ********************
+12:01:58 Generating programs of size: 5
+12:02:09 ********************
+12:02:09 New best hypothesis:
+12:02:09 tp:259 fn:184 tn:1466 fp:115 size:42 mdl:341
+12:02:09 hold_target(A):- clothes(B),behind(B,A).
+12:02:09 hold_target(A):- on_the_side_of(B,A),wearing(A,B).
+12:02:09 hold_target(A):- box(B),not_contacting(A,B).
+12:02:09 hold_target(A):- not_contacting(A,B),sandwich(B).
+12:02:09 hold_target(A):- not_contacting(A,B),vacuum(B).
+12:02:09 hold_target(A):- not_contacting(A,B),dish(B).
+12:02:09 hold_target(A):- blanket(B),not_contacting(A,B).
+12:02:09 hold_target(A):- towel(B),not_contacting(A,B).
+12:02:09 hold_target(A):- not_contacting(A,B),broom(B).
+12:02:09 hold_target(A):- not_contacting(A,B),bag(B).
+12:02:09 hold_target(A):- not_contacting(A,B),pillow(B),in_front_of(B,A).
+12:02:09 hold_target(A):- not_contacting(A,B),shoe(B),in_front_of(B,A).
+12:02:09 hold_target(A):- not_contacting(A,B),on_the_side_of(B,A),book(B).
+12:02:09 ********************
+14:07:52 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.69 Recall:0.58 TP:259 FN:184 TN:1466 FP:115 Size:42 MDL:341
+hold_target(A):- clothes(B),behind(B,A).
+hold_target(A):- on_the_side_of(B,A),wearing(A,B).
+hold_target(A):- box(B),not_contacting(A,B).
+hold_target(A):- not_contacting(A,B),sandwich(B).
+hold_target(A):- not_contacting(A,B),vacuum(B).
+hold_target(A):- not_contacting(A,B),dish(B).
+hold_target(A):- blanket(B),not_contacting(A,B).
+hold_target(A):- towel(B),not_contacting(A,B).
+hold_target(A):- not_contacting(A,B),broom(B).
+hold_target(A):- not_contacting(A,B),bag(B).
+hold_target(A):- not_contacting(A,B),pillow(B),in_front_of(B,A).
+hold_target(A):- not_contacting(A,B),shoe(B),in_front_of(B,A).
+hold_target(A):- not_contacting(A,B),on_the_side_of(B,A),book(B).
+******************************

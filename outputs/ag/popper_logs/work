@@ -61,32 +61,51 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:30:51 Generating programs of size: 2
-10:30:53 Generating programs of size: 3
-10:30:53 ********************
-10:30:53 New best hypothesis:
-10:30:53 tp:7 fn:129 tn:403 fp:2 size:3 mdl:134
-10:30:53 work_target(A):- on_the_side_of(B,A),chair(B).
-10:30:53 ********************
-10:30:53 ********************
-10:30:53 New best hypothesis:
-10:30:53 tp:50 fn:86 tn:363 fp:42 size:3 mdl:131
-10:30:53 work_target(A):- behind(B,A),chair(B).
-10:30:53 ********************
-10:30:59 ********************
-10:30:59 New best hypothesis:
-10:30:59 tp:31 fn:105 tn:396 fp:9 size:3 mdl:117
-10:30:59 work_target(A):- laptop(B),touching(A,B).
-10:30:59 ********************
-10:30:59 ********************
-10:30:59 New best hypothesis:
-10:30:59 tp:42 fn:94 tn:397 fp:8 size:3 mdl:105
-10:30:59 work_target(A):- touching(A,B),table(B).
-10:30:59 ********************
-10:31:00 ********************
-10:31:00 New best hypothesis:
-10:31:00 tp:103 fn:33 tn:356 fp:49 size:3 mdl:85
-10:31:00 work_target(A):- in_front_of(B,A),table(B).
-10:31:00 ********************
-10:31:18 Generating programs of size: 4
-10:44:01 Generating programs of size: 5
+11:52:12 Generating programs of size: 2
+11:52:14 Generating programs of size: 3
+11:52:14 ********************
+11:52:14 New best hypothesis:
+11:52:14 tp:14 fn:135 tn:298 fp:10 size:3 mdl:148
+11:52:14 work_target(A):- chair(B),leaning_on(A,B).
+11:52:14 ********************
+11:52:17 ********************
+11:52:17 New best hypothesis:
+11:52:17 tp:9 fn:140 tn:306 fp:2 size:3 mdl:145
+11:52:17 work_target(A):- chair(B),not_contacting(A,B).
+11:52:17 ********************
+11:52:18 ********************
+11:52:18 New best hypothesis:
+11:52:18 tp:61 fn:88 tn:281 fp:27 size:3 mdl:118
+11:52:18 work_target(A):- chair(B),beneath(B,A).
+11:52:18 ********************
+11:52:18 ********************
+11:52:18 New best hypothesis:
+11:52:18 tp:65 fn:84 tn:281 fp:27 size:3 mdl:114
+11:52:18 work_target(A):- chair(B),behind(B,A).
+11:52:18 ********************
+11:52:27 ********************
+11:52:27 New best hypothesis:
+11:52:27 tp:79 fn:70 tn:271 fp:37 size:3 mdl:110
+11:52:27 work_target(A):- table(B),not_contacting(A,B).
+11:52:27 ********************
+11:52:29 ********************
+11:52:29 New best hypothesis:
+11:52:29 tp:117 fn:32 tn:272 fp:36 size:3 mdl:71
+11:52:29 work_target(A):- table(B),in_front_of(B,A).
+11:52:29 ********************
+11:53:26 Generating programs of size: 4
+11:53:29 ********************
+11:53:29 New best hypothesis:
+11:53:29 tp:127 fn:22 tn:270 fp:38 size:9 mdl:69
+11:53:29 work_target(A):- chair(B),not_contacting(A,B).
+11:53:29 work_target(A):- in_front_of(B,A),writing_on(A,B).
+11:53:29 work_target(A):- table(B),in_front_of(B,A).
+11:53:29 ********************
+12:02:42 Generating programs of size: 5
+14:06:39 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.77 Recall:0.85 TP:127 FN:22 TN:270 FP:38 Size:9 MDL:69
+work_target(A):- chair(B),not_contacting(A,B).
+work_target(A):- in_front_of(B,A),writing_on(A,B).
+work_target(A):- table(B),in_front_of(B,A).
+******************************

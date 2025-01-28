@@ -412,7 +412,7 @@ class AGViewer:
             _ = input('max index reached, enter to continue')
             index = len(self.ag) - 1
 
-        id, img, sg, action = self.ag[index]
+        id, img, sg, action, constraints = self.ag[index]
         verb, obj = self.ag.action_verb_obj_map[action]
 
         self.index = index
@@ -448,7 +448,7 @@ class AGViewer:
 
         while index <= len(self.ag) - 1 and index >= 0:
 
-            id, img, sg, action = self.ag[index]
+            id, img, sg, action, constraints = self.ag[index]
             verb, obj = self.ag.action_verb_obj_map[action]
             strings = [self.subset_dict[id], self.ag.action_classes[action], \
                        self.ag.verb_classes[verb], \

@@ -61,32 +61,17 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:30:51 Generating programs of size: 2
-10:30:53 Generating programs of size: 3
-10:30:57 ********************
-10:30:57 New best hypothesis:
-10:30:57 tp:71 fn:599 tn:2079 fp:66 size:3 mdl:668
-10:30:57 smile_target(A):- in_front_of(B,A),mirror(B).
-10:30:57 ********************
-10:31:03 ********************
-10:31:03 New best hypothesis:
-10:31:03 tp:11 fn:659 tn:2142 fp:3 size:3 mdl:665
-10:31:03 smile_target(A):- sitting_on(A,B),touching(A,B).
-10:31:03 ********************
-10:31:20 Generating programs of size: 4
-10:31:26 ********************
-10:31:26 New best hypothesis:
-10:31:26 tp:90 fn:580 tn:2075 fp:70 size:12 mdl:662
-10:31:26 smile_target(A):- in_front_of(B,A),mirror(B).
-10:31:26 smile_target(A):- touching(A,B),broom(B).
-10:31:26 smile_target(A):- sitting_on(A,B),touching(A,B).
-10:31:26 smile_target(A):- picture(B),above(B,A).
-10:31:26 ********************
-10:51:13 Generating programs of size: 5
-10:51:20 ********************
-10:51:20 New best hypothesis:
-10:51:20 tp:68 fn:602 tn:2097 fp:48 size:11 mdl:661
-10:51:20 smile_target(A):- touching(A,B),broom(B).
-10:51:20 smile_target(A):- not_contacting(A,B),mirror(B),in_front_of(B,A).
-10:51:20 smile_target(A):- touching(C,B),behind(B,A),sitting_on(C,B).
-10:51:20 ********************
+11:52:13 Generating programs of size: 2
+11:52:14 Generating programs of size: 3
+11:52:26 ********************
+11:52:26 New best hypothesis:
+11:52:26 tp:62 fn:582 tn:2085 fp:53 size:3 mdl:638
+11:52:26 smile_target(A):- in_front_of(B,A),mirror(B).
+11:52:26 ********************
+11:52:43 Generating programs of size: 4
+12:06:51 Generating programs of size: 5
+14:06:59 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.54 Recall:0.10 TP:62 FN:582 TN:2085 FP:53 Size:3 MDL:638
+smile_target(A):- in_front_of(B,A),mirror(B).
+******************************

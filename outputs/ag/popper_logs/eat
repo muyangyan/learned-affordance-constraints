@@ -61,26 +61,35 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:30:51 Generating programs of size: 2
-10:30:53 Generating programs of size: 3
-10:31:00 ********************
-10:31:00 New best hypothesis:
-10:31:00 tp:18 fn:330 tn:1442 fp:7 size:3 mdl:340
-10:31:00 eat_target(A):- beneath(B,A),food(B).
-10:31:00 ********************
-10:31:01 ********************
-10:31:01 New best hypothesis:
-10:31:01 tp:253 fn:95 tn:1307 fp:142 size:3 mdl:240
-10:31:01 eat_target(A):- holding(A,B),food(B).
-10:31:01 ********************
-10:31:11 Generating programs of size: 4
-10:31:19 ********************
-10:31:19 New best hypothesis:
-10:31:19 tp:326 fn:22 tn:1276 fp:173 size:15 mdl:210
-10:31:19 eat_target(A):- holding(A,B),food(B).
-10:31:19 eat_target(A):- touching(A,B),food(B).
-10:31:19 eat_target(A):- sandwich(B),in_front_of(B,A).
-10:31:19 eat_target(A):- medicine(B),in_front_of(B,A).
-10:31:19 eat_target(A):- not_contacting(A,B),sandwich(B).
-10:31:19 ********************
-10:48:02 Generating programs of size: 5
+11:52:13 Generating programs of size: 2
+11:52:14 Generating programs of size: 3
+11:52:27 ********************
+11:52:27 New best hypothesis:
+11:52:27 tp:45 fn:307 tn:1465 fp:10 size:3 mdl:320
+11:52:27 eat_target(A):- medicine(B),holding(A,B).
+11:52:27 ********************
+11:52:27 ********************
+11:52:27 New best hypothesis:
+11:52:27 tp:256 fn:96 tn:1339 fp:136 size:3 mdl:235
+11:52:27 eat_target(A):- food(B),holding(A,B).
+11:52:27 ********************
+11:52:45 Generating programs of size: 4
+11:52:54 ********************
+11:52:54 New best hypothesis:
+11:52:54 tp:329 fn:23 tn:1308 fp:167 size:15 mdl:205
+11:52:54 eat_target(A):- medicine(B),holding(A,B).
+11:52:54 eat_target(A):- food(B),holding(A,B).
+11:52:54 eat_target(A):- sandwich(B),holding(A,B).
+11:52:54 eat_target(A):- food(B),touching(A,B).
+11:52:54 eat_target(A):- not_contacting(A,B),sandwich(B).
+11:52:54 ********************
+12:05:11 Generating programs of size: 5
+14:08:48 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.66 Recall:0.93 TP:329 FN:23 TN:1308 FP:167 Size:15 MDL:205
+eat_target(A):- medicine(B),holding(A,B).
+eat_target(A):- food(B),holding(A,B).
+eat_target(A):- sandwich(B),holding(A,B).
+eat_target(A):- food(B),touching(A,B).
+eat_target(A):- not_contacting(A,B),sandwich(B).
+******************************

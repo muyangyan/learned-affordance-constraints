@@ -61,29 +61,36 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:30:52 Generating programs of size: 2
-10:30:53 Generating programs of size: 3
-10:30:59 ********************
-10:30:59 New best hypothesis:
-10:30:59 tp:29 fn:150 tn:653 fp:2 size:3 mdl:155
-10:30:59 wash_target(A):- on_the_side_of(B,A),towel(B).
-10:30:59 ********************
-10:31:03 ********************
-10:31:03 New best hypothesis:
-10:31:03 tp:51 fn:128 tn:636 fp:19 size:3 mdl:150
-10:31:03 wash_target(A):- holding(A,B),towel(B).
-10:31:03 ********************
-10:31:05 ********************
-10:31:05 New best hypothesis:
-10:31:05 tp:64 fn:115 tn:631 fp:24 size:3 mdl:142
-10:31:05 wash_target(A):- in_front_of(B,A),towel(B).
-10:31:05 ********************
-10:31:14 Generating programs of size: 4
-10:31:19 ********************
-10:31:19 New best hypothesis:
-10:31:19 tp:84 fn:95 tn:629 fp:26 size:9 mdl:130
-10:31:19 wash_target(A):- on_the_side_of(B,A),towel(B).
-10:31:19 wash_target(A):- in_front_of(B,A),towel(B).
-10:31:19 wash_target(A):- in_front_of(B,A),wiping(A,B).
-10:31:19 ********************
-10:48:53 Generating programs of size: 5
+11:52:12 Generating programs of size: 2
+11:52:14 Generating programs of size: 3
+11:52:19 ********************
+11:52:19 New best hypothesis:
+11:52:19 tp:8 fn:164 tn:289 fp:1 size:3 mdl:168
+11:52:19 wash_target(A):- touching(A,B),towel(B).
+11:52:19 ********************
+11:52:20 ********************
+11:52:20 New best hypothesis:
+11:52:20 tp:30 fn:142 tn:270 fp:20 size:3 mdl:165
+11:52:20 wash_target(A):- dish(B),in_front_of(B,A).
+11:52:20 ********************
+11:52:20 ********************
+11:52:20 New best hypothesis:
+11:52:20 tp:66 fn:106 tn:279 fp:11 size:3 mdl:120
+11:52:20 wash_target(A):- in_front_of(B,A),towel(B).
+11:52:20 ********************
+11:52:40 Generating programs of size: 4
+11:52:44 ********************
+11:52:44 New best hypothesis:
+11:52:44 tp:109 fn:63 tn:259 fp:31 size:9 mdl:103
+11:52:44 wash_target(A):- dish(B),in_front_of(B,A).
+11:52:44 wash_target(A):- in_front_of(B,A),towel(B).
+11:52:44 wash_target(A):- on_the_side_of(B,A),towel(B).
+11:52:44 ********************
+12:02:19 Generating programs of size: 5
+14:05:34 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.78 Recall:0.63 TP:109 FN:63 TN:259 FP:31 Size:9 MDL:103
+wash_target(A):- dish(B),in_front_of(B,A).
+wash_target(A):- in_front_of(B,A),towel(B).
+wash_target(A):- on_the_side_of(B,A),towel(B).
+******************************

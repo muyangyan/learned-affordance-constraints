@@ -61,12 +61,17 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:30:51 Generating programs of size: 2
-10:30:53 Generating programs of size: 3
-10:31:06 ********************
-10:31:06 New best hypothesis:
-10:31:06 tp:4 fn:347 tn:1309 fp:0 size:3 mdl:350
-10:31:06 sneeze_target(A):- groceries(B),on_the_side_of(B,A).
-10:31:06 ********************
-10:31:16 Generating programs of size: 4
-10:58:25 Generating programs of size: 5
+11:52:13 Generating programs of size: 2
+11:52:14 Generating programs of size: 3
+11:52:24 ********************
+11:52:24 New best hypothesis:
+11:52:24 tp:5 fn:362 tn:1123 fp:0 size:3 mdl:365
+11:52:24 sneeze_target(A):- mirror(B),touching(A,B).
+11:52:24 ********************
+11:52:44 Generating programs of size: 4
+12:03:11 Generating programs of size: 5
+14:06:13 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:1.00 Recall:0.01 TP:5 FN:362 TN:1123 FP:0 Size:3 MDL:365
+sneeze_target(A):- mirror(B),touching(A,B).
+******************************

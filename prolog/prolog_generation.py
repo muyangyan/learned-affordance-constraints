@@ -115,11 +115,13 @@ class PrologData:
             general_bk = g.read()
             f.write(general_bk)
             f.write('\n')
+        
+        print(self.name)
 
         for idx, inputs in enumerate(self.dataset):
-            if type(self.dataset) is AG:
+            if self.name == 'ag':
                 id, _, data, _, _ = inputs
-            elif type(self.dataset) is ToyDataset:
+            elif self.name == 'toy':
                 data = inputs
             else:
                 raise ValueError('Invalid dataset type')

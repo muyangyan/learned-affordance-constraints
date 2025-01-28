@@ -61,24 +61,38 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:30:51 Generating programs of size: 2
-10:30:53 Generating programs of size: 3
-10:31:04 ********************
-10:31:04 New best hypothesis:
-10:31:04 tp:16 fn:764 tn:2605 fp:11 size:3 mdl:778
-10:31:04 stand_target(A):- in_front_of(B,A),wearing(A,B).
-10:31:04 ********************
-10:31:14 ********************
-10:31:14 New best hypothesis:
-10:31:14 tp:30 fn:750 tn:2593 fp:23 size:3 mdl:776
-10:31:14 stand_target(A):- other_relationship(A,B),sitting_on(A,B).
-10:31:14 ********************
-10:31:31 Generating programs of size: 4
-10:31:41 ********************
-10:31:41 New best hypothesis:
-10:31:41 tp:49 fn:731 tn:2584 fp:32 size:9 mdl:772
-10:31:41 stand_target(A):- in_front_of(B,A),wearing(A,B).
-10:31:41 stand_target(A):- other_relationship(A,B),leaning_on(A,B).
-10:31:41 stand_target(A):- touching(A,B),sitting_on(A,B).
-10:31:41 ********************
-10:54:36 Generating programs of size: 5
+11:52:13 Generating programs of size: 2
+11:52:14 Generating programs of size: 3
+11:52:23 ********************
+11:52:23 New best hypothesis:
+11:52:23 tp:30 fn:723 tn:2815 fp:23 size:3 mdl:749
+11:52:23 stand_target(A):- sitting_on(A,B),other_relationship(A,B).
+11:52:23 ********************
+11:52:31 ********************
+11:52:31 New best hypothesis:
+11:52:31 tp:21 fn:732 tn:2828 fp:10 size:3 mdl:745
+11:52:31 stand_target(A):- wearing(A,B),in_front_of(B,A).
+11:52:31 ********************
+11:52:37 Generating programs of size: 4
+11:52:47 ********************
+11:52:47 New best hypothesis:
+11:52:47 tp:60 fn:693 tn:2803 fp:35 size:9 mdl:737
+11:52:47 stand_target(A):- sitting_on(A,B),other_relationship(A,B).
+11:52:47 stand_target(A):- touching(A,B),sitting_on(A,B).
+11:52:47 stand_target(A):- wearing(A,B),in_front_of(B,A).
+11:52:47 ********************
+12:11:45 Generating programs of size: 5
+12:11:55 ********************
+12:11:55 New best hypothesis:
+12:11:55 tp:60 fn:693 tn:2805 fp:33 size:10 mdl:736
+12:11:55 stand_target(A):- sitting_on(A,B),other_relationship(A,B).
+12:11:55 stand_target(A):- touching(A,B),sitting_on(A,B).
+12:11:55 stand_target(A):- wearing(A,B),shoe(B),in_front_of(B,A).
+12:11:55 ********************
+14:07:50 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.65 Recall:0.08 TP:60 FN:693 TN:2805 FP:33 Size:10 MDL:736
+stand_target(A):- sitting_on(A,B),other_relationship(A,B).
+stand_target(A):- touching(A,B),sitting_on(A,B).
+stand_target(A):- wearing(A,B),shoe(B),in_front_of(B,A).
+******************************

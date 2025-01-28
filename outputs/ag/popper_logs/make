@@ -61,8 +61,9 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:30:51 Generating programs of size: 2
-10:30:56 Generating programs of size: 3
-10:31:11 Generating programs of size: 4
-10:33:23 Generating programs of size: 5
-10:51:38 Generating programs of size: 6
+11:52:12 Generating programs of size: 2
+11:52:17 Generating programs of size: 3
+11:52:17 Generating programs of size: 4
+11:52:48 Generating programs of size: 5
+11:55:25 Generating programs of size: 6
+12:10:33 Generating programs of size: 7

@@ -61,31 +61,31 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:30:51 Generating programs of size: 2
-10:30:53 Generating programs of size: 3
-10:30:56 ********************
-10:30:56 New best hypothesis:
-10:30:56 tp:5 fn:27 tn:101 fp:0 size:3 mdl:30
-10:30:56 grasp_target(A):- towel(B),in(B,A).
-10:30:56 ********************
-10:30:57 ********************
-10:30:57 New best hypothesis:
-10:30:57 tp:7 fn:25 tn:101 fp:0 size:3 mdl:28
-10:30:57 grasp_target(A):- in_front_of(B,A),doorway(B).
-10:30:57 ********************
-10:30:57 ********************
-10:30:57 New best hypothesis:
-10:30:57 tp:14 fn:18 tn:101 fp:0 size:3 mdl:21
-10:30:57 grasp_target(A):- in_front_of(B,A),doorknob(B).
-10:30:57 ********************
-10:30:57 ********************
-10:30:57 New best hypothesis:
-10:30:57 tp:30 fn:2 tn:101 fp:0 size:3 mdl:5
-10:30:57 grasp_target(A):- doorknob(B),not_contacting(A,B).
-10:30:57 ********************
-10:31:19 Generating programs of size: 4
-10:35:02 Generating programs of size: 5
+11:52:12 Generating programs of size: 2
+11:52:14 Generating programs of size: 3
+11:52:17 ********************
+11:52:17 New best hypothesis:
+11:52:17 tp:7 fn:21 tn:156 fp:3 size:3 mdl:27
+11:52:17 grasp_target(A):- doorway(B),in_front_of(B,A).
+11:52:17 ********************
+11:52:17 ********************
+11:52:17 New best hypothesis:
+11:52:17 tp:11 fn:17 tn:156 fp:3 size:3 mdl:23
+11:52:17 grasp_target(A):- in_front_of(B,A),doorknob(B).
+11:52:17 ********************
+11:52:17 ********************
+11:52:17 New best hypothesis:
+11:52:17 tp:14 fn:14 tn:159 fp:0 size:3 mdl:17
+11:52:17 grasp_target(A):- on_the_side_of(B,A),doorknob(B).
+11:52:17 ********************
+11:52:17 ********************
+11:52:17 New best hypothesis:
+11:52:17 tp:27 fn:1 tn:158 fp:1 size:3 mdl:5
+11:52:17 grasp_target(A):- not_contacting(A,B),doorknob(B).
+11:52:17 ********************
+11:52:19 Generating programs of size: 4
+11:57:18 Generating programs of size: 5
 ********** SOLUTION **********
-Precision:1.00 Recall:0.94 TP:30 FN:2 TN:101 FP:0 Size:3 MDL:5
-grasp_target(A):- doorknob(B),not_contacting(A,B).
+Precision:0.96 Recall:0.96 TP:27 FN:1 TN:158 FP:1 Size:3 MDL:5
+grasp_target(A):- not_contacting(A,B),doorknob(B).
 ******************************

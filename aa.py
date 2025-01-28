@@ -47,7 +47,8 @@ class JointModelLightning(L.LightningModule):
         
         # debug vars
         #correct to wrong, correct to correct, wrong to correct, wrong to wrong blocked, wrong to wrong not blocked
-        self.c_w, self.c_c, self.w_C, self.w_w_b, self.w_w_nb = 0, 0, 0, 0, 0
+        self.ids = []
+        self.c_w, self.c_c, self.w_C, self.w_w_b, self.w_w_nb = np.array([]), np.array([]), np.array([]), np.array([]), np.array([])
         
         #epoch metrics
         self.train_accuracy = torchmetrics.Accuracy(task='multiclass', num_classes=num_classes)
@@ -108,11 +109,18 @@ class JointModelLightning(L.LightningModule):
             w_before = (unconstrained_classes != label_classes)
             w_after = (constrained_classes != label_classes)
 
-            self.c_w += torch.sum(c_before * w_after)
-            self.c_c += torch.sum(c_before * c_after)
-            self.w_C += torch.sum(w_before * c_after)
-            self.w_w_b += torch.sum(w_before * w_after * blocked)
-            self.w_w_nb += torch.sum(w_before * w_after * (1 - blocked))
+            c_w = c_before * w_after
+            c_c = c_before * c_after
+            w_C = w_before * c_after
+            w_w_b = w_before * w_after * blocked
+            w_w_nb = w_before * w_after * (1 - blocked)
+
+            self.ids.extend(ids)
+            self.c_w = np.concatenate((self.c_w, c_w.cpu().numpy()))
+            self.c_c = np.concatenate((self.c_c, c_c.cpu().numpy()))
+            self.w_C = np.concatenate((self.w_C, w_C.cpu().numpy()))
+            self.w_w_b = np.concatenate((self.w_w_b, w_w_b.cpu().numpy()))
+            self.w_w_nb = np.concatenate((self.w_w_nb, w_w_nb.cpu().numpy()))
 
             out_classes = constrained_classes
 
@@ -233,11 +241,16 @@ def main(args):
         test_set.constraints = masks
         trainer.test(lightning_model, dataloaders=test_loader)
 
-        print(f'Correct to wrong: {lightning_model.c_w}')
-        print(f'Correct to correct: {lightning_model.c_c}')
-        print(f'Wrong to correct: {lightning_model.w_C}')
-        print(f'Wrong to wrong blocked: {lightning_model.w_w_b}')
-        print(f'Wrong to wrong not blocked: {lightning_model.w_w_nb}')
+        print(f'Correct to wrong: {np.sum(lightning_model.c_w)}')
+        print(f'Correct to correct: {np.sum(lightning_model.c_c)}')
+        print(f'Wrong to correct: {np.sum(lightning_model.w_C)}')
+        print(f'Wrong to wrong blocked: {np.sum(lightning_model.w_w_b)}')
+        print(f'Wrong to wrong not blocked: {np.sum(lightning_model.w_w_nb)}')
+
+        c_w_idxs = np.where(lightning_model.c_w == 1)[0]
+        print(c_w_idxs)
+        c_w_ids = [lightning_model.ids[i] for i in c_w_idxs]
+        print(c_w_ids)
 
 if __name__ == '__main__':
 
