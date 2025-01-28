@@ -43,7 +43,11 @@ class JointModelLightning(L.LightningModule):
             self.model = ViT(num_classes, head=True)
         
         # Move weight to correct device and store it only once
-        self.weight = weight.to(self.device)
+        self.register_buffer('weight', weight)
+        
+        # debug vars
+        #correct to wrong, correct to correct, wrong to correct, wrong to wrong blocked, wrong to wrong not blocked
+        self.c_w, self.c_c, self.w_C, self.w_w_b, self.w_w_nb = 0, 0, 0, 0, 0
         
         #epoch metrics
         self.train_accuracy = torchmetrics.Accuracy(task='multiclass', num_classes=num_classes)
@@ -90,16 +94,36 @@ class JointModelLightning(L.LightningModule):
         out = self(imgs, sgs)
 
         if constraints is not None:
-            out = out * constraints
 
-        out, labels = torch.argmax(out, dim=1), torch.argmax(labels, dim=1)
-        test_acc = self.test_accuracy(out, labels) 
-        test_mAP = self.test_mAP(out, labels)
-        test_mAR = self.test_mAR(out, labels)
+            blocked = torch.sum(labels * constraints, dim=1)
+
+            label_classes = torch.argmax(labels, dim=1)
+            unconstrained_classes = torch.argmax(out, dim=1)
+
+            constrained_out = out * constraints
+            constrained_classes = torch.argmax(constrained_out, dim=1)
+
+            c_before = (unconstrained_classes == label_classes)
+            c_after = (constrained_classes == label_classes)
+            w_before = (unconstrained_classes != label_classes)
+            w_after = (constrained_classes != label_classes)
+
+            self.c_w += torch.sum(c_before * w_after)
+            self.c_c += torch.sum(c_before * c_after)
+            self.w_C += torch.sum(w_before * c_after)
+            self.w_w_b += torch.sum(w_before * w_after * blocked)
+            self.w_w_nb += torch.sum(w_before * w_after * (1 - blocked))
+
+            out_classes = constrained_classes
+
+        else:
+            # Convert to class indices for accuracy
+            out_classes = torch.argmax(out, dim=1)
+            label_classes = torch.argmax(labels, dim=1)
+            
+        test_acc = self.test_accuracy(out_classes, label_classes)
 
         self.log('test_acc', test_acc, on_step=False, on_epoch=True, prog_bar=True)
-        self.log('test_mAP', test_mAP, on_step=False, on_epoch=True, prog_bar=True)
-        self.log('test_mAR', test_mAR, on_step=False, on_epoch=True, prog_bar=True)
             
 
     def configure_optimizers(self):
@@ -206,6 +230,12 @@ def main(args):
         test_set.constraints = masks
         trainer.test(lightning_model, dataloaders=test_loader)
 
+        print(f'Correct to wrong: {lightning_model.c_w}')
+        print(f'Correct to correct: {lightning_model.c_c}')
+        print(f'Wrong to correct: {lightning_model.w_C}')
+        print(f'Wrong to wrong blocked: {lightning_model.w_w_b}')
+        print(f'Wrong to wrong not blocked: {lightning_model.w_w_nb}')
+
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Train and test joint model')
@@ -230,5 +260,7 @@ if __name__ == '__main__':
 
     if not args.train and not args.test:
         parser.error('At least one of --train or --test must be specified')
+    if args.train and args.test and len(args.devices) > 1:
+        parser.error('Testing on multiple devices is not supported')
 
     main(args)
