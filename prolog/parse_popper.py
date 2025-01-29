@@ -1,6 +1,6 @@
 import os
 import json
-
+import argparse
 def parse_logs(folder):
     rules = {}
     for file in os.listdir(folder):
@@ -37,4 +37,9 @@ def write_rules(outputs_folder, rules_name):
             f.write('\n')
 
 if __name__ == '__main__':
-    write_rules('outputs/ag', 'rules_learned')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--dataset', type=str, required=True, help='Dataset name')
+    parser.add_argument('--name', type=str, required=True, help='Split name')
+    args = parser.parse_args()
+
+    write_rules('outputs/' + args.dataset, args.name)
