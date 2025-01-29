@@ -1,8 +1,12 @@
 import os
+import json
+import argparse
 import shelve
 import random
+import numpy as np
 from data.ag.action_genome import AG
 from data.toy.toy_dataset import ToyDataset
+
 
 
 '''
@@ -142,3 +146,56 @@ class PrologData:
                 #disallow use of attentional relationships
                 if edge not in ['looking_at', 'not_looking_at', 'unsure']:
                     f.write(f'body_pred({edge}, 2).\n')
+
+
+def exp_curve(b,x):
+    return 1-np.exp(-b*x)
+
+
+
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--train', action='store_true', help='Generate training data')
+    parser.add_argument('--val', action='store_true', help='Generate validation data') 
+    parser.add_argument('--test', action='store_true', help='Generate test data')
+    args = parser.parse_args()
+
+    if not (args.train or args.val or args.test):
+        print("Please specify at least one of --train, --val, or --test")
+        exit(1)
+
+    root = '/data/Datasets/ag/'
+    subset_file = 'data/ag/subset_shelve'
+
+    if args.train:
+        train_ag = AG(root, no_img=True, split='train', subset_file=subset_file)
+        print(train_ag.verb_label_counts)
+
+        train_pd = PrologData('prolog', 'ag', train_ag, train_ag.object_classes, train_ag.relationship_classes, train_ag.verb_classes, model=None, split='train')
+
+        train_pd.write_bk()
+        train_pd.init_general_bias()
+
+        for verb_idx, verb_name in enumerate(train_ag.verb_classes):
+            freq = train_ag.verb_label_counts[verb_idx]
+            ratio = freq/len(train_ag)
+            print(verb_name, ratio)
+
+            #keeps negatives according to the frequency of the verb
+            train_pd.write_verb(verb_name, keep_prob=exp_curve(4, ratio)) 
+    
+    if args.val:
+        val_ag = AG(root, no_img=True, split='val', subset_file=subset_file)
+        print(val_ag.verb_label_counts)
+
+        val_pd = PrologData('prolog', 'ag', val_ag, val_ag.object_classes, val_ag.relationship_classes, val_ag.verb_classes, model=None, split='val')
+        val_pd.write_bk()
+
+    if args.test:
+        test_ag = AG(root, no_img=True, split='test', subset_file=subset_file)
+        print(test_ag.verb_label_counts)
+        
+        test_pd = PrologData('prolog', 'ag', test_ag, test_ag.object_classes, test_ag.relationship_classes, test_ag.verb_classes, model=None, split='test')
+        test_pd.write_bk()

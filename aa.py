@@ -164,9 +164,11 @@ def test_rules(rules_file, bk_file, test_size, targets, labels=None):
 
 def main(args):
     #DATA=======================================
+    print('BEGIN ACTION GENOME DATA LOADING')
     root = args.root
     split_file = args.split_file
     subset_file = args.subset_file
+
     train_set = AG(root, split='train', split_file=split_file, subset_file=subset_file)
     val_set = AG(root, split='val', split_file=split_file, subset_file=subset_file)
     test_set = AG(root, split='test', split_file=split_file, subset_file=subset_file)
