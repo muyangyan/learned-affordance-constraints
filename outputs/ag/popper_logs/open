@@ -61,41 +61,20 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-11:52:13 Generating programs of size: 2
-11:52:14 Generating programs of size: 3
-11:52:24 ********************
-11:52:24 New best hypothesis:
-11:52:24 tp:37 fn:725 tn:2218 fp:11 size:3 mdl:739
-11:52:24 open_target(A):- holding(A,B),door(B).
-11:52:24 ********************
-11:52:25 ********************
-11:52:25 New best hypothesis:
-11:52:25 tp:150 fn:612 tn:2180 fp:49 size:3 mdl:664
-11:52:25 open_target(A):- door(B),in_front_of(B,A).
-11:52:25 ********************
-11:53:16 Generating programs of size: 4
-11:53:26 ********************
-11:53:26 New best hypothesis:
-11:53:26 tp:446 fn:316 tn:1973 fp:256 size:24 mdl:596
-11:53:26 open_target(A):- holding(A,B),doorway(B).
-11:53:26 open_target(A):- bag(B),in_front_of(B,A).
-11:53:26 open_target(A):- door(B),in_front_of(B,A).
-11:53:26 open_target(A):- in_front_of(B,A),refrigerator(B).
-11:53:26 open_target(A):- on_the_side_of(B,A),book(B).
-11:53:26 open_target(A):- on_the_side_of(B,A),door(B).
-11:53:26 open_target(A):- not_contacting(A,B),refrigerator(B).
-11:53:26 open_target(A):- box(B),touching(A,B).
-11:53:26 ********************
-12:06:46 Generating programs of size: 5
-14:35:45 TIMEOUT OF 8000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.64 Recall:0.59 TP:446 FN:316 TN:1973 FP:256 Size:24 MDL:596
-open_target(A):- holding(A,B),doorway(B).
-open_target(A):- bag(B),in_front_of(B,A).
-open_target(A):- door(B),in_front_of(B,A).
-open_target(A):- in_front_of(B,A),refrigerator(B).
-open_target(A):- on_the_side_of(B,A),book(B).
-open_target(A):- on_the_side_of(B,A),door(B).
-open_target(A):- not_contacting(A,B),refrigerator(B).
-open_target(A):- box(B),touching(A,B).
-******************************
+10:38:05 Generating programs of size: 2
+10:38:06 Generating programs of size: 3
+10:38:46 Generating programs of size: 4
+10:38:57 ********************
+10:38:57 New best hypothesis:
+10:38:57 tp:450 fn:312 tn:1972 fp:257 size:27 mdl:3404
+10:38:57 open_target(A):- in_front_of(B,A),bag(B).
+10:38:57 open_target(A):- in_front_of(B,A),refrigerator(B).
+10:38:57 open_target(A):- refrigerator(B),on_the_side_of(B,A).
+10:38:57 open_target(A):- behind(B,A),refrigerator(B).
+10:38:57 open_target(A):- book(B),on_the_side_of(B,A).
+10:38:57 open_target(A):- on_the_side_of(B,A),door(B).
+10:38:57 open_target(A):- in_front_of(B,A),door(B).
+10:38:57 open_target(A):- touching(A,B),box(B).
+10:38:57 open_target(A):- doorway(B),holding(A,B).
+10:38:57 ********************
+10:54:42 Generating programs of size: 5

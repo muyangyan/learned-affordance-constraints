@@ -61,32 +61,17 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-11:52:12 Generating programs of size: 2
-11:52:14 Generating programs of size: 3
-11:52:15 ********************
-11:52:15 New best hypothesis:
-11:52:15 tp:61 fn:804 tn:2686 fp:18 size:3 mdl:825
-11:52:15 sit_target(A):- chair(B),not_contacting(A,B).
-11:52:15 ********************
-11:52:53 Generating programs of size: 4
-11:53:04 ********************
-11:53:04 New best hypothesis:
-11:53:04 tp:115 fn:750 tn:2664 fp:40 size:18 mdl:808
-11:53:04 sit_target(A):- chair(B),not_contacting(A,B).
-11:53:04 sit_target(A):- touching(A,B),chair(B).
-11:53:04 sit_target(A):- on_the_side_of(B,A),light(B).
-11:53:04 sit_target(A):- bed(B),not_contacting(A,B).
-11:53:04 sit_target(A):- in_front_of(B,A),lying_on(A,B).
-11:53:04 sit_target(A):- lying_on(A,B),floor(B).
-11:53:04 ********************
-12:20:18 Generating programs of size: 5
-14:06:02 TIMEOUT OF 8000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.74 Recall:0.13 TP:115 FN:750 TN:2664 FP:40 Size:18 MDL:808
-sit_target(A):- chair(B),not_contacting(A,B).
-sit_target(A):- touching(A,B),chair(B).
-sit_target(A):- on_the_side_of(B,A),light(B).
-sit_target(A):- bed(B),not_contacting(A,B).
-sit_target(A):- in_front_of(B,A),lying_on(A,B).
-sit_target(A):- lying_on(A,B),floor(B).
-******************************
+10:38:05 Generating programs of size: 2
+10:38:06 Generating programs of size: 3
+10:38:56 Generating programs of size: 4
+10:39:08 ********************
+10:39:08 New best hypothesis:
+10:39:08 tp:115 fn:750 tn:2664 fp:40 size:18 mdl:7558
+10:39:08 sit_target(A):- chair(B),not_contacting(A,B).
+10:39:08 sit_target(A):- chair(B),touching(A,B).
+10:39:08 sit_target(A):- not_contacting(A,B),bed(B).
+10:39:08 sit_target(A):- light(B),on_the_side_of(B,A).
+10:39:08 sit_target(A):- lying_on(A,B),in_front_of(B,A).
+10:39:08 sit_target(A):- lying_on(A,B),floor(B).
+10:39:08 ********************
+10:57:12 Generating programs of size: 5

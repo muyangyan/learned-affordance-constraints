@@ -61,18 +61,12 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-11:52:12 Generating programs of size: 2
-11:52:14 Generating programs of size: 3
-11:52:19 ********************
-11:52:19 New best hypothesis:
-11:52:19 tp:21 fn:19 tn:117 fp:11 size:3 mdl:33
-11:52:19 talk_target(A):- holding(A,B),on_the_side_of(B,A).
-11:52:19 ********************
-11:52:20 Generating programs of size: 4
-12:04:31 Generating programs of size: 5
-14:05:25 Generating programs of size: 6
-14:07:15 TIMEOUT OF 8000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.66 Recall:0.53 TP:21 FN:19 TN:117 FP:11 Size:3 MDL:33
-talk_target(A):- holding(A,B),on_the_side_of(B,A).
-******************************
+10:38:05 Generating programs of size: 2
+10:38:06 Generating programs of size: 3
+10:38:14 Generating programs of size: 4
+10:38:15 ********************
+10:38:15 New best hypothesis:
+10:38:15 tp:21 fn:19 tn:117 fp:11 size:3 mdl:204
+10:38:15 talk_target(A):- on_the_side_of(B,A),holding(A,B).
+10:38:15 ********************
+10:42:41 Generating programs of size: 5

@@ -61,17 +61,12 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-11:52:13 Generating programs of size: 2
-11:52:14 Generating programs of size: 3
-11:52:24 ********************
-11:52:24 New best hypothesis:
-11:52:24 tp:5 fn:362 tn:1123 fp:0 size:3 mdl:365
-11:52:24 sneeze_target(A):- mirror(B),touching(A,B).
-11:52:24 ********************
-11:52:44 Generating programs of size: 4
-12:03:11 Generating programs of size: 5
-14:06:13 TIMEOUT OF 8000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:1.00 Recall:0.01 TP:5 FN:362 TN:1123 FP:0 Size:3 MDL:365
-sneeze_target(A):- mirror(B),touching(A,B).
-******************************
+10:38:05 Generating programs of size: 2
+10:38:06 Generating programs of size: 3
+10:38:30 Generating programs of size: 4
+10:38:35 ********************
+10:38:35 New best hypothesis:
+10:38:35 tp:5 fn:362 tn:1123 fp:0 size:3 mdl:3623
+10:38:35 sneeze_target(A):- touching(A,B),mirror(B).
+10:38:35 ********************
+10:53:00 Generating programs of size: 5

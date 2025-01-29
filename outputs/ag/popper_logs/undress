@@ -61,38 +61,18 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-11:52:12 Generating programs of size: 2
-11:52:14 Generating programs of size: 3
-11:52:18 ********************
-11:52:18 New best hypothesis:
-11:52:18 tp:10 fn:106 tn:405 fp:3 size:3 mdl:112
-11:52:18 undress_target(A):- clothes(B),behind(B,A).
-11:52:18 ********************
-11:52:19 ********************
-11:52:19 New best hypothesis:
-11:52:19 tp:67 fn:49 tn:399 fp:9 size:3 mdl:61
-11:52:19 undress_target(A):- clothes(B),in(B,A).
-11:52:19 ********************
-11:52:21 ********************
-11:52:21 New best hypothesis:
-11:52:21 tp:76 fn:40 tn:394 fp:14 size:3 mdl:57
-11:52:21 undress_target(A):- wearing(A,B),clothes(B).
-11:52:21 ********************
-11:52:22 Generating programs of size: 4
-11:52:24 ********************
-11:52:24 New best hypothesis:
-11:52:24 tp:84 fn:32 tn:392 fp:16 size:6 mdl:54
-11:52:24 undress_target(A):- wearing(A,B),beneath(B,A).
-11:52:24 undress_target(A):- wearing(A,B),clothes(B).
-11:52:24 ********************
-11:57:18 ********************
-11:57:18 New best hypothesis:
-11:57:18 tp:85 fn:31 tn:391 fp:17 size:4 mdl:52
-11:57:18 undress_target(A):- wearing(B,C),person(B),wearing(A,C).
-11:57:18 ********************
-11:59:18 Generating programs of size: 5
-14:07:04 TIMEOUT OF 8000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.83 Recall:0.73 TP:85 FN:31 TN:391 FP:17 Size:4 MDL:52
-undress_target(A):- wearing(B,C),person(B),wearing(A,C).
-******************************
+10:38:05 Generating programs of size: 2
+10:38:06 Generating programs of size: 3
+10:38:13 Generating programs of size: 4
+10:38:15 ********************
+10:38:15 New best hypothesis:
+10:38:15 tp:85 fn:31 tn:391 fp:17 size:6 mdl:333
+10:38:15 undress_target(A):- clothes(B),wearing(A,B).
+10:38:15 undress_target(A):- wearing(A,B),shoe(B).
+10:38:15 ********************
+10:49:25 Generating programs of size: 5
+10:49:30 ********************
+10:49:30 New best hypothesis:
+10:49:30 tp:85 fn:31 tn:391 fp:17 size:4 mdl:331
+10:49:30 undress_target(A):- person(C),wearing(A,B),wearing(C,B).
+10:49:30 ********************

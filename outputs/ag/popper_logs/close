@@ -61,35 +61,16 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-11:52:13 Generating programs of size: 2
-11:52:14 Generating programs of size: 3
-11:52:32 ********************
-11:52:32 New best hypothesis:
-11:52:32 tp:67 fn:495 tn:2188 fp:33 size:3 mdl:531
-11:52:32 close_target(A):- door(B),on_the_side_of(B,A).
-11:52:32 ********************
-11:52:33 ********************
-11:52:33 New best hypothesis:
-11:52:33 tp:128 fn:434 tn:2161 fp:60 size:3 mdl:497
-11:52:33 close_target(A):- not_contacting(A,B),door(B).
-11:52:33 ********************
-11:53:06 Generating programs of size: 4
-11:53:12 ********************
-11:53:12 New best hypothesis:
-11:53:12 tp:258 fn:304 tn:2093 fp:128 size:15 mdl:447
-11:53:12 close_target(A):- door(B),on_the_side_of(B,A).
-11:53:12 close_target(A):- on_the_side_of(B,A),refrigerator(B).
-11:53:12 close_target(A):- behind(B,A),door(B).
-11:53:12 close_target(A):- in_front_of(B,A),door(B).
-11:53:12 close_target(A):- in_front_of(B,A),refrigerator(B).
-11:53:12 ********************
-12:07:43 Generating programs of size: 5
-14:07:09 TIMEOUT OF 8000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.67 Recall:0.46 TP:258 FN:304 TN:2093 FP:128 Size:15 MDL:447
-close_target(A):- door(B),on_the_side_of(B,A).
-close_target(A):- on_the_side_of(B,A),refrigerator(B).
-close_target(A):- behind(B,A),door(B).
-close_target(A):- in_front_of(B,A),door(B).
-close_target(A):- in_front_of(B,A),refrigerator(B).
-******************************
+10:38:05 Generating programs of size: 2
+10:38:07 Generating programs of size: 3
+10:38:29 Generating programs of size: 4
+10:38:36 ********************
+10:38:36 New best hypothesis:
+10:38:36 tp:258 fn:304 tn:2093 fp:128 size:15 mdl:3183
+10:38:36 close_target(A):- door(B),in_front_of(B,A).
+10:38:36 close_target(A):- refrigerator(B),in_front_of(B,A).
+10:38:36 close_target(A):- door(B),behind(B,A).
+10:38:36 close_target(A):- on_the_side_of(B,A),door(B).
+10:38:36 close_target(A):- refrigerator(B),on_the_side_of(B,A).
+10:38:36 ********************
+10:54:08 Generating programs of size: 5

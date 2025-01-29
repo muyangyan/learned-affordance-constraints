@@ -61,31 +61,16 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-11:52:12 Generating programs of size: 2
-11:52:14 Generating programs of size: 3
-11:52:17 ********************
-11:52:17 New best hypothesis:
-11:52:17 tp:8 fn:24 tn:137 fp:0 size:3 mdl:27
-11:52:17 turn_target(A):- light(B),on_the_side_of(B,A).
-11:52:17 ********************
-11:52:18 ********************
-11:52:18 New best hypothesis:
-11:52:18 tp:15 fn:17 tn:137 fp:0 size:3 mdl:20
-11:52:18 turn_target(A):- light(B),in_front_of(B,A).
-11:52:18 ********************
-11:52:18 ********************
-11:52:18 New best hypothesis:
-11:52:18 tp:28 fn:4 tn:137 fp:0 size:3 mdl:7
-11:52:18 turn_target(A):- not_contacting(A,B),light(B).
-11:52:18 ********************
-11:52:24 Generating programs of size: 4
-11:52:29 ********************
-11:52:29 New best hypothesis:
-11:52:29 tp:32 fn:0 tn:137 fp:0 size:6 mdl:6
-11:52:29 turn_target(A):- light(B),in_front_of(B,A).
-11:52:29 turn_target(A):- not_contacting(A,B),light(B).
-11:52:29 ********************
-11:58:47 Generating programs of size: 5
+10:38:05 Generating programs of size: 2
+10:38:06 Generating programs of size: 3
+10:38:11 Generating programs of size: 4
+10:38:16 ********************
+10:38:16 New best hypothesis:
+10:38:16 tp:32 fn:0 tn:137 fp:0 size:6 mdl:6
+10:38:16 turn_target(A):- light(B),in_front_of(B,A).
+10:38:16 turn_target(A):- not_contacting(A,B),light(B).
+10:38:16 ********************
+10:51:37 Generating programs of size: 5
 ********** SOLUTION **********
 Precision:1.00 Recall:1.00 TP:32 FN:0 TN:137 FP:0 Size:6 MDL:6
 turn_target(A):- light(B),in_front_of(B,A).

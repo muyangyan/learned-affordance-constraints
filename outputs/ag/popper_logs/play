@@ -61,32 +61,13 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-11:52:12 Generating programs of size: 2
-11:52:14 Generating programs of size: 3
-11:52:20 ********************
-11:52:20 New best hypothesis:
-11:52:20 tp:15 fn:200 tn:854 fp:9 size:3 mdl:212
-11:52:20 play_target(A):- laptop(B),holding(A,B).
-11:52:20 ********************
-11:52:20 ********************
-11:52:20 New best hypothesis:
-11:52:20 tp:9 fn:206 tn:861 fp:2 size:3 mdl:211
-11:52:20 play_target(A):- laptop(B),on_the_side_of(B,A).
-11:52:20 ********************
-11:52:23 ********************
-11:52:23 New best hypothesis:
-11:52:23 tp:34 fn:181 tn:842 fp:21 size:3 mdl:205
-11:52:23 play_target(A):- laptop(B),not_contacting(A,B).
-11:52:23 ********************
-11:52:25 ********************
-11:52:25 New best hypothesis:
-11:52:25 tp:82 fn:133 tn:807 fp:56 size:3 mdl:192
-11:52:25 play_target(A):- laptop(B),in_front_of(B,A).
-11:52:25 ********************
-11:52:44 Generating programs of size: 4
-11:59:07 Generating programs of size: 5
-14:06:56 TIMEOUT OF 8000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.59 Recall:0.38 TP:82 FN:133 TN:807 FP:56 Size:3 MDL:192
-play_target(A):- laptop(B),in_front_of(B,A).
-******************************
+10:38:05 Generating programs of size: 2
+10:38:06 Generating programs of size: 3
+10:38:25 Generating programs of size: 4
+10:38:32 ********************
+10:38:32 New best hypothesis:
+10:38:32 tp:86 fn:129 tn:806 fp:57 size:6 mdl:1353
+10:38:32 play_target(A):- laptop(B),in_front_of(B,A).
+10:38:32 play_target(A):- laptop(B),on_the_side_of(B,A).
+10:38:32 ********************
+10:48:05 Generating programs of size: 5

@@ -168,6 +168,7 @@ def main(args):
     root = args.root
     split_file = args.split_file
     subset_file = args.subset_file
+    rules_file = args.rules_file
 
     train_set = AG(root, split='train', split_file=split_file, subset_file=subset_file)
     val_set = AG(root, split='val', split_file=split_file, subset_file=subset_file)
@@ -236,7 +237,7 @@ def main(args):
         trainer.test(lightning_model, dataloaders=test_loader)
 
         print('Testing the model with constraints=====================')
-        masks = test_rules('outputs/ag/rules_learned.pl', 'prolog/ag/test_bk.pl', len(test_set), test_set.verb_classes)
+        masks = test_rules(rules_file, 'prolog/ag/test_bk.pl', len(test_set), test_set.verb_classes)
 
         print(f'Average number of feasible actions per instance: {masks.sum(axis=1).mean():.2f}')
 
@@ -273,6 +274,9 @@ if __name__ == '__main__':
     parser.add_argument('--train', action='store_true', help='Train the model')
     parser.add_argument('--test', action='store_true', help='Test the dataset')
     parser.add_argument('--checkpoint', type=str, default=None, help='Checkpoint file to load')
+
+    #rules
+    parser.add_argument('--rules-file', type=str, default='outputs/ag/rules_learned.pl', help='Name of the rules file')
 
     args = parser.parse_args()
 

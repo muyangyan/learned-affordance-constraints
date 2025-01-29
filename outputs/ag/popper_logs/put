@@ -61,61 +61,32 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-11:52:13 Generating programs of size: 2
-11:52:14 Generating programs of size: 3
-11:52:22 ********************
-11:52:22 New best hypothesis:
-11:52:22 tp:124 fn:1938 tn:4747 fp:102 size:3 mdl:2043
-11:52:22 put_target(A):- not_contacting(A,B),shelf(B).
-11:52:22 ********************
-11:52:50 ********************
-11:52:50 New best hypothesis:
-11:52:50 tp:67 fn:1995 tn:4814 fp:35 size:3 mdl:2033
-11:52:50 put_target(A):- groceries(B),holding(A,B).
-11:52:50 ********************
-11:52:54 ********************
-11:52:54 New best hypothesis:
-11:52:54 tp:268 fn:1794 tn:4625 fp:224 size:3 mdl:2021
-11:52:54 put_target(A):- dish(B),holding(A,B).
-11:52:54 ********************
-11:54:09 Generating programs of size: 4
-11:54:21 ********************
-11:54:21 New best hypothesis:
-11:54:21 tp:385 fn:1677 tn:4569 fp:280 size:21 mdl:1978
-11:54:21 put_target(A):- behind(B,A),shelf(B).
-11:54:21 put_target(A):- other_relationship(A,B),clothes(B).
-11:54:21 put_target(A):- carrying(A,B),behind(B,A).
-11:54:21 put_target(A):- dish(B),holding(A,B).
-11:54:21 put_target(A):- groceries(B),in_front_of(B,A).
-11:54:21 put_target(A):- leaning_on(A,B),in_front_of(B,A).
-11:54:21 put_target(A):- above(B,A),shelf(B).
-11:54:21 ********************
-12:31:01 Generating programs of size: 5
-12:31:16 ********************
-12:31:16 New best hypothesis:
-12:31:16 tp:417 fn:1645 tn:4554 fp:295 size:34 mdl:1974
-12:31:16 put_target(A):- behind(B,A),shelf(B).
-12:31:16 put_target(A):- carrying(A,B),behind(B,A).
-12:31:16 put_target(A):- dish(B),holding(A,B).
-12:31:16 put_target(A):- groceries(B),in_front_of(B,A).
-12:31:16 put_target(A):- leaning_on(A,B),in_front_of(B,A).
-12:31:16 put_target(A):- above(B,A),shelf(B).
-12:31:16 put_target(A):- clothes(B),wearing(A,B),in_front_of(B,A).
-12:31:16 put_target(A):- towel(B),touching(A,B),in_front_of(B,A).
-12:31:16 put_target(A):- on_the_side_of(B,A),dish(B),touching(A,B).
-12:31:16 put_target(A):- other_relationship(A,B),clothes(B),in_front_of(B,A).
-12:31:16 ********************
-14:35:34 TIMEOUT OF 8000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.59 Recall:0.20 TP:417 FN:1645 TN:4554 FP:295 Size:34 MDL:1974
-put_target(A):- behind(B,A),shelf(B).
-put_target(A):- carrying(A,B),behind(B,A).
-put_target(A):- dish(B),holding(A,B).
-put_target(A):- groceries(B),in_front_of(B,A).
-put_target(A):- leaning_on(A,B),in_front_of(B,A).
-put_target(A):- above(B,A),shelf(B).
-put_target(A):- clothes(B),wearing(A,B),in_front_of(B,A).
-put_target(A):- towel(B),touching(A,B),in_front_of(B,A).
-put_target(A):- on_the_side_of(B,A),dish(B),touching(A,B).
-put_target(A):- other_relationship(A,B),clothes(B),in_front_of(B,A).
-******************************
+10:38:05 Generating programs of size: 2
+10:38:07 Generating programs of size: 3
+10:39:27 Generating programs of size: 4
+10:39:39 ********************
+10:39:39 New best hypothesis:
+10:39:39 tp:385 fn:1677 tn:4569 fp:280 size:21 mdl:17071
+10:39:39 put_target(A):- above(B,A),shelf(B).
+10:39:39 put_target(A):- dish(B),holding(A,B).
+10:39:39 put_target(A):- leaning_on(A,B),in_front_of(B,A).
+10:39:39 put_target(A):- in_front_of(B,A),groceries(B).
+10:39:39 put_target(A):- carrying(A,B),behind(B,A).
+10:39:39 put_target(A):- behind(B,A),shelf(B).
+10:39:39 put_target(A):- clothes(B),other_relationship(A,B).
+10:39:39 ********************
+11:23:14 Generating programs of size: 5
+11:23:27 ********************
+11:23:27 New best hypothesis:
+11:23:27 tp:417 fn:1645 tn:4553 fp:296 size:33 mdl:16779
+11:23:27 put_target(A):- above(B,A),shelf(B).
+11:23:27 put_target(A):- dish(B),holding(A,B).
+11:23:27 put_target(A):- leaning_on(A,B),in_front_of(B,A).
+11:23:27 put_target(A):- in_front_of(B,A),groceries(B).
+11:23:27 put_target(A):- carrying(A,B),behind(B,A).
+11:23:27 put_target(A):- behind(B,A),shelf(B).
+11:23:27 put_target(A):- clothes(B),other_relationship(A,B).
+11:23:27 put_target(A):- dish(B),on_the_side_of(B,A),touching(A,B).
+11:23:27 put_target(A):- in_front_of(B,A),touching(A,B),towel(B).
+11:23:27 put_target(A):- in_front_of(B,A),clothes(B),wearing(A,B).
+11:23:27 ********************

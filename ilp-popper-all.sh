@@ -37,15 +37,26 @@ STRINGS=(
     "work"
 )
 
-TIMEOUT=$1
-MDL_WEIGHT=$2
+DATASET="ag"
+RULES_NAME=$1
+TIMEOUT=$2
+MDL_WEIGHT=$3
+RECALL_THRESHOLD=$4
+
+
+echo "Dataset: $DATASET"
+echo "Rules Filename: $RULES_NAME"
+echo "Timeout: $TIMEOUT"
+echo "Multiplier for penalizing false negatives: $MDL_WEIGHT"
 
 # Loop through the list and run the process for each string in parallel
 for item in "${STRINGS[@]}"; do
-    ./ilp-popper.sh ag $item $TIMEOUT $MDL_WEIGHT &  # Pass the string as an argument and run in the background
+    ./ilp-popper.sh $DATASET $item $TIMEOUT $MDL_WEIGHT &  # Pass the string as an argument and run in the background
     echo "Started process with verb: $item"
 done
 
 # Wait for all background processes to finish
 wait
 echo "All processes completed."
+
+python prolog/parse_popper.py --dataset $DATASET --name "${RULES_NAME}" --weight $MDL_WEIGHT --timeout $TIMEOUT --recall-threshold $RECALL_THRESHOLD
