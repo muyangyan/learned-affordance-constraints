@@ -144,14 +144,12 @@ class PrologData:
                 f.write(f'body_pred({node}, 1).\n')
             for edge in self.edge_vocab:
                 #disallow use of attentional relationships
-                if edge not in ['looking_at', 'not_looking_at', 'unsure']:
-                    f.write(f'body_pred({edge}, 2).\n')
+                #if edge not in ['looking_at', 'not_looking_at', 'unsure']:
+                f.write(f'body_pred({edge}, 2).\n')
 
 
 def exp_curve(b,x):
     return 1-np.exp(-b*x)
-
-
 
 
 if __name__ == '__main__':
