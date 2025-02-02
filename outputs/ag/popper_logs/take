@@ -99,3 +99,20 @@ body_pred(writing_on, 2).
 10:46:48 take_target(A):- broom(B),in_front_of(B,A),not_contacting(A,B).
 10:46:48 take_target(A):- in_front_of(B,A),dish(B),not_contacting(A,B).
 10:46:48 ********************
+12:52:01 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.73 Recall:0.74 TP:285 FN:102 TN:878 FP:104 Size:42 MDL:1166
+take_target(A):- in(B,A),clothes(B).
+take_target(A):- book(B),other_relationship(A,B).
+take_target(A):- blanket(B),not_contacting(A,B).
+take_target(A):- clothes(B),not_contacting(A,B).
+take_target(A):- book(B),not_contacting(A,B).
+take_target(A):- pillow(B),not_contacting(A,B).
+take_target(A):- bag(B),not_contacting(A,B).
+take_target(A):- box(B),not_contacting(A,B).
+take_target(A):- food(B),not_contacting(A,B).
+take_target(A):- not_contacting(A,B),vacuum(B).
+take_target(A):- in_front_of(B,A),picture(B),not_contacting(A,B).
+take_target(A):- broom(B),in_front_of(B,A),not_contacting(A,B).
+take_target(A):- in_front_of(B,A),dish(B),not_contacting(A,B).
+******************************

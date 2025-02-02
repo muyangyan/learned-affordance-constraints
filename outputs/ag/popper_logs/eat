@@ -74,3 +74,12 @@ body_pred(writing_on, 2).
 10:38:36 eat_target(A):- holding(A,B),medicine(B).
 10:38:36 ********************
 10:47:40 Generating programs of size: 5
+12:52:01 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.66 Recall:0.93 TP:329 FN:23 TN:1308 FP:167 Size:15 MDL:412
+eat_target(A):- food(B),touching(A,B).
+eat_target(A):- not_contacting(A,B),sandwich(B).
+eat_target(A):- holding(A,B),sandwich(B).
+eat_target(A):- food(B),holding(A,B).
+eat_target(A):- holding(A,B),medicine(B).
+******************************

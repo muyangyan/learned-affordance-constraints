@@ -99,3 +99,20 @@ body_pred(writing_on, 2).
 10:53:17 hold_target(A):- on_the_side_of(B,A),not_contacting(A,B),clothes(B).
 10:53:17 hold_target(A):- on_the_side_of(B,A),not_contacting(A,B),broom(B).
 10:53:17 ********************
+12:53:13 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.71 Recall:0.55 TP:245 FN:198 TN:1482 FP:99 Size:44 MDL:2123
+hold_target(A):- towel(B),not_contacting(A,B).
+hold_target(A):- behind(B,A),clothes(B).
+hold_target(A):- not_contacting(A,B),box(B).
+hold_target(A):- blanket(B),not_contacting(A,B).
+hold_target(A):- not_contacting(A,B),dish(B).
+hold_target(A):- bag(B),not_contacting(A,B).
+hold_target(A):- not_contacting(A,B),vacuum(B).
+hold_target(A):- on_the_side_of(B,A),wearing(A,B).
+hold_target(A):- not_contacting(A,B),pillow(B),in_front_of(B,A).
+hold_target(A):- not_contacting(A,B),in_front_of(B,A),shoe(B).
+hold_target(A):- on_the_side_of(B,A),not_contacting(A,B),book(B).
+hold_target(A):- on_the_side_of(B,A),not_contacting(A,B),clothes(B).
+hold_target(A):- on_the_side_of(B,A),not_contacting(A,B),broom(B).
+******************************

@@ -78,3 +78,16 @@ body_pred(writing_on, 2).
 10:38:57 open_target(A):- doorway(B),holding(A,B).
 10:38:57 ********************
 10:54:42 Generating programs of size: 5
+12:52:22 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.64 Recall:0.59 TP:450 FN:312 TN:1972 FP:257 Size:27 MDL:3404
+open_target(A):- in_front_of(B,A),bag(B).
+open_target(A):- in_front_of(B,A),refrigerator(B).
+open_target(A):- refrigerator(B),on_the_side_of(B,A).
+open_target(A):- behind(B,A),refrigerator(B).
+open_target(A):- book(B),on_the_side_of(B,A).
+open_target(A):- on_the_side_of(B,A),door(B).
+open_target(A):- in_front_of(B,A),door(B).
+open_target(A):- touching(A,B),box(B).
+open_target(A):- doorway(B),holding(A,B).
+******************************

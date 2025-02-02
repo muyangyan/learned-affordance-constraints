@@ -70,3 +70,8 @@ body_pred(writing_on, 2).
 10:38:55 smile_target(A):- mirror(B),in_front_of(B,A).
 10:38:55 ********************
 10:54:21 Generating programs of size: 5
+12:51:37 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.54 Recall:0.10 TP:62 FN:582 TN:2085 FP:53 Size:3 MDL:5876
+smile_target(A):- mirror(B),in_front_of(B,A).
+******************************

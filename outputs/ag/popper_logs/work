@@ -78,3 +78,11 @@ body_pred(writing_on, 2).
 10:38:53 work_target(A):- touching(A,B),table(B).
 10:38:53 ********************
 10:44:45 Generating programs of size: 5
+12:51:24 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.77 Recall:0.87 TP:130 FN:19 TN:270 FP:38 Size:12 MDL:240
+work_target(A):- not_contacting(A,B),chair(B).
+work_target(A):- in_front_of(B,A),writing_on(A,B).
+work_target(A):- in_front_of(B,A),table(B).
+work_target(A):- touching(A,B),table(B).
+******************************

@@ -85,3 +85,13 @@ body_pred(writing_on, 2).
 10:52:21 throw_target(A):- touching(A,B),clothes(B),in(B,A).
 10:52:21 throw_target(A):- carrying(A,B),on_the_side_of(B,A),in_front_of(B,A).
 10:52:21 ********************
+12:51:47 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.62 Recall:0.47 TP:214 FN:237 TN:1419 FP:130 Size:20 MDL:2520
+throw_target(A):- holding(A,B),pillow(B).
+throw_target(A):- blanket(B),holding(A,B).
+throw_target(A):- clothes(B),holding(A,B).
+throw_target(A):- standing_on(A,B),floor(B).
+throw_target(A):- touching(A,B),clothes(B),in(B,A).
+throw_target(A):- carrying(A,B),on_the_side_of(B,A),in_front_of(B,A).
+******************************

@@ -78,3 +78,16 @@ body_pred(writing_on, 2).
 10:38:37 watch_target(A):- picture(B),above(B,A).
 10:38:37 ********************
 10:49:13 Generating programs of size: 5
+12:52:30 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.64 Recall:0.95 TP:419 FN:23 TN:1112 FP:231 Size:27 MDL:488
+watch_target(A):- television(B),not_contacting(A,B).
+watch_target(A):- window(B),not_contacting(A,B).
+watch_target(A):- mirror(B),not_contacting(A,B).
+watch_target(A):- window(B),on_the_side_of(B,A).
+watch_target(A):- laptop(B),in_front_of(B,A).
+watch_target(A):- picture(B),in_front_of(B,A).
+watch_target(A):- in_front_of(B,A),book(B).
+watch_target(A):- touching(A,B),window(B).
+watch_target(A):- picture(B),above(B,A).
+******************************

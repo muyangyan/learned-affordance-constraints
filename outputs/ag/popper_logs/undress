@@ -76,3 +76,8 @@ body_pred(writing_on, 2).
 10:49:30 tp:85 fn:31 tn:391 fp:17 size:4 mdl:331
 10:49:30 undress_target(A):- person(C),wearing(A,B),wearing(C,B).
 10:49:30 ********************
+12:51:29 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.83 Recall:0.73 TP:85 FN:31 TN:391 FP:17 Size:4 MDL:331
+undress_target(A):- person(C),wearing(A,B),wearing(C,B).
+******************************

@@ -70,3 +70,8 @@ body_pred(writing_on, 2).
 10:38:35 sneeze_target(A):- touching(A,B),mirror(B).
 10:38:35 ********************
 10:53:00 Generating programs of size: 5
+12:52:17 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:1.00 Recall:0.01 TP:5 FN:362 TN:1123 FP:0 Size:3 MDL:3623
+sneeze_target(A):- touching(A,B),mirror(B).
+******************************

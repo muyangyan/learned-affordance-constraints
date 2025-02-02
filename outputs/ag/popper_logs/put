@@ -90,3 +90,17 @@ body_pred(writing_on, 2).
 11:23:27 put_target(A):- in_front_of(B,A),touching(A,B),towel(B).
 11:23:27 put_target(A):- in_front_of(B,A),clothes(B),wearing(A,B).
 11:23:27 ********************
+12:52:04 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.58 Recall:0.20 TP:417 FN:1645 TN:4553 FP:296 Size:33 MDL:16779
+put_target(A):- above(B,A),shelf(B).
+put_target(A):- dish(B),holding(A,B).
+put_target(A):- leaning_on(A,B),in_front_of(B,A).
+put_target(A):- in_front_of(B,A),groceries(B).
+put_target(A):- carrying(A,B),behind(B,A).
+put_target(A):- behind(B,A),shelf(B).
+put_target(A):- clothes(B),other_relationship(A,B).
+put_target(A):- dish(B),on_the_side_of(B,A),touching(A,B).
+put_target(A):- in_front_of(B,A),touching(A,B),towel(B).
+put_target(A):- in_front_of(B,A),clothes(B),wearing(A,B).
+******************************

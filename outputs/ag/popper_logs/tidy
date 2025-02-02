@@ -89,3 +89,15 @@ body_pred(writing_on, 2).
 11:08:37 tidy_target(A):- floor(B),beneath(B,A),other_relationship(A,B).
 11:08:37 tidy_target(A):- not_contacting(A,B),clothes(B),behind(B,A).
 11:08:37 ********************
+13:17:47 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.76 Recall:0.54 TP:254 FN:213 TN:1267 FP:82 Size:27 MDL:2239
+tidy_target(A):- in_front_of(B,A),shelf(B).
+tidy_target(A):- holding(A,B),broom(B).
+tidy_target(A):- shelf(B),on_the_side_of(B,A).
+tidy_target(A):- blanket(B),touching(A,B).
+tidy_target(A):- medicine(B),touching(A,B).
+tidy_target(A):- floor(B),standing_on(A,B),beneath(B,A).
+tidy_target(A):- floor(B),beneath(B,A),other_relationship(A,B).
+tidy_target(A):- not_contacting(A,B),clothes(B),behind(B,A).
+******************************

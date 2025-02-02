@@ -72,3 +72,10 @@ body_pred(writing_on, 2).
 10:38:36 wash_target(A):- on_the_side_of(B,A),towel(B).
 10:38:36 ********************
 10:47:43 Generating programs of size: 5
+12:52:19 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.78 Recall:0.63 TP:109 FN:63 TN:259 FP:31 Size:9 MDL:670
+wash_target(A):- in_front_of(B,A),towel(B).
+wash_target(A):- dish(B),in_front_of(B,A).
+wash_target(A):- on_the_side_of(B,A),towel(B).
+******************************

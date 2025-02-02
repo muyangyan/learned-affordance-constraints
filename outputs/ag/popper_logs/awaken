@@ -81,3 +81,10 @@ body_pred(writing_on, 2).
 10:45:47 awaken_target(A):- floor(B),on_the_side_of(B,A).
 10:45:47 awaken_target(A):- lying_on(A,C),person(B),lying_on(B,C).
 10:45:47 ********************
+12:51:44 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.86 Recall:0.85 TP:157 FN:27 TN:640 FP:26 Size:10 MDL:306
+awaken_target(A):- leaning_on(A,B),bed(B).
+awaken_target(A):- floor(B),on_the_side_of(B,A).
+awaken_target(A):- lying_on(A,C),person(B),lying_on(B,C).
+******************************

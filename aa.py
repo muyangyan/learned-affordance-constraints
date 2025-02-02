@@ -8,6 +8,7 @@ import torch
 from torch.utils.data import DataLoader
 from data.ag.action_genome import AG
 
+from torch import Tensor
 import torch.nn.functional as F
 
 from models.rgcn import RGCN
@@ -18,6 +19,9 @@ import pytorch_lightning as L
 from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.loggers import TensorBoardLogger
 import torchmetrics
+from torchmetrics import MetricCollection, Metric
+from torchmetrics import Accuracy, Precision, Recall
+
 
 from pyswip import Prolog
 
@@ -26,6 +30,66 @@ warnings.filterwarnings("ignore")
 #warnings.filterwarnings("default")
 
 torch.set_float32_matmul_precision('medium')
+
+def torch_entropy(tensor: torch.Tensor) -> torch.Tensor:
+    """
+    Compute the entropy of a tensor with shape (N, C).
+
+    Args:
+        tensor (torch.Tensor): A tensor of shape (N, C) representing probability distributions.
+
+    Returns:
+        torch.Tensor: A tensor of shape (N,) containing the entropy of each distribution.
+    """
+    epsilon = 1e-12  # Small constant to prevent log(0)
+    tensor = torch.clamp(tensor, min=epsilon)
+    tensor = tensor / tensor.sum(dim=1, keepdim=True)  # Ensure probabilities sum to 1
+    entropy = -torch.sum(tensor * torch.log(tensor), dim=1)
+    return entropy
+
+class NLL_Metric(Metric):
+    def __init__(self, reduction: str = 'mean', **kwargs):
+        super().__init__(**kwargs)
+        self.reduction = reduction
+        self.add_state("sum_nll", default=torch.tensor(0.0), dist_reduce_fx="sum")
+        self.add_state("count", default=torch.tensor(0), dist_reduce_fx="sum")
+
+    def update(self, preds: Tensor, target: Tensor) -> None:
+        # Convert one-hot target to class indices
+        if target.ndim > 1:
+            target = torch.argmax(target, dim=1)
+        
+        # Compute log probabilities
+        if preds.ndim > 1:
+            preds = F.log_softmax(preds, dim=1)
+            
+        nll = F.nll_loss(preds, target, reduction='sum')
+        self.sum_nll += nll
+        self.count += target.size(0)
+
+    def compute(self) -> Tensor:
+        if self.reduction == 'mean':
+            return self.sum_nll / self.count
+        else:
+            return self.sum_nll
+
+class Entropy_Metric(Metric):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.add_state("entropy", default=torch.tensor(0.0), dist_reduce_fx="sum")
+        self.add_state("count", default=torch.tensor(0), dist_reduce_fx="sum")
+
+    def update(self, preds: Tensor, labels) -> None:
+        if preds.ndim > 1:
+            preds = F.log_softmax(preds, dim=1)
+        
+        batch_entropy = torch_entropy(preds).sum()
+        self.entropy += batch_entropy
+        self.count += preds.size(0)
+
+    def compute(self) -> Tensor:
+        return self.entropy / self.count
+
 
 class JointModelLightning(L.LightningModule):
     def __init__(self, model_params, weight, model_type='joint', lr=1e-3):
@@ -54,10 +118,14 @@ class JointModelLightning(L.LightningModule):
         self.train_accuracy = torchmetrics.Accuracy(task='multiclass', num_classes=num_classes)
         self.val_accuracy = torchmetrics.Accuracy(task='multiclass', num_classes=num_classes)
 
-        self.test_accuracy = torchmetrics.Accuracy(task='multiclass', num_classes=num_classes)
-        self.test_mAP = torchmetrics.AveragePrecision(task='multiclass', num_classes=num_classes)
-        self.test_mAR = torchmetrics.AveragePrecision(task='multiclass', num_classes=num_classes)
-        
+        self.test_metrics = MetricCollection([
+            Accuracy(task='multiclass', num_classes=num_classes),
+            Precision(task='multiclass', average='macro', num_classes=num_classes),
+            Recall(task='multiclass', average='macro', num_classes=num_classes)
+            #NLL_Metric(reduction='mean'),
+            #Entropy_Metric()
+        ])
+
         self.save_hyperparameters()
         
     def forward(self, img, sg):
@@ -94,14 +162,14 @@ class JointModelLightning(L.LightningModule):
         ids, imgs, sgs, verbs, labels, constraints = batch
         out = self(imgs, sgs)
 
+        label_classes = torch.argmax(labels, dim=1)
+
         if constraints is not None:
+            not_blocked = torch.sum(labels * constraints, dim=1)
 
-            blocked = torch.sum(labels * constraints, dim=1)
-
-            label_classes = torch.argmax(labels, dim=1)
             unconstrained_classes = torch.argmax(out, dim=1)
 
-            constrained_out = out * constraints
+            constrained_out = F.softmax(out * constraints, dim=1)
             constrained_classes = torch.argmax(constrained_out, dim=1)
 
             c_before = (unconstrained_classes == label_classes)
@@ -112,8 +180,8 @@ class JointModelLightning(L.LightningModule):
             c_w = c_before * w_after
             c_c = c_before * c_after
             w_C = w_before * c_after
-            w_w_b = w_before * w_after * blocked
-            w_w_nb = w_before * w_after * (1 - blocked)
+            w_w_b = w_before * w_after * (1 - not_blocked)
+            w_w_nb = w_before * w_after * not_blocked
 
             self.ids.extend(ids)
             self.c_w = np.concatenate((self.c_w, c_w.cpu().numpy()))
@@ -122,17 +190,30 @@ class JointModelLightning(L.LightningModule):
             self.w_w_b = np.concatenate((self.w_w_b, w_w_b.cpu().numpy()))
             self.w_w_nb = np.concatenate((self.w_w_nb, w_w_nb.cpu().numpy()))
 
+            out = constrained_out
             out_classes = constrained_classes
-
         else:
-            # Convert to class indices for accuracy
             out_classes = torch.argmax(out, dim=1)
-            label_classes = torch.argmax(labels, dim=1)
-            
-        test_acc = self.test_accuracy(out_classes, label_classes)
-
-        self.log('test_acc', test_acc, on_step=False, on_epoch=True, prog_bar=True)
-            
+        
+        with open('out.txt', 'a') as f:
+            for o in out:
+                # Start of Selection
+                formatted = np.array2string(o.cpu().numpy(), precision=4, suppress_small=True)
+                f.write(formatted + '\n')
+        
+        # Update metrics with appropriate format
+        metrics_dict = self.test_metrics(out_classes, label_classes)
+        '''
+        metrics_dict = self.test_metrics({
+            'Accuracy': (out_classes, label_classes),     # Pass class indices for accuracy
+            'Precision': (out_classes, label_classes),    # Pass class indices for precision
+            'Recall': (out_classes, label_classes),       # Pass class indices for recall
+            'NLL_Metric': (out, labels),                 # Pass probabilities and one-hot for NLL
+            'Entropy_Metric': (out, labels)              # Pass probabilities and one-hot for entropy
+        })
+        '''
+        
+        self.log_dict(metrics_dict, on_step=False, on_epoch=True, prog_bar=True)
 
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=self.lr)
@@ -232,9 +313,15 @@ def main(args):
         trainer.fit(lightning_model, train_dataloaders=train_loader, val_dataloaders=val_loader)
 
     if args.test:
+        with open('out.txt', 'w') as f:
+            f.write('WITHOUT CONSTRAINTS\n')
+
         print('Testing the model without constraints=====================')
         test_set.constraints = None
         trainer.test(lightning_model, dataloaders=test_loader)
+
+        with open('out.txt', 'a') as f:
+            f.write('WITHOUT CONSTRAINTS\n')
 
         print('Testing the model with constraints=====================')
         masks = test_rules(rules_file, 'prolog/ag/test_bk.pl', len(test_set), test_set.verb_classes)

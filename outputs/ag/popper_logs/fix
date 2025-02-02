@@ -72,3 +72,10 @@ body_pred(writing_on, 2).
 10:38:24 fix_target(A):- light(B),above(B,A).
 10:38:24 ********************
 10:54:38 Generating programs of size: 5
+12:52:49 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.73 Recall:0.42 TP:54 FN:74 TN:457 FP:20 Size:9 MDL:769
+fix_target(A):- mirror(B),in_front_of(B,A).
+fix_target(A):- vacuum(B),in_front_of(B,A).
+fix_target(A):- light(B),above(B,A).
+******************************

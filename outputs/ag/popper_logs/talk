@@ -70,3 +70,8 @@ body_pred(writing_on, 2).
 10:38:15 talk_target(A):- on_the_side_of(B,A),holding(A,B).
 10:38:15 ********************
 10:42:41 Generating programs of size: 5
+12:53:21 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.66 Recall:0.53 TP:21 FN:19 TN:117 FP:11 Size:3 MDL:204
+talk_target(A):- on_the_side_of(B,A),holding(A,B).
+******************************

@@ -74,3 +74,12 @@ body_pred(writing_on, 2).
 10:38:36 close_target(A):- refrigerator(B),on_the_side_of(B,A).
 10:38:36 ********************
 10:54:08 Generating programs of size: 5
+12:53:44 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.67 Recall:0.46 TP:258 FN:304 TN:2093 FP:128 Size:15 MDL:3183
+close_target(A):- door(B),in_front_of(B,A).
+close_target(A):- refrigerator(B),in_front_of(B,A).
+close_target(A):- door(B),behind(B,A).
+close_target(A):- on_the_side_of(B,A),door(B).
+close_target(A):- refrigerator(B),on_the_side_of(B,A).
+******************************

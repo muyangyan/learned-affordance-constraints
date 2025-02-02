@@ -73,3 +73,11 @@ body_pred(writing_on, 2).
 10:38:36 snuggle_target(A):- touching(A,B),pillow(B).
 10:38:36 ********************
 10:53:11 Generating programs of size: 5
+12:51:24 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.77 Recall:0.92 TP:108 FN:9 TN:353 FP:32 Size:12 MDL:134
+snuggle_target(A):- blanket(B),covered_by(A,B).
+snuggle_target(A):- blanket(B),in_front_of(B,A).
+snuggle_target(A):- pillow(B),holding(A,B).
+snuggle_target(A):- touching(A,B),pillow(B).
+******************************

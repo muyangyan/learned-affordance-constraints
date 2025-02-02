@@ -71,3 +71,9 @@ body_pred(writing_on, 2).
 10:38:22 lie_target(A):- bed(B),leaning_on(A,B).
 10:38:22 ********************
 10:49:49 Generating programs of size: 5
+12:51:26 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.85 Recall:0.23 TP:11 FN:36 TN:290 FP:2 Size:6 MDL:368
+lie_target(A):- pillow(B),touching(A,B).
+lie_target(A):- bed(B),leaning_on(A,B).
+******************************

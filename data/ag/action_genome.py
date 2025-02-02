@@ -55,7 +55,7 @@ def find_closest_frame_idx(directory, frame_number):
 def string_to_action_triple(action_string, video_id):
     a = action_string.split(' ')
     if len(a) == 3:
-        action_triple = (video_id, int(a[0][1:]), float(a[1]), float(a[2]))
+        action_triple = [video_id, int(a[0][1:]), float(a[1]), float(a[2])]
     elif len(a) == 1 and a[0] == '':
         return None
     else:
@@ -76,13 +76,14 @@ def remove_id_prefix(s):
 
 class AG(Dataset):
     
-    def __init__(self, root, threshold=1, fps=24, no_img=False, split=None, split_file='data/ag/split_train_val_test.json', subset_file=None):
+    def __init__(self, root, threshold=1, fps=24, no_img=False, split=None, split_file='data/ag/split_train_val_test.json', subset_file=None, verb_blacklist=[]):
         super().__init__()
         self.root = root
         self.threshold = threshold
         self.no_img = no_img
         self.split = split
         self.subset_file = subset_file
+        self.verb_blacklist = verb_blacklist
         self.constraints = None
 
         with open(root + 'annotations/person_bbox.pkl', 'rb') as f:
@@ -208,8 +209,11 @@ class AG(Dataset):
                 action_string = row['actions'].split(';')
                 for action in action_string:
                     action_tuple = string_to_action_triple(action, video_id)
-                    if action_tuple:
-                        actions.append(action_tuple)
+                    if action_tuple is not None and action_tuple[1] is not None:
+                        action_tuple[1] = self.action_mapper[action_tuple[1]]
+                        if action_tuple[1] is not None:
+                            actions.append(action_tuple)
+
         f.close()
         return actions
     
@@ -303,23 +307,8 @@ class AG(Dataset):
                     self.charades_ag_obj_map[int(charades_idx)] = int(ag_idx)
                 else:
                     self.charades_ag_obj_map[int(charades_idx)] = None
-        
-        self.action_classes = []
-        with open(os.path.join(self.root, 'annotations/Charades/Charades_v1_classes.txt'), 'r') as f:
-            for line in f.readlines():
-                line = line.strip('\n')
-                line = remove_id_prefix(line)
 
-                self.action_classes.append(line)
-
-        self.verb_classes = []
-        with open(os.path.join(self.root, 'annotations/Charades/Charades_v1_verbclasses.txt'), 'r') as f:
-            for line in f.readlines():
-                line = line.strip('\n')
-                line = remove_id_prefix(line)
-
-                self.verb_classes.append(line)
-
+        #action -> verb, obj map
         self.action_verb_obj_map = {}
         with open(os.path.join(self.root, 'annotations/Charades/Charades_v1_mapping.txt'), 'r') as f:
             for line in f.readlines():
@@ -330,6 +319,56 @@ class AG(Dataset):
                 obj = int(obj[1:])
                 obj = self.charades_ag_obj_map[obj]
                 self.action_verb_obj_map[action] = (verb, obj)
+
+        self.verb_classes = []
+        self.verb_mapper = {}
+        idx_counter = 0
+        with open(os.path.join(self.root, 'annotations/Charades/Charades_v1_verbclasses.txt'), 'r') as f:
+            for i,line in enumerate(f.readlines()):
+                line = line.strip('\n')
+                line = remove_id_prefix(line)
+
+                self.verb_classes.append(line)
+                if line not in self.verb_blacklist:
+                    self.verb_mapper[i] = idx_counter
+                    idx_counter += 1
+                else:
+                    self.verb_mapper[i] = None
+
+        self.action_classes = []
+        self.action_mapper = {}
+        idx_counter = 0
+        with open(os.path.join(self.root, 'annotations/Charades/Charades_v1_classes.txt'), 'r') as f:
+            for i,line in enumerate(f.readlines()):
+                line = line.strip('\n')
+                line = remove_id_prefix(line)
+
+                self.action_classes.append(line)
+                verb, _ = self.action_verb_obj_map[i]
+                if self.verb_classes[verb] not in self.verb_blacklist:
+                    self.action_mapper[i] = idx_counter
+                    idx_counter += 1
+                else:
+                    self.action_mapper[i] = None
+        
+
+        # now subset verbs and actions
+        self.verb_classes = [self.verb_classes[i] for i in self.verb_mapper.values() if i is not None]
+        self.action_classes = [self.action_classes[i] for i in self.action_mapper.values() if i is not None]
+        
+        new_a_vo_map = {}
+        #k,v is action, (verb, obj)
+        for k,v in self.action_mapper.items():
+            if v is not None:
+                verb_idx, obj_idx = self.action_verb_obj_map[k]
+                new_verb_idx = self.verb_mapper[verb_idx]
+                new_a_vo_map[v] = (new_verb_idx, obj_idx)
+
+        self.action_verb_obj_map = new_a_vo_map
+        #self.action_verb_obj_map = {i: (self.verb_mapper[self.action_verb_obj_map[i][0]], self.action_verb_obj_map[i][1]) for i in self.action_classes if i is not None}
+
+
+
 
         '''
         a dict mapping verbs to the corresponding relationship that they form
@@ -390,12 +429,13 @@ used for annotating the dataset
 can also be used to analyze the dataset in relation to a subset
 '''
 class AGViewer:
-    def __init__(self, ag, subset_dict):
+    def __init__(self, ag, subset_dict, human_test=False):
         self.ag = ag
         self.subset_dict = subset_dict
         self.index = 0
         self.key = None
         self.id = None
+        self.human_test = human_test
         self.message = "Enter/space : navigate by search key | \
                 n/p : sequential navigation | \
                 j : jump to index | \
@@ -421,10 +461,11 @@ class AGViewer:
         clear_output(wait=True)
 
         print('INDEX:', index)
-        print('LABEL:', self.subset_dict[id] if id in self.subset_dict else 'ABSENT')
-        print('ACTION:', self.ag.action_classes[action])
-        print('VERB-OBJ:', self.ag.verb_classes[verb], None if obj is None else self.ag.object_classes[obj])
-        print('VIDEO-FRAME-ACTION ID:', id)
+        if not self.human_test:
+            print('LABEL:', self.subset_dict[id] if id in self.subset_dict else 'ABSENT')
+            print('ACTION:', self.ag.action_classes[action])
+            print('VERB-OBJ:', self.ag.verb_classes[verb], None if obj is None else self.ag.object_classes[obj])
+            print('VIDEO-FRAME-ACTION ID:', id)
         nodes = [self.ag.object_classes[t] for t in sg.node_type]
         print([ (nodes[sg.edge_index[0][i].item()], \
                 self.ag.relationship_classes[t], \
@@ -436,6 +477,9 @@ class AGViewer:
         show_pyg_graph(sg, self.ag.object_classes, self.ag.relationship_classes, layout='circular', curve=0.1, ax=axs[0])
         axs[1].imshow(img)
         plt.show(fig)
+
+        if self.human_test:
+            return self.ag.action_classes[action], self.ag.verb_classes[verb]
     
     def find_next(self, key, prev=False):
         index = self.index

@@ -75,3 +75,13 @@ body_pred(writing_on, 2).
 10:39:08 sit_target(A):- lying_on(A,B),floor(B).
 10:39:08 ********************
 10:57:12 Generating programs of size: 5
+12:51:47 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.74 Recall:0.13 TP:115 FN:750 TN:2664 FP:40 Size:18 MDL:7558
+sit_target(A):- chair(B),not_contacting(A,B).
+sit_target(A):- chair(B),touching(A,B).
+sit_target(A):- not_contacting(A,B),bed(B).
+sit_target(A):- light(B),on_the_side_of(B,A).
+sit_target(A):- lying_on(A,B),in_front_of(B,A).
+sit_target(A):- lying_on(A,B),floor(B).
+******************************

@@ -79,3 +79,10 @@ body_pred(writing_on, 2).
 10:58:10 stand_target(A):- sitting_on(A,B),other_relationship(A,B).
 10:58:10 stand_target(A):- in_front_of(B,A),shoe(B),wearing(A,B).
 10:58:10 ********************
+12:52:54 TIMEOUT OF 8000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.65 Recall:0.08 TP:60 FN:693 TN:2805 FP:33 Size:10 MDL:6973
+stand_target(A):- sitting_on(A,B),touching(A,B).
+stand_target(A):- sitting_on(A,B),other_relationship(A,B).
+stand_target(A):- in_front_of(B,A),shoe(B),wearing(A,B).
+******************************
