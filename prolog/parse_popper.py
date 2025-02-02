@@ -51,14 +51,14 @@ def write_rules(outputs_folder, rules_name, weight, timeout, recall_threshold=0.
     with open(os.path.join(outputs_folder, rules_name + '.pl'), 'w+') as f: 
         f.write(f'%%{rules_name} weight: {weight} timeout: {timeout} recall_threshold: {recall_threshold}\n')
         for verb, rule_pair in rules.items():
-            f.write(f'%%{verb}\n')
+            f.write(f'%%{verb} PRECISION: {metrics["precision"]:.2f} RECALL: {metrics["recall"]:.2f}\n TP: {metrics["tp"]} FN: {metrics["fn"]} TN: {metrics["tn"]} FP: {metrics["fp"]}\n')
             if rule_pair is None:
                 f.write('%%No solution\n')
                 f.write(f'{verb}_target(_).\n\n')
                 continue
             rule, metrics = rule_pair
             if metrics is not None and metrics['recall'] < recall_threshold:
-                f.write(f'%%Solution recall ({metrics["recall"]:.2f}) below threshold {recall_threshold}\n')
+                f.write(f'%%Solution recall below threshold {recall_threshold}\n')
                 f.write(f'{verb}_target(_).\n\n')
                 continue
             for line in rule:

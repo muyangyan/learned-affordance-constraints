@@ -151,21 +151,10 @@ class PrologData:
 def exp_curve(b,x):
     return 1-np.exp(-b*x)
 
+def main(args):
 
-if __name__ == '__main__':
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--train', action='store_true', help='Generate training data')
-    parser.add_argument('--val', action='store_true', help='Generate validation data') 
-    parser.add_argument('--test', action='store_true', help='Generate test data')
-    args = parser.parse_args()
-
-    if not (args.train or args.val or args.test):
-        print("Please specify at least one of --train, --val, or --test")
-        exit(1)
-
-    root = '/data/Datasets/ag/'
-    subset_file = 'data/ag/subset_shelve'
+    root = args.root
+    subset_file = args.subset_file
 
     if args.train:
         train_ag = AG(root, no_img=True, split='train', subset_file=subset_file)
@@ -197,3 +186,18 @@ if __name__ == '__main__':
         
         test_pd = PrologData('prolog', 'ag', test_ag, test_ag.object_classes, test_ag.relationship_classes, test_ag.verb_classes, model=None, split='test')
         test_pd.write_bk()
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--train', action='store_true', help='Generate training data')
+    parser.add_argument('--val', action='store_true', help='Generate validation data') 
+    parser.add_argument('--test', action='store_true', help='Generate test data')
+    parser.add_argument('--root', type=str, default='/data/Datasets/ag/', help='Root directory')
+    parser.add_argument('--subset_file', type=str, default='data/ag/subset_shelve', help='Subset file')
+    args = parser.parse_args()
+
+    if not (args.train or args.val or args.test):
+        print("Please specify at least one of --train, --val, or --test")
+        exit(1)
+
+    main(args)

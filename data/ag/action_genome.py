@@ -76,14 +76,14 @@ def remove_id_prefix(s):
 
 class AG(Dataset):
     
-    def __init__(self, root, threshold=1, fps=24, no_img=False, split=None, split_file='data/ag/split_train_val_test.json', subset_file=None, verb_blacklist=[]):
+    def __init__(self, root, threshold=1, fps=24, no_img=False, split=None, split_file='data/ag/split_train_val_test.json', subset_file=None, verb_whitelist=[]):
         super().__init__()
         self.root = root
         self.threshold = threshold
         self.no_img = no_img
         self.split = split
         self.subset_file = subset_file
-        self.verb_blacklist = verb_blacklist
+        self.verb_whitelist = verb_whitelist
         self.constraints = None
 
         with open(root + 'annotations/person_bbox.pkl', 'rb') as f:
@@ -329,7 +329,7 @@ class AG(Dataset):
                 line = remove_id_prefix(line)
 
                 self.verb_classes.append(line)
-                if line not in self.verb_blacklist:
+                if line in self.verb_whitelist:
                     self.verb_mapper[i] = idx_counter
                     idx_counter += 1
                 else:
@@ -345,7 +345,7 @@ class AG(Dataset):
 
                 self.action_classes.append(line)
                 verb, _ = self.action_verb_obj_map[i]
-                if self.verb_classes[verb] not in self.verb_blacklist:
+                if self.verb_classes[verb] in self.verb_whitelist:
                     self.action_mapper[i] = idx_counter
                     idx_counter += 1
                 else:

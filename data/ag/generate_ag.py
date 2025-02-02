@@ -98,15 +98,15 @@ if __name__ == '__main__':
     parser.add_argument('--train_split_ratio', type=float, default=0.6)
     parser.add_argument('--val_split_ratio', type=float, default=0.2)
     parser.add_argument('--root', type=str, default='/data/Datasets/ag/')
-    parser.add_argument('--verb_blacklist', nargs='+', default=['smile', 'laugh', 'sneeze'])
+    parser.add_argument('--verb_whitelist', nargs='+')
     args = parser.parse_args()
 
     root = args.root
     train_split_ratio = args.train_split_ratio
     val_split_ratio = args.val_split_ratio
-    verb_blacklist = args.verb_blacklist
+    verb_whitelist = args.verb_whitelist
 
-    ag = AG(root, split=None, subset_file=None, verb_blacklist=verb_blacklist) #view the full dataset
+    ag = AG(root, split=None, subset_file=None, verb_whitelist=verb_whitelist) #view the full dataset
 
     with shelve.open('subset_shelve', flag='n') as subset_dict:
         generate_subset(ag, subset_dict)
