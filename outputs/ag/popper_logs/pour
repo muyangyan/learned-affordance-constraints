@@ -38,6 +38,9 @@ body_pred(television, 1).
 body_pred(towel, 1).
 body_pred(vacuum, 1).
 body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
 body_pred(above, 2).
 body_pred(beneath, 2).
 body_pred(in_front_of, 2).
@@ -61,9 +64,17 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:38:05 Generating programs of size: 2
-10:38:06 Generating programs of size: 3
-10:38:13 Generating programs of size: 4
-10:43:59 Generating programs of size: 5
-12:52:33 TIMEOUT OF 8000 SECONDS EXCEEDED
-NO SOLUTION
+12:35:45 Generating programs of size: 2
+12:35:45 Generating programs of size: 3
+12:35:47 ********************
+12:35:47 New best hypothesis:
+12:35:47 tp:4 fn:63 tn:192 fp:0 size:3 mdl:66
+12:35:47 pour_target(A):- on_the_side_of(B,A),chair(B).
+12:35:47 ********************
+12:35:49 Generating programs of size: 4
+12:40:12 Generating programs of size: 5
+14:16:09 TIMEOUT OF 6000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:1.00 Recall:0.06 TP:4 FN:63 TN:192 FP:0 Size:3 MDL:66
+pour_target(A):- on_the_side_of(B,A),chair(B).
+******************************

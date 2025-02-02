@@ -38,6 +38,9 @@ body_pred(television, 1).
 body_pred(towel, 1).
 body_pred(vacuum, 1).
 body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
 body_pred(above, 2).
 body_pred(beneath, 2).
 body_pred(in_front_of, 2).
@@ -61,58 +64,68 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:38:05 Generating programs of size: 2
-10:38:06 Generating programs of size: 3
-10:38:31 Generating programs of size: 4
-10:38:42 ********************
-10:38:42 New best hypothesis:
-10:38:42 tp:289 fn:98 tn:870 fp:112 size:39 mdl:1131
-10:38:42 take_target(A):- book(B),other_relationship(A,B).
-10:38:42 take_target(A):- in(B,A),wearing(A,B).
-10:38:42 take_target(A):- blanket(B),not_contacting(A,B).
-10:38:42 take_target(A):- clothes(B),not_contacting(A,B).
-10:38:42 take_target(A):- book(B),not_contacting(A,B).
-10:38:42 take_target(A):- pillow(B),not_contacting(A,B).
-10:38:42 take_target(A):- not_contacting(A,B),dish(B).
-10:38:42 take_target(A):- picture(B),not_contacting(A,B).
-10:38:42 take_target(A):- broom(B),not_contacting(A,B).
-10:38:42 take_target(A):- bag(B),not_contacting(A,B).
-10:38:42 take_target(A):- box(B),not_contacting(A,B).
-10:38:42 take_target(A):- food(B),not_contacting(A,B).
-10:38:42 take_target(A):- not_contacting(A,B),vacuum(B).
-10:38:42 ********************
-10:46:36 Generating programs of size: 5
-10:46:48 ********************
-10:46:48 New best hypothesis:
-10:46:48 tp:285 fn:102 tn:878 fp:104 size:42 mdl:1166
-10:46:48 take_target(A):- in(B,A),clothes(B).
-10:46:48 take_target(A):- book(B),other_relationship(A,B).
-10:46:48 take_target(A):- blanket(B),not_contacting(A,B).
-10:46:48 take_target(A):- clothes(B),not_contacting(A,B).
-10:46:48 take_target(A):- book(B),not_contacting(A,B).
-10:46:48 take_target(A):- pillow(B),not_contacting(A,B).
-10:46:48 take_target(A):- bag(B),not_contacting(A,B).
-10:46:48 take_target(A):- box(B),not_contacting(A,B).
-10:46:48 take_target(A):- food(B),not_contacting(A,B).
-10:46:48 take_target(A):- not_contacting(A,B),vacuum(B).
-10:46:48 take_target(A):- in_front_of(B,A),picture(B),not_contacting(A,B).
-10:46:48 take_target(A):- broom(B),in_front_of(B,A),not_contacting(A,B).
-10:46:48 take_target(A):- in_front_of(B,A),dish(B),not_contacting(A,B).
-10:46:48 ********************
-12:52:01 TIMEOUT OF 8000 SECONDS EXCEEDED
+12:35:45 Generating programs of size: 2
+12:35:45 Generating programs of size: 3
+12:35:45 ********************
+12:35:45 New best hypothesis:
+12:35:45 tp:5 fn:250 tn:834 fp:1 size:3 mdl:254
+12:35:45 take_target(A):- looking_at(A,B),writing_on(A,B).
+12:35:45 ********************
+12:35:46 ********************
+12:35:46 New best hypothesis:
+12:35:46 tp:55 fn:200 tn:787 fp:48 size:3 mdl:251
+12:35:46 take_target(A):- not_contacting(A,B),unsure(A,B).
+12:35:46 ********************
+12:35:46 ********************
+12:35:46 New best hypothesis:
+12:35:46 tp:25 fn:230 tn:831 fp:4 size:3 mdl:237
+12:35:46 take_target(A):- not_contacting(A,B),book(B).
+12:35:46 ********************
+12:35:46 ********************
+12:35:46 New best hypothesis:
+12:35:46 tp:32 fn:223 tn:826 fp:9 size:3 mdl:235
+12:35:46 take_target(A):- not_contacting(A,B),box(B).
+12:35:46 ********************
+12:35:56 Generating programs of size: 4
+12:36:03 ********************
+12:36:03 New best hypothesis:
+12:36:03 tp:160 fn:95 tn:764 fp:71 size:27 mdl:193
+12:36:03 take_target(A):- in_front_of(B,A),writing_on(A,B).
+12:36:03 take_target(A):- not_contacting(A,B),broom(B).
+12:36:03 take_target(A):- not_contacting(A,B),book(B).
+12:36:03 take_target(A):- not_contacting(A,B),box(B).
+12:36:03 take_target(A):- not_contacting(A,B),clothes(B).
+12:36:03 take_target(A):- not_contacting(A,B),dish(B).
+12:36:03 take_target(A):- not_contacting(A,B),food(B).
+12:36:03 take_target(A):- not_contacting(A,B),bag(B).
+12:36:03 take_target(A):- not_contacting(A,B),picture(B).
+12:36:03 ********************
+12:47:14 Generating programs of size: 5
+12:47:24 ********************
+12:47:24 New best hypothesis:
+12:47:24 tp:159 fn:96 tn:776 fp:59 size:34 mdl:189
+12:47:24 take_target(A):- in_front_of(B,A),writing_on(A,B).
+12:47:24 take_target(A):- not_contacting(A,B),book(B).
+12:47:24 take_target(A):- not_contacting(A,B),box(B).
+12:47:24 take_target(A):- not_contacting(A,B),clothes(B).
+12:47:24 take_target(A):- not_contacting(A,B),bag(B).
+12:47:24 take_target(A):- not_contacting(A,B),picture(B).
+12:47:24 take_target(A):- looking_at(A,B),not_contacting(A,B),dish(B).
+12:47:24 take_target(A):- not_contacting(A,B),in_front_of(B,A),food(B).
+12:47:24 take_target(A):- not_contacting(A,B),in_front_of(B,A),broom(B).
+12:47:24 take_target(A):- unsure(A,B),in(B,A),wearing(A,B).
+12:47:24 ********************
+14:16:12 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.73 Recall:0.74 TP:285 FN:102 TN:878 FP:104 Size:42 MDL:1166
-take_target(A):- in(B,A),clothes(B).
-take_target(A):- book(B),other_relationship(A,B).
-take_target(A):- blanket(B),not_contacting(A,B).
-take_target(A):- clothes(B),not_contacting(A,B).
-take_target(A):- book(B),not_contacting(A,B).
-take_target(A):- pillow(B),not_contacting(A,B).
-take_target(A):- bag(B),not_contacting(A,B).
-take_target(A):- box(B),not_contacting(A,B).
-take_target(A):- food(B),not_contacting(A,B).
-take_target(A):- not_contacting(A,B),vacuum(B).
-take_target(A):- in_front_of(B,A),picture(B),not_contacting(A,B).
-take_target(A):- broom(B),in_front_of(B,A),not_contacting(A,B).
-take_target(A):- in_front_of(B,A),dish(B),not_contacting(A,B).
+Precision:0.73 Recall:0.62 TP:159 FN:96 TN:776 FP:59 Size:34 MDL:189
+take_target(A):- in_front_of(B,A),writing_on(A,B).
+take_target(A):- not_contacting(A,B),book(B).
+take_target(A):- not_contacting(A,B),box(B).
+take_target(A):- not_contacting(A,B),clothes(B).
+take_target(A):- not_contacting(A,B),bag(B).
+take_target(A):- not_contacting(A,B),picture(B).
+take_target(A):- looking_at(A,B),not_contacting(A,B),dish(B).
+take_target(A):- not_contacting(A,B),in_front_of(B,A),food(B).
+take_target(A):- not_contacting(A,B),in_front_of(B,A),broom(B).
+take_target(A):- unsure(A,B),in(B,A),wearing(A,B).
 ******************************

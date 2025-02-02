@@ -38,6 +38,9 @@ body_pred(television, 1).
 body_pred(towel, 1).
 body_pred(vacuum, 1).
 body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
 body_pred(above, 2).
 body_pred(beneath, 2).
 body_pred(in_front_of, 2).
@@ -61,19 +64,17 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:38:05 Generating programs of size: 2
-10:38:06 Generating programs of size: 3
-10:38:25 Generating programs of size: 4
-10:38:32 ********************
-10:38:32 New best hypothesis:
-10:38:32 tp:86 fn:129 tn:806 fp:57 size:6 mdl:1353
-10:38:32 play_target(A):- laptop(B),in_front_of(B,A).
-10:38:32 play_target(A):- laptop(B),on_the_side_of(B,A).
-10:38:32 ********************
-10:48:05 Generating programs of size: 5
-12:51:44 TIMEOUT OF 8000 SECONDS EXCEEDED
+12:35:45 Generating programs of size: 2
+12:35:45 Generating programs of size: 3
+12:35:45 ********************
+12:35:45 New best hypothesis:
+12:35:45 tp:46 fn:114 tn:578 fp:20 size:3 mdl:137
+12:35:45 play_target(A):- laptop(B),looking_at(A,B).
+12:35:45 ********************
+12:35:54 Generating programs of size: 4
+12:46:15 Generating programs of size: 5
+14:15:51 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.60 Recall:0.40 TP:86 FN:129 TN:806 FP:57 Size:6 MDL:1353
-play_target(A):- laptop(B),in_front_of(B,A).
-play_target(A):- laptop(B),on_the_side_of(B,A).
+Precision:0.70 Recall:0.29 TP:46 FN:114 TN:578 FP:20 Size:3 MDL:137
+play_target(A):- laptop(B),looking_at(A,B).
 ******************************

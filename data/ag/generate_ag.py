@@ -5,6 +5,9 @@ from tqdm import tqdm
 import random
 import csv
 import argparse
+import warnings
+
+warnings.filterwarnings("ignore")
 
 from data.ag.action_genome import AG
 from util.graph_utils import check_edge_exists
@@ -76,20 +79,19 @@ def split_list(lst, ratio_train, ratio_val):
 in fact these will make up the full dataset.
 we will split the Charades 'train' into our own train val and test with sampling
 '''
-def create_train_val_split(root, train_split_ratio=0.6, val_split_ratio=0.2):
+def create_train_val_split(root, data_path, train_split_ratio=0.6, val_split_ratio=0.2):
     full_video_ids = []    
-    with open(os.path.join(root, '/annotations/Charades/Charades_v1_train.csv')) as f:
+    with open(os.path.join(root, 'annotations/Charades/Charades_v1_train.csv')) as f:
         reader = csv.reader(f)
         reader.__next__()
         for row in reader:
             full_video_ids.append(row[0])
 
-    print(len(full_video_ids))
-
     train_split_ids, val_split_ids, test_split_ids = split_list(full_video_ids, train_split_ratio, val_split_ratio)
 
     split_dict = {'train': train_split_ids, 'val': val_split_ids, 'test': test_split_ids}
-    with open('split_train_val_test.json', 'w') as f:
+
+    with open(os.path.join(data_path, 'split_train_val_test.json'), 'w') as f:
         json.dump(split_dict, f)
 
 
@@ -98,17 +100,21 @@ if __name__ == '__main__':
     parser.add_argument('--train_split_ratio', type=float, default=0.6)
     parser.add_argument('--val_split_ratio', type=float, default=0.2)
     parser.add_argument('--root', type=str, default='/data/Datasets/ag/')
+    parser.add_argument('--subset_file', type=str, default='data/ag/subset_shelve')
     parser.add_argument('--verb_whitelist', nargs='+')
     args = parser.parse_args()
 
     root = args.root
+    subset_file = args.subset_file
     train_split_ratio = args.train_split_ratio
     val_split_ratio = args.val_split_ratio
     verb_whitelist = args.verb_whitelist
 
     ag = AG(root, split=None, subset_file=None, verb_whitelist=verb_whitelist) #view the full dataset
 
-    with shelve.open('subset_shelve', flag='n') as subset_dict:
+    print(f"Generating subset")
+    with shelve.open(subset_file, flag='n') as subset_dict:
         generate_subset(ag, subset_dict)
 
-    create_train_val_split(root, train_split_ratio, val_split_ratio)
+    data_path = '/'.join(subset_file.split('/')[:-1]) #chop off the filename
+    create_train_val_split(root, data_path, train_split_ratio, val_split_ratio)

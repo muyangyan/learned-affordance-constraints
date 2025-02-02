@@ -38,6 +38,9 @@ body_pred(television, 1).
 body_pred(towel, 1).
 body_pred(vacuum, 1).
 body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
 body_pred(above, 2).
 body_pred(beneath, 2).
 body_pred(in_front_of, 2).
@@ -61,58 +64,89 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:38:05 Generating programs of size: 2
-10:38:06 Generating programs of size: 3
-10:38:56 Generating programs of size: 4
-10:39:07 ********************
-10:39:07 New best hypothesis:
-10:39:07 tp:286 fn:157 tn:1433 fp:148 size:39 mdl:1757
-10:39:07 hold_target(A):- towel(B),not_contacting(A,B).
-10:39:07 hold_target(A):- behind(B,A),clothes(B).
-10:39:07 hold_target(A):- not_contacting(A,B),box(B).
-10:39:07 hold_target(A):- not_contacting(A,B),broom(B).
-10:39:07 hold_target(A):- not_contacting(A,B),pillow(B).
-10:39:07 hold_target(A):- blanket(B),not_contacting(A,B).
-10:39:07 hold_target(A):- not_contacting(A,B),food(B).
-10:39:07 hold_target(A):- not_contacting(A,B),book(B).
-10:39:07 hold_target(A):- not_contacting(A,B),dish(B).
-10:39:07 hold_target(A):- bag(B),not_contacting(A,B).
-10:39:07 hold_target(A):- not_contacting(A,B),shoe(B).
-10:39:07 hold_target(A):- not_contacting(A,B),vacuum(B).
-10:39:07 hold_target(A):- on_the_side_of(B,A),wearing(A,B).
-10:39:07 ********************
-10:53:06 Generating programs of size: 5
-10:53:17 ********************
-10:53:17 New best hypothesis:
-10:53:17 tp:245 fn:198 tn:1482 fp:99 size:44 mdl:2123
-10:53:17 hold_target(A):- towel(B),not_contacting(A,B).
-10:53:17 hold_target(A):- behind(B,A),clothes(B).
-10:53:17 hold_target(A):- not_contacting(A,B),box(B).
-10:53:17 hold_target(A):- blanket(B),not_contacting(A,B).
-10:53:17 hold_target(A):- not_contacting(A,B),dish(B).
-10:53:17 hold_target(A):- bag(B),not_contacting(A,B).
-10:53:17 hold_target(A):- not_contacting(A,B),vacuum(B).
-10:53:17 hold_target(A):- on_the_side_of(B,A),wearing(A,B).
-10:53:17 hold_target(A):- not_contacting(A,B),pillow(B),in_front_of(B,A).
-10:53:17 hold_target(A):- not_contacting(A,B),in_front_of(B,A),shoe(B).
-10:53:17 hold_target(A):- on_the_side_of(B,A),not_contacting(A,B),book(B).
-10:53:17 hold_target(A):- on_the_side_of(B,A),not_contacting(A,B),clothes(B).
-10:53:17 hold_target(A):- on_the_side_of(B,A),not_contacting(A,B),broom(B).
-10:53:17 ********************
-12:53:13 TIMEOUT OF 8000 SECONDS EXCEEDED
+12:35:45 Generating programs of size: 2
+12:35:45 Generating programs of size: 3
+12:35:45 ********************
+12:35:45 New best hypothesis:
+12:35:45 tp:4 fn:315 tn:1154 fp:0 size:3 mdl:318
+12:35:45 hold_target(A):- looking_at(A,B),leaning_on(A,B).
+12:35:45 ********************
+12:35:50 ********************
+12:35:50 New best hypothesis:
+12:35:50 tp:5 fn:314 tn:1154 fp:0 size:3 mdl:317
+12:35:50 hold_target(A):- looking_at(A,B),covered_by(A,B).
+12:35:50 ********************
+12:35:56 ********************
+12:35:56 New best hypothesis:
+12:35:56 tp:14 fn:305 tn:1146 fp:8 size:3 mdl:316
+12:35:56 hold_target(A):- on_the_side_of(B,A),dish(B).
+12:35:56 ********************
+12:35:57 ********************
+12:35:57 New best hypothesis:
+12:35:57 tp:18 fn:301 tn:1148 fp:6 size:3 mdl:310
+12:35:57 hold_target(A):- not_contacting(A,B),beneath(B,A).
+12:35:57 ********************
+12:35:57 ********************
+12:35:57 New best hypothesis:
+12:35:57 tp:46 fn:273 tn:1122 fp:32 size:3 mdl:308
+12:35:57 hold_target(A):- not_contacting(A,B),food(B).
+12:35:57 ********************
+12:35:57 ********************
+12:35:57 New best hypothesis:
+12:35:57 tp:43 fn:276 tn:1138 fp:16 size:3 mdl:295
+12:35:57 hold_target(A):- not_contacting(A,B),dish(B).
+12:35:57 ********************
+12:36:06 Generating programs of size: 4
+12:36:16 ********************
+12:36:16 New best hypothesis:
+12:36:16 tp:186 fn:133 tn:1070 fp:84 size:36 mdl:253
+12:36:16 hold_target(A):- bed(B),touching(A,B).
+12:36:16 hold_target(A):- wearing(A,B),behind(B,A).
+12:36:16 hold_target(A):- wearing(A,B),on_the_side_of(B,A).
+12:36:16 hold_target(A):- not_contacting(A,B),pillow(B).
+12:36:16 hold_target(A):- not_contacting(A,B),dish(B).
+12:36:16 hold_target(A):- not_contacting(A,B),broom(B).
+12:36:16 hold_target(A):- not_contacting(A,B),box(B).
+12:36:16 hold_target(A):- not_contacting(A,B),book(B).
+12:36:16 hold_target(A):- not_contacting(A,B),bag(B).
+12:36:16 hold_target(A):- not_contacting(A,B),shoe(B).
+12:36:16 hold_target(A):- not_contacting(A,B),sandwich(B).
+12:36:16 hold_target(A):- not_contacting(A,B),blanket(B).
+12:36:16 ********************
+13:01:57 Generating programs of size: 5
+13:02:07 ********************
+13:02:07 New best hypothesis:
+13:02:07 tp:189 fn:130 tn:1087 fp:67 size:49 mdl:246
+13:02:07 hold_target(A):- wearing(A,B),behind(B,A).
+13:02:07 hold_target(A):- wearing(A,B),on_the_side_of(B,A).
+13:02:07 hold_target(A):- not_contacting(A,B),dish(B).
+13:02:07 hold_target(A):- not_contacting(A,B),broom(B).
+13:02:07 hold_target(A):- not_contacting(A,B),bag(B).
+13:02:07 hold_target(A):- not_contacting(A,B),shoe(B).
+13:02:07 hold_target(A):- not_contacting(A,B),blanket(B).
+13:02:07 hold_target(A):- blanket(B),other_relationship(A,B),on_the_side_of(B,A).
+13:02:07 hold_target(A):- not_contacting(A,B),book(B),on_the_side_of(B,A).
+13:02:07 hold_target(A):- not_contacting(A,B),in_front_of(B,A),pillow(B).
+13:02:07 hold_target(A):- not_contacting(A,B),clothes(B),in_front_of(B,A).
+13:02:07 hold_target(A):- not_looking_at(A,B),not_contacting(A,B),sandwich(B).
+13:02:07 hold_target(A):- looking_at(A,B),not_contacting(A,B),food(B).
+13:02:07 hold_target(A):- looking_at(A,B),not_contacting(A,B),box(B).
+13:02:07 ********************
+14:17:17 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.71 Recall:0.55 TP:245 FN:198 TN:1482 FP:99 Size:44 MDL:2123
-hold_target(A):- towel(B),not_contacting(A,B).
-hold_target(A):- behind(B,A),clothes(B).
-hold_target(A):- not_contacting(A,B),box(B).
-hold_target(A):- blanket(B),not_contacting(A,B).
+Precision:0.74 Recall:0.59 TP:189 FN:130 TN:1087 FP:67 Size:49 MDL:246
+hold_target(A):- wearing(A,B),behind(B,A).
+hold_target(A):- wearing(A,B),on_the_side_of(B,A).
 hold_target(A):- not_contacting(A,B),dish(B).
-hold_target(A):- bag(B),not_contacting(A,B).
-hold_target(A):- not_contacting(A,B),vacuum(B).
-hold_target(A):- on_the_side_of(B,A),wearing(A,B).
-hold_target(A):- not_contacting(A,B),pillow(B),in_front_of(B,A).
-hold_target(A):- not_contacting(A,B),in_front_of(B,A),shoe(B).
-hold_target(A):- on_the_side_of(B,A),not_contacting(A,B),book(B).
-hold_target(A):- on_the_side_of(B,A),not_contacting(A,B),clothes(B).
-hold_target(A):- on_the_side_of(B,A),not_contacting(A,B),broom(B).
+hold_target(A):- not_contacting(A,B),broom(B).
+hold_target(A):- not_contacting(A,B),bag(B).
+hold_target(A):- not_contacting(A,B),shoe(B).
+hold_target(A):- not_contacting(A,B),blanket(B).
+hold_target(A):- blanket(B),other_relationship(A,B),on_the_side_of(B,A).
+hold_target(A):- not_contacting(A,B),book(B),on_the_side_of(B,A).
+hold_target(A):- not_contacting(A,B),in_front_of(B,A),pillow(B).
+hold_target(A):- not_contacting(A,B),clothes(B),in_front_of(B,A).
+hold_target(A):- not_looking_at(A,B),not_contacting(A,B),sandwich(B).
+hold_target(A):- looking_at(A,B),not_contacting(A,B),food(B).
+hold_target(A):- looking_at(A,B),not_contacting(A,B),box(B).
 ******************************

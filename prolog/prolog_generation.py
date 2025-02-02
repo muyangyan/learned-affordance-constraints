@@ -4,6 +4,10 @@ import argparse
 import shelve
 import random
 import numpy as np
+import warnings
+
+warnings.filterwarnings("ignore")
+
 from data.ag.action_genome import AG
 from data.toy.toy_dataset import ToyDataset
 
@@ -120,8 +124,6 @@ class PrologData:
             f.write(general_bk)
             f.write('\n')
         
-        print(self.name)
-
         for idx, inputs in enumerate(self.dataset):
             if self.name == 'ag':
                 id, _, data, _, _ = inputs
@@ -155,10 +157,10 @@ def main(args):
 
     root = args.root
     subset_file = args.subset_file
+    verb_whitelist = args.verb_whitelist
 
     if args.train:
-        train_ag = AG(root, no_img=True, split='train', subset_file=subset_file)
-        print(train_ag.verb_label_counts)
+        train_ag = AG(root, no_img=True, split='train', subset_file=subset_file, verb_whitelist=verb_whitelist)
 
         train_pd = PrologData('prolog', 'ag', train_ag, train_ag.object_classes, train_ag.relationship_classes, train_ag.verb_classes, model=None, split='train')
 
@@ -174,15 +176,13 @@ def main(args):
             train_pd.write_verb(verb_name, keep_prob=exp_curve(4, ratio)) 
     
     if args.val:
-        val_ag = AG(root, no_img=True, split='val', subset_file=subset_file)
-        print(val_ag.verb_label_counts)
+        val_ag = AG(root, no_img=True, split='val', subset_file=subset_file, verb_whitelist=verb_whitelist)
 
         val_pd = PrologData('prolog', 'ag', val_ag, val_ag.object_classes, val_ag.relationship_classes, val_ag.verb_classes, model=None, split='val')
         val_pd.write_bk()
 
     if args.test:
-        test_ag = AG(root, no_img=True, split='test', subset_file=subset_file)
-        print(test_ag.verb_label_counts)
+        test_ag = AG(root, no_img=True, split='test', subset_file=subset_file, verb_whitelist=verb_whitelist)
         
         test_pd = PrologData('prolog', 'ag', test_ag, test_ag.object_classes, test_ag.relationship_classes, test_ag.verb_classes, model=None, split='test')
         test_pd.write_bk()
@@ -194,6 +194,7 @@ if __name__ == '__main__':
     parser.add_argument('--test', action='store_true', help='Generate test data')
     parser.add_argument('--root', type=str, default='/data/Datasets/ag/', help='Root directory')
     parser.add_argument('--subset_file', type=str, default='data/ag/subset_shelve', help='Subset file')
+    parser.add_argument('--verb_whitelist', nargs='+', help='Verb whitelist')
     args = parser.parse_args()
 
     if not (args.train or args.val or args.test):

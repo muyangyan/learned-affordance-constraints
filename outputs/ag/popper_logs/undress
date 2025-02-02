@@ -38,6 +38,9 @@ body_pred(television, 1).
 body_pred(towel, 1).
 body_pred(vacuum, 1).
 body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
 body_pred(above, 2).
 body_pred(beneath, 2).
 body_pred(in_front_of, 2).
@@ -61,23 +64,36 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:38:05 Generating programs of size: 2
-10:38:06 Generating programs of size: 3
-10:38:13 Generating programs of size: 4
-10:38:15 ********************
-10:38:15 New best hypothesis:
-10:38:15 tp:85 fn:31 tn:391 fp:17 size:6 mdl:333
-10:38:15 undress_target(A):- clothes(B),wearing(A,B).
-10:38:15 undress_target(A):- wearing(A,B),shoe(B).
-10:38:15 ********************
-10:49:25 Generating programs of size: 5
-10:49:30 ********************
-10:49:30 New best hypothesis:
-10:49:30 tp:85 fn:31 tn:391 fp:17 size:4 mdl:331
-10:49:30 undress_target(A):- person(C),wearing(A,B),wearing(C,B).
-10:49:30 ********************
-12:51:29 TIMEOUT OF 8000 SECONDS EXCEEDED
+12:35:45 Generating programs of size: 2
+12:35:45 Generating programs of size: 3
+12:35:45 ********************
+12:35:45 New best hypothesis:
+12:35:45 tp:46 fn:35 tn:326 fp:7 size:3 mdl:45
+12:35:45 undress_target(A):- wearing(A,B),in(B,A).
+12:35:45 ********************
+12:35:46 ********************
+12:35:46 New best hypothesis:
+12:35:46 tp:51 fn:30 tn:324 fp:9 size:3 mdl:42
+12:35:46 undress_target(A):- wearing(A,B),clothes(B).
+12:35:46 ********************
+12:35:50 Generating programs of size: 4
+12:35:52 ********************
+12:35:52 New best hypothesis:
+12:35:52 tp:64 fn:17 tn:320 fp:13 size:9 mdl:39
+12:35:52 undress_target(A):- wearing(A,B),in(B,A).
+12:35:52 undress_target(A):- not_looking_at(A,B),clothes(B).
+12:35:52 undress_target(A):- wearing(A,B),in_front_of(B,A).
+12:35:52 ********************
+12:42:40 Generating programs of size: 5
+12:42:46 ********************
+12:42:46 New best hypothesis:
+12:42:46 tp:65 fn:16 tn:320 fp:13 size:8 mdl:37
+12:42:46 undress_target(A):- wearing(B,C),wearing(A,C),person(B).
+12:42:46 undress_target(A):- holding(A,B),not_looking_at(A,B),clothes(B).
+12:42:46 ********************
+14:16:07 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.83 Recall:0.73 TP:85 FN:31 TN:391 FP:17 Size:4 MDL:331
-undress_target(A):- person(C),wearing(A,B),wearing(C,B).
+Precision:0.83 Recall:0.80 TP:65 FN:16 TN:320 FP:13 Size:8 MDL:37
+undress_target(A):- wearing(B,C),wearing(A,C),person(B).
+undress_target(A):- holding(A,B),not_looking_at(A,B),clothes(B).
 ******************************

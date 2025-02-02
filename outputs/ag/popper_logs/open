@@ -38,6 +38,9 @@ body_pred(television, 1).
 body_pred(towel, 1).
 body_pred(vacuum, 1).
 body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
 body_pred(above, 2).
 body_pred(beneath, 2).
 body_pred(in_front_of, 2).
@@ -61,33 +64,55 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:38:05 Generating programs of size: 2
-10:38:06 Generating programs of size: 3
-10:38:46 Generating programs of size: 4
-10:38:57 ********************
-10:38:57 New best hypothesis:
-10:38:57 tp:450 fn:312 tn:1972 fp:257 size:27 mdl:3404
-10:38:57 open_target(A):- in_front_of(B,A),bag(B).
-10:38:57 open_target(A):- in_front_of(B,A),refrigerator(B).
-10:38:57 open_target(A):- refrigerator(B),on_the_side_of(B,A).
-10:38:57 open_target(A):- behind(B,A),refrigerator(B).
-10:38:57 open_target(A):- book(B),on_the_side_of(B,A).
-10:38:57 open_target(A):- on_the_side_of(B,A),door(B).
-10:38:57 open_target(A):- in_front_of(B,A),door(B).
-10:38:57 open_target(A):- touching(A,B),box(B).
-10:38:57 open_target(A):- doorway(B),holding(A,B).
-10:38:57 ********************
-10:54:42 Generating programs of size: 5
-12:52:22 TIMEOUT OF 8000 SECONDS EXCEEDED
+12:35:45 Generating programs of size: 2
+12:35:45 Generating programs of size: 3
+12:35:45 ********************
+12:35:45 New best hypothesis:
+12:35:45 tp:11 fn:525 tn:1733 fp:7 size:3 mdl:535
+12:35:45 open_target(A):- doorknob(B),looking_at(A,B).
+12:35:45 ********************
+12:35:46 ********************
+12:35:46 New best hypothesis:
+12:35:46 tp:21 fn:515 tn:1730 fp:10 size:3 mdl:528
+12:35:46 open_target(A):- refrigerator(B),looking_at(A,B).
+12:35:46 ********************
+12:35:46 ********************
+12:35:46 New best hypothesis:
+12:35:46 tp:77 fn:459 tn:1702 fp:38 size:3 mdl:500
+12:35:46 open_target(A):- looking_at(A,B),door(B).
+12:35:46 ********************
+12:36:03 Generating programs of size: 4
+12:36:13 ********************
+12:36:13 New best hypothesis:
+12:36:13 tp:193 fn:343 tn:1631 fp:109 size:15 mdl:467
+12:36:13 open_target(A):- on_the_side_of(B,A),door(B).
+12:36:13 open_target(A):- on_the_side_of(B,A),refrigerator(B).
+12:36:13 open_target(A):- bag(B),touching(A,B).
+12:36:13 open_target(A):- in_front_of(B,A),door(B).
+12:36:13 open_target(A):- in_front_of(B,A),refrigerator(B).
+12:36:13 ********************
+12:56:54 Generating programs of size: 5
+12:57:04 ********************
+12:57:04 New best hypothesis:
+12:57:04 tp:237 fn:299 tn:1600 fp:140 size:27 mdl:466
+12:57:04 open_target(A):- on_the_side_of(B,A),door(B).
+12:57:04 open_target(A):- bag(B),touching(A,B).
+12:57:04 open_target(A):- refrigerator(B),not_contacting(A,B).
+12:57:04 open_target(A):- in_front_of(B,A),door(B).
+12:57:04 open_target(A):- in_front_of(B,A),refrigerator(B).
+12:57:04 open_target(A):- on_the_side_of(B,A),looking_at(A,B),book(B).
+12:57:04 open_target(A):- bag(B),looking_at(A,B),holding(A,B).
+12:57:04 open_target(A):- behind(C,B),other_relationship(B,C),on_the_side_of(C,A).
+12:57:04 ********************
+14:16:21 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.64 Recall:0.59 TP:450 FN:312 TN:1972 FP:257 Size:27 MDL:3404
-open_target(A):- in_front_of(B,A),bag(B).
-open_target(A):- in_front_of(B,A),refrigerator(B).
-open_target(A):- refrigerator(B),on_the_side_of(B,A).
-open_target(A):- behind(B,A),refrigerator(B).
-open_target(A):- book(B),on_the_side_of(B,A).
+Precision:0.63 Recall:0.44 TP:237 FN:299 TN:1600 FP:140 Size:27 MDL:466
 open_target(A):- on_the_side_of(B,A),door(B).
+open_target(A):- bag(B),touching(A,B).
+open_target(A):- refrigerator(B),not_contacting(A,B).
 open_target(A):- in_front_of(B,A),door(B).
-open_target(A):- touching(A,B),box(B).
-open_target(A):- doorway(B),holding(A,B).
+open_target(A):- in_front_of(B,A),refrigerator(B).
+open_target(A):- on_the_side_of(B,A),looking_at(A,B),book(B).
+open_target(A):- bag(B),looking_at(A,B),holding(A,B).
+open_target(A):- behind(C,B),other_relationship(B,C),on_the_side_of(C,A).
 ******************************

@@ -38,6 +38,9 @@ body_pred(television, 1).
 body_pred(towel, 1).
 body_pred(vacuum, 1).
 body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
 body_pred(above, 2).
 body_pred(beneath, 2).
 body_pred(in_front_of, 2).
@@ -61,28 +64,51 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:38:05 Generating programs of size: 2
-10:38:06 Generating programs of size: 3
-10:39:03 Generating programs of size: 4
-10:39:13 ********************
-10:39:13 New best hypothesis:
-10:39:13 tp:60 fn:693 tn:2803 fp:35 size:9 mdl:6974
-10:39:13 stand_target(A):- sitting_on(A,B),touching(A,B).
-10:39:13 stand_target(A):- sitting_on(A,B),other_relationship(A,B).
-10:39:13 stand_target(A):- in_front_of(B,A),wearing(A,B).
-10:39:13 ********************
-10:58:00 Generating programs of size: 5
-10:58:10 ********************
-10:58:10 New best hypothesis:
-10:58:10 tp:60 fn:693 tn:2805 fp:33 size:10 mdl:6973
-10:58:10 stand_target(A):- sitting_on(A,B),touching(A,B).
-10:58:10 stand_target(A):- sitting_on(A,B),other_relationship(A,B).
-10:58:10 stand_target(A):- in_front_of(B,A),shoe(B),wearing(A,B).
-10:58:10 ********************
-12:52:54 TIMEOUT OF 8000 SECONDS EXCEEDED
+12:35:45 Generating programs of size: 2
+12:35:45 Generating programs of size: 3
+12:35:45 ********************
+12:35:45 New best hypothesis:
+12:35:45 tp:5 fn:559 tn:1816 fp:1 size:3 mdl:563
+12:35:45 stand_target(A):- looking_at(A,B),sitting_on(A,B).
+12:35:45 ********************
+12:35:49 ********************
+12:35:49 New best hypothesis:
+12:35:49 tp:7 fn:557 tn:1815 fp:2 size:3 mdl:562
+12:35:49 stand_target(A):- sitting_on(A,B),touching(A,B).
+12:35:49 ********************
+12:35:50 ********************
+12:35:50 New best hypothesis:
+12:35:50 tp:14 fn:550 tn:1813 fp:4 size:3 mdl:557
+12:35:50 stand_target(A):- shoe(B),touching(A,B).
+12:35:50 ********************
+12:36:12 Generating programs of size: 4
+12:36:18 ********************
+12:36:18 New best hypothesis:
+12:36:18 tp:46 fn:518 tn:1797 fp:20 size:15 mdl:553
+12:36:18 stand_target(A):- sitting_on(A,B),touching(A,B).
+12:36:18 stand_target(A):- floor(B),touching(A,B).
+12:36:18 stand_target(A):- shoe(B),touching(A,B).
+12:36:18 stand_target(A):- other_relationship(A,B),leaning_on(A,B).
+12:36:18 stand_target(A):- in_front_of(B,A),wearing(A,B).
+12:36:18 ********************
+13:12:53 Generating programs of size: 5
+13:13:01 ********************
+13:13:01 New best hypothesis:
+13:13:01 tp:50 fn:514 tn:1798 fp:19 size:19 mdl:552
+13:13:01 stand_target(A):- looking_at(A,B),sitting_on(A,B).
+13:13:01 stand_target(A):- sitting_on(A,B),touching(A,B).
+13:13:01 stand_target(A):- floor(B),touching(A,B).
+13:13:01 stand_target(A):- shoe(B),touching(A,B).
+13:13:01 stand_target(A):- other_relationship(A,B),leaning_on(A,B).
+13:13:01 stand_target(A):- in_front_of(B,A),wearing(A,B),shoe(B).
+13:13:01 ********************
+14:16:04 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.65 Recall:0.08 TP:60 FN:693 TN:2805 FP:33 Size:10 MDL:6973
+Precision:0.72 Recall:0.09 TP:50 FN:514 TN:1798 FP:19 Size:19 MDL:552
+stand_target(A):- looking_at(A,B),sitting_on(A,B).
 stand_target(A):- sitting_on(A,B),touching(A,B).
-stand_target(A):- sitting_on(A,B),other_relationship(A,B).
-stand_target(A):- in_front_of(B,A),shoe(B),wearing(A,B).
+stand_target(A):- floor(B),touching(A,B).
+stand_target(A):- shoe(B),touching(A,B).
+stand_target(A):- other_relationship(A,B),leaning_on(A,B).
+stand_target(A):- in_front_of(B,A),wearing(A,B),shoe(B).
 ******************************

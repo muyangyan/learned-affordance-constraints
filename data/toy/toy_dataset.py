@@ -11,6 +11,10 @@ from data.toy.game.header import *
 import torch.nn.functional as F
 
 
+import warnings
+
+warnings.filterwarnings("ignore")
+
 def extract_obj_idxs(nodes):
     obj_idxs = []
     for i,node in enumerate(nodes):

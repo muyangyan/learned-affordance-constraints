@@ -38,6 +38,9 @@ body_pred(television, 1).
 body_pred(towel, 1).
 body_pred(vacuum, 1).
 body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
 body_pred(above, 2).
 body_pred(beneath, 2).
 body_pred(in_front_of, 2).
@@ -61,21 +64,29 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:38:05 Generating programs of size: 2
-10:38:06 Generating programs of size: 3
-10:38:13 Generating programs of size: 4
-10:38:15 ********************
-10:38:15 New best hypothesis:
-10:38:15 tp:66 fn:0 tn:76 fp:13 size:9 mdl:22
-10:38:15 cook_target(A):- food(B),in_front_of(B,A).
-10:38:15 cook_target(A):- food(B),not_contacting(A,B).
-10:38:15 cook_target(A):- food(B),beneath(B,A).
-10:38:15 ********************
-10:42:48 Generating programs of size: 5
-12:52:03 TIMEOUT OF 8000 SECONDS EXCEEDED
+12:35:45 Generating programs of size: 2
+12:35:45 Generating programs of size: 3
+12:35:45 ********************
+12:35:45 New best hypothesis:
+12:35:45 tp:26 fn:18 tn:142 fp:8 size:3 mdl:29
+12:35:45 cook_target(A):- looking_at(A,B),food(B).
+12:35:45 ********************
+12:35:46 ********************
+12:35:46 New best hypothesis:
+12:35:46 tp:37 fn:7 tn:136 fp:14 size:3 mdl:24
+12:35:46 cook_target(A):- food(B),in_front_of(B,A).
+12:35:46 ********************
+12:35:48 Generating programs of size: 4
+12:35:50 ********************
+12:35:50 New best hypothesis:
+12:35:50 tp:40 fn:4 tn:138 fp:12 size:6 mdl:22
+12:35:50 cook_target(A):- looking_at(A,B),food(B).
+12:35:50 cook_target(A):- unsure(A,B),food(B).
+12:35:50 ********************
+12:37:50 Generating programs of size: 5
+14:15:44 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.84 Recall:1.00 TP:66 FN:0 TN:76 FP:13 Size:9 MDL:22
-cook_target(A):- food(B),in_front_of(B,A).
-cook_target(A):- food(B),not_contacting(A,B).
-cook_target(A):- food(B),beneath(B,A).
+Precision:0.77 Recall:0.91 TP:40 FN:4 TN:138 FP:12 Size:6 MDL:22
+cook_target(A):- looking_at(A,B),food(B).
+cook_target(A):- unsure(A,B),food(B).
 ******************************

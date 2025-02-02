@@ -38,6 +38,9 @@ body_pred(television, 1).
 body_pred(towel, 1).
 body_pred(vacuum, 1).
 body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
 body_pred(above, 2).
 body_pred(beneath, 2).
 body_pred(in_front_of, 2).
@@ -61,21 +64,41 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:38:05 Generating programs of size: 2
-10:38:06 Generating programs of size: 3
-10:38:20 Generating programs of size: 4
-10:38:24 ********************
-10:38:24 New best hypothesis:
-10:38:24 tp:54 fn:74 tn:457 fp:20 size:9 mdl:769
-10:38:24 fix_target(A):- mirror(B),in_front_of(B,A).
-10:38:24 fix_target(A):- vacuum(B),in_front_of(B,A).
-10:38:24 fix_target(A):- light(B),above(B,A).
-10:38:24 ********************
-10:54:38 Generating programs of size: 5
-12:52:49 TIMEOUT OF 8000 SECONDS EXCEEDED
+12:35:45 Generating programs of size: 2
+12:35:45 Generating programs of size: 3
+12:35:45 ********************
+12:35:45 New best hypothesis:
+12:35:45 tp:6 fn:85 tn:349 fp:2 size:3 mdl:90
+12:35:45 fix_target(A):- above(B,A),looking_at(A,B).
+12:35:45 ********************
+12:35:45 ********************
+12:35:45 New best hypothesis:
+12:35:45 tp:22 fn:69 tn:346 fp:5 size:3 mdl:77
+12:35:45 fix_target(A):- looking_at(A,B),mirror(B).
+12:35:45 ********************
+12:35:49 ********************
+12:35:49 New best hypothesis:
+12:35:49 tp:28 fn:63 tn:343 fp:8 size:3 mdl:74
+12:35:49 fix_target(A):- not_contacting(A,B),mirror(B).
+12:35:49 ********************
+12:35:49 ********************
+12:35:49 New best hypothesis:
+12:35:49 tp:29 fn:62 tn:346 fp:5 size:3 mdl:70
+12:35:49 fix_target(A):- in_front_of(B,A),mirror(B).
+12:35:49 ********************
+12:35:52 Generating programs of size: 4
+12:35:55 ********************
+12:35:55 New best hypothesis:
+12:35:55 tp:42 fn:49 tn:345 fp:6 size:9 mdl:64
+12:35:55 fix_target(A):- looking_at(A,B),vacuum(B).
+12:35:55 fix_target(A):- above(B,A),light(B).
+12:35:55 fix_target(A):- in_front_of(B,A),mirror(B).
+12:35:55 ********************
+12:47:53 Generating programs of size: 5
+14:15:48 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.73 Recall:0.42 TP:54 FN:74 TN:457 FP:20 Size:9 MDL:769
-fix_target(A):- mirror(B),in_front_of(B,A).
-fix_target(A):- vacuum(B),in_front_of(B,A).
-fix_target(A):- light(B),above(B,A).
+Precision:0.88 Recall:0.46 TP:42 FN:49 TN:345 FP:6 Size:9 MDL:64
+fix_target(A):- looking_at(A,B),vacuum(B).
+fix_target(A):- above(B,A),light(B).
+fix_target(A):- in_front_of(B,A),mirror(B).
 ******************************

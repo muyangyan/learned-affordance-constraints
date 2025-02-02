@@ -38,6 +38,9 @@ body_pred(television, 1).
 body_pred(towel, 1).
 body_pred(vacuum, 1).
 body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
 body_pred(above, 2).
 body_pred(beneath, 2).
 body_pred(in_front_of, 2).
@@ -61,27 +64,48 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:38:05 Generating programs of size: 2
-10:38:06 Generating programs of size: 3
-10:38:56 Generating programs of size: 4
-10:39:08 ********************
-10:39:08 New best hypothesis:
-10:39:08 tp:115 fn:750 tn:2664 fp:40 size:18 mdl:7558
-10:39:08 sit_target(A):- chair(B),not_contacting(A,B).
-10:39:08 sit_target(A):- chair(B),touching(A,B).
-10:39:08 sit_target(A):- not_contacting(A,B),bed(B).
-10:39:08 sit_target(A):- light(B),on_the_side_of(B,A).
-10:39:08 sit_target(A):- lying_on(A,B),in_front_of(B,A).
-10:39:08 sit_target(A):- lying_on(A,B),floor(B).
-10:39:08 ********************
-10:57:12 Generating programs of size: 5
-12:51:47 TIMEOUT OF 8000 SECONDS EXCEEDED
+12:35:45 Generating programs of size: 2
+12:35:45 Generating programs of size: 3
+12:35:47 ********************
+12:35:47 New best hypothesis:
+12:35:47 tp:17 fn:642 tn:1956 fp:2 size:3 mdl:647
+12:35:47 sit_target(A):- chair(B),looking_at(A,B).
+12:35:47 ********************
+12:35:52 ********************
+12:35:52 New best hypothesis:
+12:35:52 tp:47 fn:612 tn:1945 fp:13 size:3 mdl:628
+12:35:52 sit_target(A):- chair(B),not_contacting(A,B).
+12:35:52 ********************
+12:36:07 Generating programs of size: 4
+12:36:13 ********************
+12:36:13 New best hypothesis:
+12:36:13 tp:91 fn:568 tn:1937 fp:21 size:15 mdl:604
+12:36:13 sit_target(A):- chair(B),looking_at(A,B).
+12:36:13 sit_target(A):- bed(B),unsure(A,B).
+12:36:13 sit_target(A):- chair(B),not_contacting(A,B).
+12:36:13 sit_target(A):- touching(A,B),chair(B).
+12:36:13 sit_target(A):- lying_on(A,B),table(B).
+12:36:13 ********************
+13:36:03 Generating programs of size: 5
+13:36:14 ********************
+13:36:14 New best hypothesis:
+13:36:14 tp:149 fn:510 tn:1889 fp:69 size:24 mdl:603
+13:36:14 sit_target(A):- chair(B),looking_at(A,B).
+13:36:14 sit_target(A):- chair(B),not_contacting(A,B).
+13:36:14 sit_target(A):- touching(A,B),chair(B).
+13:36:14 sit_target(A):- lying_on(A,B),table(B).
+13:36:14 sit_target(A):- bed(B),in_front_of(B,A),unsure(A,B).
+13:36:14 sit_target(A):- touching(A,B),in_front_of(B,A),table(B).
+13:36:14 sit_target(A):- on_the_side_of(B,A),lying_on(A,B),floor(B).
+13:36:14 ********************
+14:19:21 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.74 Recall:0.13 TP:115 FN:750 TN:2664 FP:40 Size:18 MDL:7558
+Precision:0.68 Recall:0.23 TP:149 FN:510 TN:1889 FP:69 Size:24 MDL:603
+sit_target(A):- chair(B),looking_at(A,B).
 sit_target(A):- chair(B),not_contacting(A,B).
-sit_target(A):- chair(B),touching(A,B).
-sit_target(A):- not_contacting(A,B),bed(B).
-sit_target(A):- light(B),on_the_side_of(B,A).
-sit_target(A):- lying_on(A,B),in_front_of(B,A).
-sit_target(A):- lying_on(A,B),floor(B).
+sit_target(A):- touching(A,B),chair(B).
+sit_target(A):- lying_on(A,B),table(B).
+sit_target(A):- bed(B),in_front_of(B,A),unsure(A,B).
+sit_target(A):- touching(A,B),in_front_of(B,A),table(B).
+sit_target(A):- on_the_side_of(B,A),lying_on(A,B),floor(B).
 ******************************

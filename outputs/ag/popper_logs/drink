@@ -38,6 +38,9 @@ body_pred(television, 1).
 body_pred(towel, 1).
 body_pred(vacuum, 1).
 body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
 body_pred(above, 2).
 body_pred(beneath, 2).
 body_pred(in_front_of, 2).
@@ -61,9 +64,9 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:38:05 Generating programs of size: 2
-10:38:07 Generating programs of size: 3
-10:38:19 Generating programs of size: 4
-11:07:52 Generating programs of size: 5
-12:53:00 TIMEOUT OF 8000 SECONDS EXCEEDED
+12:35:45 Generating programs of size: 2
+12:35:45 Generating programs of size: 3
+12:35:56 Generating programs of size: 4
+12:46:24 Generating programs of size: 5
+14:16:05 TIMEOUT OF 6000 SECONDS EXCEEDED
 NO SOLUTION

@@ -38,6 +38,9 @@ body_pred(television, 1).
 body_pred(towel, 1).
 body_pred(vacuum, 1).
 body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
 body_pred(above, 2).
 body_pred(beneath, 2).
 body_pred(in_front_of, 2).
@@ -61,25 +64,43 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:38:05 Generating programs of size: 2
-10:38:07 Generating programs of size: 3
-10:38:29 Generating programs of size: 4
-10:38:36 ********************
-10:38:36 New best hypothesis:
-10:38:36 tp:258 fn:304 tn:2093 fp:128 size:15 mdl:3183
-10:38:36 close_target(A):- door(B),in_front_of(B,A).
-10:38:36 close_target(A):- refrigerator(B),in_front_of(B,A).
-10:38:36 close_target(A):- door(B),behind(B,A).
-10:38:36 close_target(A):- on_the_side_of(B,A),door(B).
-10:38:36 close_target(A):- refrigerator(B),on_the_side_of(B,A).
-10:38:36 ********************
-10:54:08 Generating programs of size: 5
-12:53:44 TIMEOUT OF 8000 SECONDS EXCEEDED
+12:35:45 Generating programs of size: 2
+12:35:45 Generating programs of size: 3
+12:35:46 ********************
+12:35:46 New best hypothesis:
+12:35:46 tp:36 fn:364 tn:1345 fp:6 size:3 mdl:373
+12:35:46 close_target(A):- refrigerator(B),looking_at(A,B).
+12:35:46 ********************
+12:35:49 ********************
+12:35:49 New best hypothesis:
+12:35:49 tp:58 fn:342 tn:1339 fp:12 size:3 mdl:357
+12:35:49 close_target(A):- refrigerator(B),in_front_of(B,A).
+12:35:49 ********************
+12:36:03 Generating programs of size: 4
+12:36:11 ********************
+12:36:11 New best hypothesis:
+12:36:11 tp:173 fn:227 tn:1271 fp:80 size:12 mdl:319
+12:36:11 close_target(A):- refrigerator(B),on_the_side_of(B,A).
+12:36:11 close_target(A):- in_front_of(B,A),door(B).
+12:36:11 close_target(A):- refrigerator(B),in_front_of(B,A).
+12:36:11 close_target(A):- not_contacting(A,B),door(B).
+12:36:11 ********************
+12:55:10 Generating programs of size: 5
+12:55:20 ********************
+12:55:20 New best hypothesis:
+12:55:20 tp:191 fn:209 tn:1258 fp:93 size:16 mdl:318
+12:55:20 close_target(A):- refrigerator(B),on_the_side_of(B,A).
+12:55:20 close_target(A):- in_front_of(B,A),door(B).
+12:55:20 close_target(A):- refrigerator(B),in_front_of(B,A).
+12:55:20 close_target(A):- not_contacting(A,B),door(B).
+12:55:20 close_target(A):- touching(A,B),book(B),holding(A,B).
+12:55:20 ********************
+14:16:36 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.67 Recall:0.46 TP:258 FN:304 TN:2093 FP:128 Size:15 MDL:3183
-close_target(A):- door(B),in_front_of(B,A).
-close_target(A):- refrigerator(B),in_front_of(B,A).
-close_target(A):- door(B),behind(B,A).
-close_target(A):- on_the_side_of(B,A),door(B).
+Precision:0.67 Recall:0.48 TP:191 FN:209 TN:1258 FP:93 Size:16 MDL:318
 close_target(A):- refrigerator(B),on_the_side_of(B,A).
+close_target(A):- in_front_of(B,A),door(B).
+close_target(A):- refrigerator(B),in_front_of(B,A).
+close_target(A):- not_contacting(A,B),door(B).
+close_target(A):- touching(A,B),book(B),holding(A,B).
 ******************************

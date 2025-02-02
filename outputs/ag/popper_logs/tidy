@@ -38,6 +38,9 @@ body_pred(television, 1).
 body_pred(towel, 1).
 body_pred(vacuum, 1).
 body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
 body_pred(above, 2).
 body_pred(beneath, 2).
 body_pred(in_front_of, 2).
@@ -61,43 +64,48 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:38:05 Generating programs of size: 2
-10:38:06 Generating programs of size: 3
-10:39:00 Generating programs of size: 4
-10:39:11 ********************
-10:39:11 New best hypothesis:
-10:39:11 tp:281 fn:186 tn:1235 fp:114 size:24 mdl:1998
-10:39:11 tidy_target(A):- in_front_of(B,A),shelf(B).
-10:39:11 tidy_target(A):- towel(B),holding(A,B).
-10:39:11 tidy_target(A):- holding(A,B),broom(B).
-10:39:11 tidy_target(A):- vacuum(B),on_the_side_of(B,A).
-10:39:11 tidy_target(A):- shelf(B),on_the_side_of(B,A).
-10:39:11 tidy_target(A):- blanket(B),touching(A,B).
-10:39:11 tidy_target(A):- medicine(B),touching(A,B).
-10:39:11 tidy_target(A):- floor(B),standing_on(A,B).
-10:39:11 ********************
-11:08:26 Generating programs of size: 5
-11:08:37 ********************
-11:08:37 New best hypothesis:
-11:08:37 tp:254 fn:213 tn:1267 fp:82 size:27 mdl:2239
-11:08:37 tidy_target(A):- in_front_of(B,A),shelf(B).
-11:08:37 tidy_target(A):- holding(A,B),broom(B).
-11:08:37 tidy_target(A):- shelf(B),on_the_side_of(B,A).
-11:08:37 tidy_target(A):- blanket(B),touching(A,B).
-11:08:37 tidy_target(A):- medicine(B),touching(A,B).
-11:08:37 tidy_target(A):- floor(B),standing_on(A,B),beneath(B,A).
-11:08:37 tidy_target(A):- floor(B),beneath(B,A),other_relationship(A,B).
-11:08:37 tidy_target(A):- not_contacting(A,B),clothes(B),behind(B,A).
-11:08:37 ********************
-13:17:47 TIMEOUT OF 8000 SECONDS EXCEEDED
+12:35:45 Generating programs of size: 2
+12:35:45 Generating programs of size: 3
+12:35:45 ********************
+12:35:45 New best hypothesis:
+12:35:45 tp:46 fn:284 tn:969 fp:9 size:3 mdl:296
+12:35:45 tidy_target(A):- looking_at(A,B),standing_on(A,B).
+12:35:45 ********************
+12:35:47 ********************
+12:35:47 New best hypothesis:
+12:35:47 tp:91 fn:239 tn:956 fp:22 size:3 mdl:264
+12:35:47 tidy_target(A):- standing_on(A,B),beneath(B,A).
+12:35:47 ********************
+12:35:50 ********************
+12:35:50 New best hypothesis:
+12:35:50 tp:92 fn:238 tn:958 fp:20 size:3 mdl:261
+12:35:50 tidy_target(A):- standing_on(A,B),floor(B).
+12:35:50 ********************
+12:36:00 Generating programs of size: 4
+12:36:11 ********************
+12:36:11 New best hypothesis:
+12:36:11 tp:181 fn:149 tn:927 fp:51 size:27 mdl:227
+12:36:11 tidy_target(A):- looking_at(A,B),broom(B).
+12:36:11 tidy_target(A):- touching(A,B),shelf(B).
+12:36:11 tidy_target(A):- clothes(B),touching(A,B).
+12:36:11 tidy_target(A):- medicine(B),touching(A,B).
+12:36:11 tidy_target(A):- unsure(A,B),broom(B).
+12:36:11 tidy_target(A):- blanket(B),standing_on(A,B).
+12:36:11 tidy_target(A):- standing_on(A,B),floor(B).
+12:36:11 tidy_target(A):- blanket(B),behind(B,A).
+12:36:11 tidy_target(A):- not_contacting(A,B),shelf(B).
+12:36:11 ********************
+12:54:03 Generating programs of size: 5
+14:18:36 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.76 Recall:0.54 TP:254 FN:213 TN:1267 FP:82 Size:27 MDL:2239
-tidy_target(A):- in_front_of(B,A),shelf(B).
-tidy_target(A):- holding(A,B),broom(B).
-tidy_target(A):- shelf(B),on_the_side_of(B,A).
-tidy_target(A):- blanket(B),touching(A,B).
+Precision:0.78 Recall:0.55 TP:181 FN:149 TN:927 FP:51 Size:27 MDL:227
+tidy_target(A):- looking_at(A,B),broom(B).
+tidy_target(A):- touching(A,B),shelf(B).
+tidy_target(A):- clothes(B),touching(A,B).
 tidy_target(A):- medicine(B),touching(A,B).
-tidy_target(A):- floor(B),standing_on(A,B),beneath(B,A).
-tidy_target(A):- floor(B),beneath(B,A),other_relationship(A,B).
-tidy_target(A):- not_contacting(A,B),clothes(B),behind(B,A).
+tidy_target(A):- unsure(A,B),broom(B).
+tidy_target(A):- blanket(B),standing_on(A,B).
+tidy_target(A):- standing_on(A,B),floor(B).
+tidy_target(A):- blanket(B),behind(B,A).
+tidy_target(A):- not_contacting(A,B),shelf(B).
 ******************************

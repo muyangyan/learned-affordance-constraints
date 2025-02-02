@@ -38,6 +38,9 @@ body_pred(television, 1).
 body_pred(towel, 1).
 body_pred(vacuum, 1).
 body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
 body_pred(above, 2).
 body_pred(beneath, 2).
 body_pred(in_front_of, 2).
@@ -61,21 +64,43 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:38:05 Generating programs of size: 2
-10:38:06 Generating programs of size: 3
-10:38:31 Generating programs of size: 4
-10:38:36 ********************
-10:38:36 New best hypothesis:
-10:38:36 tp:109 fn:63 tn:259 fp:31 size:9 mdl:670
-10:38:36 wash_target(A):- in_front_of(B,A),towel(B).
-10:38:36 wash_target(A):- dish(B),in_front_of(B,A).
-10:38:36 wash_target(A):- on_the_side_of(B,A),towel(B).
-10:38:36 ********************
-10:47:43 Generating programs of size: 5
-12:52:19 TIMEOUT OF 8000 SECONDS EXCEEDED
+12:35:45 Generating programs of size: 2
+12:35:45 Generating programs of size: 3
+12:35:45 ********************
+12:35:45 New best hypothesis:
+12:35:45 tp:7 fn:112 tn:444 fp:3 size:3 mdl:118
+12:35:45 wash_target(A):- wiping(A,B),looking_at(A,B).
+12:35:45 ********************
+12:35:46 ********************
+12:35:46 New best hypothesis:
+12:35:46 tp:18 fn:101 tn:437 fp:10 size:3 mdl:114
+12:35:46 wash_target(A):- looking_at(A,B),towel(B).
+12:35:46 ********************
+12:35:46 ********************
+12:35:46 New best hypothesis:
+12:35:46 tp:22 fn:97 tn:442 fp:5 size:3 mdl:105
+12:35:46 wash_target(A):- on_the_side_of(B,A),towel(B).
+12:35:46 ********************
+12:35:49 ********************
+12:35:49 New best hypothesis:
+12:35:49 tp:40 fn:79 tn:427 fp:20 size:3 mdl:102
+12:35:49 wash_target(A):- in_front_of(B,A),towel(B).
+12:35:49 ********************
+12:35:55 Generating programs of size: 4
+12:36:00 ********************
+12:36:00 New best hypothesis:
+12:36:00 tp:55 fn:64 tn:427 fp:20 size:12 mdl:96
+12:36:00 wash_target(A):- on_the_side_of(B,A),towel(B).
+12:36:00 wash_target(A):- covered_by(A,B),towel(B).
+12:36:00 wash_target(A):- wiping(A,B),in_front_of(B,A).
+12:36:00 wash_target(A):- holding(A,B),towel(B).
+12:36:00 ********************
+12:46:13 Generating programs of size: 5
+14:16:07 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.78 Recall:0.63 TP:109 FN:63 TN:259 FP:31 Size:9 MDL:670
-wash_target(A):- in_front_of(B,A),towel(B).
-wash_target(A):- dish(B),in_front_of(B,A).
+Precision:0.73 Recall:0.46 TP:55 FN:64 TN:427 FP:20 Size:12 MDL:96
 wash_target(A):- on_the_side_of(B,A),towel(B).
+wash_target(A):- covered_by(A,B),towel(B).
+wash_target(A):- wiping(A,B),in_front_of(B,A).
+wash_target(A):- holding(A,B),towel(B).
 ******************************

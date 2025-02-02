@@ -38,6 +38,9 @@ body_pred(television, 1).
 body_pred(towel, 1).
 body_pred(vacuum, 1).
 body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
 body_pred(above, 2).
 body_pred(beneath, 2).
 body_pred(in_front_of, 2).
@@ -61,30 +64,41 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:38:05 Generating programs of size: 2
-10:38:06 Generating programs of size: 3
-10:38:17 Generating programs of size: 4
-10:38:21 ********************
-10:38:21 New best hypothesis:
-10:38:21 tp:155 fn:29 tn:641 fp:25 size:15 mdl:330
-10:38:21 awaken_target(A):- leaning_on(A,B),bed(B).
-10:38:21 awaken_target(A):- floor(B),on_the_side_of(B,A).
-10:38:21 awaken_target(A):- behind(B,A),lying_on(A,B).
-10:38:21 awaken_target(A):- in_front_of(B,A),lying_on(A,B).
-10:38:21 awaken_target(A):- lying_on(A,B),on_the_side_of(B,A).
-10:38:21 ********************
-10:45:41 Generating programs of size: 5
-10:45:47 ********************
-10:45:47 New best hypothesis:
-10:45:47 tp:157 fn:27 tn:640 fp:26 size:10 mdl:306
-10:45:47 awaken_target(A):- leaning_on(A,B),bed(B).
-10:45:47 awaken_target(A):- floor(B),on_the_side_of(B,A).
-10:45:47 awaken_target(A):- lying_on(A,C),person(B),lying_on(B,C).
-10:45:47 ********************
-12:51:44 TIMEOUT OF 8000 SECONDS EXCEEDED
+12:35:45 Generating programs of size: 2
+12:35:45 Generating programs of size: 3
+12:35:46 ********************
+12:35:46 New best hypothesis:
+12:35:46 tp:52 fn:85 tn:530 fp:5 size:3 mdl:93
+12:35:46 awaken_target(A):- lying_on(A,B),on_the_side_of(B,A).
+12:35:46 ********************
+12:35:48 ********************
+12:35:48 New best hypothesis:
+12:35:48 tp:68 fn:69 tn:529 fp:6 size:3 mdl:78
+12:35:48 awaken_target(A):- behind(B,A),lying_on(A,B).
+12:35:48 ********************
+12:35:48 ********************
+12:35:48 New best hypothesis:
+12:35:48 tp:100 fn:37 tn:526 fp:9 size:3 mdl:49
+12:35:48 awaken_target(A):- not_looking_at(A,B),lying_on(A,B).
+12:35:48 ********************
+12:35:53 Generating programs of size: 4
+12:35:56 ********************
+12:35:56 New best hypothesis:
+12:35:56 tp:116 fn:21 tn:526 fp:9 size:9 mdl:39
+12:35:56 awaken_target(A):- lying_on(A,B),on_the_side_of(B,A).
+12:35:56 awaken_target(A):- bed(B),leaning_on(A,B).
+12:35:56 awaken_target(A):- not_looking_at(A,B),lying_on(A,B).
+12:35:56 ********************
+12:46:10 Generating programs of size: 5
+12:46:18 ********************
+12:46:18 New best hypothesis:
+12:46:18 tp:117 fn:20 tn:526 fp:9 size:7 mdl:36
+12:46:18 awaken_target(A):- bed(B),leaning_on(A,B).
+12:46:18 awaken_target(A):- lying_on(C,B),lying_on(A,B),person(C).
+12:46:18 ********************
+14:15:51 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.86 Recall:0.85 TP:157 FN:27 TN:640 FP:26 Size:10 MDL:306
-awaken_target(A):- leaning_on(A,B),bed(B).
-awaken_target(A):- floor(B),on_the_side_of(B,A).
-awaken_target(A):- lying_on(A,C),person(B),lying_on(B,C).
+Precision:0.93 Recall:0.85 TP:117 FN:20 TN:526 FP:9 Size:7 MDL:36
+awaken_target(A):- bed(B),leaning_on(A,B).
+awaken_target(A):- lying_on(C,B),lying_on(A,B),person(C).
 ******************************

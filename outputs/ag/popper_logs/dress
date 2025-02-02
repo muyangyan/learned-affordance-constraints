@@ -38,6 +38,9 @@ body_pred(television, 1).
 body_pred(towel, 1).
 body_pred(vacuum, 1).
 body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
 body_pred(above, 2).
 body_pred(beneath, 2).
 body_pred(in_front_of, 2).
@@ -61,23 +64,31 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:38:05 Generating programs of size: 2
-10:38:06 Generating programs of size: 3
-10:38:16 Generating programs of size: 4
-10:38:19 ********************
-10:38:19 New best hypothesis:
-10:38:19 tp:85 fn:0 tn:239 fp:17 size:12 mdl:29
-10:38:19 dress_target(A):- holding(A,B),shoe(B).
-10:38:19 dress_target(A):- shoe(B),not_contacting(A,B).
-10:38:19 dress_target(A):- on_the_side_of(B,A),clothes(B).
-10:38:19 dress_target(A):- in_front_of(B,A),clothes(B).
-10:38:19 ********************
-10:50:10 Generating programs of size: 5
-12:52:52 TIMEOUT OF 8000 SECONDS EXCEEDED
+12:35:45 Generating programs of size: 2
+12:35:45 Generating programs of size: 3
+12:35:45 ********************
+12:35:45 New best hypothesis:
+12:35:45 tp:28 fn:28 tn:233 fp:6 size:3 mdl:37
+12:35:45 dress_target(A):- clothes(B),looking_at(A,B).
+12:35:45 ********************
+12:35:46 ********************
+12:35:46 New best hypothesis:
+12:35:46 tp:39 fn:17 tn:227 fp:12 size:3 mdl:32
+12:35:46 dress_target(A):- in_front_of(B,A),clothes(B).
+12:35:46 ********************
+12:35:49 Generating programs of size: 4
+12:35:52 ********************
+12:35:52 New best hypothesis:
+12:35:52 tp:54 fn:2 tn:223 fp:16 size:9 mdl:27
+12:35:52 dress_target(A):- in_front_of(B,A),clothes(B).
+12:35:52 dress_target(A):- shoe(B),in_front_of(B,A).
+12:35:52 dress_target(A):- clothes(B),on_the_side_of(B,A).
+12:35:52 ********************
+12:40:34 Generating programs of size: 5
+14:15:44 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.83 Recall:1.00 TP:85 FN:0 TN:239 FP:17 Size:12 MDL:29
-dress_target(A):- holding(A,B),shoe(B).
-dress_target(A):- shoe(B),not_contacting(A,B).
-dress_target(A):- on_the_side_of(B,A),clothes(B).
+Precision:0.77 Recall:0.96 TP:54 FN:2 TN:223 FP:16 Size:9 MDL:27
 dress_target(A):- in_front_of(B,A),clothes(B).
+dress_target(A):- shoe(B),in_front_of(B,A).
+dress_target(A):- clothes(B),on_the_side_of(B,A).
 ******************************

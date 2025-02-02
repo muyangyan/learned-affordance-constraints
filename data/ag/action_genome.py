@@ -19,7 +19,6 @@ import matplotlib.pyplot as plt
 
 def find_last_frame_idx(directory):
     if not os.path.exists(directory):
-        #print('folder %s does not exist' % directory)
         return None
     highest_number = -float('inf')  # Start with a very low number
     for file_name in os.listdir(directory):
@@ -35,7 +34,6 @@ def find_last_frame_idx(directory):
 
 def find_closest_frame_idx(directory, frame_number):
     if not os.path.exists(directory):
-        #print('folder %s does not exist' % directory)
         return None
     closest_number = None
     smallest_diff = float('inf')  # Start with a very low number
@@ -105,7 +103,7 @@ class AG(Dataset):
             with open(split_file) as f:
                 split_dict = json.load(f)
                 split_ids = split_dict[split]
-            print('split:', split, 'length:', len(split_ids))
+            print('split:', split, '| length:', len(split_ids))
 
         #create pyg scene graphs
         self.data_list = []
@@ -169,10 +167,8 @@ class AG(Dataset):
             self.scene_graphs[id] = data
             self.verb_label_counts.append(verb_class)
 
-        
         if subset_file is not None:
             subset.close()
-
         self.verb_label_counts = np.resize(np.bincount(self.verb_label_counts), len(self.verb_classes))
 
     def __len__(self):
@@ -353,8 +349,8 @@ class AG(Dataset):
         
 
         # now subset verbs and actions
-        self.verb_classes = [self.verb_classes[i] for i in self.verb_mapper.values() if i is not None]
-        self.action_classes = [self.action_classes[i] for i in self.action_mapper.values() if i is not None]
+        self.verb_classes = [self.verb_classes[k] for k,v in self.verb_mapper.items() if v is not None]
+        self.action_classes = [self.action_classes[k] for k,v in self.action_mapper.items() if v is not None]
         
         new_a_vo_map = {}
         #k,v is action, (verb, obj)

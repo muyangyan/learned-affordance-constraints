@@ -1,3 +1,8 @@
+import warnings
+warnings.filterwarnings("ignore")
+#warnings.filterwarnings("default")
+
+import os
 from tqdm import tqdm
 import tensorboard
 import argparse
@@ -21,75 +26,12 @@ from pytorch_lightning.loggers import TensorBoardLogger
 import torchmetrics
 from torchmetrics import MetricCollection, Metric
 from torchmetrics import Accuracy, Precision, Recall
-
+from util.metrics import NLL_Metric, Entropy_Metric
 
 from pyswip import Prolog
 
-import warnings
-warnings.filterwarnings("ignore")
-#warnings.filterwarnings("default")
 
 torch.set_float32_matmul_precision('medium')
-
-def torch_entropy(tensor: torch.Tensor) -> torch.Tensor:
-    """
-    Compute the entropy of a tensor with shape (N, C).
-
-    Args:
-        tensor (torch.Tensor): A tensor of shape (N, C) representing probability distributions.
-
-    Returns:
-        torch.Tensor: A tensor of shape (N,) containing the entropy of each distribution.
-    """
-    epsilon = 1e-12  # Small constant to prevent log(0)
-    tensor = torch.clamp(tensor, min=epsilon)
-    tensor = tensor / tensor.sum(dim=1, keepdim=True)  # Ensure probabilities sum to 1
-    entropy = -torch.sum(tensor * torch.log(tensor), dim=1)
-    return entropy
-
-class NLL_Metric(Metric):
-    def __init__(self, reduction: str = 'mean', **kwargs):
-        super().__init__(**kwargs)
-        self.reduction = reduction
-        self.add_state("sum_nll", default=torch.tensor(0.0), dist_reduce_fx="sum")
-        self.add_state("count", default=torch.tensor(0), dist_reduce_fx="sum")
-
-    def update(self, preds: Tensor, target: Tensor) -> None:
-        # Convert one-hot target to class indices
-        if target.ndim > 1:
-            target = torch.argmax(target, dim=1)
-        
-        # Compute log probabilities
-        if preds.ndim > 1:
-            preds = F.log_softmax(preds, dim=1)
-            
-        nll = F.nll_loss(preds, target, reduction='sum')
-        self.sum_nll += nll
-        self.count += target.size(0)
-
-    def compute(self) -> Tensor:
-        if self.reduction == 'mean':
-            return self.sum_nll / self.count
-        else:
-            return self.sum_nll
-
-class Entropy_Metric(Metric):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.add_state("entropy", default=torch.tensor(0.0), dist_reduce_fx="sum")
-        self.add_state("count", default=torch.tensor(0), dist_reduce_fx="sum")
-
-    def update(self, preds: Tensor, labels) -> None:
-        if preds.ndim > 1:
-            preds = F.log_softmax(preds, dim=1)
-        
-        batch_entropy = torch_entropy(preds).sum()
-        self.entropy += batch_entropy
-        self.count += preds.size(0)
-
-    def compute(self) -> Tensor:
-        return self.entropy / self.count
-
 
 class JointModelLightning(L.LightningModule):
     def __init__(self, model_params, weight, model_type='joint', lr=1e-3):
@@ -122,8 +64,7 @@ class JointModelLightning(L.LightningModule):
             Accuracy(task='multiclass', num_classes=num_classes),
             Precision(task='multiclass', average='macro', num_classes=num_classes),
             Recall(task='multiclass', average='macro', num_classes=num_classes)
-            #NLL_Metric(reduction='mean'),
-            #Entropy_Metric()
+
         ])
 
         self.save_hyperparameters()
@@ -203,15 +144,6 @@ class JointModelLightning(L.LightningModule):
         
         # Update metrics with appropriate format
         metrics_dict = self.test_metrics(out_classes, label_classes)
-        '''
-        metrics_dict = self.test_metrics({
-            'Accuracy': (out_classes, label_classes),     # Pass class indices for accuracy
-            'Precision': (out_classes, label_classes),    # Pass class indices for precision
-            'Recall': (out_classes, label_classes),       # Pass class indices for recall
-            'NLL_Metric': (out, labels),                 # Pass probabilities and one-hot for NLL
-            'Entropy_Metric': (out, labels)              # Pass probabilities and one-hot for entropy
-        })
-        '''
         
         self.log_dict(metrics_dict, on_step=False, on_epoch=True, prog_bar=True)
 
@@ -249,11 +181,13 @@ def main(args):
     root = args.root
     split_file = args.split_file
     subset_file = args.subset_file
-    rules_file = args.rules_file
+    rules_folder = args.rules_folder
+    rules_name = args.rules_name
+    verb_whitelist = args.verb_whitelist
 
-    train_set = AG(root, split='train', split_file=split_file, subset_file=subset_file)
-    val_set = AG(root, split='val', split_file=split_file, subset_file=subset_file)
-    test_set = AG(root, split='test', split_file=split_file, subset_file=subset_file)
+    train_set = AG(root, split='train', split_file=split_file, subset_file=subset_file, verb_whitelist=verb_whitelist)
+    val_set = AG(root, split='val', split_file=split_file, subset_file=subset_file, verb_whitelist=verb_whitelist)
+    test_set = AG(root, split='test', split_file=split_file, subset_file=subset_file, verb_whitelist=verb_whitelist)
 
     train_loader = DataLoader(train_set, batch_size=args.batch_size, collate_fn=train_set.verb_pred_collate, num_workers=16, shuffle=True)
     val_loader = DataLoader(val_set, batch_size=128, collate_fn=val_set.verb_pred_collate, num_workers=16, shuffle=False)
@@ -262,6 +196,8 @@ def main(args):
     num_obj_classes = len(train_set.object_classes)
     num_verb_classes = len(train_set.verb_classes)
     num_rel_classes = len(train_set.relationship_classes)
+
+    rules_file = os.path.join(rules_folder, f'{rules_name}.pl')
 
     #MODEL=======================================
     model_type = args.model_type
@@ -350,6 +286,8 @@ if __name__ == '__main__':
     parser.add_argument('--root', type=str, default='/data/Datasets/ag/', help='Root directory of the dataset')
     parser.add_argument('--split-file', type=str, default='data/ag/split_train_val_test.json', help='File containing train, val, test splits')
     parser.add_argument('--subset-file', type=str, default='data/ag/subset_shelve', help='File containing subset of the dataset')
+    parser.add_argument('--rules-folder', type=str, default='outputs/ag/', help='Folder containing the rules files')
+    parser.add_argument('--verb-whitelist', type=str, default='data/ag/verb_whitelist.txt', help='File containing verb whitelist')
 
     #model
     parser.add_argument('--model-type', type=str, default='joint', choices=['vit', 'rgcn', 'joint'], help='Model type to use')
@@ -357,19 +295,27 @@ if __name__ == '__main__':
     parser.add_argument('--batch-size', type=int, default=16, help='Batch size')
     parser.add_argument('--devices', type=int, nargs='+', default=[0], help='List of GPU device IDs to use')
     parser.add_argument('--lr', type=float, default=1e-3, help='Learning rate')
+
     #task
     parser.add_argument('--train', action='store_true', help='Train the model')
+    parser.add_argument('--val', action='store_true', help='Validate the model')
     parser.add_argument('--test', action='store_true', help='Test the dataset')
     parser.add_argument('--checkpoint', type=str, default=None, help='Checkpoint file to load')
 
     #rules
-    parser.add_argument('--rules-file', type=str, default='outputs/ag/rules_learned.pl', help='Name of the rules file')
+    parser.add_argument('--rules-name', type=str, default='rules_learned', help='Name of the rules file')
 
     args = parser.parse_args()
 
-    if not args.train and not args.test:
-        parser.error('At least one of --train or --test must be specified')
-    if args.train and args.test and len(args.devices) > 1:
+    if not args.train and not args.test and not args.val:
+        parser.error('At least one of --train or --test or --val must be specified')
+    if args.train and (args.test or args.val) and len(args.devices) > 1:
         parser.error('Testing on multiple devices is not supported')
+    
+    if os.path.exists(args.verb_whitelist):
+        with open(args.verb_whitelist, 'r') as f:
+            args.verb_whitelist = [line for line in f.read().splitlines() if line and not line.startswith('#')]
+    else:
+        args.verb_whitelist = args.verb_whitelist.split(' ')
 
     main(args)

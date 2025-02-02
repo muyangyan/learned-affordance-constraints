@@ -38,6 +38,9 @@ body_pred(television, 1).
 body_pred(towel, 1).
 body_pred(vacuum, 1).
 body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
 body_pred(above, 2).
 body_pred(beneath, 2).
 body_pred(in_front_of, 2).
@@ -61,18 +64,33 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:38:05 Generating programs of size: 2
-10:38:06 Generating programs of size: 3
-10:38:11 Generating programs of size: 4
-10:38:16 ********************
-10:38:16 New best hypothesis:
-10:38:16 tp:32 fn:0 tn:137 fp:0 size:6 mdl:6
-10:38:16 turn_target(A):- light(B),in_front_of(B,A).
-10:38:16 turn_target(A):- not_contacting(A,B),light(B).
-10:38:16 ********************
-10:51:37 Generating programs of size: 5
+12:35:45 Generating programs of size: 2
+12:35:45 Generating programs of size: 3
+12:35:45 ********************
+12:35:45 New best hypothesis:
+12:35:45 tp:8 fn:21 tn:100 fp:0 size:3 mdl:24
+12:35:45 turn_target(A):- light(B),looking_at(A,B).
+12:35:45 ********************
+12:35:46 ********************
+12:35:46 New best hypothesis:
+12:35:46 tp:20 fn:9 tn:100 fp:0 size:3 mdl:12
+12:35:46 turn_target(A):- light(B),not_looking_at(A,B).
+12:35:46 ********************
+12:35:47 ********************
+12:35:47 New best hypothesis:
+12:35:47 tp:25 fn:4 tn:100 fp:0 size:3 mdl:7
+12:35:47 turn_target(A):- light(B),not_contacting(A,B).
+12:35:47 ********************
+12:35:49 Generating programs of size: 4
+12:35:53 ********************
+12:35:53 New best hypothesis:
+12:35:53 tp:29 fn:0 tn:100 fp:0 size:6 mdl:6
+12:35:53 turn_target(A):- light(B),not_contacting(A,B).
+12:35:53 turn_target(A):- light(B),in_front_of(B,A).
+12:35:53 ********************
+12:39:21 Generating programs of size: 5
 ********** SOLUTION **********
-Precision:1.00 Recall:1.00 TP:32 FN:0 TN:137 FP:0 Size:6 MDL:6
+Precision:1.00 Recall:1.00 TP:29 FN:0 TN:100 FP:0 Size:6 MDL:6
+turn_target(A):- light(B),not_contacting(A,B).
 turn_target(A):- light(B),in_front_of(B,A).
-turn_target(A):- not_contacting(A,B),light(B).
 ******************************

@@ -38,6 +38,9 @@ body_pred(television, 1).
 body_pred(towel, 1).
 body_pred(vacuum, 1).
 body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
 body_pred(above, 2).
 body_pred(beneath, 2).
 body_pred(in_front_of, 2).
@@ -61,17 +64,22 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-10:38:05 Generating programs of size: 2
-10:38:06 Generating programs of size: 3
-10:38:14 Generating programs of size: 4
-10:38:15 ********************
-10:38:15 New best hypothesis:
-10:38:15 tp:21 fn:19 tn:117 fp:11 size:3 mdl:204
-10:38:15 talk_target(A):- on_the_side_of(B,A),holding(A,B).
-10:38:15 ********************
-10:42:41 Generating programs of size: 5
-12:53:21 TIMEOUT OF 8000 SECONDS EXCEEDED
+12:35:45 Generating programs of size: 2
+12:35:45 Generating programs of size: 3
+12:35:46 ********************
+12:35:46 New best hypothesis:
+12:35:46 tp:19 fn:12 tn:139 fp:15 size:3 mdl:30
+12:35:46 talk_target(A):- on_the_side_of(B,A),holding(A,B).
+12:35:46 ********************
+12:35:50 Generating programs of size: 4
+12:36:10 ********************
+12:36:10 New best hypothesis:
+12:36:10 tp:19 fn:12 tn:144 fp:10 size:4 mdl:26
+12:36:10 talk_target(A):- on_the_side_of(C,B),holding(B,C),not_looking_at(A,C).
+12:36:10 ********************
+12:40:28 Generating programs of size: 5
+14:15:44 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.66 Recall:0.53 TP:21 FN:19 TN:117 FP:11 Size:3 MDL:204
-talk_target(A):- on_the_side_of(B,A),holding(A,B).
+Precision:0.66 Recall:0.61 TP:19 FN:12 TN:144 FP:10 Size:4 MDL:26
+talk_target(A):- on_the_side_of(C,B),holding(B,C),not_looking_at(A,C).
 ******************************
