@@ -170,6 +170,7 @@ class AG(Dataset):
         if subset_file is not None:
             subset.close()
         self.verb_label_counts = np.resize(np.bincount(self.verb_label_counts), len(self.verb_classes))
+        self.verb_priors = self.verb_label_counts/len(self.data_list)
 
     def __len__(self):
         return len(self.data_list)

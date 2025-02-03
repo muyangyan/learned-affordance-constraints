@@ -12,7 +12,6 @@ VAL_SPLIT_RATIO=0.2
 RULES_NAME="long_rules"
 TIMEOUT=6000
 MDL_WEIGHT=1
-RECALL_THRESHOLD=0.7
 
 echo "Starting data pipeline==================="
 echo "Starting part: Stage $START_PART"
@@ -20,7 +19,6 @@ echo "Dataset: $DATASET"
 echo "Rules Filename: $RULES_NAME"
 echo "Timeout: $TIMEOUT"
 echo "Multiplier for penalizing false negatives: $MDL_WEIGHT"
-echo "Recall threshold: $RECALL_THRESHOLD"
 echo "Verbs: ${VERBS[@]}"
 
 
@@ -58,7 +56,7 @@ fi
 # Parses Popper results to create rules
 if [ "$START_PART" -le 4 ]; then
     echo "Parsing Popper results to create rules==================="
-    python prolog/parse_popper.py --dataset $DATASET --name "${RULES_NAME}" --weight $MDL_WEIGHT --timeout $TIMEOUT --recall-threshold $RECALL_THRESHOLD
+    python prolog/parse_popper.py --dataset $DATASET --name "${RULES_NAME}" --weight $MDL_WEIGHT --timeout $TIMEOUT
 fi
 
 # at this point should be ready for training and inference

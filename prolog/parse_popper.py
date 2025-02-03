@@ -42,14 +42,15 @@ def parse_logs(folder):
         rules[file] = (rule, metrics)
     return rules
 
-def write_rules(outputs_folder, rules_name, weight, timeout, recall_threshold=0.5):
+def write_rules(outputs_folder, rules_name, weight, timeout):
+    print(outputs_folder)
     rules = parse_logs(os.path.join(outputs_folder, 'popper_logs'))
 
-    with open(os.path.join(outputs_folder, rules_name + '.json'), 'w+') as f:
+    with open(os.path.join(outputs_folder, rules_name + '.json'), 'w') as f:
         json.dump(rules, f)
 
-    with open(os.path.join(outputs_folder, rules_name + '.pl'), 'w+') as f: 
-        f.write(f'%%{rules_name} weight: {weight} timeout: {timeout} recall_threshold: {recall_threshold}\n')
+    with open(os.path.join(outputs_folder, rules_name + '.pl'), 'w') as f: 
+        f.write(f'%%{rules_name} weight: {weight} timeout: {timeout}\n')
         for verb, rule_pair in rules.items():
             f.write(f'%%{verb}\n')
             if rule_pair is None:
@@ -59,14 +60,6 @@ def write_rules(outputs_folder, rules_name, weight, timeout, recall_threshold=0.
 
             rule, metrics = rule_pair
             f.write(f'%%PRECISION: {metrics["precision"]:.2f} RECALL: {metrics["recall"]:.2f} TP: {metrics["tp"]} FN: {metrics["fn"]} TN: {metrics["tn"]} FP: {metrics["fp"]}\n')
-
-            if metrics is not None and metrics['recall'] < recall_threshold:
-                f.write(f'%%Solution recall below threshold {recall_threshold}\n')
-                f.write(f'{verb}_target(_).\n')
-                for line in rule:
-                    f.write('%%' + line + '\n')
-                f.write('\n')
-                continue
 
             for line in rule:
                 f.write(line + '\n')
@@ -78,7 +71,6 @@ if __name__ == '__main__':
     parser.add_argument('--name', type=str, required=True, help='Split name')
     parser.add_argument('--weight', type=int, default=10, help='Weight')
     parser.add_argument('--timeout', type=int, default=600, help='Timeout')
-    parser.add_argument('--recall-threshold', type=float, default=0.5, help='Recall threshold')
     args = parser.parse_args()
 
-    write_rules('outputs/' + args.dataset, args.name, args.weight, args.timeout, args.recall_threshold)
+    write_rules('outputs/' + args.dataset, args.name, args.weight, args.timeout)

@@ -5,11 +5,12 @@ warnings.filterwarnings("ignore")
 import os
 from tqdm import tqdm
 import tensorboard
+import json
+
 import argparse
 
 import numpy as np
 import torch
-
 from torch.utils.data import DataLoader
 from data.ag.action_genome import AG
 
@@ -38,6 +39,7 @@ class JointModelLightning(L.LightningModule):
 
         super().__init__()
         self.model_type = model_type
+        self.constraint_mode = None # hard, soft
         self.lr = lr
         rgcn_params, vit_hidden_dim, num_classes = model_params 
         if model_type == 'joint':
@@ -54,18 +56,18 @@ class JointModelLightning(L.LightningModule):
         # debug vars
         #correct to wrong, correct to correct, wrong to correct, wrong to wrong blocked, wrong to wrong not blocked
         self.ids = []
-        self.c_w, self.c_c, self.w_C, self.w_w_b, self.w_w_nb = np.array([]), np.array([]), np.array([]), np.array([]), np.array([])
+        self.c_w, self.c_c, self.w_c, self.w_w_b, self.w_w_nb = np.array([]), np.array([]), np.array([]), np.array([]), np.array([])
         
         #epoch metrics
         self.train_accuracy = torchmetrics.Accuracy(task='multiclass', num_classes=num_classes)
         self.val_accuracy = torchmetrics.Accuracy(task='multiclass', num_classes=num_classes)
 
-        self.test_metrics = MetricCollection([
-            Accuracy(task='multiclass', num_classes=num_classes),
-            Precision(task='multiclass', average='macro', num_classes=num_classes),
-            Recall(task='multiclass', average='macro', num_classes=num_classes)
-
-        ])
+        self.test_metrics = MetricCollection({
+            'accuracy': Accuracy(task='multiclass', num_classes=num_classes),
+            'accuracy_top5': Accuracy(task='multiclass', num_classes=num_classes, top_k=5),
+            'precision': Precision(task='multiclass', average='macro', num_classes=num_classes),
+            'recall': Recall(task='multiclass', average='macro', num_classes=num_classes)
+        })
 
         self.save_hyperparameters()
         
@@ -102,15 +104,24 @@ class JointModelLightning(L.LightningModule):
     def test_step(self, batch, batch_idx):
         ids, imgs, sgs, verbs, labels, constraints = batch
         out = self(imgs, sgs)
+        prior_dist = None
 
         label_classes = torch.argmax(labels, dim=1)
 
         if constraints is not None:
-            not_blocked = torch.sum(labels * constraints, dim=1)
+            if self.constraint_mode is None:
+                raise ValueError(f'Constraint mode is not set')
 
             unconstrained_classes = torch.argmax(out, dim=1)
+            not_blocked = torch.sum(labels * constraints, dim=1)
 
-            constrained_out = F.softmax(out * constraints, dim=1)
+            if self.constraint_mode == 'hard':
+                constrained_out = F.softmax(out * constraints, dim=1)
+            elif self.constraint_mode == 'soft':
+                #prior_dist = F.softmax(constraints, dim=1) 
+                constrained_out = F.softmax(out * constraints, dim=1) #TODO: flagged because constraints should be prior_dist
+            else:
+                raise ValueError(f'Invalid mode: {self.constraint_mode}')
             constrained_classes = torch.argmax(constrained_out, dim=1)
 
             c_before = (unconstrained_classes == label_classes)
@@ -120,39 +131,54 @@ class JointModelLightning(L.LightningModule):
 
             c_w = c_before * w_after
             c_c = c_before * c_after
-            w_C = w_before * c_after
+            w_c = w_before * c_after
             w_w_b = w_before * w_after * (1 - not_blocked)
             w_w_nb = w_before * w_after * not_blocked
 
             self.ids.extend(ids)
             self.c_w = np.concatenate((self.c_w, c_w.cpu().numpy()))
             self.c_c = np.concatenate((self.c_c, c_c.cpu().numpy()))
-            self.w_C = np.concatenate((self.w_C, w_C.cpu().numpy()))
+            self.w_c = np.concatenate((self.w_c, w_c.cpu().numpy()))
             self.w_w_b = np.concatenate((self.w_w_b, w_w_b.cpu().numpy()))
             self.w_w_nb = np.concatenate((self.w_w_nb, w_w_nb.cpu().numpy()))
 
             out = constrained_out
-            out_classes = constrained_classes
-        else:
-            out_classes = torch.argmax(out, dim=1)
         
+        '''
         with open('out.txt', 'a') as f:
             for o in out:
-                # Start of Selection
-                formatted = np.array2string(o.cpu().numpy(), precision=4, suppress_small=True)
+                formatted = np.array2string(o.cpu().numpy(), max_line_width=10000, precision=4, suppress_small=True)
                 f.write(formatted + '\n')
+
+        if prior_dist is not None:
+            with open('priors.txt', 'a') as f:
+                for p in prior_dist:
+                    formatted = np.array2string(p.cpu().numpy(), max_line_width=10000, precision=4, suppress_small=True)
+                    f.write(formatted + '\n')
+
+            with open('raw_constraints.txt', 'a') as f:
+                for c in constraints:
+                    formatted = np.array2string(c.cpu().numpy(), max_line_width=10000, precision=4, suppress_small=True)
+                    f.write(formatted + '\n')
+        '''
         
         # Update metrics with appropriate format
-        metrics_dict = self.test_metrics(out_classes, label_classes)
+        metrics_dict = self.test_metrics(out, label_classes)
         
         self.log_dict(metrics_dict, on_step=False, on_epoch=True, prog_bar=True)
 
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=self.lr)
 
-def test_rules(rules_file, bk_file, test_size, targets, labels=None):
+def test_rules(rules_name, rules_folder, bk_file, test_size, targets, mode='hard', recall_threshold=0.7, priors=None):
     print('Testing learned rules=====================')
     preds = []
+
+    rules_file = os.path.join(rules_folder, f'{rules_name}.pl')
+    rules_json = os.path.join(rules_folder, f'{rules_name}.json')
+
+    with open(rules_json, 'r') as f:
+        rules = json.load(f)
 
     _ = Prolog()
 
@@ -163,16 +189,35 @@ def test_rules(rules_file, bk_file, test_size, targets, labels=None):
         pred = np.zeros(len(targets))
         for j,v in enumerate(targets):
             q = Prolog.query(f'{v}_target(x{i}_0)')
+
+            satisfied = False
             for q in q:
-                pred[j] = 1
+                satisfied = True
                 break
-        pred = pred.astype(int)
+            rule_exists = rules[v] is not None
+            if rule_exists:
+                recall = rules[v][1]['recall']
+                precision = rules[v][1]['precision']
+
+            if mode == 'hard':
+                if satisfied:
+                    pred[j] = 1
+                else:
+                    if not rule_exists or recall < recall_threshold:
+                        pred[j] = 1
+            elif mode == 'soft':
+                if not rule_exists or recall < recall_threshold:
+                    pred[j] = priors[j] # dont use rule
+                if satisfied:
+                    pred[j] = precision # rule satisfied, use precision as prior
+                else:
+                    pred[j] = (1-recall) * priors[j] # rule not satisfied
+
+        if mode == 'hard':
+            pred = pred.astype(int)
         preds.append(pred)
 
     preds = np.stack(preds)
-    if labels is not None:
-        #metrics(labels, preds)
-        pass
     return preds
 
 def main(args):
@@ -182,8 +227,15 @@ def main(args):
     split_file = args.split_file
     subset_file = args.subset_file
     rules_folder = args.rules_folder
-    rules_name = args.rules_name
+    prolog_folder = args.prolog_folder
     verb_whitelist = args.verb_whitelist
+    rules_name = args.rules_name
+    mode = args.mode
+    recall_threshold = args.recall_threshold
+    model_type = args.model_type
+    epochs = args.epochs
+    devices = args.devices
+    lr = args.lr
 
     train_set = AG(root, split='train', split_file=split_file, subset_file=subset_file, verb_whitelist=verb_whitelist)
     val_set = AG(root, split='val', split_file=split_file, subset_file=subset_file, verb_whitelist=verb_whitelist)
@@ -197,13 +249,8 @@ def main(args):
     num_verb_classes = len(train_set.verb_classes)
     num_rel_classes = len(train_set.relationship_classes)
 
-    rules_file = os.path.join(rules_folder, f'{rules_name}.pl')
 
     #MODEL=======================================
-    model_type = args.model_type
-    epochs = args.epochs
-    devices = args.devices
-    lr = args.lr
 
     node_feature_size = 32
     rgcn_hidden_dim, vit_hidden_dim = 32, 32
@@ -248,35 +295,30 @@ def main(args):
         print('Training the model=====================')
         trainer.fit(lightning_model, train_dataloaders=train_loader, val_dataloaders=val_loader)
 
-    if args.test:
-        with open('out.txt', 'w') as f:
-            f.write('WITHOUT CONSTRAINTS\n')
 
+    if args.test:
         print('Testing the model without constraints=====================')
         test_set.constraints = None
         trainer.test(lightning_model, dataloaders=test_loader)
 
-        with open('out.txt', 'a') as f:
-            f.write('WITHOUT CONSTRAINTS\n')
-
         print('Testing the model with constraints=====================')
-        masks = test_rules(rules_file, 'prolog/ag/test_bk.pl', len(test_set), test_set.verb_classes)
-
-        print(f'Average number of feasible actions per instance: {masks.sum(axis=1).mean():.2f}')
-
+        masks = test_rules(rules_name, rules_folder, os.path.join(prolog_folder, 'test_bk.pl'), len(test_set), test_set.verb_classes, mode=mode, recall_threshold=recall_threshold, priors=test_set.verb_priors)
         test_set.constraints = masks
+        lightning_model.constraint_mode = mode
         trainer.test(lightning_model, dataloaders=test_loader)
-
+        print(f'Average number of feasible actions per instance: {masks.sum(axis=1).mean():.2f}')
         print(f'Correct to wrong: {np.sum(lightning_model.c_w)}')
         print(f'Correct to correct: {np.sum(lightning_model.c_c)}')
-        print(f'Wrong to correct: {np.sum(lightning_model.w_C)}')
+        print(f'Wrong to correct: {np.sum(lightning_model.w_c)}')
         print(f'Wrong to wrong blocked: {np.sum(lightning_model.w_w_b)}')
         print(f'Wrong to wrong not blocked: {np.sum(lightning_model.w_w_nb)}')
 
+        '''
         c_w_idxs = np.where(lightning_model.c_w == 1)[0]
         print(c_w_idxs)
         c_w_ids = [lightning_model.ids[i] for i in c_w_idxs]
         print(c_w_ids)
+        '''
 
 if __name__ == '__main__':
 
@@ -286,6 +328,7 @@ if __name__ == '__main__':
     parser.add_argument('--root', type=str, default='/data/Datasets/ag/', help='Root directory of the dataset')
     parser.add_argument('--split-file', type=str, default='data/ag/split_train_val_test.json', help='File containing train, val, test splits')
     parser.add_argument('--subset-file', type=str, default='data/ag/subset_shelve', help='File containing subset of the dataset')
+    parser.add_argument('--prolog-folder', type=str, default='prolog/ag/', help='Folder containing the rules files')
     parser.add_argument('--rules-folder', type=str, default='outputs/ag/', help='Folder containing the rules files')
     parser.add_argument('--verb-whitelist', type=str, default='data/ag/verb_whitelist.txt', help='File containing verb whitelist')
 
@@ -304,6 +347,8 @@ if __name__ == '__main__':
 
     #rules
     parser.add_argument('--rules-name', type=str, default='rules_learned', help='Name of the rules file')
+    parser.add_argument('--mode', type=str, default='hard', choices=['hard', 'soft'], help='Mode to use for testing')
+    parser.add_argument('--recall-threshold', type=float, default=0.7, help='Recall threshold')
 
     args = parser.parse_args()
 
