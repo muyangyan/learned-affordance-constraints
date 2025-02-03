@@ -167,6 +167,16 @@ def main(args):
         train_pd.write_bk()
         train_pd.init_general_bias()
 
+        if args.checkpoint is not None:
+            lightning_model = JointModelLightning.load_from_checkpoint(args.checkpoint)
+
+            trainer = L.Trainer(
+                max_epochs=epochs,
+                accelerator='gpu',
+                devices=devices,
+            )
+            trainer.test(lightning_model, dataloaders=test_loader)
+
         for verb_idx, verb_name in enumerate(train_ag.verb_classes):
             ratio = train_ag.verb_priors[verb_idx]
             print(verb_name, ratio)

@@ -1,12 +1,19 @@
 #!/bin/bash
+CHECKPOINT=$1
+MODEL_TYPE=$(echo "$CHECKPOINT" | cut -d'/' -f3)
+
+if [[ ! "$MODEL_TYPE" =~ ^(rgcn|joint|vit)$ ]]; then
+    echo "Error: MODEL_TYPE must be either 'rgcn', 'joint', or 'vit'"
+    exit 1
+fi
 
 PYTHON_SCRIPT=aa.py
 ARGS="--test \
-    --model-type joint \
+    --model-type $MODEL_TYPE \
     --rules-name long_rules \
-    --checkpoint checkpoints/ag/joint/epoch=26-val_acc=0.23.ckpt \
+    --checkpoint $CHECKPOINT \
     --recall-threshold 0.8 \
-    --mode hard"
+    --mode soft"
 
 echo "Running script: $PYTHON_SCRIPT"
 echo "Arguments: $ARGS"
