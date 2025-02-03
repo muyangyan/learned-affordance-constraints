@@ -8,7 +8,7 @@ if [[ ! "$MODEL_TYPE" =~ ^(rgcn|joint|vit)$ ]]; then
 fi
 
 PYTHON_SCRIPT=aa.py
-ARGS="--test \
+ARGS="--val \
     --model-type $MODEL_TYPE \
     --rules-name long_rules \
     --checkpoint $CHECKPOINT \

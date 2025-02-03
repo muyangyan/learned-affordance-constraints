@@ -11,6 +11,8 @@ warnings.filterwarnings("ignore")
 from data.ag.action_genome import AG
 from data.toy.toy_dataset import ToyDataset
 
+from models.action_anticipator import ActionAnticipator
+from pytorch_lightning import Trainer
 
 
 '''
@@ -168,12 +170,12 @@ def main(args):
         train_pd.init_general_bias()
 
         if args.checkpoint is not None:
-            lightning_model = JointModelLightning.load_from_checkpoint(args.checkpoint)
+            #use trained model to generate negatives
+            lightning_model = ActionAnticipator.load_from_checkpoint(args.checkpoint)
 
-            trainer = L.Trainer(
-                max_epochs=epochs,
+            trainer = Trainer(
                 accelerator='gpu',
-                devices=devices,
+                devices=args.devices,
             )
             trainer.test(lightning_model, dataloaders=test_loader)
 

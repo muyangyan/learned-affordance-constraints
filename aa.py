@@ -12,7 +12,7 @@ import torch
 from torch.utils.data import DataLoader
 from data.ag.action_genome import AG
 
-import pytorch_lightning as L 
+from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.loggers import TensorBoardLogger
 
@@ -44,8 +44,9 @@ def apply_rule(satisfied, rule, mode, recall_threshold, prior):
         raise ValueError(f'Invalid mode: {mode}')
     return 0
 
-def test_rules(rules_name, rules_folder, bk_file, test_size, targets, mode='hard', recall_threshold=0.7, priors=None):
-    print('Testing learned rules=====================')
+def apply_rules(rules_name, rules_folder, bk_file, test_size, targets, 
+               mode='hard', recall_threshold=0.7, priors=None):
+    print('Applying learned rules-----------------')
     preds = []
 
     rules_file = os.path.join(rules_folder, f'{rules_name}.pl')
@@ -75,28 +76,45 @@ def test_rules(rules_name, rules_folder, bk_file, test_size, targets, mode='hard
         preds.append(pred)
     preds = np.stack(preds)
     return preds
+    
+def test_routine(args, trainer, model, dataset, loader, split='val'):
+    print('Without constraints---------------------')
+    dataset.constraints = None
+    trainer.test(model, dataloaders=loader)
+
+    print('With constraints---------------------')
+    constraints = apply_rules(args.rules_name, args.rules_folder, 
+        os.path.join(args.prolog_folder, f'{split}_bk.pl'),
+        len(dataset), dataset.verb_classes,
+        mode=args.mode,
+        recall_threshold=args.recall_threshold,
+        priors=dataset.verb_priors)
+
+    dataset.constraints = constraints
+    model.constraint_mode = args.mode
+    trainer.test(model, dataloaders=loader)
+    print(f'Average number of feasible actions per instance: {constraints.sum(axis=1).mean():.2f}')
+    print(f'Correct to wrong: {np.sum(model.c_w)}')
+    print(f'Correct to correct: {np.sum(model.c_c)}')
+    print(f'Wrong to correct: {np.sum(model.w_c)}')
+    print(f'Wrong to wrong blocked: {np.sum(model.w_w_b)}')
+    print(f'Wrong to wrong not blocked: {np.sum(model.w_w_nb)}')
+
+    '''
+    c_w_idxs = np.where(lightning_model.c_w == 1)[0]
+    print(c_w_idxs)
+    c_w_ids = [lightning_model.ids[i] for i in c_w_idxs]
+    print(c_w_ids)
+    '''
 
 def main(args):
     #DATA=======================================
     print('ACTION ANTICIPATOR')
-    root = args.root
-    split_file = args.split_file
-    subset_file = args.subset_file
-    rules_folder = args.rules_folder
-    prolog_folder = args.prolog_folder
-    verb_whitelist = args.verb_whitelist
-    rules_name = args.rules_name
-    mode = args.mode
-    recall_threshold = args.recall_threshold
-    model_type = args.model_type
-    epochs = args.epochs
-    devices = args.devices
-    lr = args.lr
 
     # Initialize model and trainer
     if args.train:
-        train_set = AG(root, split='train', split_file=split_file, subset_file=subset_file, verb_whitelist=verb_whitelist)
-        val_set = AG(root, split='val', split_file=split_file, subset_file=subset_file, verb_whitelist=verb_whitelist)
+        train_set = AG(args.root, split='train', split_file=args.split_file, subset_file=args.subset_file, verb_whitelist=args.verb_whitelist)
+        val_set = AG(args.root, split='val', split_file=args.split_file, subset_file=args.subset_file, verb_whitelist=args.verb_whitelist)
 
         train_loader = DataLoader(train_set, batch_size=args.batch_size, collate_fn=train_set.verb_pred_collate, num_workers=16, shuffle=True)
         val_loader = DataLoader(val_set, batch_size=128, collate_fn=val_set.verb_pred_collate, num_workers=16, shuffle=False)
@@ -112,19 +130,19 @@ def main(args):
         weight = len(train_set) / (num_verb_classes * train_set.verb_label_counts)
         weight = torch.tensor(weight, dtype=torch.float)
 
-        model = ActionAnticipator(model_params, weight, model_type=model_type, lr=lr)
+        model = ActionAnticipator(model_params, weight, model_type=args.model_type, lr=args.lr)
         checkpoint_callback = ModelCheckpoint(
             monitor='val_acc',
-            dirpath=f'checkpoints/ag/{model_type}/',
+            dirpath=f'checkpoints/ag/{args.model_type}/',
             filename='{epoch:02d}-{val_acc:.2f}',
             save_top_k=3,
             mode='max',
         )
-        logger = TensorBoardLogger("lightning_logs", name=f"{model_type}_model")
-        trainer = L.Trainer(
-            max_epochs=epochs,
+        logger = TensorBoardLogger("lightning_logs", name=f"{args.model_type}_model")
+        trainer = Trainer(
+            max_epochs=args.epochs,
             accelerator='gpu',
-            devices=devices,
+            devices=args.devices,
             callbacks=[checkpoint_callback],
             logger=logger,
         )
@@ -133,34 +151,20 @@ def main(args):
         trainer.fit(model, train_dataloaders=train_loader, val_dataloaders=val_loader)
     else:
         model = ActionAnticipator.load_from_checkpoint(args.checkpoint)
-        trainer = L.Trainer(accelerator='gpu', devices=devices)
+        trainer = Trainer(accelerator='gpu', devices=args.devices)
+
+    if args.val:
+        if not args.train:
+            val_set = AG(args.root, split='val', split_file=args.split_file, subset_file=args.subset_file, verb_whitelist=args.verb_whitelist)
+            val_loader = DataLoader(val_set, batch_size=128, collate_fn=val_set.verb_pred_collate, num_workers=16, shuffle=False)
+        test_routine(args, trainer, model, val_set, val_loader, split='val')
 
     if args.test:
-        test_set = AG(root, split='test', split_file=split_file, subset_file=subset_file, verb_whitelist=verb_whitelist)
+        test_set = AG(args.root, split='test', split_file=args.split_file, subset_file=args.subset_file, verb_whitelist=args.verb_whitelist)
         test_loader = DataLoader(test_set, batch_size=128, collate_fn=test_set.verb_pred_collate, num_workers=16, shuffle=False)
-        
-        print('Testing the model without constraints=====================')
-        test_set.constraints = None
-        trainer.test(model, dataloaders=test_loader)
+        test_routine(args, trainer, model, test_set, test_loader, split='test')
 
-        print('Testing the model with constraints=====================')
-        masks = test_rules(rules_name, rules_folder, os.path.join(prolog_folder, 'test_bk.pl'), len(test_set), test_set.verb_classes, mode=mode, recall_threshold=recall_threshold, priors=test_set.verb_priors)
-        test_set.constraints = masks
-        model.constraint_mode = mode
-        trainer.test(model, dataloaders=test_loader)
-        print(f'Average number of feasible actions per instance: {masks.sum(axis=1).mean():.2f}')
-        print(f'Correct to wrong: {np.sum(model.c_w)}')
-        print(f'Correct to correct: {np.sum(model.c_c)}')
-        print(f'Wrong to correct: {np.sum(model.w_c)}')
-        print(f'Wrong to wrong blocked: {np.sum(model.w_w_b)}')
-        print(f'Wrong to wrong not blocked: {np.sum(model.w_w_nb)}')
 
-        '''
-        c_w_idxs = np.where(lightning_model.c_w == 1)[0]
-        print(c_w_idxs)
-        c_w_ids = [lightning_model.ids[i] for i in c_w_idxs]
-        print(c_w_ids)
-        '''
 
 if __name__ == '__main__':
 
