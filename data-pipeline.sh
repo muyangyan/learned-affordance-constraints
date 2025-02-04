@@ -9,8 +9,8 @@ START_PART=$1
 DATASET="ag"
 TRAIN_SPLIT_RATIO=0.6
 VAL_SPLIT_RATIO=0.2
-RULES_NAME="long_rules"
-TIMEOUT=6000
+RULES_NAME="debug_rules"
+TIMEOUT=60
 MDL_WEIGHT=1
 
 echo "Starting data pipeline==================="

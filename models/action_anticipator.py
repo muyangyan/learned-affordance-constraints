@@ -47,7 +47,12 @@ class ActionAnticipator(L.LightningModule):
             'accuracy': Accuracy(task='multiclass', num_classes=num_classes),
             'accuracy_top5': Accuracy(task='multiclass', num_classes=num_classes, top_k=5),
             'precision': Precision(task='multiclass', average='macro', num_classes=num_classes),
-            'recall': Recall(task='multiclass', average='macro', num_classes=num_classes)
+            'recall': Recall(task='multiclass', average='macro', num_classes=num_classes),
+        })
+        self.test_metrics_per_class = MetricCollection({
+            'accuracy_per_class': Accuracy(task='multiclass', average='none', num_classes=num_classes),
+            'precision_per_class': Precision(task='multiclass', average='none', num_classes=num_classes),
+            'recall_per_class': Recall(task='multiclass', average='none', num_classes=num_classes),
         })
 
         self.save_hyperparameters()
@@ -100,7 +105,7 @@ class ActionAnticipator(L.LightningModule):
                 constrained_out = F.softmax(out * constraints, dim=1)
             elif self.constraint_mode == 'soft':
                 #prior_dist = F.softmax(constraints, dim=1) 
-                constrained_out = F.softmax(out * constraints, dim=1) #TODO: flagged because constraints should be prior_dist
+                constrained_out = F.softmax(out * constraints, dim=1) #TODO: why doesnt softmax work better
             else:
                 raise ValueError(f'Invalid mode: {self.constraint_mode}')
             constrained_classes = torch.argmax(constrained_out, dim=1)
@@ -124,7 +129,20 @@ class ActionAnticipator(L.LightningModule):
             self.w_w_nb = np.concatenate((self.w_w_nb, w_w_nb.cpu().numpy()))
 
             out = constrained_out
+        out_classes = torch.argmax(out, dim=1)
+
+        # Update summary metrics (these return scalars)
+        metrics_dict = self.test_metrics(out, label_classes)
+        self.log_dict(metrics_dict, on_step=False, on_epoch=True, prog_bar=True)
         
+        # Update and log per-class metrics individually
+        per_class_metrics = self.test_metrics_per_class(out_classes, label_classes)
+        for metric_name, values in per_class_metrics.items():
+            # Log each class's metric separately
+            for class_idx, value in enumerate(values):
+                self.log(f'{metric_name}_class_{class_idx}', value, 
+                        on_step=False, on_epoch=True, prog_bar=False)
+
         '''
         with open('out.txt', 'a') as f:
             for o in out:
@@ -142,11 +160,7 @@ class ActionAnticipator(L.LightningModule):
                     formatted = np.array2string(c.cpu().numpy(), max_line_width=10000, precision=4, suppress_small=True)
                     f.write(formatted + '\n')
         '''
-        
-        # Update metrics with appropriate format
-        metrics_dict = self.test_metrics(out, label_classes)
-        
-        self.log_dict(metrics_dict, on_step=False, on_epoch=True, prog_bar=True)
+
 
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=self.lr)

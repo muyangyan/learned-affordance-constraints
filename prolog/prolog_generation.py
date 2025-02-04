@@ -11,6 +11,8 @@ warnings.filterwarnings("ignore")
 from data.ag.action_genome import AG
 from data.toy.toy_dataset import ToyDataset
 
+from torch.utils.data import DataLoader
+
 from models.action_anticipator import ActionAnticipator
 from pytorch_lightning import Trainer
 
@@ -169,20 +171,19 @@ def main(args):
         train_pd.write_bk()
         train_pd.init_general_bias()
 
-        if args.checkpoint is not None:
+        if args.checkpoint is not None: #TODO: NOT DOING THIS FOR NOW
             #use trained model to generate negatives
+            print(f'Generating negatives with trained model at {args.checkpoint}')
+            train_ag.constraints = None
+            train_loader = DataLoader(train_ag, batch_size=128, collate_fn=train_ag.verb_pred_collate, num_workers=16, shuffle=False)
             lightning_model = ActionAnticipator.load_from_checkpoint(args.checkpoint)
-
-            trainer = Trainer(
-                accelerator='gpu',
-                devices=args.devices,
-            )
-            trainer.test(lightning_model, dataloaders=test_loader)
+            trainer = Trainer(accelerator='gpu', devices=args.devices)
+            trainer.test(lightning_model, dataloaders=train_loader)
+            #TODO: get the predictions and use in write verb
 
         for verb_idx, verb_name in enumerate(train_ag.verb_classes):
             ratio = train_ag.verb_priors[verb_idx]
             print(verb_name, ratio)
-
             #keeps negatives according to the frequency of the verb
             train_pd.write_verb(verb_name, keep_prob=exp_curve(4, ratio)) 
     

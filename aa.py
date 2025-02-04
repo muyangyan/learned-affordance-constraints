@@ -107,6 +107,8 @@ def test_routine(args, trainer, model, dataset, loader, split='val'):
     print(c_w_ids)
     '''
 
+    #show per class metrics
+
 def main(args):
     #DATA=======================================
     print('ACTION ANTICIPATOR')

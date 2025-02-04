@@ -261,11 +261,11 @@ class AG(Dataset):
         self.object_classes[31] = 'sofa/couch'
         '''
         
-        self.object_classes[8] = 'closet/cabinet'
-        self.object_classes[10] = 'cup/glass/bottle'
-        self.object_classes[22] = 'paper/notebook'
-        self.object_classes[23] = 'phone/camera'
-        self.object_classes[30] = 'sofa/couch'
+        self.object_classes[8] = 'closet_cabinet'
+        self.object_classes[10] = 'cup_glass_bottle'
+        self.object_classes[22] = 'paper_notebook'
+        self.object_classes[23] = 'phone_camera'
+        self.object_classes[30] = 'sofa_couch'
 
         # collect relationship classes
         self.relationship_classes = []
