@@ -10,9 +10,9 @@ body_pred(book, 1).
 body_pred(box, 1).
 body_pred(broom, 1).
 body_pred(chair, 1).
-body_pred(closet/cabinet, 1).
+body_pred(closet_cabinet, 1).
 body_pred(clothes, 1).
-body_pred(cup/glass/bottle, 1).
+body_pred(cup_glass_bottle, 1).
 body_pred(dish, 1).
 body_pred(door, 1).
 body_pred(doorknob, 1).
@@ -24,15 +24,15 @@ body_pred(laptop, 1).
 body_pred(light, 1).
 body_pred(medicine, 1).
 body_pred(mirror, 1).
-body_pred(paper/notebook, 1).
-body_pred(phone/camera, 1).
+body_pred(paper_notebook, 1).
+body_pred(phone_camera, 1).
 body_pred(picture, 1).
 body_pred(pillow, 1).
 body_pred(refrigerator, 1).
 body_pred(sandwich, 1).
 body_pred(shelf, 1).
 body_pred(shoe, 1).
-body_pred(sofa/couch, 1).
+body_pred(sofa_couch, 1).
 body_pred(table, 1).
 body_pred(television, 1).
 body_pred(towel, 1).
@@ -64,22 +64,29 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-12:35:45 Generating programs of size: 2
-12:35:45 Generating programs of size: 3
-12:35:46 ********************
-12:35:46 New best hypothesis:
-12:35:46 tp:19 fn:12 tn:139 fp:15 size:3 mdl:30
-12:35:46 talk_target(A):- on_the_side_of(B,A),holding(A,B).
-12:35:46 ********************
-12:35:50 Generating programs of size: 4
-12:36:10 ********************
-12:36:10 New best hypothesis:
-12:36:10 tp:19 fn:12 tn:144 fp:10 size:4 mdl:26
-12:36:10 talk_target(A):- on_the_side_of(C,B),holding(B,C),not_looking_at(A,C).
-12:36:10 ********************
-12:40:28 Generating programs of size: 5
-14:15:44 TIMEOUT OF 6000 SECONDS EXCEEDED
+16:31:58 Generating programs of size: 2
+16:31:59 Generating programs of size: 3
+16:31:59 ********************
+16:31:59 New best hypothesis:
+16:31:59 tp:17 fn:17 tn:126 fp:8 size:3 mdl:28
+16:31:59 talk_target(A):- holding(A,B),on_the_side_of(B,A).
+16:31:59 ********************
+16:31:59 ********************
+16:31:59 New best hypothesis:
+16:31:59 tp:28 fn:6 tn:130 fp:4 size:3 mdl:13
+16:31:59 talk_target(A):- phone_camera(B),holding(A,B).
+16:31:59 ********************
+16:32:03 Generating programs of size: 4
+16:32:06 ********************
+16:32:06 New best hypothesis:
+16:32:06 tp:33 fn:1 tn:130 fp:4 size:6 mdl:11
+16:32:06 talk_target(A):- phone_camera(B),on_the_side_of(B,A).
+16:32:06 talk_target(A):- looking_at(A,B),phone_camera(B).
+16:32:06 ********************
+16:37:10 Generating programs of size: 5
+PROCESS DID NOT FINISH, MANUALLY EVALUATING RULE
 ********** SOLUTION **********
-Precision:0.66 Recall:0.61 TP:19 FN:12 TN:144 FP:10 Size:4 MDL:26
-talk_target(A):- on_the_side_of(C,B),holding(B,C),not_looking_at(A,C).
+Precision:0.08 Recall:0.97 TP:33 FN:1 TN:7109 FP:367 Size:6 MDL:374
+talk_target(A):- phone_camera(B),on_the_side_of(B,A).
+talk_target(A):- looking_at(A,B),phone_camera(B).
 ******************************

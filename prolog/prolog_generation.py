@@ -171,6 +171,7 @@ def main(args):
         train_pd.write_bk()
         train_pd.init_general_bias()
 
+        '''
         if args.checkpoint is not None: #TODO: NOT DOING THIS FOR NOW
             #use trained model to generate negatives
             print(f'Generating negatives with trained model at {args.checkpoint}')
@@ -180,6 +181,7 @@ def main(args):
             trainer = Trainer(accelerator='gpu', devices=args.devices)
             trainer.test(lightning_model, dataloaders=train_loader)
             #TODO: get the predictions and use in write verb
+        '''
 
         for verb_idx, verb_name in enumerate(train_ag.verb_classes):
             ratio = train_ag.verb_priors[verb_idx]
@@ -206,17 +208,15 @@ if __name__ == '__main__':
     parser.add_argument('--test', action='store_true', help='Generate test data')
     parser.add_argument('--root', type=str, default='/data/Datasets/ag/', help='Root directory')
     parser.add_argument('--subset_file', type=str, default='data/ag/subset_shelve', help='Subset file')
-    parser.add_argument('--verb-whitelist', type=str, default='data/ag/verb_whitelist.txt', help='File containing verb whitelist')
+    parser.add_argument('--verb-whitelist', nargs='+', type=str, default='data/ag/verb_whitelist.txt', help='File containing verb whitelist')
     args = parser.parse_args()
 
     if not (args.train or args.val or args.test):
         print("Please specify at least one of --train, --val, or --test")
         exit(1)
 
-    if os.path.exists(args.verb_whitelist):
+    if type(args.verb_whitelist) == str and os.path.exists(args.verb_whitelist):
         with open(args.verb_whitelist, 'r') as f:
             args.verb_whitelist = [line for line in f.read().splitlines() if line and not line.startswith('#')]
-    else:
-        args.verb_whitelist = args.verb_whitelist.split(' ')
 
     main(args)

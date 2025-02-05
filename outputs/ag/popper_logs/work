@@ -10,9 +10,9 @@ body_pred(book, 1).
 body_pred(box, 1).
 body_pred(broom, 1).
 body_pred(chair, 1).
-body_pred(closet/cabinet, 1).
+body_pred(closet_cabinet, 1).
 body_pred(clothes, 1).
-body_pred(cup/glass/bottle, 1).
+body_pred(cup_glass_bottle, 1).
 body_pred(dish, 1).
 body_pred(door, 1).
 body_pred(doorknob, 1).
@@ -24,15 +24,15 @@ body_pred(laptop, 1).
 body_pred(light, 1).
 body_pred(medicine, 1).
 body_pred(mirror, 1).
-body_pred(paper/notebook, 1).
-body_pred(phone/camera, 1).
+body_pred(paper_notebook, 1).
+body_pred(phone_camera, 1).
 body_pred(picture, 1).
 body_pred(pillow, 1).
 body_pred(refrigerator, 1).
 body_pred(sandwich, 1).
 body_pred(shelf, 1).
 body_pred(shoe, 1).
-body_pred(sofa/couch, 1).
+body_pred(sofa_couch, 1).
 body_pred(table, 1).
 body_pred(television, 1).
 body_pred(towel, 1).
@@ -64,53 +64,46 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-12:35:45 Generating programs of size: 2
-12:35:45 Generating programs of size: 3
-12:35:45 ********************
-12:35:45 New best hypothesis:
-12:35:45 tp:47 fn:58 tn:261 fp:42 size:3 mdl:103
-12:35:45 work_target(A):- touching(A,B),looking_at(A,B).
-12:35:45 ********************
-12:35:45 ********************
-12:35:45 New best hypothesis:
-12:35:45 tp:11 fn:94 tn:302 fp:1 size:3 mdl:98
-12:35:45 work_target(A):- looking_at(A,B),writing_on(A,B).
-12:35:45 ********************
-12:35:45 ********************
-12:35:45 New best hypothesis:
-12:35:45 tp:37 fn:68 tn:290 fp:13 size:3 mdl:84
-12:35:45 work_target(A):- looking_at(A,B),laptop(B).
-12:35:45 ********************
-12:35:46 ********************
-12:35:46 New best hypothesis:
-12:35:46 tp:77 fn:28 tn:264 fp:39 size:3 mdl:70
-12:35:46 work_target(A):- table(B),in_front_of(B,A).
-12:35:46 ********************
-12:35:51 Generating programs of size: 4
-12:35:55 ********************
-12:35:55 New best hypothesis:
-12:35:55 tp:95 fn:10 tn:253 fp:50 size:9 mdl:69
-12:35:55 work_target(A):- table(B),in_front_of(B,A).
-12:35:55 work_target(A):- not_contacting(A,B),chair(B).
-12:35:55 work_target(A):- touching(A,B),book(B).
-12:35:55 ********************
-12:37:31 ********************
-12:37:31 New best hypothesis:
-12:37:31 tp:72 fn:33 tn:272 fp:31 size:4 mdl:68
-12:37:31 work_target(A):- table(B),not_looking_at(A,B),in_front_of(B,A).
-12:37:31 ********************
-12:42:59 Generating programs of size: 5
-12:43:08 ********************
-12:43:08 New best hypothesis:
-12:43:08 tp:90 fn:15 tn:262 fp:41 size:11 mdl:67
-12:43:08 work_target(A):- not_contacting(A,B),chair(B).
-12:43:08 work_target(A):- touching(A,B),book(B),in_front_of(B,A).
-12:43:08 work_target(A):- table(B),not_looking_at(A,B),in_front_of(B,A).
-12:43:08 ********************
-14:16:10 TIMEOUT OF 6000 SECONDS EXCEEDED
+16:31:58 Generating programs of size: 2
+16:31:59 Generating programs of size: 3
+16:31:59 ********************
+16:31:59 New best hypothesis:
+16:31:59 tp:15 fn:90 tn:327 fp:8 size:3 mdl:101
+16:31:59 work_target(A):- paper_notebook(B),holding(A,B).
+16:31:59 ********************
+16:31:59 ********************
+16:31:59 New best hypothesis:
+16:31:59 tp:57 fn:48 tn:291 fp:44 size:3 mdl:95
+16:31:59 work_target(A):- behind(B,A),chair(B).
+16:31:59 ********************
+16:31:59 ********************
+16:31:59 New best hypothesis:
+16:31:59 tp:36 fn:69 tn:322 fp:13 size:3 mdl:85
+16:31:59 work_target(A):- paper_notebook(B),looking_at(A,B).
+16:31:59 ********************
+16:32:00 ********************
+16:32:00 New best hypothesis:
+16:32:00 tp:67 fn:38 tn:292 fp:43 size:3 mdl:84
+16:32:00 work_target(A):- not_looking_at(A,B),table(B).
+16:32:00 ********************
+16:32:00 ********************
+16:32:00 New best hypothesis:
+16:32:00 tp:76 fn:29 tn:297 fp:38 size:3 mdl:70
+16:32:00 work_target(A):- in_front_of(B,A),table(B).
+16:32:00 ********************
+16:32:04 Generating programs of size: 4
+16:32:07 ********************
+16:32:07 New best hypothesis:
+16:32:07 tp:99 fn:6 tn:285 fp:50 size:9 mdl:65
+16:32:07 work_target(A):- paper_notebook(B),looking_at(A,B).
+16:32:07 work_target(A):- in_front_of(B,A),table(B).
+16:32:07 work_target(A):- not_contacting(A,B),chair(B).
+16:32:07 ********************
+16:42:21 Generating programs of size: 5
+PROCESS DID NOT FINISH, MANUALLY EVALUATING RULE
 ********** SOLUTION **********
-Precision:0.69 Recall:0.86 TP:90 FN:15 TN:262 FP:41 Size:11 MDL:67
+Precision:0.07 Recall:0.97 TP:87 FN:3 TN:6172 FP:1248 Size:9 MDL:1260
+work_target(A):- paper_notebook(B),looking_at(A,B).
+work_target(A):- in_front_of(B,A),table(B).
 work_target(A):- not_contacting(A,B),chair(B).
-work_target(A):- touching(A,B),book(B),in_front_of(B,A).
-work_target(A):- table(B),not_looking_at(A,B),in_front_of(B,A).
 ******************************

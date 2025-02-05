@@ -10,9 +10,9 @@ body_pred(book, 1).
 body_pred(box, 1).
 body_pred(broom, 1).
 body_pred(chair, 1).
-body_pred(closet/cabinet, 1).
+body_pred(closet_cabinet, 1).
 body_pred(clothes, 1).
-body_pred(cup/glass/bottle, 1).
+body_pred(cup_glass_bottle, 1).
 body_pred(dish, 1).
 body_pred(door, 1).
 body_pred(doorknob, 1).
@@ -24,15 +24,15 @@ body_pred(laptop, 1).
 body_pred(light, 1).
 body_pred(medicine, 1).
 body_pred(mirror, 1).
-body_pred(paper/notebook, 1).
-body_pred(phone/camera, 1).
+body_pred(paper_notebook, 1).
+body_pred(phone_camera, 1).
 body_pred(picture, 1).
 body_pred(pillow, 1).
 body_pred(refrigerator, 1).
 body_pred(sandwich, 1).
 body_pred(shelf, 1).
 body_pred(shoe, 1).
-body_pred(sofa/couch, 1).
+body_pred(sofa_couch, 1).
 body_pred(table, 1).
 body_pred(television, 1).
 body_pred(towel, 1).
@@ -64,43 +64,41 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-12:35:45 Generating programs of size: 2
-12:35:45 Generating programs of size: 3
-12:35:45 ********************
-12:35:45 New best hypothesis:
-12:35:45 tp:7 fn:112 tn:444 fp:3 size:3 mdl:118
-12:35:45 wash_target(A):- wiping(A,B),looking_at(A,B).
-12:35:45 ********************
-12:35:46 ********************
-12:35:46 New best hypothesis:
-12:35:46 tp:18 fn:101 tn:437 fp:10 size:3 mdl:114
-12:35:46 wash_target(A):- looking_at(A,B),towel(B).
-12:35:46 ********************
-12:35:46 ********************
-12:35:46 New best hypothesis:
-12:35:46 tp:22 fn:97 tn:442 fp:5 size:3 mdl:105
-12:35:46 wash_target(A):- on_the_side_of(B,A),towel(B).
-12:35:46 ********************
-12:35:49 ********************
-12:35:49 New best hypothesis:
-12:35:49 tp:40 fn:79 tn:427 fp:20 size:3 mdl:102
-12:35:49 wash_target(A):- in_front_of(B,A),towel(B).
-12:35:49 ********************
-12:35:55 Generating programs of size: 4
-12:36:00 ********************
-12:36:00 New best hypothesis:
-12:36:00 tp:55 fn:64 tn:427 fp:20 size:12 mdl:96
-12:36:00 wash_target(A):- on_the_side_of(B,A),towel(B).
-12:36:00 wash_target(A):- covered_by(A,B),towel(B).
-12:36:00 wash_target(A):- wiping(A,B),in_front_of(B,A).
-12:36:00 wash_target(A):- holding(A,B),towel(B).
-12:36:00 ********************
-12:46:13 Generating programs of size: 5
-14:16:07 TIMEOUT OF 6000 SECONDS EXCEEDED
+16:31:58 Generating programs of size: 2
+16:31:59 Generating programs of size: 3
+16:31:59 ********************
+16:31:59 New best hypothesis:
+16:31:59 tp:28 fn:97 tn:452 fp:16 size:3 mdl:116
+16:31:59 wash_target(A):- towel(B),holding(A,B).
+16:31:59 ********************
+16:31:59 ********************
+16:31:59 New best hypothesis:
+16:31:59 tp:28 fn:97 tn:453 fp:15 size:3 mdl:115
+16:31:59 wash_target(A):- towel(B),not_looking_at(A,B).
+16:31:59 ********************
+16:32:01 ********************
+16:32:01 New best hypothesis:
+16:32:01 tp:22 fn:103 tn:462 fp:6 size:3 mdl:112
+16:32:01 wash_target(A):- towel(B),on_the_side_of(B,A).
+16:32:01 ********************
+16:32:01 ********************
+16:32:01 New best hypothesis:
+16:32:01 tp:37 fn:88 tn:453 fp:15 size:3 mdl:106
+16:32:01 wash_target(A):- towel(B),in_front_of(B,A).
+16:32:01 ********************
+16:32:04 Generating programs of size: 4
+16:32:08 ********************
+16:32:08 New best hypothesis:
+16:32:08 tp:48 fn:77 tn:453 fp:15 size:9 mdl:101
+16:32:08 wash_target(A):- towel(B),not_contacting(A,B).
+16:32:08 wash_target(A):- wiping(A,B),in_front_of(B,A).
+16:32:08 wash_target(A):- towel(B),in_front_of(B,A).
+16:32:08 ********************
+16:41:31 Generating programs of size: 5
+PROCESS DID NOT FINISH, MANUALLY EVALUATING RULE
 ********** SOLUTION **********
-Precision:0.73 Recall:0.46 TP:55 FN:64 TN:427 FP:20 Size:12 MDL:96
-wash_target(A):- on_the_side_of(B,A),towel(B).
-wash_target(A):- covered_by(A,B),towel(B).
+Precision:0.13 Recall:0.39 TP:50 FN:77 TN:7055 FP:328 Size:9 MDL:414
+wash_target(A):- towel(B),not_contacting(A,B).
 wash_target(A):- wiping(A,B),in_front_of(B,A).
-wash_target(A):- holding(A,B),towel(B).
+wash_target(A):- towel(B),in_front_of(B,A).
 ******************************

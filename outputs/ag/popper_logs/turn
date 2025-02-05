@@ -10,9 +10,9 @@ body_pred(book, 1).
 body_pred(box, 1).
 body_pred(broom, 1).
 body_pred(chair, 1).
-body_pred(closet/cabinet, 1).
+body_pred(closet_cabinet, 1).
 body_pred(clothes, 1).
-body_pred(cup/glass/bottle, 1).
+body_pred(cup_glass_bottle, 1).
 body_pred(dish, 1).
 body_pred(door, 1).
 body_pred(doorknob, 1).
@@ -24,15 +24,15 @@ body_pred(laptop, 1).
 body_pred(light, 1).
 body_pred(medicine, 1).
 body_pred(mirror, 1).
-body_pred(paper/notebook, 1).
-body_pred(phone/camera, 1).
+body_pred(paper_notebook, 1).
+body_pred(phone_camera, 1).
 body_pred(picture, 1).
 body_pred(pillow, 1).
 body_pred(refrigerator, 1).
 body_pred(sandwich, 1).
 body_pred(shelf, 1).
 body_pred(shoe, 1).
-body_pred(sofa/couch, 1).
+body_pred(sofa_couch, 1).
 body_pred(table, 1).
 body_pred(television, 1).
 body_pred(towel, 1).
@@ -64,33 +64,33 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-12:35:45 Generating programs of size: 2
-12:35:45 Generating programs of size: 3
-12:35:45 ********************
-12:35:45 New best hypothesis:
-12:35:45 tp:8 fn:21 tn:100 fp:0 size:3 mdl:24
-12:35:45 turn_target(A):- light(B),looking_at(A,B).
-12:35:45 ********************
-12:35:46 ********************
-12:35:46 New best hypothesis:
-12:35:46 tp:20 fn:9 tn:100 fp:0 size:3 mdl:12
-12:35:46 turn_target(A):- light(B),not_looking_at(A,B).
-12:35:46 ********************
-12:35:47 ********************
-12:35:47 New best hypothesis:
-12:35:47 tp:25 fn:4 tn:100 fp:0 size:3 mdl:7
-12:35:47 turn_target(A):- light(B),not_contacting(A,B).
-12:35:47 ********************
-12:35:49 Generating programs of size: 4
-12:35:53 ********************
-12:35:53 New best hypothesis:
-12:35:53 tp:29 fn:0 tn:100 fp:0 size:6 mdl:6
-12:35:53 turn_target(A):- light(B),not_contacting(A,B).
-12:35:53 turn_target(A):- light(B),in_front_of(B,A).
-12:35:53 ********************
-12:39:21 Generating programs of size: 5
+16:31:58 Generating programs of size: 2
+16:31:59 Generating programs of size: 3
+16:31:59 ********************
+16:31:59 New best hypothesis:
+16:31:59 tp:12 fn:10 tn:84 fp:0 size:3 mdl:13
+16:31:59 turn_target(A):- light(B),not_looking_at(A,B).
+16:31:59 ********************
+16:32:00 ********************
+16:32:00 New best hypothesis:
+16:32:00 tp:13 fn:9 tn:84 fp:0 size:3 mdl:12
+16:32:00 turn_target(A):- light(B),in_front_of(B,A).
+16:32:00 ********************
+16:32:00 ********************
+16:32:00 New best hypothesis:
+16:32:00 tp:18 fn:4 tn:84 fp:0 size:3 mdl:7
+16:32:00 turn_target(A):- not_contacting(A,B),light(B).
+16:32:00 ********************
+16:32:03 Generating programs of size: 4
+16:32:06 ********************
+16:32:06 New best hypothesis:
+16:32:06 tp:22 fn:0 tn:84 fp:0 size:6 mdl:6
+16:32:06 turn_target(A):- light(B),in_front_of(B,A).
+16:32:06 turn_target(A):- not_contacting(A,B),light(B).
+16:32:06 ********************
+16:34:28 Generating programs of size: 5
 ********** SOLUTION **********
-Precision:1.00 Recall:1.00 TP:29 FN:0 TN:100 FP:0 Size:6 MDL:6
-turn_target(A):- light(B),not_contacting(A,B).
+Precision:1.00 Recall:1.00 TP:22 FN:0 TN:84 FP:0 Size:6 MDL:6
 turn_target(A):- light(B),in_front_of(B,A).
+turn_target(A):- not_contacting(A,B),light(B).
 ******************************

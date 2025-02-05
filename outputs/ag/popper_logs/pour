@@ -10,9 +10,9 @@ body_pred(book, 1).
 body_pred(box, 1).
 body_pred(broom, 1).
 body_pred(chair, 1).
-body_pred(closet/cabinet, 1).
+body_pred(closet_cabinet, 1).
 body_pred(clothes, 1).
-body_pred(cup/glass/bottle, 1).
+body_pred(cup_glass_bottle, 1).
 body_pred(dish, 1).
 body_pred(door, 1).
 body_pred(doorknob, 1).
@@ -24,15 +24,15 @@ body_pred(laptop, 1).
 body_pred(light, 1).
 body_pred(medicine, 1).
 body_pred(mirror, 1).
-body_pred(paper/notebook, 1).
-body_pred(phone/camera, 1).
+body_pred(paper_notebook, 1).
+body_pred(phone_camera, 1).
 body_pred(picture, 1).
 body_pred(pillow, 1).
 body_pred(refrigerator, 1).
 body_pred(sandwich, 1).
 body_pred(shelf, 1).
 body_pred(shoe, 1).
-body_pred(sofa/couch, 1).
+body_pred(sofa_couch, 1).
 body_pred(table, 1).
 body_pred(television, 1).
 body_pred(towel, 1).
@@ -64,17 +64,22 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-12:35:45 Generating programs of size: 2
-12:35:45 Generating programs of size: 3
-12:35:47 ********************
-12:35:47 New best hypothesis:
-12:35:47 tp:4 fn:63 tn:192 fp:0 size:3 mdl:66
-12:35:47 pour_target(A):- on_the_side_of(B,A),chair(B).
-12:35:47 ********************
-12:35:49 Generating programs of size: 4
-12:40:12 Generating programs of size: 5
-14:16:09 TIMEOUT OF 6000 SECONDS EXCEEDED
+16:31:58 Generating programs of size: 2
+16:31:59 Generating programs of size: 3
+16:31:59 ********************
+16:31:59 New best hypothesis:
+16:31:59 tp:38 fn:22 tn:218 fp:23 size:3 mdl:48
+16:31:59 pour_target(A):- holding(A,B),cup_glass_bottle(B).
+16:31:59 ********************
+16:32:00 ********************
+16:32:00 New best hypothesis:
+16:32:00 tp:58 fn:2 tn:205 fp:36 size:3 mdl:41
+16:32:00 pour_target(A):- in_front_of(B,A),cup_glass_bottle(B).
+16:32:00 ********************
+16:32:03 Generating programs of size: 4
+16:35:40 Generating programs of size: 5
+PROCESS DID NOT FINISH, MANUALLY EVALUATING RULE
 ********** SOLUTION **********
-Precision:1.00 Recall:0.06 TP:4 FN:63 TN:192 FP:0 Size:3 MDL:66
-pour_target(A):- on_the_side_of(B,A),chair(B).
+Precision:0.06 Recall:0.95 TP:56 FN:3 TN:6542 FP:909 Size:3 MDL:915
+pour_target(A):- in_front_of(B,A),cup_glass_bottle(B).
 ******************************

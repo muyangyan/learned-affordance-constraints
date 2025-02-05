@@ -10,9 +10,9 @@ body_pred(book, 1).
 body_pred(box, 1).
 body_pred(broom, 1).
 body_pred(chair, 1).
-body_pred(closet/cabinet, 1).
+body_pred(closet_cabinet, 1).
 body_pred(clothes, 1).
-body_pred(cup/glass/bottle, 1).
+body_pred(cup_glass_bottle, 1).
 body_pred(dish, 1).
 body_pred(door, 1).
 body_pred(doorknob, 1).
@@ -24,15 +24,15 @@ body_pred(laptop, 1).
 body_pred(light, 1).
 body_pred(medicine, 1).
 body_pred(mirror, 1).
-body_pred(paper/notebook, 1).
-body_pred(phone/camera, 1).
+body_pred(paper_notebook, 1).
+body_pred(phone_camera, 1).
 body_pred(picture, 1).
 body_pred(pillow, 1).
 body_pred(refrigerator, 1).
 body_pred(sandwich, 1).
 body_pred(shelf, 1).
 body_pred(shoe, 1).
-body_pred(sofa/couch, 1).
+body_pred(sofa_couch, 1).
 body_pred(table, 1).
 body_pred(television, 1).
 body_pred(towel, 1).
@@ -64,65 +64,49 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-12:35:45 Generating programs of size: 2
-12:35:45 Generating programs of size: 3
-12:35:45 ********************
-12:35:45 New best hypothesis:
-12:35:45 tp:10 fn:321 tn:1171 fp:6 size:3 mdl:330
-12:35:45 watch_target(A):- looking_at(A,B),above(B,A).
-12:35:45 ********************
-12:35:45 ********************
-12:35:45 New best hypothesis:
-12:35:45 tp:40 fn:291 tn:1164 fp:13 size:3 mdl:307
-12:35:45 watch_target(A):- looking_at(A,B),mirror(B).
-12:35:45 ********************
-12:35:46 ********************
-12:35:46 New best hypothesis:
-12:35:46 tp:46 fn:285 tn:1173 fp:4 size:3 mdl:292
-12:35:46 watch_target(A):- looking_at(A,B),window(B).
-12:35:46 ********************
-12:36:00 Generating programs of size: 4
-12:36:10 ********************
-12:36:10 New best hypothesis:
-12:36:10 tp:271 fn:60 tn:1050 fp:127 size:27 mdl:214
-12:36:10 watch_target(A):- looking_at(A,B),window(B).
-12:36:10 watch_target(A):- writing_on(A,B),touching(A,B).
-12:36:10 watch_target(A):- window(B),not_looking_at(A,B).
-12:36:10 watch_target(A):- mirror(B),not_looking_at(A,B).
-12:36:10 watch_target(A):- touching(A,B),laptop(B).
-12:36:10 watch_target(A):- book(B),holding(A,B).
-12:36:10 watch_target(A):- picture(B),in_front_of(B,A).
-12:36:10 watch_target(A):- mirror(B),in_front_of(B,A).
-12:36:10 watch_target(A):- not_contacting(A,B),television(B).
-12:36:10 ********************
-12:50:11 Generating programs of size: 5
-12:50:21 ********************
-12:50:21 New best hypothesis:
-12:50:21 tp:262 fn:69 tn:1074 fp:103 size:36 mdl:208
-12:50:21 watch_target(A):- looking_at(A,B),window(B).
-12:50:21 watch_target(A):- writing_on(A,B),touching(A,B).
-12:50:21 watch_target(A):- window(B),not_looking_at(A,B).
-12:50:21 watch_target(A):- mirror(B),not_looking_at(A,B).
-12:50:21 watch_target(A):- book(B),unsure(A,B).
-12:50:21 watch_target(A):- picture(B),in_front_of(B,A).
-12:50:21 watch_target(A):- mirror(B),in_front_of(B,A).
-12:50:21 watch_target(A):- not_contacting(A,B),television(B).
-12:50:21 watch_target(A):- looking_at(A,B),touching(A,B),laptop(B).
-12:50:21 watch_target(A):- book(B),looking_at(A,B),holding(A,B).
-12:50:21 watch_target(A):- book(B),not_looking_at(A,B),touching(A,B).
-12:50:21 ********************
-14:16:10 TIMEOUT OF 6000 SECONDS EXCEEDED
+16:31:58 Generating programs of size: 2
+16:31:59 Generating programs of size: 3
+16:31:59 ********************
+16:31:59 New best hypothesis:
+16:31:59 tp:85 fn:247 tn:1238 fp:55 size:3 mdl:305
+16:31:59 watch_target(A):- book(B),holding(A,B).
+16:31:59 ********************
+16:32:06 Generating programs of size: 4
+16:32:16 ********************
+16:32:16 New best hypothesis:
+16:32:16 tp:248 fn:84 tn:1167 fp:126 size:27 mdl:237
+16:32:16 watch_target(A):- book(B),holding(A,B).
+16:32:16 watch_target(A):- picture(B),looking_at(A,B).
+16:32:16 watch_target(A):- window(B),looking_at(A,B).
+16:32:16 watch_target(A):- television(B),looking_at(A,B).
+16:32:16 watch_target(A):- not_looking_at(A,B),television(B).
+16:32:16 watch_target(A):- not_looking_at(A,B),window(B).
+16:32:16 watch_target(A):- touching(A,B),writing_on(A,B).
+16:32:16 watch_target(A):- on_the_side_of(B,A),mirror(B).
+16:32:16 watch_target(A):- mirror(B),in_front_of(B,A).
+16:32:16 ********************
+16:51:21 Generating programs of size: 5
+16:51:32 ********************
+16:51:32 New best hypothesis:
+16:51:32 tp:246 fn:86 tn:1169 fp:124 size:25 mdl:235
+16:51:32 watch_target(A):- picture(B),looking_at(A,B).
+16:51:32 watch_target(A):- window(B),looking_at(A,B).
+16:51:32 watch_target(A):- not_looking_at(A,B),window(B).
+16:51:32 watch_target(A):- television(B),not_contacting(A,B).
+16:51:32 watch_target(A):- touching(A,B),writing_on(A,B).
+16:51:32 watch_target(A):- on_the_side_of(B,A),mirror(B).
+16:51:32 watch_target(A):- mirror(B),in_front_of(B,A).
+16:51:32 watch_target(A):- book(B),holding(A,B),in_front_of(B,A).
+16:51:32 ********************
+18:12:21 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.72 Recall:0.79 TP:262 FN:69 TN:1074 FP:103 Size:36 MDL:208
-watch_target(A):- looking_at(A,B),window(B).
-watch_target(A):- writing_on(A,B),touching(A,B).
-watch_target(A):- window(B),not_looking_at(A,B).
-watch_target(A):- mirror(B),not_looking_at(A,B).
-watch_target(A):- book(B),unsure(A,B).
-watch_target(A):- picture(B),in_front_of(B,A).
+Precision:0.66 Recall:0.74 TP:246 FN:86 TN:1169 FP:124 Size:25 MDL:235
+watch_target(A):- picture(B),looking_at(A,B).
+watch_target(A):- window(B),looking_at(A,B).
+watch_target(A):- not_looking_at(A,B),window(B).
+watch_target(A):- television(B),not_contacting(A,B).
+watch_target(A):- touching(A,B),writing_on(A,B).
+watch_target(A):- on_the_side_of(B,A),mirror(B).
 watch_target(A):- mirror(B),in_front_of(B,A).
-watch_target(A):- not_contacting(A,B),television(B).
-watch_target(A):- looking_at(A,B),touching(A,B),laptop(B).
-watch_target(A):- book(B),looking_at(A,B),holding(A,B).
-watch_target(A):- book(B),not_looking_at(A,B),touching(A,B).
+watch_target(A):- book(B),holding(A,B),in_front_of(B,A).
 ******************************

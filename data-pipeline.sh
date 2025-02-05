@@ -10,7 +10,7 @@ DATASET="ag"
 TRAIN_SPLIT_RATIO=0.6
 VAL_SPLIT_RATIO=0.2
 RULES_NAME="debug_rules"
-TIMEOUT=60
+TIMEOUT=6000
 MDL_WEIGHT=1
 
 echo "Starting data pipeline==================="
@@ -36,7 +36,7 @@ fi
 # Generates the prolog background knowledge, biases, and examples for each verb
 if [ "$START_PART" -le 2 ]; then
     echo "Generating background files for ILP==================="
-    python prolog/prolog_generation.py --train --val --test --root $ROOT --subset_file $SUBSET_FILE --verb_whitelist "${VERBS[@]}"
+    python prolog/prolog_generation.py --train --val --test --root $ROOT --subset_file $SUBSET_FILE --verb-whitelist "${VERBS[@]}"
 fi
 
 

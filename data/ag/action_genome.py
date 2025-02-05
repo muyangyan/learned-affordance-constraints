@@ -128,8 +128,8 @@ class AG(Dataset):
 
             objects = [obj for obj in self.object_annotations[id] if obj['visible']] # visible objects only
 
-            # unpack dict into nodes and edges
-            nodes = ["person"] + [obj['class'] for obj in objects]
+            # unpack dict into nodes and edges, replace '/' with '_' in object classes for prolog compatibility
+            nodes = ["person"] + [obj['class'].replace('/', '_') for obj in objects]
             nodes = [self.object_classes.index(node) for node in nodes]
 
             edges = []

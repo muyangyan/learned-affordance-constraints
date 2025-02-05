@@ -10,9 +10,9 @@ body_pred(book, 1).
 body_pred(box, 1).
 body_pred(broom, 1).
 body_pred(chair, 1).
-body_pred(closet/cabinet, 1).
+body_pred(closet_cabinet, 1).
 body_pred(clothes, 1).
-body_pred(cup/glass/bottle, 1).
+body_pred(cup_glass_bottle, 1).
 body_pred(dish, 1).
 body_pred(door, 1).
 body_pred(doorknob, 1).
@@ -24,15 +24,15 @@ body_pred(laptop, 1).
 body_pred(light, 1).
 body_pred(medicine, 1).
 body_pred(mirror, 1).
-body_pred(paper/notebook, 1).
-body_pred(phone/camera, 1).
+body_pred(paper_notebook, 1).
+body_pred(phone_camera, 1).
 body_pred(picture, 1).
 body_pred(pillow, 1).
 body_pred(refrigerator, 1).
 body_pred(sandwich, 1).
 body_pred(shelf, 1).
 body_pred(shoe, 1).
-body_pred(sofa/couch, 1).
+body_pred(sofa_couch, 1).
 body_pred(table, 1).
 body_pred(television, 1).
 body_pred(towel, 1).
@@ -64,63 +64,32 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-12:35:45 Generating programs of size: 2
-12:35:45 Generating programs of size: 3
-12:35:46 ********************
-12:35:46 New best hypothesis:
-12:35:46 tp:80 fn:175 tn:914 fp:61 size:3 mdl:239
-12:35:46 eat_target(A):- food(B),looking_at(A,B).
-12:35:46 ********************
-12:35:46 ********************
-12:35:46 New best hypothesis:
-12:35:46 tp:28 fn:227 tn:971 fp:4 size:3 mdl:234
-12:35:46 eat_target(A):- medicine(B),looking_at(A,B).
-12:35:46 ********************
-12:35:46 ********************
-12:35:46 New best hypothesis:
-12:35:46 tp:56 fn:199 tn:964 fp:11 size:3 mdl:213
-12:35:46 eat_target(A):- sandwich(B),looking_at(A,B).
-12:35:46 ********************
-12:35:48 ********************
-12:35:48 New best hypothesis:
-12:35:48 tp:89 fn:166 tn:949 fp:26 size:3 mdl:195
-12:35:48 eat_target(A):- sandwich(B),holding(A,B).
-12:35:48 ********************
-12:35:48 ********************
-12:35:48 New best hypothesis:
-12:35:48 tp:189 fn:66 tn:876 fp:99 size:3 mdl:168
-12:35:48 eat_target(A):- food(B),holding(A,B).
-12:35:48 ********************
-12:35:58 Generating programs of size: 4
-12:36:04 ********************
-12:36:04 New best hypothesis:
-12:36:04 tp:234 fn:21 tn:868 fp:107 size:15 mdl:143
-12:36:04 eat_target(A):- sandwich(B),looking_at(A,B).
-12:36:04 eat_target(A):- medicine(B),holding(A,B).
-12:36:04 eat_target(A):- food(B),holding(A,B).
-12:36:04 eat_target(A):- not_contacting(A,B),medicine(B).
-12:36:04 eat_target(A):- sandwich(B),unsure(A,B).
-12:36:04 ********************
-12:51:26 Generating programs of size: 5
-12:51:37 ********************
-12:51:37 New best hypothesis:
-12:51:37 tp:208 fn:47 tn:907 fp:68 size:24 mdl:139
-12:51:37 eat_target(A):- sandwich(B),looking_at(A,B).
-12:51:37 eat_target(A):- medicine(B),in_front_of(B,A).
-12:51:37 eat_target(A):- medicine(B),on_the_side_of(B,A).
-12:51:37 eat_target(A):- sandwich(B),unsure(A,B).
-12:51:37 eat_target(A):- food(B),holding(A,B),not_looking_at(A,B).
-12:51:37 eat_target(A):- sandwich(B),holding(A,B),in_front_of(B,A).
-12:51:37 eat_target(A):- food(B),holding(A,B),unsure(A,B).
-12:51:37 ********************
-14:16:11 TIMEOUT OF 6000 SECONDS EXCEEDED
+16:31:58 Generating programs of size: 2
+16:31:59 Generating programs of size: 3
+16:31:59 ********************
+16:31:59 New best hypothesis:
+16:31:59 tp:186 fn:73 tn:891 fp:93 size:3 mdl:169
+16:31:59 eat_target(A):- food(B),holding(A,B).
+16:31:59 ********************
+16:32:11 Generating programs of size: 4
+16:32:16 ********************
+16:32:16 New best hypothesis:
+16:32:16 tp:247 fn:12 tn:865 fp:119 size:18 mdl:149
+16:32:16 eat_target(A):- food(B),holding(A,B).
+16:32:16 eat_target(A):- medicine(B),holding(A,B).
+16:32:16 eat_target(A):- food(B),unsure(A,B).
+16:32:16 eat_target(A):- in_front_of(B,A),sandwich(B).
+16:32:16 eat_target(A):- medicine(B),not_contacting(A,B).
+16:32:16 eat_target(A):- not_contacting(A,B),sandwich(B).
+16:32:16 ********************
+16:55:10 Generating programs of size: 5
+18:11:57 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.75 Recall:0.82 TP:208 FN:47 TN:907 FP:68 Size:24 MDL:139
-eat_target(A):- sandwich(B),looking_at(A,B).
-eat_target(A):- medicine(B),in_front_of(B,A).
-eat_target(A):- medicine(B),on_the_side_of(B,A).
-eat_target(A):- sandwich(B),unsure(A,B).
-eat_target(A):- food(B),holding(A,B),not_looking_at(A,B).
-eat_target(A):- sandwich(B),holding(A,B),in_front_of(B,A).
-eat_target(A):- food(B),holding(A,B),unsure(A,B).
+Precision:0.67 Recall:0.95 TP:247 FN:12 TN:865 FP:119 Size:18 MDL:149
+eat_target(A):- food(B),holding(A,B).
+eat_target(A):- medicine(B),holding(A,B).
+eat_target(A):- food(B),unsure(A,B).
+eat_target(A):- in_front_of(B,A),sandwich(B).
+eat_target(A):- medicine(B),not_contacting(A,B).
+eat_target(A):- not_contacting(A,B),sandwich(B).
 ******************************

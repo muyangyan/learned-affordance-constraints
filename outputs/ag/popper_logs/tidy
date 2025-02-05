@@ -10,9 +10,9 @@ body_pred(book, 1).
 body_pred(box, 1).
 body_pred(broom, 1).
 body_pred(chair, 1).
-body_pred(closet/cabinet, 1).
+body_pred(closet_cabinet, 1).
 body_pred(clothes, 1).
-body_pred(cup/glass/bottle, 1).
+body_pred(cup_glass_bottle, 1).
 body_pred(dish, 1).
 body_pred(door, 1).
 body_pred(doorknob, 1).
@@ -24,15 +24,15 @@ body_pred(laptop, 1).
 body_pred(light, 1).
 body_pred(medicine, 1).
 body_pred(mirror, 1).
-body_pred(paper/notebook, 1).
-body_pred(phone/camera, 1).
+body_pred(paper_notebook, 1).
+body_pred(phone_camera, 1).
 body_pred(picture, 1).
 body_pred(pillow, 1).
 body_pred(refrigerator, 1).
 body_pred(sandwich, 1).
 body_pred(shelf, 1).
 body_pred(shoe, 1).
-body_pred(sofa/couch, 1).
+body_pred(sofa_couch, 1).
 body_pred(table, 1).
 body_pred(television, 1).
 body_pred(towel, 1).
@@ -64,48 +64,61 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-12:35:45 Generating programs of size: 2
-12:35:45 Generating programs of size: 3
-12:35:45 ********************
-12:35:45 New best hypothesis:
-12:35:45 tp:46 fn:284 tn:969 fp:9 size:3 mdl:296
-12:35:45 tidy_target(A):- looking_at(A,B),standing_on(A,B).
-12:35:45 ********************
-12:35:47 ********************
-12:35:47 New best hypothesis:
-12:35:47 tp:91 fn:239 tn:956 fp:22 size:3 mdl:264
-12:35:47 tidy_target(A):- standing_on(A,B),beneath(B,A).
-12:35:47 ********************
-12:35:50 ********************
-12:35:50 New best hypothesis:
-12:35:50 tp:92 fn:238 tn:958 fp:20 size:3 mdl:261
-12:35:50 tidy_target(A):- standing_on(A,B),floor(B).
-12:35:50 ********************
-12:36:00 Generating programs of size: 4
-12:36:11 ********************
-12:36:11 New best hypothesis:
-12:36:11 tp:181 fn:149 tn:927 fp:51 size:27 mdl:227
-12:36:11 tidy_target(A):- looking_at(A,B),broom(B).
-12:36:11 tidy_target(A):- touching(A,B),shelf(B).
-12:36:11 tidy_target(A):- clothes(B),touching(A,B).
-12:36:11 tidy_target(A):- medicine(B),touching(A,B).
-12:36:11 tidy_target(A):- unsure(A,B),broom(B).
-12:36:11 tidy_target(A):- blanket(B),standing_on(A,B).
-12:36:11 tidy_target(A):- standing_on(A,B),floor(B).
-12:36:11 tidy_target(A):- blanket(B),behind(B,A).
-12:36:11 tidy_target(A):- not_contacting(A,B),shelf(B).
-12:36:11 ********************
-12:54:03 Generating programs of size: 5
-14:18:36 TIMEOUT OF 6000 SECONDS EXCEEDED
+16:31:58 Generating programs of size: 2
+16:31:59 Generating programs of size: 3
+16:31:59 ********************
+16:31:59 New best hypothesis:
+16:31:59 tp:53 fn:279 tn:1084 fp:13 size:3 mdl:295
+16:31:59 tidy_target(A):- broom(B),holding(A,B).
+16:31:59 ********************
+16:32:01 ********************
+16:32:01 New best hypothesis:
+16:32:01 tp:87 fn:245 tn:1067 fp:30 size:3 mdl:278
+16:32:01 tidy_target(A):- standing_on(A,B),beneath(B,A).
+16:32:01 ********************
+16:32:02 ********************
+16:32:02 New best hypothesis:
+16:32:02 tp:88 fn:244 tn:1068 fp:29 size:3 mdl:276
+16:32:02 tidy_target(A):- floor(B),standing_on(A,B).
+16:32:02 ********************
+16:32:07 Generating programs of size: 4
+16:32:17 ********************
+16:32:17 New best hypothesis:
+16:32:17 tp:148 fn:184 tn:1049 fp:48 size:21 mdl:253
+16:32:17 tidy_target(A):- broom(B),holding(A,B).
+16:32:17 tidy_target(A):- standing_on(A,B),looking_at(A,B).
+16:32:17 tidy_target(A):- behind(B,A),in_front_of(B,A).
+16:32:17 tidy_target(A):- standing_on(A,B),in_front_of(B,A).
+16:32:17 tidy_target(A):- in_front_of(B,A),shelf(B).
+16:32:17 tidy_target(A):- medicine(B),touching(A,B).
+16:32:17 tidy_target(A):- in(B,A),closet_cabinet(B).
+16:32:17 ********************
+16:45:05 Generating programs of size: 5
+16:45:15 ********************
+16:45:15 New best hypothesis:
+16:45:15 tp:189 fn:143 tn:1027 fp:70 size:34 mdl:247
+16:45:15 tidy_target(A):- broom(B),holding(A,B).
+16:45:15 tidy_target(A):- standing_on(A,B),looking_at(A,B).
+16:45:15 tidy_target(A):- behind(B,A),in_front_of(B,A).
+16:45:15 tidy_target(A):- standing_on(A,B),in_front_of(B,A).
+16:45:15 tidy_target(A):- medicine(B),touching(A,B).
+16:45:15 tidy_target(A):- blanket(B),behind(B,A).
+16:45:15 tidy_target(A):- blanket(B),looking_at(A,B),holding(A,B).
+16:45:15 tidy_target(A):- not_contacting(A,B),in_front_of(B,A),shelf(B).
+16:45:15 tidy_target(A):- not_contacting(A,B),behind(B,A),clothes(B).
+16:45:15 tidy_target(A):- not_contacting(A,B),closet_cabinet(B),looking_at(A,B).
+16:45:15 ********************
+18:15:52 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.78 Recall:0.55 TP:181 FN:149 TN:927 FP:51 Size:27 MDL:227
-tidy_target(A):- looking_at(A,B),broom(B).
-tidy_target(A):- touching(A,B),shelf(B).
-tidy_target(A):- clothes(B),touching(A,B).
+Precision:0.73 Recall:0.57 TP:189 FN:143 TN:1027 FP:70 Size:34 MDL:247
+tidy_target(A):- broom(B),holding(A,B).
+tidy_target(A):- standing_on(A,B),looking_at(A,B).
+tidy_target(A):- behind(B,A),in_front_of(B,A).
+tidy_target(A):- standing_on(A,B),in_front_of(B,A).
 tidy_target(A):- medicine(B),touching(A,B).
-tidy_target(A):- unsure(A,B),broom(B).
-tidy_target(A):- blanket(B),standing_on(A,B).
-tidy_target(A):- standing_on(A,B),floor(B).
 tidy_target(A):- blanket(B),behind(B,A).
-tidy_target(A):- not_contacting(A,B),shelf(B).
+tidy_target(A):- blanket(B),looking_at(A,B),holding(A,B).
+tidy_target(A):- not_contacting(A,B),in_front_of(B,A),shelf(B).
+tidy_target(A):- not_contacting(A,B),behind(B,A),clothes(B).
+tidy_target(A):- not_contacting(A,B),closet_cabinet(B),looking_at(A,B).
 ******************************
