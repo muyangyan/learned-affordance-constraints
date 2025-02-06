@@ -74,7 +74,7 @@ def remove_id_prefix(s):
 
 class AG(Dataset):
     
-    def __init__(self, root, threshold=1, fps=24, no_img=False, split=None, split_file='data/ag/split_train_val_test.json', subset_file=None, verb_whitelist=[]):
+    def __init__(self, root, threshold=1, fps=24, no_img=False, split=None, split_file='data/ag/split_train_val_test.json', subset_file=None, verb_whitelist=[], verb_prior_file='data/ag/verb_priors.json'):
         super().__init__()
         self.root = root
         self.threshold = threshold
@@ -169,8 +169,20 @@ class AG(Dataset):
 
         if subset_file is not None:
             subset.close()
-        self.verb_label_counts = np.resize(np.bincount(self.verb_label_counts), len(self.verb_classes))
-        self.verb_priors = self.verb_label_counts/len(self.data_list)
+
+        if split == 'train':
+            self.verb_label_counts = np.resize(np.bincount(self.verb_label_counts), len(self.verb_classes))
+            self.verb_priors = self.verb_label_counts/len(self.data_list)
+            with open(verb_prior_file, 'w') as f:
+                prior_dict = {'verbs': self.verb_classes, 'priors': list(self.verb_priors)}
+                json.dump(prior_dict, f)
+        elif split == None:
+            self.verb_label_counts = np.resize(np.bincount(self.verb_label_counts), len(self.verb_classes))
+            self.verb_priors = self.verb_label_counts/len(self.data_list)
+        else:
+            with open(verb_prior_file, 'r') as f:
+                prior_dict = json.load(f)
+                self.verb_priors = np.array(prior_dict['priors'])
 
         self.im_transform = T.Compose([
             T.Resize(size=(224, 224)),
@@ -197,10 +209,12 @@ class AG(Dataset):
 
         if self.constraints is not None:
             constraints = torch.tensor(self.constraints[index]).float()
+            truth_values = torch.tensor(self.truth_values[index]).float()
         else:
             constraints = None
+            truth_values = None
 
-        return full_id, image, scene_graph, action_class, constraints
+        return full_id, image, scene_graph, action_class, constraints, truth_values
 
     # Load all actions from the dataset
     def load_actions(self):

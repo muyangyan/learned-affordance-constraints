@@ -86,6 +86,7 @@ def apply_rules(rules_name, rules_folder, bk_file, test_size, targets,
 def test_routine(args, trainer, model, dataset, loader, split='val'):
     print('Without constraints---------------------')
     dataset.constraints = None
+    dataset.truth_values = None
     trainer.test(model, dataloaders=loader)
 
     print('With constraints---------------------')
@@ -168,15 +169,7 @@ def main(args):
         val_loader = DataLoader(val_set[0:1], batch_size=1, collate_fn=val_set.verb_pred_collate, shuffle=False)
         ids, imgs, sgs, verbs, constraints, out = trainer.predict(model, dataloaders=val_loader)
 
-        print(ids)
-        print(verbs)
-        print(constraints)
-        print(out)
-        pred_classes = torch.argmax(out, dim=1)
-        print(pred_classes)
 
-
-        return
 
     if args.val:
         if not args.train:

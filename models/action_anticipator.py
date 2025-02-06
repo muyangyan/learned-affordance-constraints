@@ -66,7 +66,7 @@ class ActionAnticipator(L.LightningModule):
             return self.model(img, sg)
     
     def training_step(self, batch, batch_idx):
-        ids, imgs, sgs, verbs, labels, constraints = batch
+        ids, imgs, sgs, verbs, labels, constraints, truth_values = batch
         out = self(imgs, sgs)
         
         loss = F.cross_entropy(out, labels, weight=self.weight)
@@ -79,7 +79,7 @@ class ActionAnticipator(L.LightningModule):
         return loss
 
     def validation_step(self, batch, batch_idx):
-        ids, imgs, sgs, verbs, labels, constraints = batch
+        ids, imgs, sgs, verbs, labels, constraints, truth_values = batch
         out = self(imgs, sgs)
         out, labels = torch.argmax(out, dim=1), torch.argmax(labels, dim=1)
         val_acc = self.val_accuracy(out, labels) 
@@ -156,19 +156,20 @@ class ActionAnticipator(L.LightningModule):
                     f.write(formatted + '\n')
         '''
     def predict_step(self, batch, batch_idx):
-        ids, imgs, sgs, verbs, labels, constraints = batch
+        ids, imgs, sgs, verbs, labels, constraints, truth_values = batch
         out = self(imgs, sgs)
         if constraints is not None:
             out = self.apply_constraints(out, constraints)
         return ids, imgs, sgs, verbs, constraints, out
     
-    def predict_single(self, img, sg, constraints):
+    def predict_single(self, img, sg, constraints, truth_values, explain=False):
         self.eval()
         with torch.no_grad():
             out = self(img, sg)
             if constraints is not None:
-                out = self.apply_constraints(out, constraints)
-        return out
+                constrained_out = self.apply_constraints(out, constraints)
+                return constrained_out, out, constraints
+            return out
     
     def apply_constraints(self, out, constraints):
         if self.constraint_mode is None:
