@@ -88,9 +88,8 @@ class ActionAnticipator(L.LightningModule):
             
     
     def test_step(self, batch, batch_idx):
-        ids, imgs, sgs, verbs, labels, constraints = batch
+        ids, imgs, sgs, verbs, labels, constraints, truth_values = batch
         out = self(imgs, sgs)
-        prior_dist = None
 
         label_classes = torch.argmax(labels, dim=1)
 
@@ -101,13 +100,7 @@ class ActionAnticipator(L.LightningModule):
             unconstrained_classes = torch.argmax(out, dim=1)
             not_blocked = torch.sum(labels * constraints, dim=1)
 
-            if self.constraint_mode == 'hard':
-                constrained_out = F.softmax(out * constraints, dim=1)
-            elif self.constraint_mode == 'soft':
-                #prior_dist = F.softmax(constraints, dim=1) 
-                constrained_out = F.softmax(out * constraints, dim=1) #TODO: why doesnt softmax work better
-            else:
-                raise ValueError(f'Invalid mode: {self.constraint_mode}')
+            constrained_out = self.apply_constraints(out, constraints)
             constrained_classes = torch.argmax(constrained_out, dim=1)
 
             c_before = (unconstrained_classes == label_classes)
@@ -136,12 +129,14 @@ class ActionAnticipator(L.LightningModule):
         self.log_dict(metrics_dict, on_step=False, on_epoch=True, prog_bar=True)
         
         # Update and log per-class metrics individually
+        '''
         per_class_metrics = self.test_metrics_per_class(out_classes, label_classes)
         for metric_name, values in per_class_metrics.items():
             # Log each class's metric separately
             for class_idx, value in enumerate(values):
                 self.log(f'{metric_name}_class_{class_idx}', value, 
                         on_step=False, on_epoch=True, prog_bar=False)
+        '''
 
         '''
         with open('out.txt', 'a') as f:
@@ -160,7 +155,30 @@ class ActionAnticipator(L.LightningModule):
                     formatted = np.array2string(c.cpu().numpy(), max_line_width=10000, precision=4, suppress_small=True)
                     f.write(formatted + '\n')
         '''
-
+    def predict_step(self, batch, batch_idx):
+        ids, imgs, sgs, verbs, labels, constraints = batch
+        out = self(imgs, sgs)
+        if constraints is not None:
+            out = self.apply_constraints(out, constraints)
+        return ids, imgs, sgs, verbs, constraints, out
+    
+    def predict_single(self, img, sg, constraints):
+        self.eval()
+        with torch.no_grad():
+            out = self(img, sg)
+            if constraints is not None:
+                out = self.apply_constraints(out, constraints)
+        return out
+    
+    def apply_constraints(self, out, constraints):
+        if self.constraint_mode is None:
+            raise ValueError(f'Constraint mode is not set')
+        if self.constraint_mode == 'hard':
+            return F.normalize(out * constraints, dim=1)
+        elif self.constraint_mode == 'soft':
+            return F.normalize(out * constraints, dim=1) #TODO: why doesnt softmax constraints work better
+        else:
+            raise ValueError(f'Invalid mode: {self.constraint_mode}')
 
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=self.lr)

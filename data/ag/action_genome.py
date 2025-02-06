@@ -172,6 +172,12 @@ class AG(Dataset):
         self.verb_label_counts = np.resize(np.bincount(self.verb_label_counts), len(self.verb_classes))
         self.verb_priors = self.verb_label_counts/len(self.data_list)
 
+        self.im_transform = T.Compose([
+            T.Resize(size=(224, 224)),
+            T.ToTensor(),
+            T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+        ])
+
     def __len__(self):
         return len(self.data_list)
 
@@ -384,7 +390,7 @@ class AG(Dataset):
         }
 
     def verb_pred_collate(self, batch):
-        ids, images, scene_graphs, actions, constraints = zip(*batch)
+        ids, images, scene_graphs, actions, constraints, truth_values = zip(*batch)
         sg_batch = Batch.from_data_list(scene_graphs, exclude_keys=['o'])
         
         verbs = torch.tensor([self.action_verb_obj_map[a][0] for a in actions])
@@ -393,20 +399,17 @@ class AG(Dataset):
         if self.no_img:
             resized_images = None
         else:
-            transform = T.Compose([
-                T.Resize(size=(224, 224)),
-                T.ToTensor(),
-                T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-            ])
-            resized_images = [transform(img) for img in images]
+            resized_images = [self.im_transform(img) for img in images]
             resized_images = torch.stack(resized_images)
         
         if self.constraints is None:
             constraints = None
+            truth_values = None
         else:
             constraints = torch.stack(constraints)
+            truth_values = torch.stack(truth_values)
 
-        return ids, resized_images, sg_batch, verbs, labels, constraints
+        return ids, resized_images, sg_batch, verbs, labels, constraints, truth_values
 
 import os
 import csv

@@ -1,5 +1,6 @@
 #!/bin/bash
 CHECKPOINT=$1
+DATA_ID=$2
 MODEL_TYPE=$(echo "$CHECKPOINT" | cut -d'/' -f3)
 
 if [[ ! "$MODEL_TYPE" =~ ^(rgcn|joint|vit)$ ]]; then
@@ -8,12 +9,13 @@ if [[ ! "$MODEL_TYPE" =~ ^(rgcn|joint|vit)$ ]]; then
 fi
 
 PYTHON_SCRIPT=aa.py
-ARGS="--val \
+ARGS="--predict \
     --model-type $MODEL_TYPE \
     --rules-name debug_rules \
     --checkpoint $CHECKPOINT \
     --recall-threshold 0.8 \
-    --mode soft"
+    --mode soft \
+    --data-id $DATA_ID"
 
 echo "Running script: $PYTHON_SCRIPT"
 echo "Arguments: $ARGS"

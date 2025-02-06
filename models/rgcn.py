@@ -30,17 +30,15 @@ class RGCN(torch.nn.Module):
         x = self.node_embedding(x)
 
         if edge_index.size()[0] != 2:
-            print("edge_index:", edge_index.shape)
-            print("edge_type:", edge_type.shape)
-            print("x:", x.shape)
-            print("batch:", batch.shape)
-        x = self.conv1(x, edge_index, edge_type)
-        x = F.relu(x)
-        x = self.conv2(x, edge_index, edge_type)
-        x = F.relu(x)
-        
-        # Global mean pooling
-        x = global_mean_pool(x, batch)
+            print('small graph, skipping conv layers')
+        else:
+            x = self.conv1(x, edge_index, edge_type)
+            x = F.relu(x)
+            x = self.conv2(x, edge_index, edge_type)
+            x = F.relu(x)
+
+            # Global mean pooling
+            x = global_mean_pool(x, batch)
 
         x = self.fc1(x)
         x = F.relu(x)

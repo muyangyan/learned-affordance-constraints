@@ -26,28 +26,30 @@ def apply_rule(satisfied, rule, mode, recall_threshold, prior):
     if rule_exists:
         recall = rule[1]['recall']
         precision = rule[1]['precision']
-
+    else:
+        recall = 1
+        precision = prior
     if mode == 'hard':
-        if satisfied:
+        if satisfied: #if rule was not found, always satisfied
             return 1
         else:
-            if not rule_exists or recall < recall_threshold:
+            if recall < recall_threshold:
                 return 1
+        return 0
     elif mode == 'soft':
-        if not rule_exists:
-            return prior # dont use rule
-        if satisfied:
+        #if not rule_exists:
+        #    return prior # dont use rule 
+        if satisfied: # if no rule was found, always satisfied, prec is prior
             return precision # rule satisfied, use precision as prior
-        else:
-            return (1-recall) * prior # rule not satisfied
+        return (1-recall) * prior # rule not satisfied
     else:
         raise ValueError(f'Invalid mode: {mode}')
-    return 0
 
 def apply_rules(rules_name, rules_folder, bk_file, test_size, targets, 
                mode='hard', recall_threshold=0.7, priors=None):
     print('Applying learned rules-----------------')
     preds = []
+    truths = []
 
     rules_file = os.path.join(rules_folder, f'{rules_name}.pl')
     rules_json = os.path.join(rules_folder, f'{rules_name}.json')
@@ -62,20 +64,24 @@ def apply_rules(rules_name, rules_folder, bk_file, test_size, targets,
 
     for i in range(test_size):
         pred = np.zeros(len(targets))
+        truth = np.zeros(len(targets))
         for j,v in enumerate(targets):
             q = Prolog.query(f'{v}_target(x{i}_0)')
             satisfied = False
             for q in q:
                 satisfied = True
                 break
-                        
+
             pred[j] = apply_rule(satisfied, rules[v], mode, recall_threshold, priors[j])
+            truth[j] = 1 if satisfied else 0
 
         if mode == 'hard':
             pred = pred.astype(int)
         preds.append(pred)
+        truths.append(truth)
     preds = np.stack(preds)
-    return preds
+    truths = np.stack(truths)
+    return preds, truths
     
 def test_routine(args, trainer, model, dataset, loader, split='val'):
     print('Without constraints---------------------')
@@ -83,7 +89,7 @@ def test_routine(args, trainer, model, dataset, loader, split='val'):
     trainer.test(model, dataloaders=loader)
 
     print('With constraints---------------------')
-    constraints = apply_rules(args.rules_name, args.rules_folder, 
+    constraints, truth_values = apply_rules(args.rules_name, args.rules_folder, 
         os.path.join(args.prolog_folder, f'{split}_bk.pl'),
         len(dataset), dataset.verb_classes,
         mode=args.mode,
@@ -91,6 +97,7 @@ def test_routine(args, trainer, model, dataset, loader, split='val'):
         priors=dataset.verb_priors)
 
     dataset.constraints = constraints
+    dataset.truth_values = truth_values
     model.constraint_mode = args.mode
     trainer.test(model, dataloaders=loader)
     print(f'Average number of feasible actions per instance: {constraints.sum(axis=1).mean():.2f}')
@@ -112,6 +119,7 @@ def test_routine(args, trainer, model, dataset, loader, split='val'):
 def main(args):
     #DATA=======================================
     print('ACTION ANTICIPATOR')
+
 
     # Initialize model and trainer
     if args.train:
@@ -155,6 +163,21 @@ def main(args):
         model = ActionAnticipator.load_from_checkpoint(args.checkpoint)
         trainer = Trainer(accelerator='gpu', devices=args.devices)
 
+    if args.predict:
+        val_set = AG(args.root, split='val', split_file=args.split_file, subset_file=args.subset_file, verb_whitelist=args.verb_whitelist)
+        val_loader = DataLoader(val_set[0:1], batch_size=1, collate_fn=val_set.verb_pred_collate, shuffle=False)
+        ids, imgs, sgs, verbs, constraints, out = trainer.predict(model, dataloaders=val_loader)
+
+        print(ids)
+        print(verbs)
+        print(constraints)
+        print(out)
+        pred_classes = torch.argmax(out, dim=1)
+        print(pred_classes)
+
+
+        return
+
     if args.val:
         if not args.train:
             val_set = AG(args.root, split='val', split_file=args.split_file, subset_file=args.subset_file, verb_whitelist=args.verb_whitelist)
@@ -190,7 +213,8 @@ if __name__ == '__main__':
     #task
     parser.add_argument('--train', action='store_true', help='Train the model')
     parser.add_argument('--val', action='store_true', help='Validate the model')
-    parser.add_argument('--test', action='store_true', help='Test the dataset')
+    parser.add_argument('--test', action='store_true', help='Test the model')
+    parser.add_argument('--predict', action='store_true', help='Predict on a certain datapoint')
     parser.add_argument('--checkpoint', type=str, default=None, help='Checkpoint file to load')
 
     #rules
@@ -200,9 +224,9 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    if not args.train and not args.test and not args.val:
-        parser.error('At least one of --train or --test or --val must be specified')
-    if args.train and (args.test or args.val) and len(args.devices) > 1:
+    if not args.train and not args.test and not args.val and not args.predict:
+        parser.error('At least one of --train or --test or --val or --predict must be specified')
+    if args.train and (args.test or args.val or args.predict) and len(args.devices) > 1:
         parser.error('Testing on multiple devices is not supported')
     
     if os.path.exists(args.verb_whitelist):
