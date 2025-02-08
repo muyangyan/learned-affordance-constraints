@@ -22,6 +22,7 @@ class ActionAnticipator(L.LightningModule):
         self.model_type = model_type
         self.constraint_mode = None # hard, soft
         self.lr = lr
+        self.constraint_weight = 1
         rgcn_params, vit_hidden_dim, num_classes = model_params 
         if model_type == 'joint':
             self.model = JointModel(rgcn_params, vit_hidden_dim, num_classes)
@@ -100,7 +101,7 @@ class ActionAnticipator(L.LightningModule):
             unconstrained_classes = torch.argmax(out, dim=1)
             not_blocked = torch.sum(labels * constraints, dim=1)
 
-            constrained_out = self.apply_constraints(out, constraints)
+            constrained_out = self.apply_constraints(out, constraints, weight=self.constraint_weight)
             constrained_classes = torch.argmax(constrained_out, dim=1)
 
             c_before = (unconstrained_classes == label_classes)
@@ -171,13 +172,13 @@ class ActionAnticipator(L.LightningModule):
                 return constrained_out, out, constraints
             return out
     
-    def apply_constraints(self, out, constraints):
+    def apply_constraints(self, out, constraints, weight=1.0):
         if self.constraint_mode is None:
             raise ValueError(f'Constraint mode is not set')
         if self.constraint_mode == 'hard':
             return F.normalize(out * constraints, dim=1)
         elif self.constraint_mode == 'soft':
-            return F.normalize(out * constraints, dim=1) #TODO: why doesnt softmax constraints work better
+            return F.normalize(out * (constraints ** weight), dim=1) #TODO: why doesnt softmax constraints work better
         else:
             raise ValueError(f'Invalid mode: {self.constraint_mode}')
 

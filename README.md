@@ -33,14 +33,11 @@ it should work at the frame level as well as the video level.
 
 
 
+# Testing
 
 
 # TODO:
-
-current rules are learned from the whole dataset, and did not have proper causal masking
-rules need to be re-learned from new train split with proper causal masking
-
-test and val bks have been generated anyway to get greedy results
+add new constraint mode to use rules better
 
 
 

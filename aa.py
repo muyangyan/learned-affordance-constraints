@@ -83,7 +83,7 @@ def apply_rules(rules_name, rules_folder, bk_file, test_size, targets,
     truths = np.stack(truths)
     return preds, truths
     
-def test_routine(args, trainer, model, dataset, loader, split='val'):
+def test_routine(args, trainer, model, dataset, loader, split='val', constraint_weight=1):
     print('Without constraints---------------------')
     dataset.constraints = None
     dataset.truth_values = None
@@ -100,6 +100,7 @@ def test_routine(args, trainer, model, dataset, loader, split='val'):
     dataset.constraints = constraints
     dataset.truth_values = truth_values
     model.constraint_mode = args.mode
+    model.constraint_weight = constraint_weight
     trainer.test(model, dataloaders=loader)
     print(f'Average number of feasible actions per instance: {constraints.sum(axis=1).mean():.2f}')
     print(f'Correct to wrong: {np.sum(model.c_w)}')
@@ -175,12 +176,12 @@ def main(args):
         if not args.train:
             val_set = AG(args.root, split='val', split_file=args.split_file, subset_file=args.subset_file, verb_whitelist=args.verb_whitelist)
             val_loader = DataLoader(val_set, batch_size=128, collate_fn=val_set.verb_pred_collate, num_workers=16, shuffle=False)
-        test_routine(args, trainer, model, val_set, val_loader, split='val')
+        test_routine(args, trainer, model, val_set, val_loader, split='val', constraint_weight=args.constraint_weight)
 
     if args.test:
         test_set = AG(args.root, split='test', split_file=args.split_file, subset_file=args.subset_file, verb_whitelist=args.verb_whitelist)
         test_loader = DataLoader(test_set, batch_size=128, collate_fn=test_set.verb_pred_collate, num_workers=16, shuffle=False)
-        test_routine(args, trainer, model, test_set, test_loader, split='test')
+        test_routine(args, trainer, model, test_set, test_loader, split='test', constraint_weight=args.constraint_weight)
 
 
 
@@ -214,6 +215,7 @@ if __name__ == '__main__':
     parser.add_argument('--rules-name', type=str, default='rules_learned', help='Name of the rules file')
     parser.add_argument('--mode', type=str, default='hard', choices=['hard', 'soft'], help='Mode to use for testing')
     parser.add_argument('--recall-threshold', type=float, default=0.7, help='Recall threshold')
+    parser.add_argument('--constraint-weight', type=float, default=1, help='Constraint weight')
 
     args = parser.parse_args()
 

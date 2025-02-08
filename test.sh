@@ -13,7 +13,8 @@ ARGS="--val \
     --rules-name debug_rules \
     --checkpoint $CHECKPOINT \
     --recall-threshold 0.8 \
-    --mode soft"
+    --mode soft \
+    --constraint-weight 20"
 
 echo "Running script: $PYTHON_SCRIPT"
 echo "Arguments: $ARGS"
