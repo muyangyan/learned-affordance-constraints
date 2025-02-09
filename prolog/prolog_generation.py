@@ -6,15 +6,12 @@ import random
 import numpy as np
 import warnings
 
+from util.config_utils import load_yaml
+
 warnings.filterwarnings("ignore")
 
 from data.ag.action_genome import AG
 from data.toy.toy_dataset import ToyDataset
-
-from torch.utils.data import DataLoader
-
-from models.action_anticipator import ActionAnticipator
-from pytorch_lightning import Trainer
 
 
 '''
@@ -157,11 +154,16 @@ class PrologData:
 def exp_curve(b,x):
     return 1-np.exp(-b*x)
 
-def main(args):
+def main(config, args):
 
-    root = args.root
-    subset_file = args.subset_file
-    verb_whitelist = args.verb_whitelist
+    root = config.data_root
+    subset_file = config.subset_file
+    verb_whitelist = config.verb_whitelist
+    if type(verb_whitelist) == str and os.path.exists(verb_whitelist):
+        with open(verb_whitelist, 'r') as f:
+            verb_whitelist = [line for line in f.read().splitlines() if line and not line.startswith('#')]
+    else:
+        raise ValueError('Invalid verb whitelist')
 
     if args.train:
         train_ag = AG(root, no_img=True, split='train', subset_file=subset_file, verb_whitelist=verb_whitelist)
@@ -170,18 +172,6 @@ def main(args):
 
         train_pd.write_bk()
         train_pd.init_general_bias()
-
-        '''
-        if args.checkpoint is not None: #TODO: NOT DOING THIS FOR NOW
-            #use trained model to generate negatives
-            print(f'Generating negatives with trained model at {args.checkpoint}')
-            train_ag.constraints = None
-            train_loader = DataLoader(train_ag, batch_size=128, collate_fn=train_ag.verb_pred_collate, num_workers=16, shuffle=False)
-            lightning_model = ActionAnticipator.load_from_checkpoint(args.checkpoint)
-            trainer = Trainer(accelerator='gpu', devices=args.devices)
-            trainer.test(lightning_model, dataloaders=train_loader)
-            #TODO: get the predictions and use in write verb
-        '''
 
         for verb_idx, verb_name in enumerate(train_ag.verb_classes):
             ratio = train_ag.verb_priors[verb_idx]
@@ -203,20 +193,13 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('--config', type=str, default='configs/ag.yaml', help='Path to config file')
     parser.add_argument('--train', action='store_true', help='Generate training data')
     parser.add_argument('--val', action='store_true', help='Generate validation data') 
     parser.add_argument('--test', action='store_true', help='Generate test data')
-    parser.add_argument('--root', type=str, default='/data/Datasets/ag/', help='Root directory')
-    parser.add_argument('--subset_file', type=str, default='data/ag/subset_shelve', help='Subset file')
-    parser.add_argument('--verb-whitelist', nargs='+', type=str, default='data/ag/verb_whitelist.txt', help='File containing verb whitelist')
+
     args = parser.parse_args()
 
-    if not (args.train or args.val or args.test):
-        print("Please specify at least one of --train, --val, or --test")
-        exit(1)
+    config = load_yaml(args.config)
 
-    if type(args.verb_whitelist) == str and os.path.exists(args.verb_whitelist):
-        with open(args.verb_whitelist, 'r') as f:
-            args.verb_whitelist = [line for line in f.read().splitlines() if line and not line.startswith('#')]
-
-    main(args)
+    main(config, args)

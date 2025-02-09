@@ -2,6 +2,8 @@ import os
 import json
 import argparse
 
+from util.config_utils import load_yaml
+
 def parse_metrics(line):
     metrics = {}
     for metric in line.split(' '):
@@ -67,10 +69,9 @@ def write_rules(outputs_folder, rules_name, weight, timeout):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', type=str, required=True, help='Dataset name')
-    parser.add_argument('--name', type=str, required=True, help='Split name')
-    parser.add_argument('--weight', type=int, default=10, help='Weight')
-    parser.add_argument('--timeout', type=int, default=600, help='Timeout')
+    parser.add_argument('--config', type=str, default='configs/ag.yaml', help='Path to config file')
     args = parser.parse_args()
 
-    write_rules('outputs/' + args.dataset, args.name, args.weight, args.timeout)
+    config = load_yaml(args.config)
+
+    write_rules(config.rules_folder, config.rules_name, config.fn_weight, config.ilp_timeout)

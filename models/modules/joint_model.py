@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from models.rgcn import RGCN
-from models.vit import ViT
+from models.modules.rgcn import RGCN
+from models.modules.vit import ViT
 
 class JointModel(nn.Module):
     def __init__(self, rgcn_params, vit_hidden_dim, num_classes):

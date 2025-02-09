@@ -11,7 +11,7 @@ warnings.filterwarnings("ignore")
 
 from data.ag.action_genome import AG
 from util.graph_utils import check_edge_exists
-
+from util.config_utils import load_yaml
 # Generate subset, applying heuristics to filter out invalid examples
 def generate_subset(ag, subset_dict):
     absent_count = 0
@@ -94,21 +94,19 @@ def create_train_val_split(root, data_path, train_split_ratio=0.6, val_split_rat
     with open(os.path.join(data_path, 'split_train_val_test.json'), 'w') as f:
         json.dump(split_dict, f)
 
+def main(config):
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--train_split_ratio', type=float, default=0.6)
-    parser.add_argument('--val_split_ratio', type=float, default=0.2)
-    parser.add_argument('--root', type=str, default='/data/Datasets/ag/')
-    parser.add_argument('--subset_file', type=str, default='data/ag/subset_shelve')
-    parser.add_argument('--verb_whitelist', nargs='+')
-    args = parser.parse_args()
+    root = config.data_root
+    subset_file = config.subset_file
+    verb_whitelist = config.verb_whitelist
+    train_split_ratio = config.train_split_ratio
+    val_split_ratio = config.val_split_ratio
 
-    root = args.root
-    subset_file = args.subset_file
-    train_split_ratio = args.train_split_ratio
-    val_split_ratio = args.val_split_ratio
-    verb_whitelist = args.verb_whitelist
+    if type(verb_whitelist) == str and os.path.exists(verb_whitelist):
+        with open(verb_whitelist, 'r') as f:
+            verb_whitelist = [line for line in f.read().splitlines() if line and not line.startswith('#')]
+    else:
+        raise ValueError('Invalid verb whitelist')
 
     ag = AG(root, split=None, subset_file=None, verb_whitelist=verb_whitelist) #view the full dataset
 
@@ -118,3 +116,11 @@ if __name__ == '__main__':
 
     data_path = '/'.join(subset_file.split('/')[:-1]) #chop off the filename
     create_train_val_split(root, data_path, train_split_ratio, val_split_ratio)
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--config', type=str, default='configs/ag.yaml', help='Path to config file')
+    args = parser.parse_args()
+    config = load_yaml(args.config)
+    main(config)
+

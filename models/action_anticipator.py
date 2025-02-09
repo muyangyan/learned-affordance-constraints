@@ -3,9 +3,9 @@ import torch
 from torch import Tensor
 import torch.nn.functional as F
 
-from models.rgcn import RGCN
-from models.vit import ViT
-from models.joint_model import JointModel
+from models.modules.rgcn import RGCN
+from models.modules.vit import ViT
+from models.modules.joint_model import JointModel
 
 import pytorch_lightning as L 
 
