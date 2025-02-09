@@ -15,6 +15,7 @@ ARGS="--val \
     --recall-threshold 0.8 \
     --mode soft \
     --constraint-weight 20"
+    --
 
 echo "Running script: $PYTHON_SCRIPT"
 echo "Arguments: $ARGS"
