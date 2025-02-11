@@ -2,6 +2,7 @@ import warnings
 warnings.filterwarnings("ignore")
 #warnings.filterwarnings("default")
 
+import os
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
@@ -13,6 +14,11 @@ from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.loggers import TensorBoardLogger
 
 from models.action_anticipator import ActionAnticipator
+
+from util.config_utils import load_yaml, load_verb_whitelist
+import argparse
+
+torch.set_float32_matmul_precision('medium')
 
 def init_model_train(cfg, train_set):
     num_obj_classes = len(train_set.object_classes)
@@ -47,8 +53,10 @@ setup checkpoint callback and logger
 train
 '''
 def train(cfg, run_name):
-    train_set = AG(cfg.data_root, split='train', split_file=cfg.split_file, subset_file=cfg.subset_file, verb_whitelist=cfg.verb_whitelist)
-    val_set = AG(cfg.data_root, split='val', split_file=cfg.split_file, subset_file=cfg.subset_file, verb_whitelist=cfg.verb_whitelist)
+    verb_whitelist = load_verb_whitelist(cfg.verb_whitelist)
+
+    train_set = AG(cfg.data_root, split='train', split_file=cfg.split_file, subset_file=cfg.subset_file, verb_whitelist=verb_whitelist)
+    val_set = AG(cfg.data_root, split='val', split_file=cfg.split_file, subset_file=cfg.subset_file, verb_whitelist=verb_whitelist)
 
     train_loader = DataLoader(train_set, batch_size=cfg.batch_size, collate_fn=train_set.verb_pred_collate, num_workers=16, shuffle=True)
     val_loader = DataLoader(val_set, batch_size=128, collate_fn=val_set.verb_pred_collate, num_workers=16, shuffle=False)
@@ -67,9 +75,30 @@ def train(cfg, run_name):
         max_epochs=cfg.epochs,
         accelerator='gpu',
         devices=cfg.devices,
+        strategy='ddp',
+        sync_batchnorm=True,
         callbacks=[checkpoint_callback],
         logger=logger,
     )
 
     print('Training the model=====================')
     trainer.fit(model, train_dataloaders=train_loader, val_dataloaders=val_loader)
+
+if __name__ == '__main__':
+    '''
+    can be trained given a config file and run name. called from main.py if distributed
+    '''
+    args = argparse.ArgumentParser()
+    args.add_argument('--config', type=str, default='none')
+    args.add_argument('--run', type=str, default='none')
+    args = args.parse_args()
+    
+    # Load config file
+    assert args.config != 'none' or args.run != 'none', 'Must specify either config or run'
+
+    if args.config == 'none':
+        cfg = load_yaml(os.path.join('runs/', args.run, 'config.yaml'))
+    else:
+        cfg = load_yaml(args.config)
+
+    train(cfg, args.run)

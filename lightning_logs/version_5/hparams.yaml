@@ -1,0 +1,28 @@
+lr: 1e-3
+model_params: !!python/tuple
+- !!python/tuple
+  - 36
+  - 32
+  - 32
+  - 26
+- 32
+- 30
+model_type: joint
+weight: !!python/object/apply:torch._utils._rebuild_tensor_v2
+- !!python/object/apply:torch.storage._load_from_bytes
+  - !!binary |
+    gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+    AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+    aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+    Z2UKcQFYDgAAADk0NjQ2NjQyNTIwNzIwcQJYAwAAAGNwdXEDSx5OdHEEUS6AAl1xAFgOAAAAOTQ2
+    NDY2NDI1MjA3MjBxAWEuHgAAAAAAAABkWu0/HsgNPxolrkCcm2tAEKKGP76EXj/LAzJARERIQfzu
+    Oz+RcKpAVVV6QhgT4D4hDZpAMgfBPybGh0AT7yE+YGgEQC+uwz6RcCpAFY7UPmRabT+cm+tA1gM0
+    P7sRUD8aJS5BnTYgQCENmj/xTfw/ywMyP8sDMkA=
+- 0
+- !!python/tuple
+  - 30
+- !!python/tuple
+  - 1
+- false
+- !!python/object/apply:collections.OrderedDict
+  - []

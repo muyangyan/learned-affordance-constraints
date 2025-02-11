@@ -28,6 +28,8 @@ def apply_rule(satisfied, rule, mode, recall_threshold, prior):
 def apply_rules(rules_name, rules_folder, bk_file, test_size, targets, 
                mode='hard', recall_threshold=0.7, priors=None):
     print('Applying learned rules-----------------')
+    print('rules_name:', rules_name)
+    print('bk_file:', bk_file)
     preds = []
     truths = []
 

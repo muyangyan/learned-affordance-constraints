@@ -466,7 +466,7 @@ class AGViewer:
             _ = input('max index reached, enter to continue')
             index = len(self.ag) - 1
 
-        id, img, sg, action, constraints = self.ag[index]
+        id, img, sg, action, constraints, truth_values = self.ag[index]
         verb, obj = self.ag.action_verb_obj_map[action]
 
         self.index = index

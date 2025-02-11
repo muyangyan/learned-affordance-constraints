@@ -1,0 +1,38 @@
+
+#paths and files
+dataset: "ag"
+data_root: "/data/Datasets/ag/"
+data_folder: "data/ag/"
+split_file: "data/ag/split_train_val_test.json"
+subset_file: "data/ag/subset_shelve"
+verb_whitelist: "data/ag/verb_whitelist.txt"
+prolog_folder: "prolog/ag/"
+rules_folder: "prolog/ag/learned_rules/"
+log_folder: "prolog/ag/learned_rules/popper_logs/"
+popper_path: "/home/muyang/Popper/popper.py"
+runs_folder: "runs/"
+
+#data parameters
+train_split_ratio: 0.6
+val_split_ratio: 0.2
+
+#ILP
+ilp_timeout: 6000
+fn_weight: 1
+
+#Training parameters========================
+#model
+model_type: 'joint' # joint, rgcn, vit
+weight_scheme: 'inverse' # uniform, inverse, invsqrt
+epochs: 30
+batch_size: 16
+devices: [0, 1, 2, 4]
+lr: 1e-3
+
+#Testing parameters========================
+#rules
+data_split: 'test'
+rules_name: 'debug_rules'
+mode: 'soft'
+recall_threshold: 0.8
+constraint_weight: 20

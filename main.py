@@ -16,65 +16,81 @@ import randomname
 from test import test
 from train import train
 
-torch.set_float32_matmul_precision('medium')
+import subprocess
+
+
+def create_run_directories(cfg, args):
+    run_name = randomname.get_name()
+    run_folder = f'{cfg.runs_folder}/{run_name}'
+    
+    os.makedirs(run_folder, exist_ok=False)
+    os.makedirs(os.path.join(run_folder, 'checkpoints'), exist_ok=False)
+    os.makedirs(os.path.join(run_folder, 'logs'), exist_ok=False)
+    os.makedirs(os.path.join(run_folder, 'test_runs'), exist_ok=False)
+    os.system(f'cp {args.config} {run_folder}/config.yaml')
+    return run_name
+
+def create_test_directories(cfg, args):
+    run_name = args.run
+    test_run_name = randomname.get_name()
+    run_folder = f'{cfg.runs_folder}/{run_name}' #folder for the training run we are testing
+    test_run_folder = f'{run_folder}/test_runs/{test_run_name}' #new folder for the specific test run
+    config_file = os.path.join(run_folder, 'config.yaml')
+    
+    os.makedirs(test_run_folder, exist_ok=False)
+    os.system(f'cp {config_file} {test_run_folder}/config.yaml')
+    return test_run_name
+
 '''
 entry point for training and testing. handles organization of runs, configs, etc.
 calls train and test routines
 
-
 '''
 def main(cfg, args):
-    print('ACTION ANTICIPATOR')
+    print('LEAPR')
 
-    if args.run is None:
+    # Only create directories on the main process
+    if args.run == 'none':
         '''
-        if config is specified instead of run, it means we are training a new model
-        create a new run folder, copy the config file there, and train the model
+        training a new model
         '''
-        run_name = randomname.get_random_name()
-        run_folder = f'{cfg.runs_folder}/{run_name}'
-
-        os.makedirs(run_folder, exist_ok=False)
-        os.makedirs(os.path.join(run_folder, 'checkpoints'), exist_ok=False)
-        os.makedirs(os.path.join(run_folder, 'logs'), exist_ok=False)
-        os.system(f'cp {args.config} {run_folder}/config.yaml')
-        train(cfg, run_name)
+        run_name = create_run_directories(cfg, args)
+        
+        print('Training new model - source config: ', args.config, 'run: ', run_name)
+        
+        #subprocess.run(['python', 'train.py', '--config', args.config, '--run_name', run_name])
+        if len(cfg.devices) == 1:
+            train(cfg, run_name)
+        else:
+            #print('Distributed training not supported yet, please run train.py manually')
+            subprocess.run(['python', 'train.py', '--config', args.config, '--run', run_name])
+            
     else:
         '''
-        if run is specified, it means we are testing a model trained in a previous run
-        create a new folder for the test run, copy the config file there, and test the model
+        testing a model trained in a previous run
         '''
-        run_name = args.run
-        test_run_name = randomname.get_random_name()
-        run_folder = f'{cfg.runs_folder}/{run_name}'
-        test_run_folder = f'{run_folder}/{test_run_name}'
-        config_file = os.path.join(run_folder, 'config.yaml')
+        test_run_name = create_test_directories(cfg, args)
+            
+        print('Testing model - run: ', args.run, 'test_run: ', test_run_name)
+        test(cfg, args.run, test_run_name)
 
-        os.makedirs(test_run_folder, exist_ok=False)
-        os.system(f'cp {config_file} {test_run_folder}/config.yaml')
-        test(cfg, test_run_name)
 
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Train and test joint model')
 
     #config
-    parser.add_argument('--config', type=str, default=None, help='Path to config file')
-    parser.add_argument('--run', type=str, default=None, help='Run name')
+    parser.add_argument('--config', type=str, default='none', help='Path to config file')
+    parser.add_argument('--run', type=str, default='none', help='Run name')
 
     args = parser.parse_args()
 
-    # Load config file
-    assert args.config is None != args.run is None, 'Must specify either config or run'
-    if args.config is None:
-        cfg = load_yaml(os.path.join(args.runs_folder, args.run, 'config.yaml'))
+    assert args.config != 'none' or args.run != 'none', 'Must specify either config or run'
+    assert args.config == 'none' or args.run == 'none', 'Must specify either config or run'
+
+    if args.config == 'none':
+        cfg = load_yaml(os.path.join('runs/', args.run, 'config.yaml'))
     else:
         cfg = load_yaml(args.config)
-
-    if os.path.exists(cfg.verb_whitelist):
-        with open(cfg.verb_whitelist, 'r') as f:
-            cfg.verb_whitelist = [line for line in f.read().splitlines() if line and not line.startswith('#')]
-    else:
-        raise ValueError(f'Invalid verb whitelist: {cfg.verb_whitelist}')
 
     main(cfg, args)

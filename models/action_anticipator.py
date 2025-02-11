@@ -21,7 +21,7 @@ class ActionAnticipator(L.LightningModule):
         super().__init__()
         self.model_type = model_type
         self.constraint_mode = None # hard, soft
-        self.lr = lr
+        self.lr = float(lr)
         self.constraint_weight = 1
         rgcn_params, vit_hidden_dim, num_classes = model_params 
         if model_type == 'joint':

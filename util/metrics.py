@@ -9,8 +9,8 @@ from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import numpy as np
     
-def analyze_preds(cfg, test_run_name, preds, class_names=None):
-    save_folder = f'{cfg.runs_folder}/{cfg.run_name}/test_runs/{test_run_name}'
+def analyze_preds(cfg, run_name, test_run_name, preds, class_names=None):
+    save_folder = f'{cfg.runs_folder}/{run_name}/test_runs/{test_run_name}'
 
     #each pred is: [nn_class, rule_class, final_class, label]
     nn_preds = preds[:,0]
