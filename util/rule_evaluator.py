@@ -71,6 +71,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--verb", type=str, required=True)
+    parser.add_argument("--pos", type=str, required=True)
     args = parser.parse_args()
 
     with open('data/ag/verb_whitelist.txt', 'r') as f:
@@ -79,7 +80,7 @@ if __name__ == "__main__":
     print(VERBS)
 
     root = '/data/Datasets/ag/'
-    subset_file = 'data/ag/subset_shelve'
+    subset_file = f'data/ag/{args.pos}/subset_shelve'
     ag = AG(root, no_img=True, split='train', subset_file=subset_file, verb_whitelist=VERBS)
 
     rules_file = 'rules.pl'

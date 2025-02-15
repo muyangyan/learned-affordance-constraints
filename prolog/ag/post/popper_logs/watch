@@ -1,0 +1,121 @@
+%%no negative model used
+max_vars(6).
+max_body(8).
+head_pred(watch_target, 1).
+body_pred(person, 1).
+body_pred(bag, 1).
+body_pred(bed, 1).
+body_pred(blanket, 1).
+body_pred(book, 1).
+body_pred(box, 1).
+body_pred(broom, 1).
+body_pred(chair, 1).
+body_pred(closet_cabinet, 1).
+body_pred(clothes, 1).
+body_pred(cup_glass_bottle, 1).
+body_pred(dish, 1).
+body_pred(door, 1).
+body_pred(doorknob, 1).
+body_pred(doorway, 1).
+body_pred(floor, 1).
+body_pred(food, 1).
+body_pred(groceries, 1).
+body_pred(laptop, 1).
+body_pred(light, 1).
+body_pred(medicine, 1).
+body_pred(mirror, 1).
+body_pred(paper_notebook, 1).
+body_pred(phone_camera, 1).
+body_pred(picture, 1).
+body_pred(pillow, 1).
+body_pred(refrigerator, 1).
+body_pred(sandwich, 1).
+body_pred(shelf, 1).
+body_pred(shoe, 1).
+body_pred(sofa_couch, 1).
+body_pred(table, 1).
+body_pred(television, 1).
+body_pred(towel, 1).
+body_pred(vacuum, 1).
+body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
+body_pred(above, 2).
+body_pred(beneath, 2).
+body_pred(in_front_of, 2).
+body_pred(behind, 2).
+body_pred(on_the_side_of, 2).
+body_pred(in, 2).
+body_pred(carrying, 2).
+body_pred(covered_by, 2).
+body_pred(drinking_from, 2).
+body_pred(eating, 2).
+body_pred(have_it_on_the_back, 2).
+body_pred(holding, 2).
+body_pred(leaning_on, 2).
+body_pred(lying_on, 2).
+body_pred(not_contacting, 2).
+body_pred(other_relationship, 2).
+body_pred(sitting_on, 2).
+body_pred(standing_on, 2).
+body_pred(touching, 2).
+body_pred(twisting, 2).
+body_pred(wearing, 2).
+body_pred(wiping, 2).
+body_pred(writing_on, 2).
+15:59:41 Generating programs of size: 2
+15:59:41 Generating programs of size: 3
+15:59:41 ********************
+15:59:41 New best hypothesis:
+15:59:41 tp:143 fn:439 tn:1965 fp:103 size:3 mdl:545
+15:59:41 watch_target(A):- book(B),holding(A,B).
+15:59:41 ********************
+15:59:42 ********************
+15:59:42 New best hypothesis:
+15:59:42 tp:159 fn:423 tn:1985 fp:83 size:3 mdl:509
+15:59:42 watch_target(A):- looking_at(A,B),book(B).
+15:59:42 ********************
+15:59:49 Generating programs of size: 4
+16:00:00 ********************
+16:00:00 New best hypothesis:
+16:00:00 tp:487 fn:95 tn:1856 fp:212 size:27 mdl:334
+16:00:00 watch_target(A):- picture(B),holding(A,B).
+16:00:00 watch_target(A):- on_the_side_of(B,A),window(B).
+16:00:00 watch_target(A):- looking_at(A,B),book(B).
+16:00:00 watch_target(A):- looking_at(A,B),mirror(B).
+16:00:00 watch_target(A):- television(B),not_contacting(A,B).
+16:00:00 watch_target(A):- picture(B),not_contacting(A,B).
+16:00:00 watch_target(A):- mirror(B),not_contacting(A,B).
+16:00:00 watch_target(A):- laptop(B),not_contacting(A,B).
+16:00:00 watch_target(A):- window(B),in_front_of(B,A).
+16:00:00 ********************
+16:26:07 Generating programs of size: 5
+16:26:17 ********************
+16:26:17 New best hypothesis:
+16:26:17 tp:474 fn:108 tn:1876 fp:192 size:31 mdl:331
+16:26:17 watch_target(A):- picture(B),holding(A,B).
+16:26:17 watch_target(A):- on_the_side_of(B,A),window(B).
+16:26:17 watch_target(A):- looking_at(A,B),book(B).
+16:26:17 watch_target(A):- looking_at(A,B),mirror(B).
+16:26:17 watch_target(A):- looking_at(A,B),television(B).
+16:26:17 watch_target(A):- picture(B),not_contacting(A,B).
+16:26:17 watch_target(A):- mirror(B),not_contacting(A,B).
+16:26:17 watch_target(A):- not_looking_at(A,B),television(B).
+16:26:17 watch_target(A):- window(B),in_front_of(B,A).
+16:26:17 watch_target(A):- looking_at(A,B),laptop(B),not_contacting(A,B).
+16:26:17 ********************
+17:42:45 TIMEOUT OF 6000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.71 Recall:0.81 TP:474 FN:108 TN:1876 FP:192 Size:31 MDL:331
+watch_target(A):- picture(B),holding(A,B).
+watch_target(A):- on_the_side_of(B,A),window(B).
+watch_target(A):- looking_at(A,B),book(B).
+watch_target(A):- looking_at(A,B),mirror(B).
+watch_target(A):- looking_at(A,B),television(B).
+watch_target(A):- picture(B),not_contacting(A,B).
+watch_target(A):- mirror(B),not_contacting(A,B).
+watch_target(A):- not_looking_at(A,B),television(B).
+watch_target(A):- window(B),in_front_of(B,A).
+watch_target(A):- looking_at(A,B),laptop(B),not_contacting(A,B).
+******************************

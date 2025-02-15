@@ -1,0 +1,107 @@
+%%no negative model used
+max_vars(6).
+max_body(8).
+head_pred(hold_target, 1).
+body_pred(person, 1).
+body_pred(bag, 1).
+body_pred(bed, 1).
+body_pred(blanket, 1).
+body_pred(book, 1).
+body_pred(box, 1).
+body_pred(broom, 1).
+body_pred(chair, 1).
+body_pred(closet_cabinet, 1).
+body_pred(clothes, 1).
+body_pred(cup_glass_bottle, 1).
+body_pred(dish, 1).
+body_pred(door, 1).
+body_pred(doorknob, 1).
+body_pred(doorway, 1).
+body_pred(floor, 1).
+body_pred(food, 1).
+body_pred(groceries, 1).
+body_pred(laptop, 1).
+body_pred(light, 1).
+body_pred(medicine, 1).
+body_pred(mirror, 1).
+body_pred(paper_notebook, 1).
+body_pred(phone_camera, 1).
+body_pred(picture, 1).
+body_pred(pillow, 1).
+body_pred(refrigerator, 1).
+body_pred(sandwich, 1).
+body_pred(shelf, 1).
+body_pred(shoe, 1).
+body_pred(sofa_couch, 1).
+body_pred(table, 1).
+body_pred(television, 1).
+body_pred(towel, 1).
+body_pred(vacuum, 1).
+body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
+body_pred(above, 2).
+body_pred(beneath, 2).
+body_pred(in_front_of, 2).
+body_pred(behind, 2).
+body_pred(on_the_side_of, 2).
+body_pred(in, 2).
+body_pred(carrying, 2).
+body_pred(covered_by, 2).
+body_pred(drinking_from, 2).
+body_pred(eating, 2).
+body_pred(have_it_on_the_back, 2).
+body_pred(holding, 2).
+body_pred(leaning_on, 2).
+body_pred(lying_on, 2).
+body_pred(not_contacting, 2).
+body_pred(other_relationship, 2).
+body_pred(sitting_on, 2).
+body_pred(standing_on, 2).
+body_pred(touching, 2).
+body_pred(twisting, 2).
+body_pred(wearing, 2).
+body_pred(wiping, 2).
+body_pred(writing_on, 2).
+15:59:41 Generating programs of size: 2
+15:59:41 Generating programs of size: 3
+15:59:41 ********************
+15:59:41 New best hypothesis:
+15:59:41 tp:81 fn:2451 tn:6213 fp:56 size:3 mdl:2510
+15:59:41 hold_target(A):- holding(A,B),medicine(B).
+15:59:41 ********************
+15:59:51 Generating programs of size: 4
+16:00:01 ********************
+16:00:01 New best hypothesis:
+16:00:01 tp:177 fn:2355 tn:6146 fp:123 size:12 mdl:2490
+16:00:01 hold_target(A):- holding(A,B),medicine(B).
+16:00:01 hold_target(A):- holding(A,B),mirror(B).
+16:00:01 hold_target(A):- looking_at(A,B),vacuum(B).
+16:00:01 hold_target(A):- carrying(A,B),towel(B).
+16:00:01 ********************
+17:09:44 Generating programs of size: 5
+17:09:54 ********************
+17:09:54 New best hypothesis:
+17:09:54 tp:239 fn:2293 tn:6114 fp:155 size:28 mdl:2476
+17:09:54 hold_target(A):- holding(A,B),medicine(B).
+17:09:54 hold_target(A):- holding(A,B),mirror(B).
+17:09:54 hold_target(A):- looking_at(A,B),vacuum(B).
+17:09:54 hold_target(A):- carrying(A,B),towel(B).
+17:09:54 hold_target(A):- holding(A,B),unsure(A,B),laptop(B).
+17:09:54 hold_target(A):- box(B),on_the_side_of(B,A),holding(A,B).
+17:09:54 hold_target(A):- dish(B),on_the_side_of(B,A),holding(A,B).
+17:09:54 hold_target(A):- above(B,A),window(B),not_contacting(A,B).
+17:09:54 ********************
+17:40:48 TIMEOUT OF 6000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.61 Recall:0.09 TP:239 FN:2293 TN:6114 FP:155 Size:28 MDL:2476
+hold_target(A):- holding(A,B),medicine(B).
+hold_target(A):- holding(A,B),mirror(B).
+hold_target(A):- looking_at(A,B),vacuum(B).
+hold_target(A):- carrying(A,B),towel(B).
+hold_target(A):- holding(A,B),unsure(A,B),laptop(B).
+hold_target(A):- box(B),on_the_side_of(B,A),holding(A,B).
+hold_target(A):- dish(B),on_the_side_of(B,A),holding(A,B).
+hold_target(A):- above(B,A),window(B),not_contacting(A,B).
+******************************

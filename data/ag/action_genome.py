@@ -50,10 +50,10 @@ def find_closest_frame_idx(directory, frame_number):
             continue
     return closest_number
 
-def string_to_action_triple(action_string, video_id):
+def string_to_action_triple(action_string):
     a = action_string.split(' ')
     if len(a) == 3:
-        action_triple = [video_id, int(a[0][1:]), float(a[1]), float(a[2])]
+        action_triple = [int(a[0][1:]), float(a[1]), float(a[2])] #parses lines. ex. c006 5.10 11.50
     elif len(a) == 1 and a[0] == '':
         return None
     else:
@@ -61,22 +61,24 @@ def string_to_action_triple(action_string, video_id):
         return None
     return action_triple
 
-def get_id(video_id, frame_idx, action_class=None):
-    id = "%s.mp4/%06d.png" % (video_id, frame_idx)
-    if action_class is not None:
-        full_id = id + '_' + str(action_class)
-        return id, full_id
-    return id
+def get_id(video_id, frame_idx):
+    return "%s.mp4/%06d.png" % (video_id, frame_idx)
 
 def remove_id_prefix(s):
     return s[5:]
 
 
 class AG(Dataset):
+    '''
+    location: 'pre', 'post', 'both'
+    determines whether we use the start or end of the action as the frame. in other words, are we anticipating the next action or inferring the previous/causal action?
+
+    '''
     
-    def __init__(self, root, threshold=1, fps=24, no_img=False, split=None, split_file='data/ag/split_train_val_test.json', subset_file=None, verb_whitelist=[], verb_prior_file='data/ag/verb_priors.json'):
+    def __init__(self, root, position='both', no_img=False, split=None, split_file='data/ag/split_train_val.json', subset_file=None, verb_whitelist=[], verb_prior_file='data/ag/verb_priors.json', threshold=1, fps=24):
         super().__init__()
         self.root = root
+        self.position = position
         self.threshold = threshold
         self.no_img = no_img
         self.split = split
@@ -92,39 +94,38 @@ class AG(Dataset):
         f.close()
 
         self.init_vocab()
-        actions = self.load_actions()
-        usable_list = self.extract_usable_frames(actions, threshold, fps)
+        examples = self.load_examples(split)
+        usable_list = self.extract_usable_frames(examples, threshold, fps=fps)
 
         split_ids = None
         assert split in ['train', 'val', 'test', None]
 
         if split is not None:
-            split_ids = []
             with open(split_file) as f:
                 split_dict = json.load(f)
                 split_ids = split_dict[split]
             print('split:', split, '| length:', len(split_ids))
+        else:
+            split_ids = [video_id for video_id, _, _ in usable_list]
 
         #create pyg scene graphs
         self.data_list = []
         self.scene_graphs = {}
         self.verb_label_counts = []
         
+        print(subset_file)
         if subset_file is not None:
             subset = shelve.open(subset_file)
         
-        for video_id, frame_idx, action_class in usable_list:
-            id, full_id = get_id(video_id, frame_idx, action_class=action_class)
+        for video_id, frame_idx, action_classes in usable_list:
+            id = get_id(video_id, frame_idx)
 
-            # only use videos in the split
-            if split_ids is not None and video_id not in split_ids:
-                continue
-            # only use examples in the subset
-            if self.subset_file is not None and subset[full_id] == 'False':
+            # only use videos in the split, and examples in the subset
+            if video_id not in split_ids or (self.subset_file is not None and subset[id] == 'False'):
                 continue
 
             #now we know we can include in our dataset
-            self.data_list.append((video_id, frame_idx, action_class))
+            self.data_list.append((video_id, frame_idx, action_classes))
 
             objects = [obj for obj in self.object_annotations[id] if obj['visible']] # visible objects only
 
@@ -154,19 +155,19 @@ class AG(Dataset):
             edge_type = torch.tensor(edge_type, dtype=torch.long) # Adjust dtype as needed
 
             edge_attr = F.one_hot(edge_type, num_classes=len(self.relationship_classes)).float()
+            verb_classes, obj_classes = zip(*[self.action_verb_obj_map[action_class] for action_class in action_classes])
 
-            verb_class, obj_class = self.action_verb_obj_map[action_class]
-
-            w = torch.tensor([action_class], dtype=torch.long) # only the specific action taken
-            y = torch.tensor([verb_class], dtype=torch.long)
-            o = torch.tensor([]) if obj_class is None else torch.tensor([obj_class], dtype=torch.long)
+            w = torch.tensor(action_classes, dtype=torch.long) # only the specific action taken
+            y = torch.tensor(verb_classes, dtype=torch.long)
+            o = torch.tensor([o if o is not None else -1 for o in obj_classes], dtype=torch.long)
 
             data = Data(x, edge_index=edge_index, edge_attr=edge_attr, \
                         node_type=node_type, edge_type=edge_type, y=y, w=w, o=o, id=id)
 
             self.scene_graphs[id] = data
-            self.verb_label_counts.append(verb_class)
+            self.verb_label_counts.append(list(verb_classes))
 
+        self.verb_label_counts = [v for l in self.verb_label_counts for v in l]
         if subset_file is not None:
             subset.close()
 
@@ -194,10 +195,10 @@ class AG(Dataset):
         return len(self.data_list)
 
     def __getitem__(self, index):
-        video_id, frame_idx, action_class = self.data_list[index]
+        video_id, frame_idx, action_classes = self.data_list[index]
 
         #full id is necessary since some actions start on the same frame
-        id, full_id = get_id(video_id, frame_idx, action_class=action_class)
+        id = get_id(video_id, frame_idx)
 
         scene_graph = self.scene_graphs[id]
 
@@ -214,48 +215,63 @@ class AG(Dataset):
             constraints = None
             truth_values = None
 
-        return full_id, image, scene_graph, action_class, constraints, truth_values
+        return id, image, scene_graph, action_classes, constraints, truth_values
 
-    # Load all actions from the dataset
-    def load_actions(self):
-        actions = []
-        with open(self.root + 'annotations/Charades/Charades_v1_train.csv') as f:
+    #loads examples
+    def load_examples_from_file(self, filename):
+        examples = []
+        with open(filename) as f:
             reader = csv.DictReader(f)
             for row in reader:
                 video_id = row['id']
                 action_string = row['actions'].split(';')
+                timestep_actions = {} #key-timestep, value-list of actions
                 for action in action_string:
-                    action_tuple = string_to_action_triple(action, video_id)
-                    if action_tuple is not None and action_tuple[1] is not None:
-                        action_tuple[1] = self.action_mapper[action_tuple[1]]
-                        if action_tuple[1] is not None:
-                            actions.append(action_tuple)
+                    action_tuple = string_to_action_triple(action) # [action_id, start_time, end_time]
+                    if action_tuple is not None and action_tuple[0] is not None:
+                        timestep = action_tuple[1] if self.position == 'pre' else action_tuple[2]
+                        timestep = round(timestep, 2)
+                        action_label = self.action_mapper[action_tuple[0]]
+                        if action_label is not None:
+                            if timestep not in timestep_actions:
+                                timestep_actions[timestep] = []
+                            timestep_actions[timestep].append(action_label) # add the action id to that timestep
 
+                for timestep, actions in timestep_actions.items():
+                    examples.append((video_id, actions, timestep))
         f.close()
-        return actions
+        return examples
+
+    # Load all actions from the dataset
+    def load_examples(self, split):
+        train_val_filename = self.root + 'annotations/Charades/Charades_v1_train.csv'
+        test_filename = self.root + 'annotations/Charades/Charades_v1_test.csv'
+
+        if split == 'train' or split == 'val':
+            return self.load_examples_from_file(train_val_filename)
+        elif split == 'test':
+            return self.load_examples_from_file(test_filename)
+        else: #get the whole dataset, all splits included
+            train_val_actions = self.load_examples_from_file(train_val_filename)
+            test_actions = self.load_examples_from_file(test_filename)
+            return train_val_actions + test_actions
     
     '''
-    gets all usable frame-action pairs, where the frame should be the very beginning of the action
+    gets all usable frame-action pairs, where the frame should be the very beginning or the very end of the action
     threshold: the maximum deviation in seconds between the start time of the action and the frame time
+    position: 'pre' or 'post'
     '''
-    def extract_usable_frames(self, actions, threshold, fps=24, plot=False):
-        distribution = []
+    def extract_usable_frames(self, examples, threshold, fps=24):
         data_list = []
 
-        for video_id, action_class, start_time, _ in actions:
-            frame_idx = self.get_frame_from_time(video_id, start_time, fps)
+        for video_id, actions, timestep in examples:
+            frame_idx = self.get_frame_from_time(video_id, timestep, fps)
             if frame_idx:
-
-                deviation = abs((frame_idx / fps) - start_time)
+                deviation = abs((frame_idx / fps) - timestep)
 
                 if deviation < threshold and get_id(video_id, frame_idx) in self.object_annotations:
-                    data_list.append((video_id, frame_idx, action_class))
+                    data_list.append((video_id, frame_idx, actions))
 
-                if plot:
-                    distribution.append(deviation)
-
-        if plot:
-            plt.hist(distribution, bins=100, range=(0, 5))
         return data_list
 
     def get_frame_from_time(self, video_id, time, fps):
@@ -404,11 +420,16 @@ class AG(Dataset):
         }
 
     def verb_pred_collate(self, batch):
-        ids, images, scene_graphs, actions, constraints, truth_values = zip(*batch)
+        # action_labels is multilabel
+        ids, images, scene_graphs, action_labels, constraints, truth_values = zip(*batch)
         sg_batch = Batch.from_data_list(scene_graphs, exclude_keys=['o'])
         
-        verbs = torch.tensor([self.action_verb_obj_map[a][0] for a in actions])
-        labels = F.one_hot(verbs, len(self.verb_classes)).float()
+        # Create a 2D tensor for multi-label verbs with shape Batch x Classes
+        verb_labels = torch.zeros((len(action_labels), len(self.verb_classes)), dtype=torch.float)
+        for i, actions in enumerate(action_labels):
+            for action in actions:
+                verb_idx = self.action_verb_obj_map[action][0]
+                verb_labels[i, verb_idx] = 1.0
         
         if self.no_img:
             resized_images = None
@@ -423,7 +444,7 @@ class AG(Dataset):
             constraints = torch.stack(constraints)
             truth_values = torch.stack(truth_values)
 
-        return ids, resized_images, sg_batch, verbs, labels, constraints, truth_values
+        return ids, resized_images, sg_batch, verb_labels, constraints, truth_values
 
 import os
 import csv

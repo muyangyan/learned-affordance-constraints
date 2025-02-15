@@ -1,0 +1,111 @@
+%%no negative model used
+max_vars(6).
+max_body(8).
+head_pred(snuggle_target, 1).
+body_pred(person, 1).
+body_pred(bag, 1).
+body_pred(bed, 1).
+body_pred(blanket, 1).
+body_pred(book, 1).
+body_pred(box, 1).
+body_pred(broom, 1).
+body_pred(chair, 1).
+body_pred(closet_cabinet, 1).
+body_pred(clothes, 1).
+body_pred(cup_glass_bottle, 1).
+body_pred(dish, 1).
+body_pred(door, 1).
+body_pred(doorknob, 1).
+body_pred(doorway, 1).
+body_pred(floor, 1).
+body_pred(food, 1).
+body_pred(groceries, 1).
+body_pred(laptop, 1).
+body_pred(light, 1).
+body_pred(medicine, 1).
+body_pred(mirror, 1).
+body_pred(paper_notebook, 1).
+body_pred(phone_camera, 1).
+body_pred(picture, 1).
+body_pred(pillow, 1).
+body_pred(refrigerator, 1).
+body_pred(sandwich, 1).
+body_pred(shelf, 1).
+body_pred(shoe, 1).
+body_pred(sofa_couch, 1).
+body_pred(table, 1).
+body_pred(television, 1).
+body_pred(towel, 1).
+body_pred(vacuum, 1).
+body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
+body_pred(above, 2).
+body_pred(beneath, 2).
+body_pred(in_front_of, 2).
+body_pred(behind, 2).
+body_pred(on_the_side_of, 2).
+body_pred(in, 2).
+body_pred(carrying, 2).
+body_pred(covered_by, 2).
+body_pred(drinking_from, 2).
+body_pred(eating, 2).
+body_pred(have_it_on_the_back, 2).
+body_pred(holding, 2).
+body_pred(leaning_on, 2).
+body_pred(lying_on, 2).
+body_pred(not_contacting, 2).
+body_pred(other_relationship, 2).
+body_pred(sitting_on, 2).
+body_pred(standing_on, 2).
+body_pred(touching, 2).
+body_pred(twisting, 2).
+body_pred(wearing, 2).
+body_pred(wiping, 2).
+body_pred(writing_on, 2).
+15:59:41 Generating programs of size: 2
+15:59:41 Generating programs of size: 3
+15:59:41 ********************
+15:59:41 New best hypothesis:
+15:59:41 tp:21 fn:141 tn:560 fp:10 size:3 mdl:154
+15:59:41 snuggle_target(A):- blanket(B),holding(A,B).
+15:59:41 ********************
+15:59:41 ********************
+15:59:41 New best hypothesis:
+15:59:41 tp:37 fn:125 tn:553 fp:17 size:3 mdl:145
+15:59:41 snuggle_target(A):- not_looking_at(A,B),lying_on(A,B).
+15:59:41 ********************
+15:59:41 ********************
+15:59:41 New best hypothesis:
+15:59:41 tp:58 fn:104 tn:541 fp:29 size:3 mdl:136
+15:59:41 snuggle_target(A):- in(B,A),not_looking_at(A,B).
+15:59:41 ********************
+15:59:41 ********************
+15:59:41 New best hypothesis:
+15:59:41 tp:60 fn:102 tn:558 fp:12 size:3 mdl:117
+15:59:41 snuggle_target(A):- covered_by(A,B),not_looking_at(A,B).
+15:59:41 ********************
+15:59:41 ********************
+15:59:41 New best hypothesis:
+15:59:41 tp:91 fn:71 tn:552 fp:18 size:3 mdl:92
+15:59:41 snuggle_target(A):- blanket(B),not_looking_at(A,B).
+15:59:41 ********************
+15:59:50 Generating programs of size: 4
+15:59:54 ********************
+15:59:54 New best hypothesis:
+15:59:54 tp:152 fn:10 tn:532 fp:38 size:12 mdl:60
+15:59:54 snuggle_target(A):- blanket(B),not_looking_at(A,B).
+15:59:54 snuggle_target(A):- pillow(B),not_looking_at(A,B).
+15:59:54 snuggle_target(A):- in(B,A),blanket(B).
+15:59:54 snuggle_target(A):- pillow(B),in_front_of(B,A).
+15:59:54 ********************
+16:28:28 Generating programs of size: 5
+17:40:04 TIMEOUT OF 6000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.80 Recall:0.94 TP:152 FN:10 TN:532 FP:38 Size:12 MDL:60
+snuggle_target(A):- blanket(B),not_looking_at(A,B).
+snuggle_target(A):- pillow(B),not_looking_at(A,B).
+snuggle_target(A):- in(B,A),blanket(B).
+snuggle_target(A):- pillow(B),in_front_of(B,A).
+******************************

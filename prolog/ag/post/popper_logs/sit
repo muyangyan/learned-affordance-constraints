@@ -1,0 +1,124 @@
+%%no negative model used
+max_vars(6).
+max_body(8).
+head_pred(sit_target, 1).
+body_pred(person, 1).
+body_pred(bag, 1).
+body_pred(bed, 1).
+body_pred(blanket, 1).
+body_pred(book, 1).
+body_pred(box, 1).
+body_pred(broom, 1).
+body_pred(chair, 1).
+body_pred(closet_cabinet, 1).
+body_pred(clothes, 1).
+body_pred(cup_glass_bottle, 1).
+body_pred(dish, 1).
+body_pred(door, 1).
+body_pred(doorknob, 1).
+body_pred(doorway, 1).
+body_pred(floor, 1).
+body_pred(food, 1).
+body_pred(groceries, 1).
+body_pred(laptop, 1).
+body_pred(light, 1).
+body_pred(medicine, 1).
+body_pred(mirror, 1).
+body_pred(paper_notebook, 1).
+body_pred(phone_camera, 1).
+body_pred(picture, 1).
+body_pred(pillow, 1).
+body_pred(refrigerator, 1).
+body_pred(sandwich, 1).
+body_pred(shelf, 1).
+body_pred(shoe, 1).
+body_pred(sofa_couch, 1).
+body_pred(table, 1).
+body_pred(television, 1).
+body_pred(towel, 1).
+body_pred(vacuum, 1).
+body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
+body_pred(above, 2).
+body_pred(beneath, 2).
+body_pred(in_front_of, 2).
+body_pred(behind, 2).
+body_pred(on_the_side_of, 2).
+body_pred(in, 2).
+body_pred(carrying, 2).
+body_pred(covered_by, 2).
+body_pred(drinking_from, 2).
+body_pred(eating, 2).
+body_pred(have_it_on_the_back, 2).
+body_pred(holding, 2).
+body_pred(leaning_on, 2).
+body_pred(lying_on, 2).
+body_pred(not_contacting, 2).
+body_pred(other_relationship, 2).
+body_pred(sitting_on, 2).
+body_pred(standing_on, 2).
+body_pred(touching, 2).
+body_pred(twisting, 2).
+body_pred(wearing, 2).
+body_pred(wiping, 2).
+body_pred(writing_on, 2).
+15:59:41 Generating programs of size: 2
+15:59:41 Generating programs of size: 3
+15:59:41 ********************
+15:59:41 New best hypothesis:
+15:59:41 tp:4 fn:1213 tn:4050 fp:0 size:3 mdl:1216
+15:59:41 sit_target(A):- sitting_on(A,B),not_contacting(A,B).
+15:59:41 ********************
+15:59:41 ********************
+15:59:41 New best hypothesis:
+15:59:41 tp:68 fn:1149 tn:4012 fp:38 size:3 mdl:1190
+15:59:41 sit_target(A):- chair(B),not_contacting(A,B).
+15:59:41 ********************
+15:59:42 ********************
+15:59:42 New best hypothesis:
+15:59:42 tp:748 fn:469 tn:3404 fp:646 size:3 mdl:1118
+15:59:42 sit_target(A):- sitting_on(A,B),not_looking_at(A,B).
+15:59:42 ********************
+15:59:42 ********************
+15:59:42 New best hypothesis:
+15:59:42 tp:527 fn:690 tn:3664 fp:386 size:3 mdl:1079
+15:59:42 sit_target(A):- not_looking_at(A,B),chair(B).
+15:59:42 ********************
+15:59:49 Generating programs of size: 4
+16:00:00 ********************
+16:00:00 New best hypothesis:
+16:00:00 tp:719 fn:498 tn:3541 fp:509 size:24 mdl:1031
+16:00:00 sit_target(A):- not_contacting(A,B),sofa_couch(B).
+16:00:00 sit_target(A):- leaning_on(A,B),sitting_on(A,B).
+16:00:00 sit_target(A):- touching(A,B),sofa_couch(B).
+16:00:00 sit_target(A):- behind(B,A),chair(B).
+16:00:00 sit_target(A):- other_relationship(A,B),sofa_couch(B).
+16:00:00 sit_target(A):- bed(B),other_relationship(A,B).
+16:00:00 sit_target(A):- sitting_on(A,B),floor(B).
+16:00:00 sit_target(A):- sitting_on(A,B),chair(B).
+16:00:00 ********************
+16:59:01 Generating programs of size: 5
+16:59:12 ********************
+16:59:12 New best hypothesis:
+16:59:12 tp:727 fn:490 tn:3532 fp:518 size:22 mdl:1030
+16:59:12 sit_target(A):- chair(B),not_contacting(A,B).
+16:59:12 sit_target(A):- not_contacting(A,B),sofa_couch(B).
+16:59:12 sit_target(A):- not_looking_at(A,B),chair(B).
+16:59:12 sit_target(A):- touching(A,B),sofa_couch(B).
+16:59:12 sit_target(A):- other_relationship(A,B),sofa_couch(B).
+16:59:12 sit_target(A):- sitting_on(A,B),floor(B).
+16:59:12 sit_target(A):- not_looking_at(B,C),leaning_on(B,C),sitting_on(A,C).
+16:59:12 ********************
+17:41:11 TIMEOUT OF 6000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.58 Recall:0.60 TP:727 FN:490 TN:3532 FP:518 Size:22 MDL:1030
+sit_target(A):- chair(B),not_contacting(A,B).
+sit_target(A):- not_contacting(A,B),sofa_couch(B).
+sit_target(A):- not_looking_at(A,B),chair(B).
+sit_target(A):- touching(A,B),sofa_couch(B).
+sit_target(A):- other_relationship(A,B),sofa_couch(B).
+sit_target(A):- sitting_on(A,B),floor(B).
+sit_target(A):- not_looking_at(B,C),leaning_on(B,C),sitting_on(A,C).
+******************************

@@ -1,0 +1,122 @@
+%%no negative model used
+max_vars(6).
+max_body(8).
+head_pred(close_target, 1).
+body_pred(person, 1).
+body_pred(bag, 1).
+body_pred(bed, 1).
+body_pred(blanket, 1).
+body_pred(book, 1).
+body_pred(box, 1).
+body_pred(broom, 1).
+body_pred(chair, 1).
+body_pred(closet_cabinet, 1).
+body_pred(clothes, 1).
+body_pred(cup_glass_bottle, 1).
+body_pred(dish, 1).
+body_pred(door, 1).
+body_pred(doorknob, 1).
+body_pred(doorway, 1).
+body_pred(floor, 1).
+body_pred(food, 1).
+body_pred(groceries, 1).
+body_pred(laptop, 1).
+body_pred(light, 1).
+body_pred(medicine, 1).
+body_pred(mirror, 1).
+body_pred(paper_notebook, 1).
+body_pred(phone_camera, 1).
+body_pred(picture, 1).
+body_pred(pillow, 1).
+body_pred(refrigerator, 1).
+body_pred(sandwich, 1).
+body_pred(shelf, 1).
+body_pred(shoe, 1).
+body_pred(sofa_couch, 1).
+body_pred(table, 1).
+body_pred(television, 1).
+body_pred(towel, 1).
+body_pred(vacuum, 1).
+body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
+body_pred(above, 2).
+body_pred(beneath, 2).
+body_pred(in_front_of, 2).
+body_pred(behind, 2).
+body_pred(on_the_side_of, 2).
+body_pred(in, 2).
+body_pred(carrying, 2).
+body_pred(covered_by, 2).
+body_pred(drinking_from, 2).
+body_pred(eating, 2).
+body_pred(have_it_on_the_back, 2).
+body_pred(holding, 2).
+body_pred(leaning_on, 2).
+body_pred(lying_on, 2).
+body_pred(not_contacting, 2).
+body_pred(other_relationship, 2).
+body_pred(sitting_on, 2).
+body_pred(standing_on, 2).
+body_pred(touching, 2).
+body_pred(twisting, 2).
+body_pred(wearing, 2).
+body_pred(wiping, 2).
+body_pred(writing_on, 2).
+15:59:41 Generating programs of size: 2
+15:59:41 Generating programs of size: 3
+15:59:41 ********************
+15:59:41 New best hypothesis:
+15:59:41 tp:87 fn:547 tn:2152 fp:44 size:3 mdl:594
+15:59:41 close_target(A):- closet_cabinet(B),holding(A,B).
+15:59:41 ********************
+15:59:41 ********************
+15:59:41 New best hypothesis:
+15:59:41 tp:116 fn:518 tn:2141 fp:55 size:3 mdl:576
+15:59:41 close_target(A):- door(B),on_the_side_of(B,A).
+15:59:41 ********************
+15:59:42 ********************
+15:59:42 New best hypothesis:
+15:59:42 tp:168 fn:466 tn:2090 fp:106 size:3 mdl:575
+15:59:42 close_target(A):- in_front_of(B,A),closet_cabinet(B).
+15:59:42 ********************
+15:59:42 ********************
+15:59:42 New best hypothesis:
+15:59:42 tp:117 fn:517 tn:2143 fp:53 size:3 mdl:573
+15:59:42 close_target(A):- in_front_of(B,A),door(B).
+15:59:42 ********************
+15:59:42 ********************
+15:59:42 New best hypothesis:
+15:59:42 tp:161 fn:473 tn:2121 fp:75 size:3 mdl:551
+15:59:42 close_target(A):- not_looking_at(A,B),door(B).
+15:59:42 ********************
+15:59:46 ********************
+15:59:46 New best hypothesis:
+15:59:46 tp:182 fn:452 tn:2111 fp:85 size:3 mdl:540
+15:59:46 close_target(A):- door(B),not_contacting(A,B).
+15:59:46 ********************
+15:59:50 Generating programs of size: 4
+16:00:00 ********************
+16:00:00 New best hypothesis:
+16:00:00 tp:427 fn:207 tn:1989 fp:207 size:21 mdl:435
+16:00:00 close_target(A):- closet_cabinet(B),holding(A,B).
+16:00:00 close_target(A):- in_front_of(B,A),door(B).
+16:00:00 close_target(A):- in_front_of(B,A),refrigerator(B).
+16:00:00 close_target(A):- not_looking_at(A,B),closet_cabinet(B).
+16:00:00 close_target(A):- not_looking_at(A,B),door(B).
+16:00:00 close_target(A):- touching(A,B),closet_cabinet(B).
+16:00:00 close_target(A):- refrigerator(B),not_contacting(A,B).
+16:00:00 ********************
+16:14:20 Generating programs of size: 5
+17:41:49 TIMEOUT OF 6000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.67 Recall:0.67 TP:427 FN:207 TN:1989 FP:207 Size:21 MDL:435
+close_target(A):- closet_cabinet(B),holding(A,B).
+close_target(A):- in_front_of(B,A),door(B).
+close_target(A):- in_front_of(B,A),refrigerator(B).
+close_target(A):- not_looking_at(A,B),closet_cabinet(B).
+close_target(A):- not_looking_at(A,B),door(B).
+close_target(A):- touching(A,B),closet_cabinet(B).
+close_target(A):- refrigerator(B),not_contacting(A,B).
+******************************

@@ -11,7 +11,6 @@ from util.config_utils import load_yaml
 warnings.filterwarnings("ignore")
 
 from data.ag.action_genome import AG
-from data.toy.toy_dataset import ToyDataset
 
 
 '''
@@ -22,9 +21,8 @@ class PrologData:
     '''
     initialize vocabulary
     '''
-    def __init__(self, prolog_root, name, dataset, node_vocab, edge_vocab, verb_vocab, model=None, split=None):
-        self.root = os.path.join(prolog_root, name)
-        self.name = name
+    def __init__(self, prolog_root, dataset, node_vocab, edge_vocab, verb_vocab, model=None, split=None):
+        self.root = prolog_root
         self.node_vocab = node_vocab
         self.edge_vocab = edge_vocab
         self.verb_vocab = verb_vocab
@@ -75,6 +73,10 @@ class PrologData:
 
         exs_filename = os.path.join(self.root, 'examples', f'{target_verb_name}.pl', )
         bias_filename = os.path.join(self.root, 'biases', f'{target_verb_name}.pl')
+        if not os.path.exists(exs_filename):
+            os.makedirs(os.path.dirname(exs_filename), exist_ok=True)
+        if not os.path.exists(bias_filename):
+            os.makedirs(os.path.dirname(bias_filename), exist_ok=True)
 
         with(open(exs_filename, 'w+')) as f:
             f.write(f'%%keep negative probability: {keep_prob}\n')
@@ -82,17 +84,15 @@ class PrologData:
         for idx, inputs in enumerate(self.dataset):
             
             if type(self.dataset) is AG:
-                id, _, data, _, _ = inputs
-            elif type(self.dataset) is ToyDataset:
-                data = inputs
+                id, _, data, _, _, _ = inputs
             else:
                 raise ValueError('Invalid dataset type')
 
             player_var = f'x{idx}_0'
-            verb = data.y.item()
+            verbs = data.y.numpy()
 
             with(open(exs_filename, 'a')) as f:
-                if verb == target_verb_idx:
+                if target_verb_idx in verbs:
                     f.write(f'pos({target_verb_name}_target({player_var})).\n')
                 else:
                     if random.random() > keep_prob:
@@ -120,18 +120,13 @@ class PrologData:
     write the prolog background knowledge for the dataset in general
     '''
     def write_bk(self):
-        with open(self.bk_filename, 'w') as f, open(self.general_bk_filename, 'r') as g:
+        with open(self.bk_filename, 'w+') as f, open(self.general_bk_filename, 'r') as g:
             general_bk = g.read()
             f.write(general_bk)
             f.write('\n')
         
         for idx, inputs in enumerate(self.dataset):
-            if self.name == 'ag':
-                id, _, data, _, _ = inputs
-            elif self.name == 'toy':
-                data = inputs
-            else:
-                raise ValueError('Invalid dataset type')
+            id, _, data, _, _, _ = inputs
 
             example = self.pyg_to_prolog(idx, data)
 
@@ -139,10 +134,12 @@ class PrologData:
                 f.write('%%train example %d\n' % idx)
                 f.write(f'{example}\n')
 
-        #test_bk_filename = 'prolog/test_bk.pl'
+    def init_general_bk(self):
+        with open(self.general_bk_filename, 'w+') as f:
+            f.write(':- style_check(-discontiguous).\n')
 
     def init_general_bias(self):
-        with open(self.general_bias_filename, 'w') as f:
+        with open(self.general_bias_filename, 'w+') as f:
             for node in self.node_vocab:
                 f.write(f'body_pred({node}, 1).\n')
             for edge in self.edge_vocab:
@@ -157,8 +154,12 @@ def exp_curve(b,x):
 def main(config, args):
 
     root = config.data_root
+    prolog_folder = config.prolog_folder
     subset_file = config.subset_file
     verb_whitelist = config.verb_whitelist
+    position = config.position
+    verb_prior_file = config.verb_prior_file
+
     if type(verb_whitelist) == str and os.path.exists(verb_whitelist):
         with open(verb_whitelist, 'r') as f:
             verb_whitelist = [line for line in f.read().splitlines() if line and not line.startswith('#')]
@@ -166,10 +167,11 @@ def main(config, args):
         raise ValueError('Invalid verb whitelist')
 
     if args.train:
-        train_ag = AG(root, no_img=True, split='train', subset_file=subset_file, verb_whitelist=verb_whitelist)
+        train_ag = AG(root, no_img=True, split='train', subset_file=subset_file, verb_whitelist=verb_whitelist, position=position, verb_prior_file=verb_prior_file)
 
-        train_pd = PrologData('prolog', 'ag', train_ag, train_ag.object_classes, train_ag.relationship_classes, train_ag.verb_classes, model=None, split='train')
+        train_pd = PrologData(prolog_folder, train_ag, train_ag.object_classes, train_ag.relationship_classes, train_ag.verb_classes, model=None, split='train')
 
+        train_pd.init_general_bk()
         train_pd.write_bk()
         train_pd.init_general_bias()
 
@@ -180,15 +182,15 @@ def main(config, args):
             train_pd.write_verb(verb_name, keep_prob=exp_curve(4, ratio)) 
     
     if args.val:
-        val_ag = AG(root, no_img=True, split='val', subset_file=subset_file, verb_whitelist=verb_whitelist)
+        val_ag = AG(root, no_img=True, split='val', subset_file=subset_file, verb_whitelist=verb_whitelist, position=position, verb_prior_file=verb_prior_file)
 
-        val_pd = PrologData('prolog', 'ag', val_ag, val_ag.object_classes, val_ag.relationship_classes, val_ag.verb_classes, model=None, split='val')
+        val_pd = PrologData(prolog_folder, val_ag, val_ag.object_classes, val_ag.relationship_classes, val_ag.verb_classes, model=None, split='val')
         val_pd.write_bk()
 
     if args.test:
-        test_ag = AG(root, no_img=True, split='test', subset_file=subset_file, verb_whitelist=verb_whitelist)
+        test_ag = AG(root, no_img=True, split='test', subset_file=subset_file, verb_whitelist=verb_whitelist, position=position, verb_prior_file=verb_prior_file)
         
-        test_pd = PrologData('prolog', 'ag', test_ag, test_ag.object_classes, test_ag.relationship_classes, test_ag.verb_classes, model=None, split='test')
+        test_pd = PrologData(prolog_folder, test_ag, test_ag.object_classes, test_ag.relationship_classes, test_ag.verb_classes, model=None, split='test')
         test_pd.write_bk()
 
 if __name__ == '__main__':

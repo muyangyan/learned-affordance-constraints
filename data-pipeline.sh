@@ -16,14 +16,13 @@ fi
 # Generates the prolog background knowledge, biases, and examples for each verb
 if [ "$START_PART" -le 2 ]; then
     echo "Generating background files for ILP==================="
-    python prolog/prolog_generation.py --config $CONFIG_FILE
+    python prolog/prolog_generation.py --config $CONFIG_FILE --train --val --test
 fi
 
 
 # Runs Popper for each verb
 if [ "$START_PART" -le 3 ]; then
     echo "Running Popper for each verb==================="
-    rm -rf outputs/ag/popper_logs/*
     python prolog/run_popper.py --config $CONFIG_FILE
     echo "All Popper processes completed"
 fi

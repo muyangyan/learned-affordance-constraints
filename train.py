@@ -55,8 +55,8 @@ train
 def train(cfg, run_name):
     verb_whitelist = load_verb_whitelist(cfg.verb_whitelist)
 
-    train_set = AG(cfg.data_root, split='train', split_file=cfg.split_file, subset_file=cfg.subset_file, verb_whitelist=verb_whitelist)
-    val_set = AG(cfg.data_root, split='val', split_file=cfg.split_file, subset_file=cfg.subset_file, verb_whitelist=verb_whitelist)
+    train_set = AG(cfg.data_root, split='train', split_file=cfg.split_file, subset_file=cfg.subset_file, verb_whitelist=verb_whitelist, verb_prior_file=cfg.verb_prior_file)
+    val_set = AG(cfg.data_root, split='val', split_file=cfg.split_file, subset_file=cfg.subset_file, verb_whitelist=verb_whitelist, verb_prior_file=cfg.verb_prior_file)
 
     train_loader = DataLoader(train_set, batch_size=cfg.batch_size, collate_fn=train_set.verb_pred_collate, num_workers=16, shuffle=True)
     val_loader = DataLoader(val_set, batch_size=128, collate_fn=val_set.verb_pred_collate, num_workers=16, shuffle=False)

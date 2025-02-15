@@ -11,16 +11,21 @@ def parse_metrics(line):
             metrics['precision'] = float(metric.split(':')[1])
         elif metric.startswith('Recall:'):
             metrics['recall'] = float(metric.split(':')[1])
-        elif metric.startswith('TP:'):
+        elif metric.startswith('TP:') or metric.startswith('tp:'):
             metrics['tp'] = int(metric.split(':')[1])
-        elif metric.startswith('FN:'):
+        elif metric.startswith('FN:') or metric.startswith('fn:'):
             metrics['fn'] = int(metric.split(':')[1])
-        elif metric.startswith('TN:'):
+        elif metric.startswith('TN:') or metric.startswith('tn:'):
             metrics['tn'] = int(metric.split(':')[1])
-        elif metric.startswith('FP:'):
+        elif metric.startswith('FP:') or metric.startswith('fp:'):
             metrics['fp'] = int(metric.split(':')[1])
-        elif metric.startswith('Size:'):
+        elif metric.startswith('Size:') or metric.startswith('size:'):
             metrics['size'] = int(metric.split(':')[1])
+        
+    if not 'precision' in metrics.keys():
+        metrics['precision'] = round(metrics['tp'] / (metrics['tp'] + metrics['fp']), 2)
+    if not 'recall' in metrics.keys():
+        metrics['recall'] = round(metrics['tp'] / (metrics['tp'] + metrics['fn']), 2)
     return metrics
 
 def parse_logs(folder):
@@ -28,30 +33,57 @@ def parse_logs(folder):
     for file in os.listdir(folder):
         rule = []
         metrics = None
+        add_rule = True
         with open(folder + '/' + file, 'r') as f:
             lines = f.readlines()
-            if lines[-1].strip('\n') != "******************************":
+
+            if lines[-1].strip('\n') == "NO SOLUTION":
                 print(file, 'no solution')
                 rules[file] = None
                 continue
-            for line in reversed(lines[:-1]):
-                line = line.strip('\n')
-                if line[-1] != '.':
-                    if line.startswith('Precision:'):
-                        metrics = parse_metrics(line)
-                    break
-                rule.append(line)
-        rules[file] = (rule, metrics)
+            if lines[-1].strip('\n') != "******************************":
+                print(file, 'stuck, fixing')
+                for line in reversed(lines[:-1]):
+                    line = line.strip('\n')
+
+                    if line.startswith('body_pred'):
+                        print(file, 'no solution')
+                        rules[file] = None
+                        add_rule = False
+                        break
+                        
+                    line = ' '.join(line.split(' ')[1:])
+                    if line[-1] != '.':
+                        if line.startswith('tp:'):
+                            metrics = parse_metrics(line)
+                            break
+                    else:
+                        rule.append(line)
+            else:
+                for line in reversed(lines[:-1]):
+                    line = line.strip('\n')
+                    if line[-1] != '.':
+                        if line.startswith('Precision:'):
+                            metrics = parse_metrics(line)
+                        break
+                    rule.append(line)
+        if add_rule:
+            rules[file] = (rule, metrics)
     return rules
 
-def write_rules(outputs_folder, rules_name, weight, timeout):
-    print(outputs_folder)
-    rules = parse_logs(os.path.join(outputs_folder, 'popper_logs'))
+def write_rules(rules_folder, logs_folder, rules_name, weight, timeout):
+    print('writing rules to:', rules_folder)
+    print('parsing logs from:', logs_folder)
+    print('rules name:', rules_name)
+    rules = parse_logs(logs_folder)
 
-    with open(os.path.join(outputs_folder, rules_name + '.json'), 'w') as f:
+    if not os.path.exists(rules_folder):
+        os.makedirs(rules_folder)
+
+    with open(os.path.join(rules_folder, rules_name + '.json'), 'w') as f:
         json.dump(rules, f)
 
-    with open(os.path.join(outputs_folder, rules_name + '.pl'), 'w') as f: 
+    with open(os.path.join(rules_folder, rules_name + '.pl'), 'w') as f: 
         f.write(f'%%{rules_name} weight: {weight} timeout: {timeout}\n')
         for verb, rule_pair in rules.items():
             f.write(f'%%{verb}\n')
@@ -74,4 +106,4 @@ if __name__ == '__main__':
 
     config = load_yaml(args.config)
 
-    write_rules(config.rules_folder, config.rules_name, config.fn_weight, config.ilp_timeout)
+    write_rules(config.rules_folder, config.log_folder, config.rules_name, config.fn_weight, config.ilp_timeout)

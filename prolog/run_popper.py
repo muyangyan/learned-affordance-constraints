@@ -4,6 +4,7 @@ import subprocess
 from pathlib import Path
 from util.config_utils import load_yaml
 import multiprocessing as mp
+import shutil
 
 def run_popper_for_verb(verb, prolog_path, log_folder, popper_path, fn_weight, ilp_timeout):
     """Run Popper ILP system for a single verb"""
@@ -51,6 +52,13 @@ def main(config):
             verb_whitelist = [line for line in f.read().splitlines() if line and not line.startswith('#')]
     else:
         raise ValueError('Invalid verb whitelist')
+
+    # Delete the prolog_logs folder if it exists
+    if os.path.exists(log_folder):
+        print(f"Deleting folder: {log_folder}")
+        #input("Press Enter to continue")
+        shutil.rmtree(log_folder)
+        print(f"Deleted folder: {log_folder}")
 
     # Create process pool
     pool = mp.Pool(processes=min(mp.cpu_count(), len(verb_whitelist)))
