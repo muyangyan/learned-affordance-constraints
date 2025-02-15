@@ -16,4 +16,4 @@ class JointModel(nn.Module):
         img = self.vit(img)
         sg = self.rgcn(sg)
         hidden_state = torch.cat((img, sg), dim=1)
-        return F.softmax(self.head(hidden_state), dim=-1)
+        return self.head(hidden_state)

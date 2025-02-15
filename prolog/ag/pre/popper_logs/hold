@@ -1,0 +1,95 @@
+%%no negative model used
+max_vars(6).
+max_body(8).
+head_pred(hold_target, 1).
+body_pred(person, 1).
+body_pred(bag, 1).
+body_pred(bed, 1).
+body_pred(blanket, 1).
+body_pred(book, 1).
+body_pred(box, 1).
+body_pred(broom, 1).
+body_pred(chair, 1).
+body_pred(closet_cabinet, 1).
+body_pred(clothes, 1).
+body_pred(cup_glass_bottle, 1).
+body_pred(dish, 1).
+body_pred(door, 1).
+body_pred(doorknob, 1).
+body_pred(doorway, 1).
+body_pred(floor, 1).
+body_pred(food, 1).
+body_pred(groceries, 1).
+body_pred(laptop, 1).
+body_pred(light, 1).
+body_pred(medicine, 1).
+body_pred(mirror, 1).
+body_pred(paper_notebook, 1).
+body_pred(phone_camera, 1).
+body_pred(picture, 1).
+body_pred(pillow, 1).
+body_pred(refrigerator, 1).
+body_pred(sandwich, 1).
+body_pred(shelf, 1).
+body_pred(shoe, 1).
+body_pred(sofa_couch, 1).
+body_pred(table, 1).
+body_pred(television, 1).
+body_pred(towel, 1).
+body_pred(vacuum, 1).
+body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
+body_pred(above, 2).
+body_pred(beneath, 2).
+body_pred(in_front_of, 2).
+body_pred(behind, 2).
+body_pred(on_the_side_of, 2).
+body_pred(in, 2).
+body_pred(carrying, 2).
+body_pred(covered_by, 2).
+body_pred(drinking_from, 2).
+body_pred(eating, 2).
+body_pred(have_it_on_the_back, 2).
+body_pred(holding, 2).
+body_pred(leaning_on, 2).
+body_pred(lying_on, 2).
+body_pred(not_contacting, 2).
+body_pred(other_relationship, 2).
+body_pred(sitting_on, 2).
+body_pred(standing_on, 2).
+body_pred(touching, 2).
+body_pred(twisting, 2).
+body_pred(wearing, 2).
+body_pred(wiping, 2).
+body_pred(writing_on, 2).
+16:11:03 Generating programs of size: 2
+16:11:03 Generating programs of size: 3
+16:11:04 ********************
+16:11:04 New best hypothesis:
+16:11:04 tp:10 fn:331 tn:1569 fp:6 size:3 mdl:340
+16:11:04 hold_target(A):- not_contacting(A,B),broom(B).
+16:11:04 ********************
+16:11:04 ********************
+16:11:04 New best hypothesis:
+16:11:04 tp:31 fn:310 tn:1556 fp:19 size:3 mdl:332
+16:11:04 hold_target(A):- not_contacting(A,B),dish(B).
+16:11:04 ********************
+16:11:11 Generating programs of size: 4
+16:11:18 ********************
+16:11:18 New best hypothesis:
+16:11:18 tp:85 fn:256 tn:1523 fp:52 size:12 mdl:320
+16:11:18 hold_target(A):- not_contacting(A,B),dish(B).
+16:11:18 hold_target(A):- not_contacting(A,B),bag(B).
+16:11:18 hold_target(A):- not_contacting(A,B),blanket(B).
+16:11:18 hold_target(A):- laptop(B),unsure(A,B).
+16:11:18 ********************
+16:12:01 TIMEOUT OF 60 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.62 Recall:0.25 TP:85 FN:256 TN:1523 FP:52 Size:12 MDL:320
+hold_target(A):- not_contacting(A,B),dish(B).
+hold_target(A):- not_contacting(A,B),bag(B).
+hold_target(A):- not_contacting(A,B),blanket(B).
+hold_target(A):- laptop(B),unsure(A,B).
+******************************

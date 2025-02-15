@@ -121,7 +121,7 @@ class AG(Dataset):
             id = get_id(video_id, frame_idx)
 
             # only use videos in the split, and examples in the subset
-            if video_id not in split_ids or (self.subset_file is not None and subset[id] == 'False'):
+            if video_id not in split_ids or (self.subset_file is not None and subset.get(id, 'False') == 'False'):
                 continue
 
             #now we know we can include in our dataset

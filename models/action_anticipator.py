@@ -2,6 +2,7 @@ import numpy as np
 import torch
 from torch import Tensor
 import torch.nn.functional as F
+import torch.nn as nn
 
 from models.modules.rgcn import RGCN
 from models.modules.vit import ViT
@@ -34,23 +35,27 @@ class ActionAnticipator(L.LightningModule):
         
         # Move weight to correct device and store it only once
         self.register_buffer('weight', weight)
+
+        self.criterion = nn.BCEWithLogitsLoss(weight=self.weight)
         
         # debug vars
         self.ids = []
         self.preds = None
 
         #epoch metrics
-        self.train_accuracy = torchmetrics.Accuracy(task='multiclass', num_classes=num_classes)
-        self.val_accuracy = torchmetrics.Accuracy(task='multiclass', num_classes=num_classes)
+        #self.train_accuracy = torchmetrics.Accuracy(task='multilabel', average='macro', num_labels=num_classes)
+        #self.val_accuracy = torchmetrics.Accuracy(task='multilabel', average='macro', num_labels=num_classes)
+        self.train_mAP = AveragePrecision(task='multilabel', average='macro', num_labels=num_classes)
+        self.val_mAP = AveragePrecision(task='multilabel', average='macro', num_labels=num_classes)
 
         self.test_metrics = MetricCollection({
-            'acc_top1': Accuracy(task='multiclass', num_classes=num_classes),
-            'acc_top5': Accuracy(task='multiclass', num_classes=num_classes, top_k=5),
-            'prec_macro': Precision(task='multiclass', average='macro', num_classes=num_classes),
-            'rec_macro': Recall(task='multiclass', average='macro', num_classes=num_classes),
-            'prec_micro': Precision(task='multiclass', average='micro', num_classes=num_classes),
-            'rec_micro': Recall(task='multiclass', average='micro', num_classes=num_classes),
-            'mAP': AveragePrecision(task='multiclass', average='macro', num_classes=num_classes),
+            'acc_macro': Accuracy(task='multilabel', average='macro', num_labels=num_classes),
+            'acc_micro': Accuracy(task='multilabel', average='micro', num_labels=num_classes),
+            'prec_macro': Precision(task='multilabel', average='macro', num_labels=num_classes),
+            'prec_micro': Precision(task='multilabel', average='micro', num_labels=num_classes),
+            'rec_macro': Recall(task='multilabel', average='macro', num_labels=num_classes),
+            'rec_micro': Recall(task='multilabel', average='micro', num_labels=num_classes),
+            'mAP': AveragePrecision(task='multilabel', average='macro', num_labels=num_classes),
         })
 
         self.save_hyperparameters()
@@ -64,50 +69,42 @@ class ActionAnticipator(L.LightningModule):
             return self.model(img, sg)
     
     def training_step(self, batch, batch_idx):
-        ids, imgs, sgs, verbs, labels, constraints, truth_values = batch
+        ids, imgs, sgs, labels, constraints, truth_values = batch
         out = self(imgs, sgs)
         
-        loss = F.cross_entropy(out, labels, weight=self.weight)
-        out, labels = torch.argmax(out, dim=1), torch.argmax(labels, dim=1)
-        acc = self.train_accuracy(out, labels)
+        loss = self.criterion(out, labels)
+        mAP = self.train_mAP(out, labels.int())
         
         self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True)
-        self.log('train_acc', acc, on_step=False, on_epoch=True, prog_bar=True)
+        self.log('train_mAP', mAP, on_step=False, on_epoch=True, prog_bar=True)
         
         return loss
 
     def validation_step(self, batch, batch_idx):
-        ids, imgs, sgs, verbs, labels, constraints, truth_values = batch
+        ids, imgs, sgs, labels, constraints, truth_values = batch
         out = self(imgs, sgs)
-        out, labels = torch.argmax(out, dim=1), torch.argmax(labels, dim=1)
-        val_acc = self.val_accuracy(out, labels) 
+        loss = self.criterion(out, labels)
+        mAP = self.val_mAP(out, labels.int())
         
-        self.log('val_acc', val_acc, on_step=False, on_epoch=True, prog_bar=True)
+        self.log('val_loss', loss, on_step=False, on_epoch=True, prog_bar=True)
+        self.log('val_mAP', mAP, on_step=False, on_epoch=True, prog_bar=True)
     
     def test_step(self, batch, batch_idx):
-        ids, imgs, sgs, verbs, labels, constraints, truth_values = batch
+        ids, imgs, sgs, labels, constraints, truth_values = batch
         out = self(imgs, sgs)
-
-        neural_out_classes = torch.argmax(out, dim=1)
-        rule_out_classes = -1 * torch.ones_like(neural_out_classes)
-        label_classes = torch.argmax(labels, dim=1)
 
         if constraints is not None:
             if self.constraint_mode is None:
                 raise ValueError(f'Constraint mode is not set')
-
-            rule_out_classes = torch.argmax(constraints, dim=1)
             constrained_out = self.apply_constraints(out, constraints, weight=self.constraint_weight)
-
             out = constrained_out
-        out_classes = torch.argmax(out, dim=1)
 
         # debug, metrics and logging
         self.ids.extend(ids)
         if self.preds is not None:
-            self.preds.append(torch.stack([neural_out_classes, rule_out_classes, out_classes, label_classes], dim=1).cpu())
+            self.preds.append(torch.stack([out, labels], dim=1).cpu())
         
-        metrics_dict = self.test_metrics(out, label_classes)
+        metrics_dict = self.test_metrics(out, labels.int())
         self.log_dict(metrics_dict, on_step=False, on_epoch=True, prog_bar=True)
 
     def on_test_epoch_end(self):
@@ -116,11 +113,11 @@ class ActionAnticipator(L.LightningModule):
             self.preds = self.preds.cpu().numpy()
 
     def predict_step(self, batch, batch_idx):
-        ids, imgs, sgs, verbs, labels, constraints, truth_values = batch
+        ids, imgs, sgs, labels, constraints, truth_values = batch
         out = self(imgs, sgs)
         if constraints is not None:
             out = self.apply_constraints(out, constraints, weight=self.constraint_weight)
-        return ids, imgs, sgs, verbs, constraints, out
+        return ids, imgs, sgs, labels, constraints, out
     
     def predict_single(self, img, sg, constraints, truth_values, explain=False):
         self.eval()
@@ -131,13 +128,13 @@ class ActionAnticipator(L.LightningModule):
                 return constrained_out, out, constraints
             return out
     
-    def apply_constraints(self, out, constraints, weight=1.0):
+    def apply_constraints(self, out, constraints, weight=0.5):
         if self.constraint_mode is None:
             raise ValueError(f'Constraint mode is not set')
         if self.constraint_mode == 'hard':
-            return F.normalize(out * constraints, dim=1)
+            return out * constraints
         elif self.constraint_mode == 'soft':
-            return F.normalize(out * (constraints ** weight), dim=1) #TODO: why doesnt softmax constraints work better
+            return (1-weight) * out + weight * constraints
         else:
             raise ValueError(f'Invalid mode: {self.constraint_mode}')
 
