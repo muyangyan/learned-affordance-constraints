@@ -64,42 +64,55 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-16:11:03 Generating programs of size: 2
-16:11:03 Generating programs of size: 3
-16:11:03 ********************
-16:11:03 New best hypothesis:
-16:11:03 tp:7 fn:230 tn:839 fp:2 size:3 mdl:235
-16:11:03 tidy_target(A):- vacuum(B),holding(A,B).
-16:11:03 ********************
-16:11:03 ********************
-16:11:03 New best hypothesis:
-16:11:03 tp:41 fn:196 tn:828 fp:13 size:3 mdl:212
-16:11:03 tidy_target(A):- broom(B),holding(A,B).
-16:11:03 ********************
-16:11:04 ********************
-16:11:04 New best hypothesis:
-16:11:04 tp:67 fn:170 tn:816 fp:25 size:3 mdl:198
-16:11:04 tidy_target(A):- standing_on(A,B),beneath(B,A).
-16:11:04 ********************
-16:11:06 ********************
-16:11:06 New best hypothesis:
-16:11:06 tp:67 fn:170 tn:817 fp:24 size:3 mdl:197
-16:11:06 tidy_target(A):- floor(B),standing_on(A,B).
-16:11:06 ********************
-16:11:10 Generating programs of size: 4
-16:11:20 ********************
-16:11:20 New best hypothesis:
-16:11:20 tp:99 fn:138 tn:810 fp:31 size:12 mdl:181
-16:11:20 tidy_target(A):- shelf(B),looking_at(A,B).
-16:11:20 tidy_target(A):- unsure(A,B),broom(B).
-16:11:20 tidy_target(A):- unsure(A,B),shelf(B).
-16:11:20 tidy_target(A):- floor(B),standing_on(A,B).
-16:11:20 ********************
-16:12:01 TIMEOUT OF 60 SECONDS EXCEEDED
+17:45:38 Generating programs of size: 2
+17:45:39 Generating programs of size: 3
+17:45:39 ********************
+17:45:39 New best hypothesis:
+17:45:39 tp:7 fn:230 tn:839 fp:2 size:3 mdl:235
+17:45:39 tidy_target(A):- vacuum(B),holding(A,B).
+17:45:39 ********************
+17:45:39 ********************
+17:45:39 New best hypothesis:
+17:45:39 tp:41 fn:196 tn:828 fp:13 size:3 mdl:212
+17:45:39 tidy_target(A):- holding(A,B),broom(B).
+17:45:39 ********************
+17:45:40 ********************
+17:45:40 New best hypothesis:
+17:45:40 tp:67 fn:170 tn:816 fp:25 size:3 mdl:198
+17:45:40 tidy_target(A):- beneath(B,A),standing_on(A,B).
+17:45:40 ********************
+17:45:40 ********************
+17:45:40 New best hypothesis:
+17:45:40 tp:67 fn:170 tn:817 fp:24 size:3 mdl:197
+17:45:40 tidy_target(A):- floor(B),standing_on(A,B).
+17:45:40 ********************
+17:45:45 Generating programs of size: 4
+17:45:55 ********************
+17:45:55 New best hypothesis:
+17:45:55 tp:99 fn:138 tn:810 fp:31 size:12 mdl:181
+17:45:55 tidy_target(A):- shelf(B),looking_at(A,B).
+17:45:55 tidy_target(A):- unsure(A,B),shelf(B).
+17:45:55 tidy_target(A):- unsure(A,B),broom(B).
+17:45:55 tidy_target(A):- floor(B),standing_on(A,B).
+17:45:55 ********************
+18:08:08 Generating programs of size: 5
+18:08:18 ********************
+18:08:18 New best hypothesis:
+18:08:18 tp:119 fn:118 tn:800 fp:41 size:21 mdl:180
+18:08:18 tidy_target(A):- unsure(A,B),shelf(B).
+18:08:18 tidy_target(A):- unsure(A,B),broom(B).
+18:08:18 tidy_target(A):- floor(B),standing_on(A,B).
+18:08:18 tidy_target(A):- holding(A,B),in_front_of(B,A),blanket(B).
+18:08:18 tidy_target(A):- in_front_of(B,A),shelf(B),looking_at(A,B).
+18:08:18 tidy_target(A):- on_the_side_of(B,A),laptop(B),not_looking_at(A,B).
+18:08:18 ********************
+19:25:49 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.76 Recall:0.42 TP:99 FN:138 TN:810 FP:31 Size:12 MDL:181
-tidy_target(A):- shelf(B),looking_at(A,B).
-tidy_target(A):- unsure(A,B),broom(B).
+Precision:0.74 Recall:0.50 TP:119 FN:118 TN:800 FP:41 Size:21 MDL:180
 tidy_target(A):- unsure(A,B),shelf(B).
+tidy_target(A):- unsure(A,B),broom(B).
 tidy_target(A):- floor(B),standing_on(A,B).
+tidy_target(A):- holding(A,B),in_front_of(B,A),blanket(B).
+tidy_target(A):- in_front_of(B,A),shelf(B),looking_at(A,B).
+tidy_target(A):- on_the_side_of(B,A),laptop(B),not_looking_at(A,B).
 ******************************

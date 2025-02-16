@@ -64,50 +64,67 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-16:11:03 Generating programs of size: 2
-16:11:03 Generating programs of size: 3
-16:11:03 ********************
-16:11:03 New best hypothesis:
-16:11:03 tp:10 fn:367 tn:1365 fp:3 size:3 mdl:373
-16:11:03 open_target(A):- refrigerator(B),holding(A,B).
-16:11:03 ********************
-16:11:03 ********************
-16:11:03 New best hypothesis:
-16:11:03 tp:43 fn:334 tn:1340 fp:28 size:3 mdl:365
-16:11:03 open_target(A):- door(B),not_looking_at(A,B).
-16:11:03 ********************
-16:11:04 ********************
-16:11:04 New best hypothesis:
-16:11:04 tp:60 fn:317 tn:1335 fp:33 size:3 mdl:353
-16:11:04 open_target(A):- in_front_of(B,A),door(B).
-16:11:04 ********************
-16:11:04 ********************
-16:11:04 New best hypothesis:
-16:11:04 tp:72 fn:305 tn:1324 fp:44 size:3 mdl:352
-16:11:04 open_target(A):- door(B),not_contacting(A,B).
-16:11:04 ********************
-16:11:10 Generating programs of size: 4
-16:11:20 ********************
-16:11:20 New best hypothesis:
-16:11:20 tp:152 fn:225 tn:1283 fp:85 size:24 mdl:334
-16:11:20 open_target(A):- refrigerator(B),holding(A,B).
-16:11:20 open_target(A):- doorknob(B),looking_at(A,B).
-16:11:20 open_target(A):- door(B),touching(A,B).
-16:11:20 open_target(A):- door(B),not_contacting(A,B).
-16:11:20 open_target(A):- window(B),touching(A,B).
-16:11:20 open_target(A):- touching(A,B),box(B).
-16:11:20 open_target(A):- refrigerator(B),not_contacting(A,B).
-16:11:20 open_target(A):- carrying(A,B),bag(B).
-16:11:20 ********************
-16:12:01 TIMEOUT OF 60 SECONDS EXCEEDED
+17:45:38 Generating programs of size: 2
+17:45:39 Generating programs of size: 3
+17:45:39 ********************
+17:45:39 New best hypothesis:
+17:45:39 tp:10 fn:367 tn:1365 fp:3 size:3 mdl:373
+17:45:39 open_target(A):- refrigerator(B),holding(A,B).
+17:45:39 ********************
+17:45:39 ********************
+17:45:39 New best hypothesis:
+17:45:39 tp:43 fn:334 tn:1340 fp:28 size:3 mdl:365
+17:45:39 open_target(A):- door(B),not_looking_at(A,B).
+17:45:39 ********************
+17:45:41 ********************
+17:45:41 New best hypothesis:
+17:45:41 tp:29 fn:348 tn:1356 fp:12 size:3 mdl:363
+17:45:41 open_target(A):- refrigerator(B),not_contacting(A,B).
+17:45:41 ********************
+17:45:41 ********************
+17:45:41 New best hypothesis:
+17:45:41 tp:72 fn:305 tn:1324 fp:44 size:3 mdl:352
+17:45:41 open_target(A):- door(B),not_contacting(A,B).
+17:45:41 ********************
+17:45:47 Generating programs of size: 4
+17:45:57 ********************
+17:45:57 New best hypothesis:
+17:45:57 tp:152 fn:225 tn:1283 fp:85 size:24 mdl:334
+17:45:57 open_target(A):- refrigerator(B),holding(A,B).
+17:45:57 open_target(A):- doorknob(B),looking_at(A,B).
+17:45:57 open_target(A):- touching(A,B),window(B).
+17:45:57 open_target(A):- touching(A,B),door(B).
+17:45:57 open_target(A):- touching(A,B),box(B).
+17:45:57 open_target(A):- bag(B),carrying(A,B).
+17:45:57 open_target(A):- refrigerator(B),not_contacting(A,B).
+17:45:57 open_target(A):- door(B),not_contacting(A,B).
+17:45:57 ********************
+18:00:57 Generating programs of size: 5
+18:01:07 ********************
+18:01:07 New best hypothesis:
+18:01:07 tp:172 fn:205 tn:1277 fp:91 size:33 mdl:329
+18:01:07 open_target(A):- refrigerator(B),holding(A,B).
+18:01:07 open_target(A):- doorknob(B),looking_at(A,B).
+18:01:07 open_target(A):- touching(A,B),window(B).
+18:01:07 open_target(A):- touching(A,B),door(B).
+18:01:07 open_target(A):- touching(A,B),box(B).
+18:01:07 open_target(A):- refrigerator(B),not_contacting(A,B).
+18:01:07 open_target(A):- door(B),not_contacting(A,B).
+18:01:07 open_target(A):- book(B),on_the_side_of(B,A),looking_at(A,B).
+18:01:07 open_target(A):- bag(B),on_the_side_of(B,A),unsure(A,B).
+18:01:07 open_target(A):- groceries(B),not_looking_at(A,B),holding(A,B).
+18:01:07 ********************
+19:26:43 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.64 Recall:0.40 TP:152 FN:225 TN:1283 FP:85 Size:24 MDL:334
+Precision:0.65 Recall:0.46 TP:172 FN:205 TN:1277 FP:91 Size:33 MDL:329
 open_target(A):- refrigerator(B),holding(A,B).
 open_target(A):- doorknob(B),looking_at(A,B).
-open_target(A):- door(B),touching(A,B).
-open_target(A):- door(B),not_contacting(A,B).
-open_target(A):- window(B),touching(A,B).
+open_target(A):- touching(A,B),window(B).
+open_target(A):- touching(A,B),door(B).
 open_target(A):- touching(A,B),box(B).
 open_target(A):- refrigerator(B),not_contacting(A,B).
-open_target(A):- carrying(A,B),bag(B).
+open_target(A):- door(B),not_contacting(A,B).
+open_target(A):- book(B),on_the_side_of(B,A),looking_at(A,B).
+open_target(A):- bag(B),on_the_side_of(B,A),unsure(A,B).
+open_target(A):- groceries(B),not_looking_at(A,B),holding(A,B).
 ******************************

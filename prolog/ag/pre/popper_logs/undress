@@ -64,52 +64,48 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-16:11:03 Generating programs of size: 2
-16:11:03 Generating programs of size: 3
-16:11:03 ********************
-16:11:03 New best hypothesis:
-16:11:03 tp:4 fn:76 tn:371 fp:0 size:3 mdl:79
-16:11:03 undress_target(A):- wearing(A,B),holding(A,B).
-16:11:03 ********************
-16:11:03 ********************
-16:11:03 New best hypothesis:
-16:11:03 tp:23 fn:57 tn:362 fp:9 size:3 mdl:69
-16:11:03 undress_target(A):- unsure(A,B),in(B,A).
-16:11:03 ********************
-16:11:03 ********************
-16:11:03 New best hypothesis:
-16:11:03 tp:27 fn:53 tn:363 fp:8 size:3 mdl:64
-16:11:03 undress_target(A):- unsure(A,B),wearing(A,B).
-16:11:03 ********************
-16:11:04 ********************
-16:11:04 New best hypothesis:
-16:11:04 tp:30 fn:50 tn:364 fp:7 size:3 mdl:60
-16:11:04 undress_target(A):- not_looking_at(A,B),wearing(A,B).
-16:11:04 ********************
-16:11:04 ********************
-16:11:04 New best hypothesis:
-16:11:04 tp:49 fn:31 tn:358 fp:13 size:3 mdl:47
-16:11:04 undress_target(A):- in(B,A),wearing(A,B).
-16:11:04 ********************
-16:11:04 ********************
-16:11:04 New best hypothesis:
-16:11:04 tp:54 fn:26 tn:356 fp:15 size:3 mdl:44
-16:11:04 undress_target(A):- clothes(B),wearing(A,B).
-16:11:04 ********************
-16:11:08 Generating programs of size: 4
-16:11:10 ********************
-16:11:10 New best hypothesis:
-16:11:10 tp:61 fn:19 tn:355 fp:16 size:6 mdl:41
-16:11:10 undress_target(A):- unsure(A,B),shoe(B).
-16:11:10 undress_target(A):- clothes(B),wearing(A,B).
-16:11:10 ********************
-16:11:50 ********************
-16:11:50 New best hypothesis:
-16:11:50 tp:63 fn:17 tn:352 fp:19 size:4 mdl:40
-16:11:50 undress_target(A):- wearing(C,B),person(C),wearing(A,B).
-16:11:50 ********************
-16:12:01 TIMEOUT OF 60 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.77 Recall:0.79 TP:63 FN:17 TN:352 FP:19 Size:4 MDL:40
-undress_target(A):- wearing(C,B),person(C),wearing(A,B).
-******************************
+17:45:38 Generating programs of size: 2
+17:45:39 Generating programs of size: 3
+17:45:39 ********************
+17:45:39 New best hypothesis:
+17:45:39 tp:4 fn:76 tn:371 fp:0 size:3 mdl:79
+17:45:39 undress_target(A):- wearing(A,B),holding(A,B).
+17:45:39 ********************
+17:45:39 ********************
+17:45:39 New best hypothesis:
+17:45:39 tp:23 fn:57 tn:362 fp:9 size:3 mdl:69
+17:45:39 undress_target(A):- in(B,A),unsure(A,B).
+17:45:39 ********************
+17:45:39 ********************
+17:45:39 New best hypothesis:
+17:45:39 tp:27 fn:53 tn:363 fp:8 size:3 mdl:64
+17:45:39 undress_target(A):- wearing(A,B),unsure(A,B).
+17:45:39 ********************
+17:45:40 ********************
+17:45:40 New best hypothesis:
+17:45:40 tp:30 fn:50 tn:364 fp:7 size:3 mdl:60
+17:45:40 undress_target(A):- not_looking_at(A,B),wearing(A,B).
+17:45:40 ********************
+17:45:41 ********************
+17:45:41 New best hypothesis:
+17:45:41 tp:49 fn:31 tn:358 fp:13 size:3 mdl:47
+17:45:41 undress_target(A):- in(B,A),wearing(A,B).
+17:45:41 ********************
+17:45:41 ********************
+17:45:41 New best hypothesis:
+17:45:41 tp:54 fn:26 tn:356 fp:15 size:3 mdl:44
+17:45:41 undress_target(A):- clothes(B),wearing(A,B).
+17:45:41 ********************
+17:45:45 Generating programs of size: 4
+17:45:48 ********************
+17:45:48 New best hypothesis:
+17:45:48 tp:61 fn:19 tn:355 fp:16 size:6 mdl:41
+17:45:48 undress_target(A):- shoe(B),unsure(A,B).
+17:45:48 undress_target(A):- clothes(B),wearing(A,B).
+17:45:48 ********************
+17:46:02 ********************
+17:46:02 New best hypothesis:
+17:46:02 tp:63 fn:17 tn:352 fp:19 size:4 mdl:40
+17:46:02 undress_target(A):- wearing(B,C),wearing(A,C),person(B).
+17:46:02 ********************
+17:53:23 Generating programs of size: 5

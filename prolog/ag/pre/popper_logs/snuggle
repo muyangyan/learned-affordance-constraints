@@ -64,32 +64,33 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-16:11:03 Generating programs of size: 2
-16:11:03 Generating programs of size: 3
-16:11:03 ********************
-16:11:03 New best hypothesis:
-16:11:03 tp:20 fn:44 tn:283 fp:7 size:3 mdl:54
-16:11:03 snuggle_target(A):- holding(A,B),blanket(B).
-16:11:03 ********************
-16:11:03 ********************
-16:11:03 New best hypothesis:
-16:11:03 tp:32 fn:32 tn:281 fp:9 size:3 mdl:44
-16:11:03 snuggle_target(A):- not_looking_at(A,B),blanket(B).
-16:11:03 ********************
-16:11:09 Generating programs of size: 4
-16:11:11 ********************
-16:11:11 New best hypothesis:
-16:11:11 tp:52 fn:12 tn:275 fp:15 size:12 mdl:39
-16:11:11 snuggle_target(A):- holding(A,B),blanket(B).
-16:11:11 snuggle_target(A):- not_looking_at(A,B),blanket(B).
-16:11:11 snuggle_target(A):- touching(A,B),blanket(B).
-16:11:11 snuggle_target(A):- touching(A,B),pillow(B).
-16:11:11 ********************
-16:12:01 TIMEOUT OF 60 SECONDS EXCEEDED
+17:45:38 Generating programs of size: 2
+17:45:39 Generating programs of size: 3
+17:45:39 ********************
+17:45:39 New best hypothesis:
+17:45:39 tp:20 fn:44 tn:283 fp:7 size:3 mdl:54
+17:45:39 snuggle_target(A):- holding(A,B),blanket(B).
+17:45:39 ********************
+17:45:39 ********************
+17:45:39 New best hypothesis:
+17:45:39 tp:32 fn:32 tn:281 fp:9 size:3 mdl:44
+17:45:39 snuggle_target(A):- blanket(B),not_looking_at(A,B).
+17:45:39 ********************
+17:45:45 Generating programs of size: 4
+17:45:47 ********************
+17:45:47 New best hypothesis:
+17:45:47 tp:52 fn:12 tn:275 fp:15 size:12 mdl:39
+17:45:47 snuggle_target(A):- holding(A,B),blanket(B).
+17:45:47 snuggle_target(A):- blanket(B),not_looking_at(A,B).
+17:45:47 snuggle_target(A):- touching(A,B),pillow(B).
+17:45:47 snuggle_target(A):- blanket(B),touching(A,B).
+17:45:47 ********************
+18:16:57 Generating programs of size: 5
+19:26:44 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
 Precision:0.78 Recall:0.81 TP:52 FN:12 TN:275 FP:15 Size:12 MDL:39
 snuggle_target(A):- holding(A,B),blanket(B).
-snuggle_target(A):- not_looking_at(A,B),blanket(B).
-snuggle_target(A):- touching(A,B),blanket(B).
+snuggle_target(A):- blanket(B),not_looking_at(A,B).
 snuggle_target(A):- touching(A,B),pillow(B).
+snuggle_target(A):- blanket(B),touching(A,B).
 ******************************

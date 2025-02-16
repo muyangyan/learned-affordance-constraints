@@ -64,30 +64,29 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-16:11:03 Generating programs of size: 2
-16:11:03 Generating programs of size: 3
-16:11:03 ********************
-16:11:03 New best hypothesis:
-16:11:03 tp:7 fn:27 tn:174 fp:3 size:3 mdl:33
-16:11:03 lie_target(A):- blanket(B),covered_by(A,B).
-16:11:03 ********************
-16:11:04 ********************
-16:11:04 New best hypothesis:
-16:11:04 tp:8 fn:26 tn:176 fp:1 size:3 mdl:30
-16:11:04 lie_target(A):- on_the_side_of(B,A),leaning_on(A,B).
-16:11:04 ********************
-16:11:08 Generating programs of size: 4
-16:11:10 ********************
-16:11:10 New best hypothesis:
-16:11:10 tp:18 fn:16 tn:174 fp:3 size:9 mdl:28
-16:11:10 lie_target(A):- on_the_side_of(B,A),leaning_on(A,B).
-16:11:10 lie_target(A):- other_relationship(A,B),floor(B).
-16:11:10 lie_target(A):- lying_on(A,B),behind(B,A).
-16:11:10 ********************
-16:12:03 TIMEOUT OF 60 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.86 Recall:0.53 TP:18 FN:16 TN:174 FP:3 Size:9 MDL:28
-lie_target(A):- on_the_side_of(B,A),leaning_on(A,B).
-lie_target(A):- other_relationship(A,B),floor(B).
-lie_target(A):- lying_on(A,B),behind(B,A).
-******************************
+17:45:38 Generating programs of size: 2
+17:45:39 Generating programs of size: 3
+17:45:39 ********************
+17:45:39 New best hypothesis:
+17:45:39 tp:7 fn:27 tn:174 fp:3 size:3 mdl:33
+17:45:39 lie_target(A):- blanket(B),covered_by(A,B).
+17:45:39 ********************
+17:45:40 ********************
+17:45:40 New best hypothesis:
+17:45:40 tp:6 fn:28 tn:176 fp:1 size:3 mdl:32
+17:45:40 lie_target(A):- lying_on(A,B),behind(B,A).
+17:45:40 ********************
+17:45:40 ********************
+17:45:40 New best hypothesis:
+17:45:40 tp:8 fn:26 tn:176 fp:1 size:3 mdl:30
+17:45:40 lie_target(A):- leaning_on(A,B),on_the_side_of(B,A).
+17:45:40 ********************
+17:45:44 Generating programs of size: 4
+17:45:46 ********************
+17:45:46 New best hypothesis:
+17:45:46 tp:18 fn:16 tn:174 fp:3 size:9 mdl:28
+17:45:46 lie_target(A):- lying_on(A,B),behind(B,A).
+17:45:46 lie_target(A):- leaning_on(A,B),on_the_side_of(B,A).
+17:45:46 lie_target(A):- other_relationship(A,B),floor(B).
+17:45:46 ********************
+17:54:33 Generating programs of size: 5

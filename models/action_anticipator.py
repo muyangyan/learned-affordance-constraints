@@ -12,7 +12,7 @@ import pytorch_lightning as L
 
 import torchmetrics
 from torchmetrics import MetricCollection, Metric
-from torchmetrics import Accuracy, Precision, Recall, AveragePrecision
+from torchmetrics import Accuracy, Precision, Recall, AveragePrecision, F1Score
 from util.metrics import NLL_Metric, Entropy_Metric
 
 
@@ -50,12 +50,13 @@ class ActionAnticipator(L.LightningModule):
 
         self.test_metrics = MetricCollection({
             'acc_macro': Accuracy(task='multilabel', average='macro', num_labels=num_classes),
-            'acc_micro': Accuracy(task='multilabel', average='micro', num_labels=num_classes),
+            #'acc_micro': Accuracy(task='multilabel', average='micro', num_labels=num_classes),
             'prec_macro': Precision(task='multilabel', average='macro', num_labels=num_classes),
-            'prec_micro': Precision(task='multilabel', average='micro', num_labels=num_classes),
+            #'prec_micro': Precision(task='multilabel', average='micro', num_labels=num_classes),
             'rec_macro': Recall(task='multilabel', average='macro', num_labels=num_classes),
-            'rec_micro': Recall(task='multilabel', average='micro', num_labels=num_classes),
+            #'rec_micro': Recall(task='multilabel', average='micro', num_labels=num_classes),
             'mAP': AveragePrecision(task='multilabel', average='macro', num_labels=num_classes),
+            'f1-score': F1Score(task='multilabel', average='macro', num_labels=num_classes),
         })
 
         self.save_hyperparameters()
@@ -71,8 +72,8 @@ class ActionAnticipator(L.LightningModule):
     def training_step(self, batch, batch_idx):
         ids, imgs, sgs, labels, constraints, truth_values = batch
         out = self(imgs, sgs)
-        
         loss = self.criterion(out, labels)
+        out = torch.sigmoid(out)
         mAP = self.train_mAP(out, labels.int())
         
         self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True)
@@ -84,6 +85,7 @@ class ActionAnticipator(L.LightningModule):
         ids, imgs, sgs, labels, constraints, truth_values = batch
         out = self(imgs, sgs)
         loss = self.criterion(out, labels)
+        out = torch.sigmoid(out)
         mAP = self.val_mAP(out, labels.int())
         
         self.log('val_loss', loss, on_step=False, on_epoch=True, prog_bar=True)
@@ -92,6 +94,7 @@ class ActionAnticipator(L.LightningModule):
     def test_step(self, batch, batch_idx):
         ids, imgs, sgs, labels, constraints, truth_values = batch
         out = self(imgs, sgs)
+        out = torch.sigmoid(out)
 
         if constraints is not None:
             if self.constraint_mode is None:
@@ -115,6 +118,7 @@ class ActionAnticipator(L.LightningModule):
     def predict_step(self, batch, batch_idx):
         ids, imgs, sgs, labels, constraints, truth_values = batch
         out = self(imgs, sgs)
+        out = torch.sigmoid(out)
         if constraints is not None:
             out = self.apply_constraints(out, constraints, weight=self.constraint_weight)
         return ids, imgs, sgs, labels, constraints, out
@@ -123,6 +127,7 @@ class ActionAnticipator(L.LightningModule):
         self.eval()
         with torch.no_grad():
             out = self(img, sg)
+            out = torch.sigmoid(out)
             if constraints is not None:
                 constrained_out = self.apply_constraints(out, constraints, weight=self.constraint_weight)
                 return constrained_out, out, constraints
@@ -140,3 +145,5 @@ class ActionAnticipator(L.LightningModule):
 
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=self.lr)
+
+

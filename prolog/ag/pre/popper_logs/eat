@@ -64,25 +64,28 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-16:11:03 Generating programs of size: 2
-16:11:03 Generating programs of size: 3
-16:11:03 ********************
-16:11:03 New best hypothesis:
-16:11:03 tp:141 fn:56 tn:697 fp:68 size:3 mdl:127
-16:11:03 eat_target(A):- holding(A,B),food(B).
-16:11:03 ********************
-16:11:15 Generating programs of size: 4
-16:11:20 ********************
-16:11:20 New best hypothesis:
-16:11:20 tp:165 fn:32 tn:692 fp:73 size:9 mdl:114
-16:11:20 eat_target(A):- holding(A,B),food(B).
-16:11:20 eat_target(A):- in_front_of(B,A),medicine(B).
-16:11:20 eat_target(A):- sandwich(B),looking_at(A,B).
-16:11:20 ********************
-16:12:02 TIMEOUT OF 60 SECONDS EXCEEDED
+17:45:38 Generating programs of size: 2
+17:45:39 Generating programs of size: 3
+17:45:39 ********************
+17:45:39 New best hypothesis:
+17:45:39 tp:141 fn:56 tn:697 fp:68 size:3 mdl:127
+17:45:39 eat_target(A):- holding(A,B),food(B).
+17:45:39 ********************
+17:45:51 Generating programs of size: 4
+17:45:56 ********************
+17:45:56 New best hypothesis:
+17:45:56 tp:171 fn:26 tn:689 fp:76 size:12 mdl:114
+17:45:56 eat_target(A):- holding(A,B),food(B).
+17:45:56 eat_target(A):- holding(A,B),medicine(B).
+17:45:56 eat_target(A):- in_front_of(B,A),sandwich(B).
+17:45:56 eat_target(A):- not_contacting(A,B),medicine(B).
+17:45:56 ********************
+18:04:58 Generating programs of size: 5
+19:29:39 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.69 Recall:0.84 TP:165 FN:32 TN:692 FP:73 Size:9 MDL:114
+Precision:0.69 Recall:0.87 TP:171 FN:26 TN:689 FP:76 Size:12 MDL:114
 eat_target(A):- holding(A,B),food(B).
-eat_target(A):- in_front_of(B,A),medicine(B).
-eat_target(A):- sandwich(B),looking_at(A,B).
+eat_target(A):- holding(A,B),medicine(B).
+eat_target(A):- in_front_of(B,A),sandwich(B).
+eat_target(A):- not_contacting(A,B),medicine(B).
 ******************************

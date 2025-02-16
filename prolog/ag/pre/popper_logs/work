@@ -64,21 +64,17 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-16:11:03 Generating programs of size: 2
-16:11:03 Generating programs of size: 3
-16:11:03 ********************
-16:11:03 New best hypothesis:
-16:11:03 tp:12 fn:49 tn:278 fp:6 size:3 mdl:58
-16:11:03 work_target(A):- holding(A,B),paper_notebook(B).
-16:11:03 ********************
-16:11:04 ********************
-16:11:04 New best hypothesis:
-16:11:04 tp:21 fn:40 tn:277 fp:7 size:3 mdl:50
-16:11:04 work_target(A):- paper_notebook(B),looking_at(A,B).
-16:11:04 ********************
-16:11:08 Generating programs of size: 4
-16:12:01 TIMEOUT OF 60 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.75 Recall:0.34 TP:21 FN:40 TN:277 FP:7 Size:3 MDL:50
-work_target(A):- paper_notebook(B),looking_at(A,B).
-******************************
+17:45:38 Generating programs of size: 2
+17:45:39 Generating programs of size: 3
+17:45:39 ********************
+17:45:39 New best hypothesis:
+17:45:39 tp:12 fn:49 tn:278 fp:6 size:3 mdl:58
+17:45:39 work_target(A):- paper_notebook(B),holding(A,B).
+17:45:39 ********************
+17:45:40 ********************
+17:45:40 New best hypothesis:
+17:45:40 tp:21 fn:40 tn:277 fp:7 size:3 mdl:50
+17:45:40 work_target(A):- paper_notebook(B),looking_at(A,B).
+17:45:40 ********************
+17:45:43 Generating programs of size: 4
+17:51:04 Generating programs of size: 5

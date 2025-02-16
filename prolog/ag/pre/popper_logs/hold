@@ -64,32 +64,58 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-16:11:03 Generating programs of size: 2
-16:11:03 Generating programs of size: 3
-16:11:04 ********************
-16:11:04 New best hypothesis:
-16:11:04 tp:10 fn:331 tn:1569 fp:6 size:3 mdl:340
-16:11:04 hold_target(A):- not_contacting(A,B),broom(B).
-16:11:04 ********************
-16:11:04 ********************
-16:11:04 New best hypothesis:
-16:11:04 tp:31 fn:310 tn:1556 fp:19 size:3 mdl:332
-16:11:04 hold_target(A):- not_contacting(A,B),dish(B).
-16:11:04 ********************
-16:11:11 Generating programs of size: 4
-16:11:18 ********************
-16:11:18 New best hypothesis:
-16:11:18 tp:85 fn:256 tn:1523 fp:52 size:12 mdl:320
-16:11:18 hold_target(A):- not_contacting(A,B),dish(B).
-16:11:18 hold_target(A):- not_contacting(A,B),bag(B).
-16:11:18 hold_target(A):- not_contacting(A,B),blanket(B).
-16:11:18 hold_target(A):- laptop(B),unsure(A,B).
-16:11:18 ********************
-16:12:01 TIMEOUT OF 60 SECONDS EXCEEDED
+17:45:38 Generating programs of size: 2
+17:45:39 Generating programs of size: 3
+17:45:41 ********************
+17:45:41 New best hypothesis:
+17:45:41 tp:7 fn:334 tn:1574 fp:1 size:3 mdl:338
+17:45:41 hold_target(A):- laptop(B),unsure(A,B).
+17:45:41 ********************
+17:45:42 ********************
+17:45:42 New best hypothesis:
+17:45:42 tp:31 fn:310 tn:1553 fp:22 size:3 mdl:335
+17:45:42 hold_target(A):- bag(B),not_contacting(A,B).
+17:45:42 ********************
+17:45:42 ********************
+17:45:42 New best hypothesis:
+17:45:42 tp:31 fn:310 tn:1556 fp:19 size:3 mdl:332
+17:45:42 hold_target(A):- dish(B),not_contacting(A,B).
+17:45:42 ********************
+17:45:47 Generating programs of size: 4
+17:45:54 ********************
+17:45:54 New best hypothesis:
+17:45:54 tp:85 fn:256 tn:1523 fp:52 size:12 mdl:320
+17:45:54 hold_target(A):- laptop(B),unsure(A,B).
+17:45:54 hold_target(A):- not_contacting(A,B),blanket(B).
+17:45:54 hold_target(A):- bag(B),not_contacting(A,B).
+17:45:54 hold_target(A):- dish(B),not_contacting(A,B).
+17:45:54 ********************
+18:14:47 Generating programs of size: 5
+18:14:57 ********************
+18:14:57 New best hypothesis:
+18:14:57 tp:154 fn:187 tn:1485 fp:90 size:35 mdl:312
+18:14:57 hold_target(A):- on_the_side_of(B,A),vacuum(B).
+18:14:57 hold_target(A):- laptop(B),unsure(A,B).
+18:14:57 hold_target(A):- bag(B),not_contacting(A,B).
+18:14:57 hold_target(A):- dish(B),not_contacting(A,B).
+18:14:57 hold_target(A):- broom(B),not_contacting(A,B).
+18:14:57 hold_target(A):- not_contacting(A,B),towel(B),looking_at(A,B).
+18:14:57 hold_target(A):- in_front_of(B,A),not_contacting(A,B),food(B).
+18:14:57 hold_target(A):- in_front_of(B,A),not_contacting(A,B),blanket(B).
+18:14:57 hold_target(A):- not_contacting(A,B),on_the_side_of(B,A),book(B).
+18:14:57 hold_target(A):- cup_glass_bottle(B),not_contacting(A,B),unsure(A,B).
+18:14:57 ********************
+19:28:22 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.62 Recall:0.25 TP:85 FN:256 TN:1523 FP:52 Size:12 MDL:320
-hold_target(A):- not_contacting(A,B),dish(B).
-hold_target(A):- not_contacting(A,B),bag(B).
-hold_target(A):- not_contacting(A,B),blanket(B).
+Precision:0.63 Recall:0.45 TP:154 FN:187 TN:1485 FP:90 Size:35 MDL:312
+hold_target(A):- on_the_side_of(B,A),vacuum(B).
 hold_target(A):- laptop(B),unsure(A,B).
+hold_target(A):- bag(B),not_contacting(A,B).
+hold_target(A):- dish(B),not_contacting(A,B).
+hold_target(A):- broom(B),not_contacting(A,B).
+hold_target(A):- not_contacting(A,B),towel(B),looking_at(A,B).
+hold_target(A):- in_front_of(B,A),not_contacting(A,B),food(B).
+hold_target(A):- in_front_of(B,A),not_contacting(A,B),blanket(B).
+hold_target(A):- not_contacting(A,B),on_the_side_of(B,A),book(B).
+hold_target(A):- cup_glass_bottle(B),not_contacting(A,B),unsure(A,B).
 ******************************

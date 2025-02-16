@@ -64,30 +64,24 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-16:11:03 Generating programs of size: 2
-16:11:03 Generating programs of size: 3
-16:11:03 ********************
-16:11:03 New best hypothesis:
-16:11:03 tp:31 fn:28 tn:252 fp:12 size:3 mdl:43
-16:11:03 dress_target(A):- clothes(B),holding(A,B).
-16:11:03 ********************
-16:11:03 ********************
-16:11:03 New best hypothesis:
-16:11:03 tp:35 fn:24 tn:249 fp:15 size:3 mdl:42
-16:11:03 dress_target(A):- clothes(B),in_front_of(B,A).
-16:11:03 ********************
-16:11:07 Generating programs of size: 4
-16:11:09 ********************
-16:11:09 New best hypothesis:
-16:11:09 tp:58 fn:1 tn:241 fp:23 size:9 mdl:33
-16:11:09 dress_target(A):- shoe(B),looking_at(A,B).
-16:11:09 dress_target(A):- clothes(B),on_the_side_of(B,A).
-16:11:09 dress_target(A):- clothes(B),in_front_of(B,A).
-16:11:09 ********************
-16:12:01 TIMEOUT OF 60 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.72 Recall:0.98 TP:58 FN:1 TN:241 FP:23 Size:9 MDL:33
-dress_target(A):- shoe(B),looking_at(A,B).
-dress_target(A):- clothes(B),on_the_side_of(B,A).
-dress_target(A):- clothes(B),in_front_of(B,A).
-******************************
+17:45:38 Generating programs of size: 2
+17:45:39 Generating programs of size: 3
+17:45:39 ********************
+17:45:39 New best hypothesis:
+17:45:39 tp:31 fn:28 tn:252 fp:12 size:3 mdl:43
+17:45:39 dress_target(A):- holding(A,B),clothes(B).
+17:45:39 ********************
+17:45:39 ********************
+17:45:39 New best hypothesis:
+17:45:39 tp:35 fn:24 tn:249 fp:15 size:3 mdl:42
+17:45:39 dress_target(A):- in_front_of(B,A),clothes(B).
+17:45:39 ********************
+17:45:43 Generating programs of size: 4
+17:45:45 ********************
+17:45:45 New best hypothesis:
+17:45:45 tp:58 fn:1 tn:241 fp:23 size:9 mdl:33
+17:45:45 dress_target(A):- looking_at(A,B),shoe(B).
+17:45:45 dress_target(A):- clothes(B),on_the_side_of(B,A).
+17:45:45 dress_target(A):- in_front_of(B,A),clothes(B).
+17:45:45 ********************
+17:50:54 Generating programs of size: 5

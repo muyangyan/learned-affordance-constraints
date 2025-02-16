@@ -64,28 +64,28 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-16:11:03 Generating programs of size: 2
-16:11:03 Generating programs of size: 3
-16:11:04 ********************
-16:11:04 New best hypothesis:
-16:11:04 tp:11 fn:8 tn:86 fp:0 size:3 mdl:11
-16:11:04 turn_target(A):- in_front_of(B,A),light(B).
-16:11:04 ********************
-16:11:05 ********************
-16:11:05 New best hypothesis:
-16:11:05 tp:15 fn:4 tn:86 fp:0 size:3 mdl:7
-16:11:05 turn_target(A):- not_contacting(A,B),light(B).
-16:11:05 ********************
-16:11:06 Generating programs of size: 4
-16:11:09 ********************
-16:11:09 New best hypothesis:
-16:11:09 tp:19 fn:0 tn:86 fp:0 size:6 mdl:6
-16:11:09 turn_target(A):- looking_at(A,B),light(B).
-16:11:09 turn_target(A):- not_looking_at(A,B),light(B).
-16:11:09 ********************
-16:12:10 TIMEOUT OF 60 SECONDS EXCEEDED
+17:45:38 Generating programs of size: 2
+17:45:39 Generating programs of size: 3
+17:45:39 ********************
+17:45:39 New best hypothesis:
+17:45:39 tp:11 fn:8 tn:86 fp:0 size:3 mdl:11
+17:45:39 turn_target(A):- light(B),in_front_of(B,A).
+17:45:39 ********************
+17:45:40 ********************
+17:45:40 New best hypothesis:
+17:45:40 tp:15 fn:4 tn:86 fp:0 size:3 mdl:7
+17:45:40 turn_target(A):- light(B),not_contacting(A,B).
+17:45:40 ********************
+17:45:42 Generating programs of size: 4
+17:45:45 ********************
+17:45:45 New best hypothesis:
+17:45:45 tp:19 fn:0 tn:86 fp:0 size:6 mdl:6
+17:45:45 turn_target(A):- looking_at(A,B),light(B).
+17:45:45 turn_target(A):- light(B),not_looking_at(A,B).
+17:45:45 ********************
+17:48:05 Generating programs of size: 5
 ********** SOLUTION **********
 Precision:1.00 Recall:1.00 TP:19 FN:0 TN:86 FP:0 Size:6 MDL:6
 turn_target(A):- looking_at(A,B),light(B).
-turn_target(A):- not_looking_at(A,B),light(B).
+turn_target(A):- light(B),not_looking_at(A,B).
 ******************************

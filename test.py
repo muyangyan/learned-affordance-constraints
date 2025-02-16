@@ -14,7 +14,7 @@ from pytorch_lightning import Trainer
 from models.action_anticipator import ActionAnticipator
 
 from util.rule_utils import apply_rules
-from util.metrics import analyze_preds
+from util.metrics import analyze_preds_ml
 
 from util.config_utils import load_yaml, load_verb_whitelist
 
@@ -44,7 +44,7 @@ def test_routine(cfg, run_name, test_run_name, trainer, model, dataset, loader):
 
     model.preds = []
     trainer.test(model, dataloaders=loader)
-    analyze_preds(cfg, run_name, test_run_name, model.preds, class_names=dataset.verb_classes)
+    analyze_preds_ml(cfg, run_name, test_run_name, model.preds, class_names=dataset.verb_classes)
 
 '''
 with run folders set up, we can test the model
@@ -64,7 +64,7 @@ def test(cfg, run_name, test_run_name):
     checkpoint = os.path.join(checkpoints_folder, checkpoints[0])
 
     model = ActionAnticipator.load_from_checkpoint(checkpoint)
-    trainer = Trainer(accelerator='gpu', devices=[0])
+    trainer = Trainer(accelerator='gpu', devices=[0], logger=False)
 
     assert cfg.data_split in ['test', 'val'], 'Invalid test split'
 

@@ -64,30 +64,36 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-16:11:03 Generating programs of size: 2
-16:11:03 Generating programs of size: 3
-16:11:03 ********************
-16:11:03 New best hypothesis:
-16:11:03 tp:24 fn:71 tn:362 fp:8 size:3 mdl:82
-16:11:03 awaken_target(A):- above(B,A),not_looking_at(A,B).
-16:11:03 ********************
-16:11:03 ********************
-16:11:03 New best hypothesis:
-16:11:03 tp:64 fn:31 tn:356 fp:14 size:3 mdl:48
-16:11:03 awaken_target(A):- lying_on(A,B),not_looking_at(A,B).
-16:11:03 ********************
-16:11:09 Generating programs of size: 4
-16:11:12 ********************
-16:11:12 New best hypothesis:
-16:11:12 tp:78 fn:17 tn:354 fp:16 size:9 mdl:42
-16:11:12 awaken_target(A):- lying_on(A,B),not_looking_at(A,B).
-16:11:12 awaken_target(A):- on_the_side_of(B,A),leaning_on(A,B).
-16:11:12 awaken_target(A):- on_the_side_of(B,A),floor(B).
-16:11:12 ********************
-16:12:02 TIMEOUT OF 60 SECONDS EXCEEDED
+17:45:38 Generating programs of size: 2
+17:45:39 Generating programs of size: 3
+17:45:39 ********************
+17:45:39 New best hypothesis:
+17:45:39 tp:24 fn:71 tn:362 fp:8 size:3 mdl:82
+17:45:39 awaken_target(A):- above(B,A),not_looking_at(A,B).
+17:45:39 ********************
+17:45:39 ********************
+17:45:39 New best hypothesis:
+17:45:39 tp:64 fn:31 tn:356 fp:14 size:3 mdl:48
+17:45:39 awaken_target(A):- not_looking_at(A,B),lying_on(A,B).
+17:45:39 ********************
+17:45:45 Generating programs of size: 4
+17:45:47 ********************
+17:45:47 New best hypothesis:
+17:45:47 tp:78 fn:17 tn:354 fp:16 size:9 mdl:42
+17:45:47 awaken_target(A):- not_looking_at(A,B),lying_on(A,B).
+17:45:47 awaken_target(A):- on_the_side_of(B,A),leaning_on(A,B).
+17:45:47 awaken_target(A):- floor(B),on_the_side_of(B,A).
+17:45:47 ********************
+17:58:40 Generating programs of size: 5
+17:58:47 ********************
+17:58:47 New best hypothesis:
+17:58:47 tp:78 fn:17 tn:353 fp:17 size:7 mdl:41
+17:58:47 awaken_target(A):- on_the_side_of(B,A),leaning_on(A,B).
+17:58:47 awaken_target(A):- lying_on(B,C),lying_on(A,C),person(B).
+17:58:47 ********************
+19:31:14 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.83 Recall:0.82 TP:78 FN:17 TN:354 FP:16 Size:9 MDL:42
-awaken_target(A):- lying_on(A,B),not_looking_at(A,B).
+Precision:0.82 Recall:0.82 TP:78 FN:17 TN:353 FP:17 Size:7 MDL:41
 awaken_target(A):- on_the_side_of(B,A),leaning_on(A,B).
-awaken_target(A):- on_the_side_of(B,A),floor(B).
+awaken_target(A):- lying_on(B,C),lying_on(A,C),person(B).
 ******************************

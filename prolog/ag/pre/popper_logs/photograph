@@ -64,16 +64,18 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-16:11:03 Generating programs of size: 2
-16:11:03 Generating programs of size: 3
-16:11:03 ********************
-16:11:03 New best hypothesis:
-16:11:03 tp:43 fn:1 tn:152 fp:5 size:3 mdl:9
-16:11:03 photograph_target(A):- holding(A,B),phone_camera(B).
-16:11:03 ********************
-16:11:06 Generating programs of size: 4
-16:12:02 TIMEOUT OF 60 SECONDS EXCEEDED
+17:45:38 Generating programs of size: 2
+17:45:39 Generating programs of size: 3
+17:45:39 ********************
+17:45:39 New best hypothesis:
+17:45:39 tp:43 fn:1 tn:152 fp:5 size:3 mdl:9
+17:45:39 photograph_target(A):- phone_camera(B),holding(A,B).
+17:45:39 ********************
+17:45:42 Generating programs of size: 4
+17:49:07 Generating programs of size: 5
+19:20:07 Generating programs of size: 6
+19:26:13 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
 Precision:0.90 Recall:0.98 TP:43 FN:1 TN:152 FP:5 Size:3 MDL:9
-photograph_target(A):- holding(A,B),phone_camera(B).
+photograph_target(A):- phone_camera(B),holding(A,B).
 ******************************
