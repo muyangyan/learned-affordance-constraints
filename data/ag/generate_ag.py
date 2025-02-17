@@ -10,7 +10,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from data.ag.action_genome import AG
-from util.graph_utils import check_edge_exists
+from util.data_utils import check_edge_exists
 from util.config_utils import load_yaml
 # Generate subset, applying heuristics to filter out invalid examples
 def generate_subset(ag, subset_dict):

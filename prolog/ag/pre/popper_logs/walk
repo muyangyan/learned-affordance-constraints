@@ -95,3 +95,10 @@ body_pred(writing_on, 2).
 17:45:48 walk_target(A):- not_contacting(A,B),doorway(B).
 17:45:48 ********************
 17:51:07 Generating programs of size: 5
+22:38:03 TIMEOUT OF 6000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.85 Recall:1.00 TP:181 FN:0 TN:600 FP:31 Size:9 MDL:40
+walk_target(A):- in(B,A),doorway(B).
+walk_target(A):- doorway(B),in_front_of(B,A).
+walk_target(A):- not_contacting(A,B),doorway(B).
+******************************

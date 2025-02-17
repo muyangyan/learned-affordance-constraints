@@ -85,3 +85,10 @@ body_pred(writing_on, 2).
 17:45:45 dress_target(A):- in_front_of(B,A),clothes(B).
 17:45:45 ********************
 17:50:54 Generating programs of size: 5
+23:54:42 TIMEOUT OF 6000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.72 Recall:0.98 TP:58 FN:1 TN:241 FP:23 Size:9 MDL:33
+dress_target(A):- looking_at(A,B),shoe(B).
+dress_target(A):- clothes(B),on_the_side_of(B,A).
+dress_target(A):- in_front_of(B,A),clothes(B).
+******************************

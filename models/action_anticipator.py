@@ -15,7 +15,6 @@ from torchmetrics import MetricCollection, Metric
 from torchmetrics import Accuracy, Precision, Recall, AveragePrecision, F1Score
 from util.metrics import NLL_Metric, Entropy_Metric
 
-
 class ActionAnticipator(L.LightningModule):
     def __init__(self, model_params, weight, model_type='joint', lr=1e-3):
 
@@ -147,3 +146,8 @@ class ActionAnticipator(L.LightningModule):
         return torch.optim.Adam(self.parameters(), lr=self.lr)
 
 
+class MultiLabelActionAnticipator(ActionAnticipator):
+    pass
+
+class SingleLabelActionAnticipator(ActionAnticipator):
+    pass

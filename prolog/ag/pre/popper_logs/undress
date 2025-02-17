@@ -109,3 +109,8 @@ body_pred(writing_on, 2).
 17:46:02 undress_target(A):- wearing(B,C),wearing(A,C),person(B).
 17:46:02 ********************
 17:53:23 Generating programs of size: 5
+09:21:01 TIMEOUT OF 6000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.77 Recall:0.79 TP:63 FN:17 TN:352 FP:19 Size:4 MDL:40
+undress_target(A):- wearing(B,C),wearing(A,C),person(B).
+******************************

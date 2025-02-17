@@ -90,3 +90,10 @@ body_pred(writing_on, 2).
 17:45:47 play_target(A):- laptop(B),in_front_of(B,A).
 17:45:47 ********************
 17:52:24 Generating programs of size: 5
+01:55:22 TIMEOUT OF 6000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.73 Recall:0.97 TP:115 FN:3 TN:409 FP:42 Size:9 MDL:54
+play_target(A):- phone_camera(B),on_the_side_of(B,A).
+play_target(A):- phone_camera(B),in_front_of(B,A).
+play_target(A):- laptop(B),in_front_of(B,A).
+******************************

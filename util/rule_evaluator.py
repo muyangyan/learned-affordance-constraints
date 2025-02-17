@@ -10,7 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from data.ag.action_genome import AG, AGViewer
-from util.graph_utils import check_edge_exists
+from util.data_utils import check_edge_exists
 
 from pyswip import Prolog
 

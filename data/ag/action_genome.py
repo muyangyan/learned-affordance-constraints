@@ -6,169 +6,249 @@ import shelve
 from PIL import Image
 
 import numpy as np
+import pandas as pd
+
+from functools import partial
 
 import torch
 import torch.nn.functional as F
 import torchvision.transforms as T
 from torch.utils.data import Dataset, DataLoader
-import torch_geometric
 from torch_geometric.data import Data, Batch
 
 import matplotlib.pyplot as plt
 
+from util.data_utils import string_to_action_triple, get_id, extract_usable_frames, clean_df, load_examples, apply_subset
 
-def find_last_frame_idx(directory):
-    if not os.path.exists(directory):
-        return None
-    highest_number = -float('inf')  # Start with a very low number
-    for file_name in os.listdir(directory):
-        try:
-            # Extract the number from the file name
-            number = int(file_name.split('.')[0])  # Assuming numbers are before the file extension
-            if number > highest_number:
-                highest_number = number
-        except ValueError:
-            # Skip files that don't have a number as their name
-            continue
-    return highest_number if highest_number != -float('inf') else None
+class ActionGenome(Dataset):
 
-def find_closest_frame_idx(directory, frame_number):
-    if not os.path.exists(directory):
-        return None
-    closest_number = None
-    smallest_diff = float('inf')  # Start with a very low number
-    for file_name in os.listdir(directory):
-        try:
-            # Extract the number from the file name
-            number = int(file_name.split('.')[0])  # Assuming numbers are before the file extension
-            diff = abs(number - frame_number)
-            if diff < smallest_diff:
-                smallest_diff = diff
-                closest_number = number
-        except ValueError:
-            # Skip files that don't have a number as their name
-            continue
-    return closest_number
-
-def string_to_action_triple(action_string):
-    a = action_string.split(' ')
-    if len(a) == 3:
-        action_triple = [int(a[0][1:]), float(a[1]), float(a[2])] #parses lines. ex. c006 5.10 11.50
-    elif len(a) == 1 and a[0] == '':
-        return None
-    else:
-        print('invalid string')
-        return None
-    return action_triple
-
-def get_id(video_id, frame_idx):
-    return "%s.mp4/%06d.png" % (video_id, frame_idx)
-
-def remove_id_prefix(s):
-    return s[5:]
-
-
-class AG(Dataset):
-    '''
-    location: 'pre', 'post', 'both'
-    determines whether we use the start or end of the action as the frame. in other words, are we anticipating the next action or inferring the previous/causal action?
-
-    '''
-    
-    def __init__(self, root, position='both', no_img=False, split=None, split_file='data/ag/split_train_val.json', subset_file=None, verb_whitelist=[], verb_prior_file='data/ag/verb_priors.json', threshold=1, fps=24):
+    def __init__(self, root, meta_root, position='both', no_img=False, subset=True, split=None, threshold=1, fps=24):
         super().__init__()
         self.root = root
+        self.meta_root = meta_root
+
         self.position = position
         self.threshold = threshold
         self.no_img = no_img
         self.split = split
-        self.subset_file = subset_file
-        self.verb_whitelist = verb_whitelist
         self.constraints = None
+
+        split_file = os.path.join(meta_root, 'split_train_val.json')
+        frame_validity_file = os.path.join(meta_root, 'frame_validity.json')
+        verb_priors_file = os.path.join(meta_root, 'verb_priors.json')
+        verb_whitelist_file = os.path.join(meta_root, 'verb_whitelist.txt')
+
+        self.init_vocab()
 
         with open(root + 'annotations/person_bbox.pkl', 'rb') as f:
             self.person_annotations = pickle.load(f)
-        f.close()
         with open(root+'annotations/object_bbox_and_relationship.pkl', 'rb') as f:
             self.object_annotations = pickle.load(f)
+        with open(root + '/annotations/Charades/Charades_v1_train.csv', 'r') as f:
+            raw_df = pd.read_csv(f)
+        with open(split_file, 'r') as f:
+            split_dict = json.load(f)
+        cleaned_df = clean_df(raw_df, split_dict[split])
+        examples_df = load_examples(cleaned_df, position)
+        usable_df = extract_usable_frames(self.root, self.object_annotations, examples_df, position, threshold, fps=fps)
+        if subset:
+            frame_validity_df = pd.read_csv(frame_validity_file)
+            apply_subset_partial = partial(apply_subset, frame_validity_df=frame_validity_df, position=position)
+            final_df = usable_df[usable_df.apply(apply_subset_partial, axis=1)]
+        else:
+            final_df = usable_df
+        #expand actions into verb, nouns
+        final_df['verb'] = final_df['action'].apply(lambda x: self.action_verb_obj_map[x][0])
+        final_df['noun'] = final_df['action'].apply(lambda x: self.action_verb_obj_map[x][1])
+
+        self.df = final_df
+
+        self.im_transform = T.Compose([
+            T.Resize(size=(224, 224)),
+            T.ToTensor(),
+            T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+        ])
+
+
+    def __len__(self):
+        return len(self.df)
+    
+    def __getitem__(self, index):
+        pass
+
+    def create_scene_graph(self, id):
+        objects = [obj for obj in self.object_annotations[id] if obj['visible']] # visible objects only
+
+        # unpack dict into nodes and edges, replace '/' with '_' in object classes for prolog compatibility
+        nodes = ["person"] + [obj['class'].replace('/', '_') for obj in objects]
+        nodes = [self.object_classes.index(node) for node in nodes]
+
+        edges = []
+        for i,annot in enumerate(objects):
+            for rel in annot['attention_relationship']:
+                edges.append([0, i+1, self.relationship_classes.index(rel)])
+            for rel in annot['spatial_relationship']:
+                edges.append([i+1, 0, self.relationship_classes.index(rel)])
+            for rel in annot['contacting_relationship']:
+                edges.append([0, i+1, self.relationship_classes.index(rel)])
+
+        # create data object using nodes and edges
+        node_type = torch.tensor(nodes)
+        x = F.one_hot(node_type, num_classes=len(self.object_classes)).float()
+
+        edge_index = []
+        edge_type = []
+        for src, dst, rel in edges:
+            edge_index.append([src, dst])
+            edge_type.append(rel)
+        edge_index = torch.tensor(edge_index, dtype=torch.long).t().contiguous()
+        edge_type = torch.tensor(edge_type, dtype=torch.long) # Adjust dtype as needed
+
+        edge_attr = F.one_hot(edge_type, num_classes=len(self.relationship_classes)).float()
+
+        #the part where we use the label. should be differentiated between single and multi-label TODO
+        verb_classes, obj_classes = zip(*[self.action_verb_obj_map[action_class] for action_class in action_classes])
+
+        w = torch.tensor(action_classes, dtype=torch.long) # only the specific action taken
+        y = torch.tensor(verb_classes, dtype=torch.long)
+        o = torch.tensor([o if o is not None else -1 for o in obj_classes], dtype=torch.long)
+
+        data = Data(x, edge_index=edge_index, edge_attr=edge_attr, \
+                    node_type=node_type, edge_type=edge_type, y=y, w=w, o=o, id=id)
+
+
+
+    def init_vocab(self):
+        # collect the object classes
+        #self.object_classes = ['__background__']
+        self.object_classes = []
+        with open(os.path.join(self.root, 'annotations/Muyang/object_classes.txt'), 'r') as f:
+            for line in f.readlines():
+                line = line.strip('\n')
+                self.object_classes.append(line)
         f.close()
 
-        self.init_vocab()
-        examples = self.load_examples(split)
-        usable_list = self.extract_usable_frames(examples, threshold, fps=fps)
+        # collect relationship classes
+        self.relationship_classes = []
+        with open(os.path.join(self.root, 'annotations/Muyang/relationship_classes.txt'), 'r') as f:
+            for line in f.readlines():
+                line = line.strip('\n')
+                self.relationship_classes.append(line)
+        f.close()
+        
 
-        split_ids = None
-        assert split in ['train', 'val', 'test', None]
 
-        if split is not None:
-            with open(split_file) as f:
-                split_dict = json.load(f)
-                split_ids = split_dict[split]
-            print('split:', split, '| length:', len(split_ids))
-        else:
-            split_ids = [video_id for video_id, _, _ in usable_list]
+        #self.attention_relationships = self.relationship_classes[0:3]
+        #self.spatial_relationships = self.relationship_classes[3:9]
+        #self.contacting_relationships = self.relationship_classes[9:]
+
+        #hardcoded mapping
+        self.charades_ag_obj_map = {}
+        with open(os.path.join(self.root, 'annotations/charades_to_ag_obj_map.txt'), 'r') as f:
+            for line in f.readlines():
+                line = line.strip('\n')
+                charades_idx, ag_idx = line.split(' ')
+                if ag_idx != 'None':
+                    self.charades_ag_obj_map[int(charades_idx)] = int(ag_idx)
+                else:
+                    self.charades_ag_obj_map[int(charades_idx)] = None
+
+        #action -> verb, obj map
+        self.action_verb_obj_map = {}
+        with open(os.path.join(self.root, 'annotations/Charades/Charades_v1_mapping.txt'), 'r') as f:
+            for line in f.readlines():
+                line = line.strip('\n')
+                action, obj, verb = line.split(' ')
+                action = int(action[1:])
+                verb = int(verb[1:])
+                obj = int(obj[1:])
+                obj = self.charades_ag_obj_map[obj]
+                self.action_verb_obj_map[action] = (verb, obj)
+
+        self.verb_classes = []
+        self.verb_mapper = {}
+        idx_counter = 0
+        with open(os.path.join(self.root, 'annotations/Charades/Charades_v1_verbclasses.txt'), 'r') as f:
+            for i,line in enumerate(f.readlines()):
+                line = line.strip('\n')
+                line = line[:5] #remove the id prefix
+
+                self.verb_classes.append(line)
+                if line in self.verb_whitelist:
+                    self.verb_mapper[i] = idx_counter
+                    idx_counter += 1
+                else:
+                    self.verb_mapper[i] = None
+
+        self.action_classes = []
+        self.action_mapper = {}
+        idx_counter = 0
+        with open(os.path.join(self.root, 'annotations/Charades/Charades_v1_classes.txt'), 'r') as f:
+            for i,line in enumerate(f.readlines()):
+                line = line.strip('\n')
+                line = line[:5] #remove the id prefix
+
+                self.action_classes.append(line)
+                verb, _ = self.action_verb_obj_map[i]
+                if self.verb_classes[verb] in self.verb_whitelist:
+                    self.action_mapper[i] = idx_counter
+                    idx_counter += 1
+                else:
+                    self.action_mapper[i] = None
+        
+
+        # now subset verbs and actions
+        self.verb_classes = [self.verb_classes[k] for k,v in self.verb_mapper.items() if v is not None]
+        self.action_classes = [self.action_classes[k] for k,v in self.action_mapper.items() if v is not None]
+        
+        new_a_vo_map = {}
+        #k,v is action, (verb, obj)
+        for k,v in self.action_mapper.items():
+            if v is not None:
+                verb_idx, obj_idx = self.action_verb_obj_map[k]
+                new_verb_idx = self.verb_mapper[verb_idx]
+                new_a_vo_map[v] = (new_verb_idx, obj_idx)
+
+        self.action_verb_obj_map = new_a_vo_map
+
+        '''
+        a dict mapping verbs to the corresponding relationship that they form
+        used to check if the verb has already been taken in the frame, so that we may prune invalid preconditions
+        '''
+        self.verb_result_rel_map = {
+            'drink' : ['drinking_from'],
+            'eat' : ['eating'],
+            'grasp' : ['holding'],
+            'hold' : ['holding', 'carrying', 'touching'],
+            'sit' : ['sitting_on'],
+            'stand' : ['standing_on'],
+            'dress' : ['wearing'],
+            'lie' : ['lying_on'],
+            'take' : ['holding', 'carrying', 'touching'],
+        }
+
+class MultilabelActionGenome(ActionGenome):
+    '''
+    location: 'pre', 'post', 'both'
+    determines whether we use the start or end of the action as the frame. in other words, are we anticipating the next action or inferring the previous/causal action?
+    '''
+    
+    def __init__(self, root, meta_root, position='both', no_img=False, subset=True, split=None, threshold=1, fps=24):
+        super().__init__(root, meta_root, position, no_img, subset, split, threshold, fps)
 
         #create pyg scene graphs
-        self.data_list = []
         self.scene_graphs = {}
         self.verb_label_counts = []
         
-        print(subset_file)
-        if subset_file is not None:
-            subset = shelve.open(subset_file)
-        
-        for video_id, frame_idx, action_classes in usable_list:
-            id = get_id(video_id, frame_idx)
+        for idx, row in self.df.iterrows():
 
-            # only use videos in the split, and examples in the subset
-            if video_id not in split_ids or (self.subset_file is not None and subset.get(id, 'False') == 'False'):
-                continue
-
-            #now we know we can include in our dataset
-            self.data_list.append((video_id, frame_idx, action_classes))
-
-            objects = [obj for obj in self.object_annotations[id] if obj['visible']] # visible objects only
-
-            # unpack dict into nodes and edges, replace '/' with '_' in object classes for prolog compatibility
-            nodes = ["person"] + [obj['class'].replace('/', '_') for obj in objects]
-            nodes = [self.object_classes.index(node) for node in nodes]
-
-            edges = []
-            for i,annot in enumerate(objects):
-                for rel in annot['attention_relationship']:
-                    edges.append([0, i+1, self.relationship_classes.index(rel)])
-                for rel in annot['spatial_relationship']:
-                    edges.append([i+1, 0, self.relationship_classes.index(rel)])
-                for rel in annot['contacting_relationship']:
-                    edges.append([0, i+1, self.relationship_classes.index(rel)])
-
-            # create data object using nodes and edges
-            node_type = torch.tensor(nodes)
-            x = F.one_hot(node_type, num_classes=len(self.object_classes)).float()
-
-            edge_index = []
-            edge_type = []
-            for src, dst, rel in edges:
-                edge_index.append([src, dst])
-                edge_type.append(rel)
-            edge_index = torch.tensor(edge_index, dtype=torch.long).t().contiguous()
-            edge_type = torch.tensor(edge_type, dtype=torch.long) # Adjust dtype as needed
-
-            edge_attr = F.one_hot(edge_type, num_classes=len(self.relationship_classes)).float()
-            verb_classes, obj_classes = zip(*[self.action_verb_obj_map[action_class] for action_class in action_classes])
-
-            w = torch.tensor(action_classes, dtype=torch.long) # only the specific action taken
-            y = torch.tensor(verb_classes, dtype=torch.long)
-            o = torch.tensor([o if o is not None else -1 for o in obj_classes], dtype=torch.long)
-
-            data = Data(x, edge_index=edge_index, edge_attr=edge_attr, \
-                        node_type=node_type, edge_type=edge_type, y=y, w=w, o=o, id=id)
+            id = get_id(row['vid'], row['frame_idx'])
 
             self.scene_graphs[id] = data
             self.verb_label_counts.append(list(verb_classes))
 
         self.verb_label_counts = [v for l in self.verb_label_counts for v in l]
-        if subset_file is not None:
+        if frame_validity_file is not None:
             subset.close()
 
         if split == 'train':
@@ -185,14 +265,8 @@ class AG(Dataset):
                 prior_dict = json.load(f)
                 self.verb_priors = np.array(prior_dict['priors'])
 
-        self.im_transform = T.Compose([
-            T.Resize(size=(224, 224)),
-            T.ToTensor(),
-            T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-        ])
 
-    def __len__(self):
-        return len(self.data_list)
+
 
     def __getitem__(self, index):
         video_id, frame_idx, action_classes = self.data_list[index]
@@ -256,169 +330,6 @@ class AG(Dataset):
             test_actions = self.load_examples_from_file(test_filename)
             return train_val_actions + test_actions
     
-    '''
-    gets all usable frame-action pairs, where the frame should be the very beginning or the very end of the action
-    threshold: the maximum deviation in seconds between the start time of the action and the frame time
-    position: 'pre' or 'post'
-    '''
-    def extract_usable_frames(self, examples, threshold, fps=24):
-        data_list = []
-
-        for video_id, actions, timestep in examples:
-            frame_idx = self.get_frame_from_time(video_id, timestep, fps)
-            if frame_idx:
-                deviation = abs((frame_idx / fps) - timestep)
-
-                if deviation < threshold and get_id(video_id, frame_idx) in self.object_annotations:
-                    data_list.append((video_id, frame_idx, actions))
-
-        return data_list
-
-    def get_frame_from_time(self, video_id, time, fps):
-        frame_number = int(time * fps)
-        directory = os.path.join(self.root, 'frames', video_id + '.mp4')
-        return find_closest_frame_idx(directory, frame_number)
-
-    def init_vocab(self):
-        # collect the object classes
-        #self.object_classes = ['__background__']
-        self.object_classes = []
-        with open(os.path.join(self.root, 'annotations/object_classes.txt'), 'r') as f:
-            for line in f.readlines():
-                line = line.strip('\n')
-                self.object_classes.append(line)
-        f.close()
-
-        '''
-        self.object_classes[9] = 'closet/cabinet'
-        self.object_classes[11] = 'cup/glass/bottle'
-        self.object_classes[23] = 'paper/notebook'
-        self.object_classes[24] = 'phone/camera'
-        self.object_classes[31] = 'sofa/couch'
-        '''
-        
-        self.object_classes[8] = 'closet_cabinet'
-        self.object_classes[10] = 'cup_glass_bottle'
-        self.object_classes[22] = 'paper_notebook'
-        self.object_classes[23] = 'phone_camera'
-        self.object_classes[30] = 'sofa_couch'
-
-        # collect relationship classes
-        self.relationship_classes = []
-        with open(os.path.join(self.root, 'annotations/relationship_classes.txt'), 'r') as f:
-            for line in f.readlines():
-                line = line.strip('\n')
-                self.relationship_classes.append(line)
-        f.close()
-        
-        self.relationship_classes[0] = 'looking_at'
-        self.relationship_classes[1] = 'not_looking_at'
-        self.relationship_classes[5] = 'in_front_of'
-        self.relationship_classes[7] = 'on_the_side_of'
-        self.relationship_classes[10] = 'covered_by'
-        self.relationship_classes[11] = 'drinking_from'
-        self.relationship_classes[13] = 'have_it_on_the_back'
-        self.relationship_classes[15] = 'leaning_on'
-        self.relationship_classes[16] = 'lying_on'
-        self.relationship_classes[17] = 'not_contacting'
-        self.relationship_classes[18] = 'other_relationship'
-        self.relationship_classes[19] = 'sitting_on'
-        self.relationship_classes[20] = 'standing_on'
-        self.relationship_classes[25] = 'writing_on'
-
-        self.attention_relationships = self.relationship_classes[0:3]
-        self.spatial_relationships = self.relationship_classes[3:9]
-        self.contacting_relationships = self.relationship_classes[9:]
-
-        #hardcoded mapping
-        self.charades_ag_obj_map = {}
-        with open(os.path.join(self.root, 'annotations/charades_to_ag_obj_map.txt'), 'r') as f:
-            for line in f.readlines():
-                line = line.strip('\n')
-                charades_idx, ag_idx = line.split(' ')
-                if ag_idx != 'None':
-                    self.charades_ag_obj_map[int(charades_idx)] = int(ag_idx)
-                else:
-                    self.charades_ag_obj_map[int(charades_idx)] = None
-
-        #action -> verb, obj map
-        self.action_verb_obj_map = {}
-        with open(os.path.join(self.root, 'annotations/Charades/Charades_v1_mapping.txt'), 'r') as f:
-            for line in f.readlines():
-                line = line.strip('\n')
-                action, obj, verb = line.split(' ')
-                action = int(action[1:])
-                verb = int(verb[1:])
-                obj = int(obj[1:])
-                obj = self.charades_ag_obj_map[obj]
-                self.action_verb_obj_map[action] = (verb, obj)
-
-        self.verb_classes = []
-        self.verb_mapper = {}
-        idx_counter = 0
-        with open(os.path.join(self.root, 'annotations/Charades/Charades_v1_verbclasses.txt'), 'r') as f:
-            for i,line in enumerate(f.readlines()):
-                line = line.strip('\n')
-                line = remove_id_prefix(line)
-
-                self.verb_classes.append(line)
-                if line in self.verb_whitelist:
-                    self.verb_mapper[i] = idx_counter
-                    idx_counter += 1
-                else:
-                    self.verb_mapper[i] = None
-
-        self.action_classes = []
-        self.action_mapper = {}
-        idx_counter = 0
-        with open(os.path.join(self.root, 'annotations/Charades/Charades_v1_classes.txt'), 'r') as f:
-            for i,line in enumerate(f.readlines()):
-                line = line.strip('\n')
-                line = remove_id_prefix(line)
-
-                self.action_classes.append(line)
-                verb, _ = self.action_verb_obj_map[i]
-                if self.verb_classes[verb] in self.verb_whitelist:
-                    self.action_mapper[i] = idx_counter
-                    idx_counter += 1
-                else:
-                    self.action_mapper[i] = None
-        
-
-        # now subset verbs and actions
-        self.verb_classes = [self.verb_classes[k] for k,v in self.verb_mapper.items() if v is not None]
-        self.action_classes = [self.action_classes[k] for k,v in self.action_mapper.items() if v is not None]
-        
-        new_a_vo_map = {}
-        #k,v is action, (verb, obj)
-        for k,v in self.action_mapper.items():
-            if v is not None:
-                verb_idx, obj_idx = self.action_verb_obj_map[k]
-                new_verb_idx = self.verb_mapper[verb_idx]
-                new_a_vo_map[v] = (new_verb_idx, obj_idx)
-
-        self.action_verb_obj_map = new_a_vo_map
-        #self.action_verb_obj_map = {i: (self.verb_mapper[self.action_verb_obj_map[i][0]], self.action_verb_obj_map[i][1]) for i in self.action_classes if i is not None}
-
-
-
-
-        '''
-        a dict mapping verbs to the corresponding relationship that they form
-        used to check if the verb has already been taken in the frame, so that we may prune invalid preconditions
-        '''
-        self.verb_result_rel_map = {
-            'drink' : ['drinking_from'],
-            'eat' : ['eating'],
-            'grasp' : ['holding'],
-            'hold' : ['holding', 'carrying', 'touching'],
-            'sit' : ['sitting_on'],
-            'stand' : ['standing_on'],
-            'dress' : ['wearing'],
-            'lie' : ['lying_on'],
-            'take' : ['holding', 'carrying', 'touching'],
-        }
-
     def verb_pred_collate(self, batch):
         # action_labels is multilabel
         ids, images, scene_graphs, action_labels, constraints, truth_values = zip(*batch)
@@ -445,6 +356,194 @@ class AG(Dataset):
             truth_values = torch.stack(truth_values)
 
         return ids, resized_images, sg_batch, verb_labels, constraints, truth_values
+
+
+class SingleLabelActionGenome(ActionGenome):
+    
+    def __init__(self, root, threshold=1, fps=24, no_img=False, split=None, split_file='data/ag/split_train_val_test.json', subset_file=None, verb_whitelist=[], verb_prior_file='data/ag/verb_priors.json'):
+        super().__init__()
+        self.root = root
+        self.threshold = threshold
+        self.no_img = no_img
+        self.split = split
+        self.subset_file = subset_file
+        self.verb_whitelist = verb_whitelist
+        self.constraints = None
+
+        with open(root + 'annotations/person_bbox.pkl', 'rb') as f:
+            self.person_annotations = pickle.load(f)
+        f.close()
+        with open(root+'annotations/object_bbox_and_relationship.pkl', 'rb') as f:
+            self.object_annotations = pickle.load(f)
+        f.close()
+
+        self.init_vocab()
+        actions = self.load_actions()
+        usable_list = extract_usable_frames(self.root, self.object_annotations, actions, threshold, fps)
+
+        split_ids = None
+        assert split in ['train', 'val', 'test', None]
+
+        if split is not None:
+            split_ids = []
+            with open(split_file) as f:
+                split_dict = json.load(f)
+                split_ids = split_dict[split]
+            print('split:', split, '| length:', len(split_ids))
+
+        #create pyg scene graphs
+        self.data_list = []
+        self.scene_graphs = {}
+        self.verb_label_counts = []
+        
+        if subset_file is not None:
+            subset = shelve.open(subset_file)
+        
+        for video_id, frame_idx, action_class in usable_list:
+            id, full_id = get_id(video_id, frame_idx, action_class=action_class)
+
+            # only use videos in the split
+            if split_ids is not None and video_id not in split_ids:
+                continue
+            # only use examples in the subset
+            if self.subset_file is not None and subset[full_id] == 'False':
+                continue
+
+            #now we know we can include in our dataset
+            self.data_list.append((video_id, frame_idx, action_class))
+
+            objects = [obj for obj in self.object_annotations[id] if obj['visible']] # visible objects only
+
+            # unpack dict into nodes and edges, replace '/' with '_' in object classes for prolog compatibility
+            nodes = ["person"] + [obj['class'].replace('/', '_') for obj in objects]
+            nodes = [self.object_classes.index(node) for node in nodes]
+
+            edges = []
+            for i,annot in enumerate(objects):
+                for rel in annot['attention_relationship']:
+                    edges.append([0, i+1, self.relationship_classes.index(rel)])
+                for rel in annot['spatial_relationship']:
+                    edges.append([i+1, 0, self.relationship_classes.index(rel)])
+                for rel in annot['contacting_relationship']:
+                    edges.append([0, i+1, self.relationship_classes.index(rel)])
+
+            # create data object using nodes and edges
+            node_type = torch.tensor(nodes)
+            x = F.one_hot(node_type, num_classes=len(self.object_classes)).float()
+
+            edge_index = []
+            edge_type = []
+            for src, dst, rel in edges:
+                edge_index.append([src, dst])
+                edge_type.append(rel)
+            edge_index = torch.tensor(edge_index, dtype=torch.long).t().contiguous()
+            edge_type = torch.tensor(edge_type, dtype=torch.long) # Adjust dtype as needed
+
+            edge_attr = F.one_hot(edge_type, num_classes=len(self.relationship_classes)).float()
+
+            verb_class, obj_class = self.action_verb_obj_map[action_class]
+
+            w = torch.tensor([action_class], dtype=torch.long) # only the specific action taken
+            y = torch.tensor([verb_class], dtype=torch.long)
+            o = torch.tensor([]) if obj_class is None else torch.tensor([obj_class], dtype=torch.long)
+
+            data = Data(x, edge_index=edge_index, edge_attr=edge_attr, \
+                        node_type=node_type, edge_type=edge_type, y=y, w=w, o=o, id=id)
+
+            self.scene_graphs[id] = data
+            self.verb_label_counts.append(verb_class)
+
+        if subset_file is not None:
+            subset.close()
+
+        if split == 'train':
+            self.verb_label_counts = np.resize(np.bincount(self.verb_label_counts), len(self.verb_classes))
+            self.verb_priors = self.verb_label_counts/len(self.data_list)
+            with open(verb_prior_file, 'w') as f:
+                prior_dict = {'verbs': self.verb_classes, 'priors': list(self.verb_priors)}
+                json.dump(prior_dict, f)
+        elif split == None:
+            self.verb_label_counts = np.resize(np.bincount(self.verb_label_counts), len(self.verb_classes))
+            self.verb_priors = self.verb_label_counts/len(self.data_list)
+        else:
+            with open(verb_prior_file, 'r') as f:
+                prior_dict = json.load(f)
+                self.verb_priors = np.array(prior_dict['priors'])
+
+        self.im_transform = T.Compose([
+            T.Resize(size=(224, 224)),
+            T.ToTensor(),
+            T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+        ])
+
+    def __len__(self):
+        return len(self.data_list)
+
+    def __getitem__(self, index):
+        video_id, frame_idx, action_class = self.data_list[index]
+
+        #full id is necessary since some actions start on the same frame
+        id, full_id = get_id(video_id, frame_idx, action_class=action_class)
+
+        scene_graph = self.scene_graphs[id]
+
+        if self.no_img:
+            image = None
+        else:
+            image_path = os.path.join(self.root, 'frames', id)
+            image = Image.open(image_path).convert('RGB')
+
+        if self.constraints is not None:
+            constraints = torch.tensor(self.constraints[index]).float()
+            truth_values = torch.tensor(self.truth_values[index]).float()
+        else:
+            constraints = None
+            truth_values = None
+
+        return full_id, image, scene_graph, action_class, constraints, truth_values
+
+    # Load all actions from the dataset
+    def load_actions(self):
+        actions = []
+        with open(self.root + 'annotations/Charades/Charades_v1_train.csv') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                video_id = row['id']
+                action_string = row['actions'].split(';')
+                for action in action_string:
+                    action_tuple = string_to_action_triple(action, video_id)
+                    if action_tuple is not None and action_tuple[1] is not None:
+                        action_tuple[1] = self.action_mapper[action_tuple[1]]
+                        if action_tuple[1] is not None:
+                            actions.append(action_tuple)
+
+        f.close()
+        return actions
+
+    def verb_pred_collate(self, batch):
+        ids, images, scene_graphs, actions, constraints, truth_values = zip(*batch)
+        sg_batch = Batch.from_data_list(scene_graphs, exclude_keys=['o'])
+        
+        verbs = torch.tensor([self.action_verb_obj_map[a][0] for a in actions])
+        labels = F.one_hot(verbs, len(self.verb_classes)).float()
+        
+        if self.no_img:
+            resized_images = None
+        else:
+            resized_images = [self.im_transform(img) for img in images]
+            resized_images = torch.stack(resized_images)
+        
+        if self.constraints is None:
+            constraints = None
+            truth_values = None
+        else:
+            constraints = torch.stack(constraints)
+            truth_values = torch.stack(truth_values)
+
+        return ids, resized_images, sg_batch, verbs, labels, constraints, truth_values
+
+
+
 
 import os
 import csv
