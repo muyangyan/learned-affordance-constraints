@@ -13,7 +13,3 @@ def load_yaml(path):
         return dict2obj(yaml.safe_load(f))
 
 
-def load_verb_whitelist(path):
-    with open(path, 'r') as f:
-        verb_whitelist = [line for line in f.read().splitlines() if line and not line.startswith('#')]
-    return verb_whitelist

@@ -16,7 +16,7 @@ from models.action_anticipator import ActionAnticipator
 from util.rule_utils import apply_rules
 from util.metrics import analyze_preds_ml
 
-from util.config_utils import load_yaml, load_verb_whitelist
+from util.config_utils import load_yaml
 
 torch.set_float32_matmul_precision('medium')
 
@@ -57,7 +57,6 @@ test
 '''
 def test(cfg, run_name, test_run_name):
 
-    verb_whitelist = load_verb_whitelist(cfg.verb_whitelist)
 
     checkpoints_folder = os.path.join(cfg.runs_folder, run_name, 'checkpoints')
     checkpoints = os.listdir(checkpoints_folder)
@@ -68,7 +67,7 @@ def test(cfg, run_name, test_run_name):
 
     assert cfg.data_split in ['test', 'val'], 'Invalid test split'
 
-    dataset = AG(cfg.data_root, split=cfg.data_split, split_file=cfg.split_file, subset_file=cfg.subset_file, verb_whitelist=verb_whitelist)
+    dataset = AG(cfg.data_root, split=cfg.data_split, split_file=cfg.split_file, subset_file=cfg.subset_file, verb_whitelist=cfg.verb_whitelist)
     loader = DataLoader(dataset, batch_size=128, collate_fn=dataset.verb_pred_collate, num_workers=16, shuffle=False)
 
     print(f"Dataset length: {len(dataset)}")

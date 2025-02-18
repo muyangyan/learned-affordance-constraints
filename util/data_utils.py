@@ -69,7 +69,10 @@ def load_examples(action_df, position, label_mode='single'):
         elif label_mode == 'single':
             return action_df[['vid', time_col, 'action']].reset_index(drop=True)
 
-
+def load_verb_whitelist(path):
+    with open(path, 'r') as f:
+        verb_whitelist = [line for line in f.read().splitlines() if line and not line.startswith('#')]
+    return verb_whitelist
 
 '''
 gets all usable frame-action pairs, where the frame should be the very beginning or the very end of the action

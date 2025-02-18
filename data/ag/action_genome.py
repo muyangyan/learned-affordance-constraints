@@ -18,7 +18,7 @@ from torch_geometric.data import Data, Batch
 
 import matplotlib.pyplot as plt
 
-from util.data_utils import string_to_action_triple, get_id, extract_usable_frames, clean_df, load_examples, apply_subset
+from util.data_utils import string_to_action_triple, get_id, extract_usable_frames, clean_df, load_examples, apply_subset, load_verb_whitelist
 
 class ActionGenome(Dataset):
 
@@ -38,6 +38,7 @@ class ActionGenome(Dataset):
         verb_priors_file = os.path.join(meta_root, 'verb_priors.json')
         verb_whitelist_file = os.path.join(meta_root, 'verb_whitelist.txt')
 
+        self.verb_whitelist = load_verb_whitelist(verb_whitelist_file)
         self.init_vocab()
 
         with open(root + 'annotations/person_bbox.pkl', 'rb') as f:
@@ -69,6 +70,20 @@ class ActionGenome(Dataset):
             T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         ])
 
+        self.init_priors()
+
+        #create pyg scene graphs
+        self.scene_graphs = {}
+        self.verb_label_counts = []
+        
+        for idx, row in self.df.iterrows():
+            id = get_id(row['vid'], row['frame_idx'])
+            action_classes = row['action_classes']
+
+            data = self.create_scene_graph(id, action_classes)
+
+            self.scene_graphs[id] = data
+
 
     def __len__(self):
         return len(self.df)
@@ -76,7 +91,7 @@ class ActionGenome(Dataset):
     def __getitem__(self, index):
         pass
 
-    def create_scene_graph(self, id):
+    def create_scene_graph(self, id, action_classes):
         objects = [obj for obj in self.object_annotations[id] if obj['visible']] # visible objects only
 
         # unpack dict into nodes and edges, replace '/' with '_' in object classes for prolog compatibility
@@ -106,17 +121,17 @@ class ActionGenome(Dataset):
 
         edge_attr = F.one_hot(edge_type, num_classes=len(self.relationship_classes)).float()
 
-        #the part where we use the label. should be differentiated between single and multi-label TODO
-        verb_classes, obj_classes = zip(*[self.action_verb_obj_map[action_class] for action_class in action_classes])
-
-        w = torch.tensor(action_classes, dtype=torch.long) # only the specific action taken
-        y = torch.tensor(verb_classes, dtype=torch.long)
-        o = torch.tensor([o if o is not None else -1 for o in obj_classes], dtype=torch.long)
+        w, y, o = self.create_labels(action_classes)
 
         data = Data(x, edge_index=edge_index, edge_attr=edge_attr, \
                     node_type=node_type, edge_type=edge_type, y=y, w=w, o=o, id=id)
+        return data
 
+    def create_labels(self, action_classes):
+        pass
 
+    def init_priors(self):
+        pass
 
     def init_vocab(self):
         # collect the object classes
@@ -235,23 +250,12 @@ class MultilabelActionGenome(ActionGenome):
     
     def __init__(self, root, meta_root, position='both', no_img=False, subset=True, split=None, threshold=1, fps=24):
         super().__init__(root, meta_root, position, no_img, subset, split, threshold, fps)
+            #self.verb_label_counts.append(list(verb_classes))
 
-        #create pyg scene graphs
-        self.scene_graphs = {}
-        self.verb_label_counts = []
-        
-        for idx, row in self.df.iterrows():
-
-            id = get_id(row['vid'], row['frame_idx'])
-
-            self.scene_graphs[id] = data
-            self.verb_label_counts.append(list(verb_classes))
-
+    def init_priors(self):
         self.verb_label_counts = [v for l in self.verb_label_counts for v in l]
-        if frame_validity_file is not None:
-            subset.close()
 
-        if split == 'train':
+        if self.split == 'train':
             self.verb_label_counts = np.resize(np.bincount(self.verb_label_counts), len(self.verb_classes))
             self.verb_priors = self.verb_label_counts/len(self.data_list)
             with open(verb_prior_file, 'w') as f:
@@ -265,6 +269,14 @@ class MultilabelActionGenome(ActionGenome):
                 prior_dict = json.load(f)
                 self.verb_priors = np.array(prior_dict['priors'])
 
+
+    def create_labels(self, action_classes):
+        #the part where we use the label. should be differentiated between single and multi-label TODO
+        verb_classes, obj_classes = zip(*[self.action_verb_obj_map[action_class] for action_class in action_classes])
+
+        w = torch.tensor(action_classes, dtype=torch.long) # only the specific action taken
+        y = torch.tensor(verb_classes, dtype=torch.long)
+        o = torch.tensor([o if o is not None else -1 for o in obj_classes], dtype=torch.long)
 
 
 

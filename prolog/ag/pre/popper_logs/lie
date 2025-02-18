@@ -90,3 +90,10 @@ body_pred(writing_on, 2).
 17:45:46 lie_target(A):- other_relationship(A,B),floor(B).
 17:45:46 ********************
 17:54:33 Generating programs of size: 5
+07:20:34 TIMEOUT OF 6000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.86 Recall:0.53 TP:18 FN:16 TN:174 FP:3 Size:9 MDL:28
+lie_target(A):- lying_on(A,B),behind(B,A).
+lie_target(A):- leaning_on(A,B),on_the_side_of(B,A).
+lie_target(A):- other_relationship(A,B),floor(B).
+******************************
