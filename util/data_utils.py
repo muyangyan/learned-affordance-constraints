@@ -41,25 +41,19 @@ def clean_df(df, split_ids):
     actions_split = split_df['actions'].str.split(';').apply(pd.Series, 1).stack()
     actions_split.index = actions_split.index.droplevel(-1)
     actions_split = actions_split.str.split(' ', expand=True)
-    actions_split.columns = ['action', 'start_time', 'end_time']
+    actions_split.columns = ['action', 'pre_time', 'post_time']
     actions_split['action'] = actions_split['action'].str.lstrip('c').astype(int)
     cleaned_df = split_df.drop('actions', axis=1).join(actions_split).dropna()
 
     return cleaned_df
 
+# DEPRECATED
+'''
 def load_examples(action_df, position, label_mode='single'):
-    assert position in ['pre', 'post', 'both']
-    assert label_mode in ['single', 'multi']
-    assert not (position == 'both' and label_mode == 'multi')
-
-    if position == 'both':
-        #apply pre and post subsets
-        return action_df
-    else:
+    if position != 'both':
         time_col = f'{position}_time'
-        action_df[f'video_{position}'] = action_df['vid'] + '_' + action_df[time_col]
-        
         if label_mode == 'multi':
+            action_df[f'video_{position}'] = action_df['vid'] + '_' + action_df[time_col]
             grouped_df = action_df.groupby(f'video_{position}').agg({
                 'vid': 'first',
                 time_col: 'first',
@@ -68,6 +62,12 @@ def load_examples(action_df, position, label_mode='single'):
             return grouped_df
         elif label_mode == 'single':
             return action_df[['vid', time_col, 'action']].reset_index(drop=True)
+    return action_df
+'''
+
+
+
+    
 
 def load_verb_whitelist(path):
     with open(path, 'r') as f:

@@ -22,12 +22,17 @@ from util.data_utils import string_to_action_triple, get_id, extract_usable_fram
 
 class ActionGenome(Dataset):
 
-    def __init__(self, root, meta_root, position='both', no_img=False, subset=True, split=None, threshold=1, fps=24):
+    def __init__(self, root, meta_root, position='both', label_mode='single', no_img=False, subset=True, split=None, threshold=1, fps=24):
+        assert position in ['pre', 'post', 'both']
+        assert label_mode in ['single', 'multi']
+        assert not (position == 'both' and label_mode == 'multi')
+
         super().__init__()
         self.root = root
         self.meta_root = meta_root
 
         self.position = position
+        self.label_mode = label_mode
         self.threshold = threshold
         self.no_img = no_img
         self.split = split
@@ -38,8 +43,7 @@ class ActionGenome(Dataset):
         verb_priors_file = os.path.join(meta_root, 'verb_priors.json')
         verb_whitelist_file = os.path.join(meta_root, 'verb_whitelist.txt')
 
-        self.verb_whitelist = load_verb_whitelist(verb_whitelist_file)
-        self.init_vocab()
+        self.init_vocab(verb_whitelist_file)
 
         with open(root + 'annotations/person_bbox.pkl', 'rb') as f:
             self.person_annotations = pickle.load(f)
@@ -50,8 +54,7 @@ class ActionGenome(Dataset):
         with open(split_file, 'r') as f:
             split_dict = json.load(f)
         cleaned_df = clean_df(raw_df, split_dict[split])
-        examples_df = load_examples(cleaned_df, position)
-        usable_df = extract_usable_frames(self.root, self.object_annotations, examples_df, position, threshold, fps=fps)
+        usable_df = extract_usable_frames(self.root, self.object_annotations, cleaned_df, position, threshold, fps=fps)
         if subset:
             frame_validity_df = pd.read_csv(frame_validity_file)
             apply_subset_partial = partial(apply_subset, frame_validity_df=frame_validity_df, position=position)
@@ -62,20 +65,31 @@ class ActionGenome(Dataset):
         final_df['verb'] = final_df['action'].apply(lambda x: self.action_verb_obj_map[x][0])
         final_df['noun'] = final_df['action'].apply(lambda x: self.action_verb_obj_map[x][1])
 
-        self.df = final_df
+        #up until here each row is a single action
+        single_df = final_df
 
-        self.im_transform = T.Compose([
-            T.Resize(size=(224, 224)),
-            T.ToTensor(),
-            T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-        ])
+        #differentiate between single and multi-label
+        if label_mode == 'single':
+            length = len(single_df)
+            if position != 'both':
+                self.df = single_df[['vid', f'{position}_idx', 'action']]
+            else:
+                self.df = single_df[['vid', 'pre_idx', 'post_idx', 'action']]
+        else:
+            multi_df = single_df
+            multi_df[f'video_{position}'] = multi_df['vid'] + '_' + multi_df[f'{position}_idx']
+            multi_df = multi_df.groupby(f'video_{position}').agg({
+                'vid': 'first',
+                f'{position}_idx': 'first',
+                'action': lambda x: list(x.astype(int))
+            }).reset_index(drop=True)
+            self.df = multi_df
+            length = len(multi_df)
 
-        self.init_priors()
+        self.init_priors(verb_priors_file, single_df, length)
 
         #create pyg scene graphs
         self.scene_graphs = {}
-        self.verb_label_counts = []
-        
         for idx, row in self.df.iterrows():
             id = get_id(row['vid'], row['frame_idx'])
             action_classes = row['action_classes']
@@ -83,6 +97,12 @@ class ActionGenome(Dataset):
             data = self.create_scene_graph(id, action_classes)
 
             self.scene_graphs[id] = data
+
+        self.im_transform = T.Compose([
+            T.Resize(size=(224, 224)),
+            T.ToTensor(),
+            T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+        ])
 
 
     def __len__(self):
@@ -129,11 +149,33 @@ class ActionGenome(Dataset):
 
     def create_labels(self, action_classes):
         pass
+        #the part where we use the label. should be differentiated between single and multi-label TODO
+        if self.label_mode == 'multi':
+        else:
+            #in this case action_classes is a single action
+            verb_class, obj_class = self.action_verb_obj_map[action_classes]
+            w = torch.tensor([action_classes], dtype=torch.long) # only the specific action taken
+            y = torch.tensor([verb_class], dtype=torch.long)
+            o = torch.tensor([]) if obj_class is None else torch.tensor([obj_class], dtype=torch.long)
+            return w, y, o
 
-    def init_priors(self):
-        pass
+    def init_priors(self, verb_prior_file, single_df, length):
+        if self.split == 'train' or self.split == None:
+            verb_counts = single_df['verb'].value_counts().to_dict()
+            self.verb_priors = [verb_counts[verb]/length for verb in verb_counts]
+            if self.split == 'train':
+                with open(verb_prior_file, 'w') as f:
+                    prior_dict = {'verbs': self.verb_classes, 'priors': list(self.verb_priors)}
+                    json.dump(prior_dict, f)
+        else:
+            with open(verb_prior_file, 'r') as f:
+                prior_dict = json.load(f)
+                self.verb_priors = np.array(prior_dict['priors'])
 
-    def init_vocab(self):
+    def init_vocab(self, verb_whitelist_file):
+
+        self.verb_whitelist = load_verb_whitelist(verb_whitelist_file)
+
         # collect the object classes
         #self.object_classes = ['__background__']
         self.object_classes = []
@@ -248,36 +290,16 @@ class MultilabelActionGenome(ActionGenome):
     determines whether we use the start or end of the action as the frame. in other words, are we anticipating the next action or inferring the previous/causal action?
     '''
     
-    def __init__(self, root, meta_root, position='both', no_img=False, subset=True, split=None, threshold=1, fps=24):
-        super().__init__(root, meta_root, position, no_img, subset, split, threshold, fps)
-            #self.verb_label_counts.append(list(verb_classes))
-
-    def init_priors(self):
-        self.verb_label_counts = [v for l in self.verb_label_counts for v in l]
-
-        if self.split == 'train':
-            self.verb_label_counts = np.resize(np.bincount(self.verb_label_counts), len(self.verb_classes))
-            self.verb_priors = self.verb_label_counts/len(self.data_list)
-            with open(verb_prior_file, 'w') as f:
-                prior_dict = {'verbs': self.verb_classes, 'priors': list(self.verb_priors)}
-                json.dump(prior_dict, f)
-        elif split == None:
-            self.verb_label_counts = np.resize(np.bincount(self.verb_label_counts), len(self.verb_classes))
-            self.verb_priors = self.verb_label_counts/len(self.data_list)
-        else:
-            with open(verb_prior_file, 'r') as f:
-                prior_dict = json.load(f)
-                self.verb_priors = np.array(prior_dict['priors'])
-
+    def __init__(self, root, meta_root, position='pre', no_img=False, subset=True, split=None):
+        super().__init__(root, meta_root, position, label_mode='multi', no_img=no_img, subset=subset, split=split)
 
     def create_labels(self, action_classes):
-        #the part where we use the label. should be differentiated between single and multi-label TODO
         verb_classes, obj_classes = zip(*[self.action_verb_obj_map[action_class] for action_class in action_classes])
 
         w = torch.tensor(action_classes, dtype=torch.long) # only the specific action taken
         y = torch.tensor(verb_classes, dtype=torch.long)
         o = torch.tensor([o if o is not None else -1 for o in obj_classes], dtype=torch.long)
-
+        return w, y, o
 
 
     def __getitem__(self, index):
@@ -303,45 +325,6 @@ class MultilabelActionGenome(ActionGenome):
 
         return id, image, scene_graph, action_classes, constraints, truth_values
 
-    #loads examples
-    def load_examples_from_file(self, filename):
-        examples = []
-        with open(filename) as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                video_id = row['id']
-                action_string = row['actions'].split(';')
-                timestep_actions = {} #key-timestep, value-list of actions
-                for action in action_string:
-                    action_tuple = string_to_action_triple(action) # [action_id, start_time, end_time]
-                    if action_tuple is not None and action_tuple[0] is not None:
-                        timestep = action_tuple[1] if self.position == 'pre' else action_tuple[2]
-                        timestep = round(timestep, 2)
-                        action_label = self.action_mapper[action_tuple[0]]
-                        if action_label is not None:
-                            if timestep not in timestep_actions:
-                                timestep_actions[timestep] = []
-                            timestep_actions[timestep].append(action_label) # add the action id to that timestep
-
-                for timestep, actions in timestep_actions.items():
-                    examples.append((video_id, actions, timestep))
-        f.close()
-        return examples
-
-    # Load all actions from the dataset
-    def load_examples(self, split):
-        train_val_filename = self.root + 'annotations/Charades/Charades_v1_train.csv'
-        test_filename = self.root + 'annotations/Charades/Charades_v1_test.csv'
-
-        if split == 'train' or split == 'val':
-            return self.load_examples_from_file(train_val_filename)
-        elif split == 'test':
-            return self.load_examples_from_file(test_filename)
-        else: #get the whole dataset, all splits included
-            train_val_actions = self.load_examples_from_file(train_val_filename)
-            test_actions = self.load_examples_from_file(test_filename)
-            return train_val_actions + test_actions
-    
     def verb_pred_collate(self, batch):
         # action_labels is multilabel
         ids, images, scene_graphs, action_labels, constraints, truth_values = zip(*batch)
