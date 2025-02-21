@@ -32,7 +32,7 @@ def apply_subset(row, frame_validity_df, position):
     elif position == 'both':
         return valid_pre and valid_post
 
-def clean_df(df, split_ids):
+def clean_df(df, split_ids, action_map):
     df = df[['id', 'actions']]
     df = df.rename(columns={'id': 'vid'})
 
@@ -43,7 +43,13 @@ def clean_df(df, split_ids):
     actions_split = actions_split.str.split(' ', expand=True)
     actions_split.columns = ['action', 'pre_time', 'post_time']
     actions_split['action'] = actions_split['action'].str.lstrip('c').astype(int)
+    actions_split['pre_time'] = actions_split['pre_time'].astype(float)
+    actions_split['post_time'] = actions_split['post_time'].astype(float)
     cleaned_df = split_df.drop('actions', axis=1).join(actions_split).dropna()
+
+    cleaned_df['action'] = cleaned_df['action'].apply(lambda x: action_map[x])
+    cleaned_df.dropna(inplace=True)
+    cleaned_df.reset_index(drop=True, inplace=True)
 
     return cleaned_df
 
@@ -80,20 +86,22 @@ threshold: the maximum deviation in seconds between the start time of the action
 position: 'pre' or 'post'
 '''
 def extract_usable_frames(root, object_annotations, examples_df, position, threshold, fps=24):
+    if position == 'both':
+        positions = ['pre', 'post']
+    else:
+        positions = [position]
+    for pos in positions:
+        examples_df[f'{pos}_frame'] = None
+
     for index, row in examples_df.iterrows():
         video_id = row['vid']
-
-        if position == 'both':
-            positions = ['pre', 'post']
-        else:
-            positions = [position]
 
         for pos in positions:
             timestep = row[f'{pos}_time']
             frame_idx = time_to_frame(root, video_id, timestep, fps, threshold, object_annotations)
             if frame_idx:
-                examples_df.loc[index, f'{pos}_frame'] = frame_idx
-    return examples_df
+                examples_df.at[index, f'{pos}_frame'] = frame_idx
+    return examples_df.dropna()
 
 def time_to_frame(root, video_id, timestep, fps, threshold, object_annotations):
     frame_idx = get_frame_from_time(root, video_id, timestep, fps)
