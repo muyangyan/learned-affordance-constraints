@@ -12,7 +12,6 @@ from util.config_utils import load_yaml
 
 import randomname
 
-
 from test import test
 from train import train
 
@@ -44,7 +43,6 @@ def create_test_directories(cfg, args):
 '''
 entry point for training and testing. handles organization of runs, configs, etc.
 calls train and test routines
-
 '''
 def main(cfg, args):
     print('LEAPR')

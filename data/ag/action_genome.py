@@ -22,7 +22,7 @@ from util.data_utils import get_id, extract_usable_frames, clean_df, load_verb_w
 
 class ActionGenome(Dataset):
 
-    def __init__(self, root, meta_root, position='both', label_mode='single', no_img=False, subset=True, split=None, threshold=1, fps=24):
+    def __init__(self, root, meta_root, position='both', label_mode='single', no_img=False, subset=True, split=None, threshold=1):
         assert position in ['pre', 'post', 'both']
         assert label_mode in ['single', 'multi']
         assert not (position == 'both' and label_mode == 'multi')
@@ -51,11 +51,13 @@ class ActionGenome(Dataset):
             self.object_annotations = pickle.load(f)
         with open(os.path.join(root, 'annotations/Charades/Charades_v1_train.csv'), 'r') as f:
             raw_df = pd.read_csv(f)
+        with open(os.path.join(root, 'annotations/Muyang/framerates.csv'), 'r') as f:
+            framerate_df = pd.read_csv(f)
         with open(split_file, 'r') as f:
             split_dict = json.load(f)
         split_ids = split_dict['train']+split_dict['val']+split_dict['test'] if split == None else split_dict[split]
-        cleaned_df = clean_df(raw_df, split_ids, self.action_mapper)
-        usable_df = extract_usable_frames(self.root, self.object_annotations, cleaned_df, position, threshold, fps=fps)
+        cleaned_df = clean_df(raw_df, split_ids, self.action_mapper, framerate_df)
+        usable_df = extract_usable_frames(self.root, self.object_annotations, cleaned_df, position, threshold)
         if subset:
             frame_validity_df = pd.read_csv(frame_validity_file)
             apply_subset_partial = partial(apply_subset, frame_validity_df=frame_validity_df, position=position)

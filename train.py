@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 from torch.utils.data import DataLoader
-from data.ag.action_genome import AG
+from data.ag.action_genome import ActionGenome, MultiAG, SingleAG, SingleBothAG
 
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint
@@ -15,7 +15,7 @@ from pytorch_lightning.loggers import TensorBoardLogger
 
 from models.action_anticipator import ActionAnticipator
 
-from util.config_utils import load_yaml, load_verb_whitelist
+from util.config_utils import load_yaml
 import argparse
 
 torch.set_float32_matmul_precision('medium')

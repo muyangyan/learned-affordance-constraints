@@ -32,7 +32,7 @@ def apply_subset(row, frame_validity_df, position):
     elif position == 'both':
         return valid_pre and valid_post
 
-def clean_df(df, split_ids, action_map):
+def clean_df(df, split_ids, action_map, framerate_df):
     df = df[['id', 'actions']]
     df = df.rename(columns={'id': 'vid'})
 
@@ -50,6 +50,8 @@ def clean_df(df, split_ids, action_map):
     cleaned_df['action'] = cleaned_df['action'].apply(lambda x: action_map[x])
     cleaned_df.dropna(inplace=True)
     cleaned_df.reset_index(drop=True, inplace=True)
+
+    cleaned_df['fps'] = cleaned_df['vid'].apply(lambda x: framerate_df.loc[framerate_df['video_id'] == x, 'frame_rate'].values[0])
 
     return cleaned_df
 
@@ -85,7 +87,7 @@ gets all usable frame-action pairs, where the frame should be the very beginning
 threshold: the maximum deviation in seconds between the start time of the action and the frame time
 position: 'pre' or 'post'
 '''
-def extract_usable_frames(root, object_annotations, examples_df, position, threshold, fps=24):
+def extract_usable_frames(root, object_annotations, examples_df, position, threshold):
     if position == 'both':
         positions = ['pre', 'post']
     else:
@@ -98,6 +100,7 @@ def extract_usable_frames(root, object_annotations, examples_df, position, thres
 
         for pos in positions:
             timestep = row[f'{pos}_time']
+            fps = row['fps']
             frame_idx = time_to_frame(root, video_id, timestep, fps, threshold, object_annotations)
             if frame_idx:
                 examples_df.at[index, f'{pos}_frame'] = frame_idx
