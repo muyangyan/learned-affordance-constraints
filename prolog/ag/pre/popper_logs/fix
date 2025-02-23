@@ -64,43 +64,36 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-17:45:38 Generating programs of size: 2
-17:45:39 Generating programs of size: 3
-17:45:39 ********************
-17:45:39 New best hypothesis:
-17:45:39 tp:5 fn:80 tn:308 fp:1 size:3 mdl:84
-17:45:39 fix_target(A):- holding(A,B),mirror(B).
-17:45:39 ********************
-17:45:39 ********************
-17:45:39 New best hypothesis:
-17:45:39 tp:20 fn:65 tn:303 fp:6 size:3 mdl:74
-17:45:39 fix_target(A):- looking_at(A,B),mirror(B).
-17:45:39 ********************
-17:45:40 ********************
-17:45:40 New best hypothesis:
-17:45:40 tp:25 fn:60 tn:300 fp:9 size:3 mdl:72
-17:45:40 fix_target(A):- in_front_of(B,A),mirror(B).
-17:45:40 ********************
-17:45:40 ********************
-17:45:40 New best hypothesis:
-17:45:40 tp:25 fn:60 tn:301 fp:8 size:3 mdl:71
-17:45:40 fix_target(A):- not_contacting(A,B),mirror(B).
-17:45:40 ********************
-17:45:46 Generating programs of size: 4
-17:45:48 ********************
-17:45:48 New best hypothesis:
-17:45:48 tp:41 fn:44 tn:299 fp:10 size:12 mdl:66
-17:45:48 fix_target(A):- looking_at(A,B),mirror(B).
-17:45:48 fix_target(A):- mirror(B),not_looking_at(A,B).
-17:45:48 fix_target(A):- in_front_of(B,A),vacuum(B).
-17:45:48 fix_target(A):- light(B),not_contacting(A,B).
-17:45:48 ********************
-17:56:40 Generating programs of size: 5
-14:52:07 TIMEOUT OF 6000 SECONDS EXCEEDED
+05:17:29 Generating programs of size: 2
+05:17:29 Generating programs of size: 3
+05:17:30 ********************
+05:17:30 New best hypothesis:
+05:17:30 tp:23 fn:54 tn:293 fp:10 size:3 mdl:67
+05:17:30 fix_target(A):- mirror(B),in_front_of(B,A).
+05:17:30 ********************
+05:17:30 ********************
+05:17:30 New best hypothesis:
+05:17:30 tp:18 fn:59 tn:299 fp:4 size:3 mdl:66
+05:17:30 fix_target(A):- mirror(B),looking_at(A,B).
+05:17:30 ********************
+05:17:31 ********************
+05:17:31 New best hypothesis:
+05:17:31 tp:23 fn:54 tn:295 fp:8 size:3 mdl:65
+05:17:31 fix_target(A):- mirror(B),not_contacting(A,B).
+05:17:31 ********************
+05:17:35 Generating programs of size: 4
+05:17:37 ********************
+05:17:37 New best hypothesis:
+05:17:37 tp:33 fn:44 tn:295 fp:8 size:9 mdl:61
+05:17:37 fix_target(A):- mirror(B),not_looking_at(A,B).
+05:17:37 fix_target(A):- mirror(B),looking_at(A,B).
+05:17:37 fix_target(A):- light(B),above(B,A).
+05:17:37 ********************
+05:30:04 Generating programs of size: 5
+07:13:00 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.80 Recall:0.48 TP:41 FN:44 TN:299 FP:10 Size:12 MDL:66
-fix_target(A):- looking_at(A,B),mirror(B).
+Precision:0.80 Recall:0.43 TP:33 FN:44 TN:295 FP:8 Size:9 MDL:61
 fix_target(A):- mirror(B),not_looking_at(A,B).
-fix_target(A):- in_front_of(B,A),vacuum(B).
-fix_target(A):- light(B),not_contacting(A,B).
+fix_target(A):- mirror(B),looking_at(A,B).
+fix_target(A):- light(B),above(B,A).
 ******************************

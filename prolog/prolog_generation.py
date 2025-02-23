@@ -10,7 +10,7 @@ from util.config_utils import load_yaml
 
 warnings.filterwarnings("ignore")
 
-from data.ag.action_genome import AG
+from data.ag.action_genome import MultiAG
 
 
 '''
@@ -83,7 +83,7 @@ class PrologData:
             f.write(':- style_check(-discontiguous).\n')
         for idx, inputs in enumerate(self.dataset):
             
-            if type(self.dataset) is AG:
+            if type(self.dataset) is MultiAG:
                 id, _, data, _, _, _ = inputs
             else:
                 raise ValueError('Invalid dataset type')
@@ -154,20 +154,12 @@ def exp_curve(b,x):
 def main(config, args):
 
     root = config.data_root
-    prolog_folder = config.prolog_folder
-    subset_file = config.subset_file
-    verb_whitelist = config.verb_whitelist
+    prolog_folder = os.path.join(config.prolog_folder, config.position)
+    data_folder = config.data_folder
     position = config.position
-    verb_prior_file = config.verb_prior_file
-
-    if type(verb_whitelist) == str and os.path.exists(verb_whitelist):
-        with open(verb_whitelist, 'r') as f:
-            verb_whitelist = [line for line in f.read().splitlines() if line and not line.startswith('#')]
-    else:
-        raise ValueError('Invalid verb whitelist')
 
     if args.train:
-        train_ag = AG(root, no_img=True, split='train', subset_file=subset_file, verb_whitelist=verb_whitelist, position=position, verb_prior_file=verb_prior_file)
+        train_ag = MultiAG(root, data_folder, position=position, no_img=True, split='train')
 
         train_pd = PrologData(prolog_folder, train_ag, train_ag.object_classes, train_ag.relationship_classes, train_ag.verb_classes, model=None, split='train')
 
@@ -182,13 +174,13 @@ def main(config, args):
             train_pd.write_verb(verb_name, keep_prob=exp_curve(4, ratio)) 
     
     if args.val:
-        val_ag = AG(root, no_img=True, split='val', subset_file=subset_file, verb_whitelist=verb_whitelist, position=position, verb_prior_file=verb_prior_file)
+        val_ag = MultiAG(root, data_folder, position=position, no_img=True, split='val')
 
         val_pd = PrologData(prolog_folder, val_ag, val_ag.object_classes, val_ag.relationship_classes, val_ag.verb_classes, model=None, split='val')
         val_pd.write_bk()
 
     if args.test:
-        test_ag = AG(root, no_img=True, split='test', subset_file=subset_file, verb_whitelist=verb_whitelist, position=position, verb_prior_file=verb_prior_file)
+        test_ag = MultiAG(root, data_folder, position=position, no_img=True, split='test')
         
         test_pd = PrologData(prolog_folder, test_ag, test_ag.object_classes, test_ag.relationship_classes, test_ag.verb_classes, model=None, split='test')
         test_pd.write_bk()

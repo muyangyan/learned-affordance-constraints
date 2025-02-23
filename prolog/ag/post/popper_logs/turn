@@ -64,34 +64,41 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-15:59:41 Generating programs of size: 2
-15:59:41 Generating programs of size: 3
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:5 fn:57 tn:271 fp:0 size:3 mdl:60
-15:59:41 turn_target(A):- light(B),holding(A,B).
-15:59:41 ********************
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:29 fn:33 tn:271 fp:0 size:3 mdl:36
-15:59:41 turn_target(A):- light(B),in_front_of(B,A).
-15:59:41 ********************
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:34 fn:28 tn:271 fp:0 size:3 mdl:31
-15:59:41 turn_target(A):- not_looking_at(A,B),light(B).
-15:59:41 ********************
-15:59:42 ********************
-15:59:42 New best hypothesis:
-15:59:42 tp:49 fn:13 tn:271 fp:0 size:3 mdl:16
-15:59:42 turn_target(A):- not_contacting(A,B),light(B).
-15:59:42 ********************
-15:59:45 Generating programs of size: 4
-15:59:52 ********************
-15:59:52 New best hypothesis:
-15:59:52 tp:62 fn:0 tn:271 fp:0 size:9 mdl:9
-15:59:52 turn_target(A):- light(B),in_front_of(B,A).
-15:59:52 turn_target(A):- on_the_side_of(B,A),light(B).
-15:59:52 turn_target(A):- not_contacting(A,B),light(B).
-15:59:52 ********************
-16:04:52 Generating programs of size: 5
+05:17:47 Generating programs of size: 2
+05:17:47 Generating programs of size: 3
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:5 fn:57 tn:271 fp:0 size:3 mdl:60
+05:17:48 turn_target(A):- holding(A,B),light(B).
+05:17:48 ********************
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:29 fn:33 tn:271 fp:0 size:3 mdl:36
+05:17:48 turn_target(A):- in_front_of(B,A),light(B).
+05:17:48 ********************
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:34 fn:28 tn:271 fp:0 size:3 mdl:31
+05:17:48 turn_target(A):- not_looking_at(A,B),light(B).
+05:17:48 ********************
+05:17:49 ********************
+05:17:49 New best hypothesis:
+05:17:49 tp:49 fn:13 tn:271 fp:0 size:3 mdl:16
+05:17:49 turn_target(A):- not_contacting(A,B),light(B).
+05:17:49 ********************
+05:17:54 Generating programs of size: 4
+05:18:00 ********************
+05:18:00 New best hypothesis:
+05:18:00 tp:62 fn:0 tn:271 fp:0 size:9 mdl:9
+05:18:00 turn_target(A):- in_front_of(B,A),light(B).
+05:18:00 turn_target(A):- on_the_side_of(B,A),light(B).
+05:18:00 turn_target(A):- not_contacting(A,B),light(B).
+05:18:00 ********************
+05:25:11 Generating programs of size: 5
+13:32:25 TIMEOUT OF 6000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:1.00 Recall:1.00 TP:62 FN:0 TN:271 FP:0 Size:9 MDL:9
+turn_target(A):- in_front_of(B,A),light(B).
+turn_target(A):- on_the_side_of(B,A),light(B).
+turn_target(A):- not_contacting(A,B),light(B).
+******************************

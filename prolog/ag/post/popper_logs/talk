@@ -64,22 +64,27 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-15:59:41 Generating programs of size: 2
-15:59:41 Generating programs of size: 3
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:27 fn:14 tn:131 fp:20 size:3 mdl:37
-15:59:41 talk_target(A):- holding(A,B),on_the_side_of(B,A).
-15:59:41 ********************
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:38 fn:3 tn:137 fp:14 size:3 mdl:20
-15:59:41 talk_target(A):- holding(A,B),phone_camera(B).
-15:59:41 ********************
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:30 fn:11 tn:148 fp:3 size:3 mdl:17
-15:59:41 talk_target(A):- phone_camera(B),on_the_side_of(B,A).
-15:59:41 ********************
-15:59:47 Generating programs of size: 4
-16:07:00 Generating programs of size: 5
+05:17:47 Generating programs of size: 2
+05:17:48 Generating programs of size: 3
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:27 fn:14 tn:131 fp:20 size:3 mdl:37
+05:17:48 talk_target(A):- on_the_side_of(B,A),holding(A,B).
+05:17:48 ********************
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:38 fn:3 tn:137 fp:14 size:3 mdl:20
+05:17:48 talk_target(A):- phone_camera(B),holding(A,B).
+05:17:48 ********************
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:30 fn:11 tn:148 fp:3 size:3 mdl:17
+05:17:48 talk_target(A):- on_the_side_of(B,A),phone_camera(B).
+05:17:48 ********************
+05:17:55 Generating programs of size: 4
+05:24:25 Generating programs of size: 5
+07:23:45 TIMEOUT OF 6000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.91 Recall:0.73 TP:30 FN:11 TN:148 FP:3 Size:3 MDL:17
+talk_target(A):- on_the_side_of(B,A),phone_camera(B).
+******************************

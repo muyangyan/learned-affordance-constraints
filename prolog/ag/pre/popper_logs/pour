@@ -64,32 +64,17 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-17:45:38 Generating programs of size: 2
-17:45:39 Generating programs of size: 3
-17:45:39 ********************
-17:45:39 New best hypothesis:
-17:45:39 tp:27 fn:22 tn:155 fp:18 size:3 mdl:43
-17:45:39 pour_target(A):- holding(A,B),cup_glass_bottle(B).
-17:45:39 ********************
-17:45:39 ********************
-17:45:39 New best hypothesis:
-17:45:39 tp:22 fn:27 tn:162 fp:11 size:3 mdl:41
-17:45:39 pour_target(A):- cup_glass_bottle(B),not_looking_at(A,B).
-17:45:39 ********************
-17:45:39 ********************
-17:45:39 New best hypothesis:
-17:45:39 tp:14 fn:35 tn:171 fp:2 size:3 mdl:40
-17:45:39 pour_target(A):- not_contacting(A,B),cup_glass_bottle(B).
-17:45:39 ********************
-17:45:39 ********************
-17:45:39 New best hypothesis:
-17:45:39 tp:47 fn:2 tn:153 fp:20 size:3 mdl:25
-17:45:39 pour_target(A):- in_front_of(B,A),cup_glass_bottle(B).
-17:45:39 ********************
-17:45:43 Generating programs of size: 4
-17:48:26 Generating programs of size: 5
-14:17:51 TIMEOUT OF 6000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.70 Recall:0.96 TP:47 FN:2 TN:153 FP:20 Size:3 MDL:25
-pour_target(A):- in_front_of(B,A),cup_glass_bottle(B).
-******************************
+05:17:29 Generating programs of size: 2
+05:17:29 Generating programs of size: 3
+05:17:30 ********************
+05:17:30 New best hypothesis:
+05:17:30 tp:48 fn:27 tn:258 fp:27 size:3 mdl:57
+05:17:30 pour_target(A):- holding(A,B),cup_glass_bottle(B).
+05:17:30 ********************
+05:17:31 ********************
+05:17:31 New best hypothesis:
+05:17:31 tp:70 fn:5 tn:245 fp:40 size:3 mdl:48
+05:17:31 pour_target(A):- cup_glass_bottle(B),in_front_of(B,A).
+05:17:31 ********************
+05:17:34 Generating programs of size: 4
+05:25:21 Generating programs of size: 5

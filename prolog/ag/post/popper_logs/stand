@@ -64,36 +64,36 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-15:59:41 Generating programs of size: 2
-15:59:41 Generating programs of size: 3
-15:59:43 ********************
-15:59:43 New best hypothesis:
-15:59:43 tp:30 fn:540 tn:1930 fp:20 size:3 mdl:563
-15:59:43 stand_target(A):- chair(B),not_contacting(A,B).
-15:59:43 ********************
-15:59:50 Generating programs of size: 4
-15:59:56 ********************
-15:59:56 New best hypothesis:
-15:59:56 tp:60 fn:510 tn:1915 fp:35 size:12 mdl:557
-15:59:56 stand_target(A):- chair(B),not_contacting(A,B).
-15:59:56 stand_target(A):- not_contacting(A,B),sofa_couch(B).
-15:59:56 stand_target(A):- not_contacting(A,B),bed(B).
-15:59:56 stand_target(A):- chair(B),standing_on(A,B).
-15:59:56 ********************
-16:13:38 Generating programs of size: 5
-16:13:44 ********************
-16:13:44 New best hypothesis:
-16:13:44 tp:53 fn:517 tn:1928 fp:22 size:14 mdl:553
-16:13:44 stand_target(A):- not_contacting(A,B),sofa_couch(B).
-16:13:44 stand_target(A):- chair(B),standing_on(A,B).
-16:13:44 stand_target(A):- chair(B),not_contacting(A,B),behind(B,A).
-16:13:44 stand_target(A):- not_contacting(A,B),behind(B,A),bed(B).
-16:13:44 ********************
-17:43:58 TIMEOUT OF 6000 SECONDS EXCEEDED
+05:17:47 Generating programs of size: 2
+05:17:48 Generating programs of size: 3
+05:17:51 ********************
+05:17:51 New best hypothesis:
+05:17:51 tp:30 fn:540 tn:1930 fp:20 size:3 mdl:563
+05:17:51 stand_target(A):- chair(B),not_contacting(A,B).
+05:17:51 ********************
+05:17:57 Generating programs of size: 4
+05:18:03 ********************
+05:18:03 New best hypothesis:
+05:18:03 tp:60 fn:510 tn:1915 fp:35 size:12 mdl:557
+05:18:03 stand_target(A):- chair(B),not_contacting(A,B).
+05:18:03 stand_target(A):- not_contacting(A,B),bed(B).
+05:18:03 stand_target(A):- sofa_couch(B),not_contacting(A,B).
+05:18:03 stand_target(A):- chair(B),standing_on(A,B).
+05:18:03 ********************
+05:51:38 Generating programs of size: 5
+05:51:43 ********************
+05:51:43 New best hypothesis:
+05:51:43 tp:53 fn:517 tn:1928 fp:22 size:14 mdl:553
+05:51:43 stand_target(A):- sofa_couch(B),not_contacting(A,B).
+05:51:43 stand_target(A):- chair(B),standing_on(A,B).
+05:51:43 stand_target(A):- behind(B,A),not_contacting(A,B),bed(B).
+05:51:43 stand_target(A):- chair(B),not_contacting(A,B),behind(B,A).
+05:51:43 ********************
+06:57:48 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
 Precision:0.71 Recall:0.09 TP:53 FN:517 TN:1928 FP:22 Size:14 MDL:553
-stand_target(A):- not_contacting(A,B),sofa_couch(B).
+stand_target(A):- sofa_couch(B),not_contacting(A,B).
 stand_target(A):- chair(B),standing_on(A,B).
+stand_target(A):- behind(B,A),not_contacting(A,B),bed(B).
 stand_target(A):- chair(B),not_contacting(A,B),behind(B,A).
-stand_target(A):- not_contacting(A,B),behind(B,A),bed(B).
 ******************************

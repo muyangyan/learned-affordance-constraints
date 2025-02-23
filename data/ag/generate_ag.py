@@ -1,59 +1,92 @@
 import os
 import json
-import shelve
-from tqdm import tqdm
 import random
 import csv
 import argparse
 import warnings
+from tqdm import tqdm
+
+import pandas as pd
 
 warnings.filterwarnings("ignore")
 
-from data.ag.action_genome import AG
+from data.ag.action_genome import SingleAG, SingleBothAG, MultiAG
 from util.data_utils import check_edge_exists
 from util.config_utils import load_yaml
+
 # Generate subset, applying heuristics to filter out invalid examples
-def generate_subset(ag, subset_dict):
+def generate_subset(pre_ag, post_ag, output_csv_path):
     absent_count = 0
     invalid_precond_count = 0
     total_invalid = 0
     total_dodged = 0
-    for idx in tqdm(range(len(ag))):
-        id, img, sg, action_labels, constraints, truth_values = ag[idx]
+    frame_validity_data = []
 
-        verb_labels, obj_labels = zip(*[ag.action_verb_obj_map[action_label] for action_label in action_labels])
-        verb_names = [ag.verb_classes[verb] for verb in verb_labels]
+    for idx in tqdm(range(len(pre_ag))):
+        id, img, sg, action_labels, constraints, truth_values = pre_ag[idx]
 
-        subset_dict[id] = 'UNMARKED'
+        verb_labels, obj_labels = zip(*[pre_ag.action_verb_obj_map[action_label] for action_label in action_labels])
+        verb_names = [pre_ag.verb_classes[verb] for verb in verb_labels]
 
-        #ensure objects are present
+        pre_status = True
+
+        # Ensure objects are present
         for obj in obj_labels:
             if obj is not None and obj not in sg.node_type:
-                subset_dict[id] = 'False'
-                absent_count+=1
+                pre_status = False
+                absent_count += 1
                 break
         
-        #ensure examples are actually preconditions
-        if ag.position == 'pre':
-            for verb_name in verb_names:
-                if verb_name in ag.verb_result_rel_map.keys():
-                    bad_rels = ag.verb_result_rel_map[verb_name]
-                    for bad_rel in bad_rels:
-                        rel = ag.relationship_classes.index(bad_rel)
-                        rel_name = ag.relationship_classes[rel]
-                        if check_edge_exists(sg, rel, 0, obj):
-                            subset_dict[id] = 'False'
-                            invalid_precond_count+=1
-                            break
-                    if subset_dict[id] != 'False':
-                        total_dodged+=1
+        # Ensure examples are actually preconditions
+        for verb_name in verb_names:
+            if verb_name in pre_ag.verb_result_rel_map.keys():
+                bad_rels = pre_ag.verb_result_rel_map[verb_name]
+                for bad_rel in bad_rels:
+                    rel = pre_ag.relationship_classes.index(bad_rel)
+                    rel_name = pre_ag.relationship_classes[rel]
+                    if check_edge_exists(sg, rel, 0, obj):
+                        pre_status = False
+                        invalid_precond_count += 1
+                        break
+                if pre_status:
+                    total_dodged += 1
+
+        if not pre_status:
+            total_invalid += 1
         
-        #if verb_name in ag.verb_result_rel_map.keys():
+        frame_validity_data.append({'id': id, 'pre': pre_status, 'post': True})
 
-        if subset_dict[id] == 'False':
-            total_invalid+=1
+    for idx in tqdm(range(len(post_ag))):
+        id, img, sg, action_labels, constraints, truth_values = post_ag[idx]
 
-    print('LEN:', len(ag))
+        verb_labels, obj_labels = zip(*[post_ag.action_verb_obj_map[action_label] for action_label in action_labels])
+        verb_names = [post_ag.verb_classes[verb] for verb in verb_labels]
+
+        post_status = True
+
+        # Ensure objects are present
+        for obj in obj_labels:
+            if obj is not None and obj not in sg.node_type:
+                post_status = False
+                absent_count += 1
+                break
+        
+        if not post_status:
+            total_invalid += 1
+
+        # Update the post status in the dataframe
+        for entry in frame_validity_data:
+            if entry['id'] == id:
+                entry['post'] = post_status
+                break
+
+    # Convert the list of dictionaries to a DataFrame
+    frame_validity_df = pd.DataFrame(frame_validity_data)
+
+    # Save the frame validity DataFrame to a CSV file
+    frame_validity_df.to_csv(output_csv_path, index=False)
+
+    print('LEN:', len(pre_ag) + len(post_ag))
     print('TOTAL ABSENT:', absent_count)
     print('TOTAL INVALID PRECOND:', invalid_precond_count)
     print('TOTAL DEFECTS:', absent_count + invalid_precond_count)
@@ -103,27 +136,21 @@ def create_train_val_split(root, data_path, train_split_ratio=0.6):
 def main(config, args):
 
     root = config.data_root
-    subset_file = config.subset_file
-    verb_whitelist = config.verb_whitelist
+    data_folder = config.data_folder
     train_split_ratio = config.train_split_ratio
-    verb_prior_file = config.verb_prior_file
-    position = config.position
 
-    if type(verb_whitelist) == str and os.path.exists(verb_whitelist):
-        with open(verb_whitelist, 'r') as f:
-            verb_whitelist = [line for line in f.read().splitlines() if line and not line.startswith('#')]
-    else:
-        raise ValueError('Invalid verb whitelist')
+    frame_validity_file = os.path.join(data_folder, 'frame_validity.csv')
 
-    ag = AG(root, position=position, split=None, subset_file=None, verb_whitelist=verb_whitelist, verb_prior_file=verb_prior_file) #view the full dataset
+    pre_ag = MultiAG(root, data_folder, position='pre', no_img=True, subset=False, split=None)
+    post_ag = MultiAG(root, data_folder, position='post', no_img=True, subset=False, split=None)
 
     print(f"Generating subset")
-    with shelve.open(subset_file, flag='n') as subset_dict:
-        generate_subset(ag, subset_dict)
+
+    # Populate frame_validity table with valid preconditions, and postconditions
+    generate_subset(pre_ag, post_ag, frame_validity_file)
 
     if args.resplit:
-        data_path = '/'.join(subset_file.split('/')[:-1]) #chop off the filename
-        create_train_val_split(root, data_path, train_split_ratio)
+        create_train_val_split(root, data_folder, train_split_ratio)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -132,4 +159,3 @@ if __name__ == '__main__':
     args = parser.parse_args()
     config = load_yaml(args.config)
     main(config, args)
-

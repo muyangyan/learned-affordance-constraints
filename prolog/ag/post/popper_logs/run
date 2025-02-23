@@ -64,7 +64,9 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-15:59:41 Generating programs of size: 2
-15:59:41 Generating programs of size: 3
-15:59:48 Generating programs of size: 4
-16:15:51 Generating programs of size: 5
+05:17:47 Generating programs of size: 2
+05:17:48 Generating programs of size: 3
+05:17:55 Generating programs of size: 4
+05:43:53 Generating programs of size: 5
+07:01:35 TIMEOUT OF 6000 SECONDS EXCEEDED
+NO SOLUTION

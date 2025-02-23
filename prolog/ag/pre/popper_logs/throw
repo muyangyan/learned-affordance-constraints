@@ -64,41 +64,47 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-17:45:38 Generating programs of size: 2
-17:45:39 Generating programs of size: 3
-17:45:39 ********************
-17:45:39 New best hypothesis:
-17:45:39 tp:61 fn:218 tn:930 fp:46 size:3 mdl:267
-17:45:39 throw_target(A):- clothes(B),holding(A,B).
-17:45:39 ********************
-17:45:41 ********************
-17:45:41 New best hypothesis:
-17:45:41 tp:31 fn:248 tn:964 fp:12 size:3 mdl:263
-17:45:41 throw_target(A):- in_front_of(B,A),pillow(B).
-17:45:41 ********************
-17:45:45 Generating programs of size: 4
-17:45:52 ********************
-17:45:52 New best hypothesis:
-17:45:52 tp:113 fn:166 tn:909 fp:67 size:12 mdl:245
-17:45:52 throw_target(A):- clothes(B),holding(A,B).
-17:45:52 throw_target(A):- standing_on(A,B),not_looking_at(A,B).
-17:45:52 throw_target(A):- in_front_of(B,A),pillow(B).
-17:45:52 throw_target(A):- wearing(A,B),on_the_side_of(B,A).
-17:45:52 ********************
-18:07:49 Generating programs of size: 5
-18:07:59 ********************
-18:07:59 New best hypothesis:
-18:07:59 tp:113 fn:166 tn:911 fp:65 size:13 mdl:244
-18:07:59 throw_target(A):- clothes(B),holding(A,B).
-18:07:59 throw_target(A):- in_front_of(B,A),pillow(B).
-18:07:59 throw_target(A):- wearing(A,B),on_the_side_of(B,A).
-18:07:59 throw_target(A):- standing_on(A,B),not_looking_at(A,B),floor(B).
-18:07:59 ********************
-19:25:39 TIMEOUT OF 6000 SECONDS EXCEEDED
+05:17:29 Generating programs of size: 2
+05:17:29 Generating programs of size: 3
+05:17:30 ********************
+05:17:30 New best hypothesis:
+05:17:30 tp:5 fn:374 tn:1363 fp:1 size:3 mdl:378
+05:17:30 throw_target(A):- wearing(A,B),holding(A,B).
+05:17:30 ********************
+05:17:30 ********************
+05:17:30 New best hypothesis:
+05:17:30 tp:79 fn:300 tn:1316 fp:48 size:3 mdl:351
+05:17:30 throw_target(A):- clothes(B),holding(A,B).
+05:17:30 ********************
+05:17:36 Generating programs of size: 4
+05:17:46 ********************
+05:17:46 New best hypothesis:
+05:17:46 tp:167 fn:212 tn:1272 fp:92 size:18 mdl:322
+05:17:46 throw_target(A):- clothes(B),holding(A,B).
+05:17:46 throw_target(A):- pillow(B),holding(A,B).
+05:17:46 throw_target(A):- unsure(A,B),carrying(A,B).
+05:17:46 throw_target(A):- other_relationship(A,B),floor(B).
+05:17:46 throw_target(A):- not_looking_at(A,B),standing_on(A,B).
+05:17:46 throw_target(A):- behind(B,A),clothes(B).
+05:17:46 ********************
+06:02:56 Generating programs of size: 5
+06:03:06 ********************
+06:03:06 New best hypothesis:
+06:03:06 tp:158 fn:221 tn:1290 fp:74 size:20 mdl:315
+06:03:06 throw_target(A):- clothes(B),holding(A,B).
+06:03:06 throw_target(A):- unsure(A,B),carrying(A,B).
+06:03:06 throw_target(A):- not_looking_at(A,B),standing_on(A,B).
+06:03:06 throw_target(A):- behind(B,A),clothes(B).
+06:03:06 throw_target(A):- pillow(B),in_front_of(B,A),holding(A,B).
+06:03:06 throw_target(A):- other_relationship(A,B),floor(B),not_looking_at(A,B).
+06:03:06 ********************
+07:01:37 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.63 Recall:0.41 TP:113 FN:166 TN:911 FP:65 Size:13 MDL:244
+Precision:0.68 Recall:0.42 TP:158 FN:221 TN:1290 FP:74 Size:20 MDL:315
 throw_target(A):- clothes(B),holding(A,B).
-throw_target(A):- in_front_of(B,A),pillow(B).
-throw_target(A):- wearing(A,B),on_the_side_of(B,A).
-throw_target(A):- standing_on(A,B),not_looking_at(A,B),floor(B).
+throw_target(A):- unsure(A,B),carrying(A,B).
+throw_target(A):- not_looking_at(A,B),standing_on(A,B).
+throw_target(A):- behind(B,A),clothes(B).
+throw_target(A):- pillow(B),in_front_of(B,A),holding(A,B).
+throw_target(A):- other_relationship(A,B),floor(B),not_looking_at(A,B).
 ******************************

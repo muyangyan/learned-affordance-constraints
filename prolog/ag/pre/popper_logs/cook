@@ -64,29 +64,31 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-17:45:38 Generating programs of size: 2
-17:45:39 Generating programs of size: 3
-17:45:39 ********************
-17:45:39 New best hypothesis:
-17:45:39 tp:20 fn:26 tn:187 fp:13 size:3 mdl:42
-17:45:39 cook_target(A):- food(B),looking_at(A,B).
-17:45:39 ********************
-17:45:39 ********************
-17:45:39 New best hypothesis:
-17:45:39 tp:20 fn:26 tn:198 fp:2 size:3 mdl:31
-17:45:39 cook_target(A):- food(B),not_contacting(A,B).
-17:45:39 ********************
-17:45:43 Generating programs of size: 4
-17:45:44 ********************
-17:45:44 New best hypothesis:
-17:45:44 tp:29 fn:17 tn:196 fp:4 size:6 mdl:27
-17:45:44 cook_target(A):- food(B),not_contacting(A,B).
-17:45:44 cook_target(A):- food(B),unsure(A,B).
-17:45:44 ********************
-17:48:52 Generating programs of size: 5
-22:44:05 TIMEOUT OF 6000 SECONDS EXCEEDED
+05:17:29 Generating programs of size: 2
+05:17:29 Generating programs of size: 3
+05:17:30 ********************
+05:17:30 New best hypothesis:
+05:17:30 tp:4 fn:57 tn:238 fp:0 size:3 mdl:60
+05:17:30 cook_target(A):- other_relationship(A,B),food(B).
+05:17:30 ********************
+05:17:30 ********************
+05:17:30 New best hypothesis:
+05:17:30 tp:54 fn:7 tn:207 fp:31 size:3 mdl:41
+05:17:30 cook_target(A):- in_front_of(B,A),food(B).
+05:17:30 ********************
+05:17:32 Generating programs of size: 4
+05:17:34 ********************
+05:17:34 New best hypothesis:
+05:17:34 tp:56 fn:5 tn:218 fp:20 size:9 mdl:34
+05:17:34 cook_target(A):- looking_at(A,B),food(B).
+05:17:34 cook_target(A):- unsure(A,B),food(B).
+05:17:34 cook_target(A):- not_contacting(A,B),food(B).
+05:17:34 ********************
+05:21:23 Generating programs of size: 5
+07:47:38 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.88 Recall:0.63 TP:29 FN:17 TN:196 FP:4 Size:6 MDL:27
-cook_target(A):- food(B),not_contacting(A,B).
-cook_target(A):- food(B),unsure(A,B).
+Precision:0.74 Recall:0.92 TP:56 FN:5 TN:218 FP:20 Size:9 MDL:34
+cook_target(A):- looking_at(A,B),food(B).
+cook_target(A):- unsure(A,B),food(B).
+cook_target(A):- not_contacting(A,B),food(B).
 ******************************

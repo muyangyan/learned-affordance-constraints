@@ -64,24 +64,31 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-15:59:41 Generating programs of size: 2
-15:59:41 Generating programs of size: 3
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:54 fn:91 tn:554 fp:21 size:3 mdl:115
-15:59:41 wash_target(A):- towel(B),holding(A,B).
-15:59:41 ********************
-15:59:44 ********************
-15:59:44 New best hypothesis:
-15:59:44 tp:59 fn:86 tn:552 fp:23 size:3 mdl:112
-15:59:44 wash_target(A):- towel(B),in_front_of(B,A).
-15:59:44 ********************
-15:59:47 Generating programs of size: 4
-15:59:52 ********************
-15:59:52 New best hypothesis:
-15:59:52 tp:77 fn:68 tn:549 fp:26 size:9 mdl:103
-15:59:52 wash_target(A):- towel(B),holding(A,B).
-15:59:52 wash_target(A):- looking_at(A,B),wiping(A,B).
-15:59:52 wash_target(A):- towel(B),in_front_of(B,A).
-15:59:52 ********************
-16:11:24 Generating programs of size: 5
+05:17:47 Generating programs of size: 2
+05:17:47 Generating programs of size: 3
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:54 fn:91 tn:554 fp:21 size:3 mdl:115
+05:17:48 wash_target(A):- towel(B),holding(A,B).
+05:17:48 ********************
+05:17:49 ********************
+05:17:49 New best hypothesis:
+05:17:49 tp:59 fn:86 tn:552 fp:23 size:3 mdl:112
+05:17:49 wash_target(A):- towel(B),in_front_of(B,A).
+05:17:49 ********************
+05:17:54 Generating programs of size: 4
+05:17:59 ********************
+05:17:59 New best hypothesis:
+05:17:59 tp:77 fn:68 tn:549 fp:26 size:9 mdl:103
+05:17:59 wash_target(A):- towel(B),holding(A,B).
+05:17:59 wash_target(A):- looking_at(A,B),wiping(A,B).
+05:17:59 wash_target(A):- towel(B),in_front_of(B,A).
+05:17:59 ********************
+05:35:44 Generating programs of size: 5
+07:04:14 TIMEOUT OF 6000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.75 Recall:0.53 TP:77 FN:68 TN:549 FP:26 Size:9 MDL:103
+wash_target(A):- towel(B),holding(A,B).
+wash_target(A):- looking_at(A,B),wiping(A,B).
+wash_target(A):- towel(B),in_front_of(B,A).
+******************************

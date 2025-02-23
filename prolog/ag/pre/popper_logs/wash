@@ -64,31 +64,12 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-17:45:38 Generating programs of size: 2
-17:45:39 Generating programs of size: 3
-17:45:39 ********************
-17:45:39 New best hypothesis:
-17:45:39 tp:32 fn:60 tn:315 fp:9 size:3 mdl:72
-17:45:39 wash_target(A):- holding(A,B),towel(B).
-17:45:39 ********************
-17:45:40 ********************
-17:45:40 New best hypothesis:
-17:45:40 tp:36 fn:56 tn:313 fp:11 size:3 mdl:70
-17:45:40 wash_target(A):- in_front_of(B,A),towel(B).
-17:45:40 ********************
-17:45:44 Generating programs of size: 4
-17:45:47 ********************
-17:45:47 New best hypothesis:
-17:45:47 tp:47 fn:45 tn:311 fp:13 size:9 mdl:67
-17:45:47 wash_target(A):- in_front_of(B,A),wiping(A,B).
-17:45:47 wash_target(A):- in_front_of(B,A),towel(B).
-17:45:47 wash_target(A):- on_the_side_of(B,A),towel(B).
-17:45:47 ********************
-17:51:53 Generating programs of size: 5
-19:26:51 TIMEOUT OF 6000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.78 Recall:0.51 TP:47 FN:45 TN:311 FP:13 Size:9 MDL:67
-wash_target(A):- in_front_of(B,A),wiping(A,B).
-wash_target(A):- in_front_of(B,A),towel(B).
-wash_target(A):- on_the_side_of(B,A),towel(B).
-******************************
+05:17:29 Generating programs of size: 2
+05:17:29 Generating programs of size: 3
+05:17:30 ********************
+05:17:30 New best hypothesis:
+05:17:30 tp:28 fn:64 tn:324 fp:8 size:3 mdl:75
+05:17:30 wash_target(A):- towel(B),holding(A,B).
+05:17:30 ********************
+05:17:35 Generating programs of size: 4
+05:26:54 Generating programs of size: 5

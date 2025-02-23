@@ -64,22 +64,22 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-15:59:41 Generating programs of size: 2
-15:59:41 Generating programs of size: 3
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:78 fn:26 tn:362 fp:53 size:3 mdl:82
-15:59:41 pour_target(A):- cup_glass_bottle(B),holding(A,B).
-15:59:41 ********************
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:69 fn:35 tn:380 fp:35 size:3 mdl:73
-15:59:41 pour_target(A):- cup_glass_bottle(B),looking_at(A,B).
-15:59:41 ********************
-15:59:47 Generating programs of size: 4
-16:01:02 ********************
-16:01:02 New best hypothesis:
-16:01:02 tp:69 fn:35 tn:383 fp:32 size:4 mdl:71
-16:01:02 pour_target(A):- cup_glass_bottle(B),looking_at(A,B),in_front_of(B,A).
-16:01:02 ********************
-16:07:02 Generating programs of size: 5
+05:17:47 Generating programs of size: 2
+05:17:48 Generating programs of size: 3
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:78 fn:26 tn:362 fp:53 size:3 mdl:82
+05:17:48 pour_target(A):- holding(A,B),cup_glass_bottle(B).
+05:17:48 ********************
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:69 fn:35 tn:380 fp:35 size:3 mdl:73
+05:17:48 pour_target(A):- looking_at(A,B),cup_glass_bottle(B).
+05:17:48 ********************
+05:17:54 Generating programs of size: 4
+05:19:32 ********************
+05:19:32 New best hypothesis:
+05:19:32 tp:69 fn:35 tn:383 fp:32 size:4 mdl:71
+05:19:32 pour_target(A):- in_front_of(B,A),looking_at(A,B),cup_glass_bottle(B).
+05:19:32 ********************
+05:30:56 Generating programs of size: 5

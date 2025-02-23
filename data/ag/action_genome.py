@@ -49,15 +49,29 @@ class ActionGenome(Dataset):
             self.person_annotations = pickle.load(f)
         with open(os.path.join(root, 'annotations/object_bbox_and_relationship.pkl'), 'rb') as f:
             self.object_annotations = pickle.load(f)
-        with open(os.path.join(root, 'annotations/Charades/Charades_v1_train.csv'), 'r') as f:
-            raw_df = pd.read_csv(f)
         with open(os.path.join(root, 'annotations/Muyang/framerates.csv'), 'r') as f:
-            framerate_df = pd.read_csv(f)
+            fps_df = pd.read_csv(f)
+            fps_dict = fps_df.set_index('video_id')['frame_rate'].to_dict()
+
         with open(split_file, 'r') as f:
             split_dict = json.load(f)
-        split_ids = split_dict['train']+split_dict['val']+split_dict['test'] if split == None else split_dict[split]
-        cleaned_df = clean_df(raw_df, split_ids, self.action_mapper, framerate_df)
-        usable_df = extract_usable_frames(self.root, self.object_annotations, cleaned_df, position, threshold)
+        if split == None:
+            split_ids = split_dict['train']+split_dict['val']+split_dict['test']
+            with open(os.path.join(root, f'annotations/Charades/Charades_v1_train.csv'), 'r') as f:
+                raw_df = pd.read_csv(f)
+            with open(os.path.join(root, f'annotations/Charades/Charades_v1_test.csv'), 'r') as f:
+                raw_df = pd.concat([raw_df, pd.read_csv(f)])
+        else:
+            split_ids = split_dict[split]
+            if split == 'test':
+                with open(os.path.join(root, f'annotations/Charades/Charades_v1_test.csv'), 'r') as f:
+                    raw_df = pd.read_csv(f)
+            else:
+                with open(os.path.join(root, f'annotations/Charades/Charades_v1_train.csv'), 'r') as f:
+                    raw_df = pd.read_csv(f)
+
+        cleaned_df = clean_df(raw_df, split_ids, self.action_mapper)
+        usable_df = extract_usable_frames(self.root, self.object_annotations, cleaned_df, position, threshold, fps_dict)
         if subset:
             frame_validity_df = pd.read_csv(frame_validity_file)
             apply_subset_partial = partial(apply_subset, frame_validity_df=frame_validity_df, position=position)
@@ -155,12 +169,13 @@ class ActionGenome(Dataset):
             #expand actions into verb, nouns. used only for priors.
             single_df['verb'] = single_df['action'].apply(lambda x: self.action_verb_obj_map[x][0])
             single_df['noun'] = single_df['action'].apply(lambda x: self.action_verb_obj_map[x][1])
-            verb_counts = single_df['verb'].value_counts().to_dict()
+            verb_counts = dict(sorted(single_df['verb'].value_counts().to_dict().items()))
             self.verb_priors = [verb_counts[verb]/length for verb in verb_counts]
             if self.split == 'train':
                 with open(verb_prior_file, 'w') as f:
                     prior_dict = {'verbs': self.verb_classes, 'priors': list(self.verb_priors)}
                     json.dump(prior_dict, f)
+            self.verb_priors = np.array(self.verb_priors)
         else:
             with open(verb_prior_file, 'r') as f:
                 prior_dict = json.load(f)
@@ -326,6 +341,30 @@ class SingleBothAG(ActionGenome):
         post_data = (post_id, post_image, post_scene_graph, action_classes, post_constraints, post_truth_values)
         
         return pre_data, post_data
+
+    def verb_pred_collate(self, batch):
+        # action_labels is multilabel
+        pre_batch, post_batch = zip(*batch)
+        ids, images, scene_graphs, action_labels, constraints, truth_values = zip(*pre_batch)
+        sg_batch = Batch.from_data_list(scene_graphs, exclude_keys=['o'])
+        
+        verbs = torch.tensor([self.action_verb_obj_map[a][0] for a in action_labels])
+        verb_labels = F.one_hot(verbs, len(self.verb_classes)).float()
+        
+        if self.no_img:
+            resized_images = None
+        else:
+            resized_images = [self.im_transform(img) for img in images]
+            resized_images = torch.stack(resized_images)
+        
+        if self.constraints is None:
+            constraints = None
+            truth_values = None
+        else:
+            constraints = torch.stack(constraints)
+            truth_values = torch.stack(truth_values)
+
+        return ids, resized_images, sg_batch, verb_labels, constraints, truth_values
         
 class SingleAG(ActionGenome):
     '''
@@ -372,12 +411,8 @@ class SingleAG(ActionGenome):
         ids, images, scene_graphs, action_labels, constraints, truth_values = zip(*batch)
         sg_batch = Batch.from_data_list(scene_graphs, exclude_keys=['o'])
         
-        # Create a 2D tensor for multi-label verbs with shape Batch x Classes
-        verb_labels = torch.zeros((len(action_labels), len(self.verb_classes)), dtype=torch.float)
-        for i, actions in enumerate(action_labels):
-            for action in actions:
-                verb_idx = self.action_verb_obj_map[action][0]
-                verb_labels[i, verb_idx] = 1.0
+        verbs = torch.tensor([self.action_verb_obj_map[a][0] for a in action_labels])
+        verb_labels = F.one_hot(verbs, len(self.verb_classes)).float()
         
         if self.no_img:
             resized_images = None
@@ -460,6 +495,8 @@ class MultiAG(ActionGenome):
             truth_values = torch.stack(truth_values)
 
         return ids, resized_images, sg_batch, verb_labels, constraints, truth_values
+
+
 
 import os
 import csv

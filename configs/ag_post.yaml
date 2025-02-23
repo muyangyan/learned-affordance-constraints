@@ -1,14 +1,8 @@
 #paths and files
 dataset: "ag"
 data_root: "/data/Datasets/ag/"
-data_folder: "data/ag/"
-split_file: "data/ag/split_train_val.json"
-subset_file: "data/ag/post/subset_shelve"
-verb_whitelist: "data/ag/verb_whitelist.txt"
-verb_prior_file: "data/ag/post/verb_priors.json"
-prolog_folder: "prolog/ag/post"
-rules_folder: "prolog/ag/post/learned_rules/"
-log_folder: "prolog/ag/post/popper_logs/"
+data_folder: "data/ag/" #meta root
+prolog_folder: "prolog/ag/"
 popper_path: "/home/muyang/Popper/popper.py"
 runs_folder: "runs/"
 
@@ -26,7 +20,7 @@ model_type: 'joint' # joint, rgcn, vit
 weight_scheme: 'inverse' # uniform, inverse, invsqrt
 epochs: 30
 batch_size: 16
-devices: [0]
+devices: [0,1,2,3]
 lr: 1e-3
 
 #Testing parameters========================

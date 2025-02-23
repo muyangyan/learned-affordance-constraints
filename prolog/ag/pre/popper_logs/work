@@ -64,22 +64,39 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-17:45:38 Generating programs of size: 2
-17:45:39 Generating programs of size: 3
-17:45:39 ********************
-17:45:39 New best hypothesis:
-17:45:39 tp:12 fn:49 tn:278 fp:6 size:3 mdl:58
-17:45:39 work_target(A):- paper_notebook(B),holding(A,B).
-17:45:39 ********************
-17:45:40 ********************
-17:45:40 New best hypothesis:
-17:45:40 tp:21 fn:40 tn:277 fp:7 size:3 mdl:50
-17:45:40 work_target(A):- paper_notebook(B),looking_at(A,B).
-17:45:40 ********************
-17:45:43 Generating programs of size: 4
-17:51:04 Generating programs of size: 5
-11:44:09 TIMEOUT OF 6000 SECONDS EXCEEDED
+05:17:29 Generating programs of size: 2
+05:17:29 Generating programs of size: 3
+05:17:30 ********************
+05:17:30 New best hypothesis:
+05:17:30 tp:11 fn:56 tn:270 fp:4 size:3 mdl:63
+05:17:30 work_target(A):- paper_notebook(B),holding(A,B).
+05:17:30 ********************
+05:17:30 ********************
+05:17:30 New best hypothesis:
+05:17:30 tp:11 fn:56 tn:271 fp:3 size:3 mdl:62
+05:17:30 work_target(A):- paper_notebook(B),not_contacting(A,B).
+05:17:30 ********************
+05:17:30 ********************
+05:17:30 New best hypothesis:
+05:17:30 tp:31 fn:36 tn:264 fp:10 size:3 mdl:49
+05:17:30 work_target(A):- paper_notebook(B),looking_at(A,B).
+05:17:30 ********************
+05:17:31 ********************
+05:17:31 New best hypothesis:
+05:17:31 tp:35 fn:32 tn:262 fp:12 size:3 mdl:47
+05:17:31 work_target(A):- paper_notebook(B),in_front_of(B,A).
+05:17:31 ********************
+05:17:34 Generating programs of size: 4
+05:17:36 ********************
+05:17:36 New best hypothesis:
+05:17:36 tp:41 fn:26 tn:261 fp:13 size:6 mdl:45
+05:17:36 work_target(A):- on_the_side_of(B,A),paper_notebook(B).
+05:17:36 work_target(A):- paper_notebook(B),in_front_of(B,A).
+05:17:36 ********************
+05:24:51 Generating programs of size: 5
+08:28:45 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.75 Recall:0.34 TP:21 FN:40 TN:277 FP:7 Size:3 MDL:50
-work_target(A):- paper_notebook(B),looking_at(A,B).
+Precision:0.76 Recall:0.61 TP:41 FN:26 TN:261 FP:13 Size:6 MDL:45
+work_target(A):- on_the_side_of(B,A),paper_notebook(B).
+work_target(A):- paper_notebook(B),in_front_of(B,A).
 ******************************

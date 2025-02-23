@@ -64,36 +64,38 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-17:45:38 Generating programs of size: 2
-17:45:39 Generating programs of size: 3
-17:45:39 ********************
-17:45:39 New best hypothesis:
-17:45:39 tp:13 fn:105 tn:445 fp:6 size:3 mdl:114
-17:45:39 play_target(A):- laptop(B),holding(A,B).
-17:45:39 ********************
-17:45:39 ********************
-17:45:39 New best hypothesis:
-17:45:39 tp:54 fn:64 tn:433 fp:18 size:3 mdl:85
-17:45:39 play_target(A):- phone_camera(B),holding(A,B).
-17:45:39 ********************
-17:45:39 ********************
-17:45:39 New best hypothesis:
-17:45:39 tp:57 fn:61 tn:434 fp:17 size:3 mdl:81
-17:45:39 play_target(A):- phone_camera(B),in_front_of(B,A).
-17:45:39 ********************
-17:45:44 Generating programs of size: 4
-17:45:47 ********************
-17:45:47 New best hypothesis:
-17:45:47 tp:115 fn:3 tn:409 fp:42 size:9 mdl:54
-17:45:47 play_target(A):- phone_camera(B),on_the_side_of(B,A).
-17:45:47 play_target(A):- phone_camera(B),in_front_of(B,A).
-17:45:47 play_target(A):- laptop(B),in_front_of(B,A).
-17:45:47 ********************
-17:52:24 Generating programs of size: 5
-01:55:22 TIMEOUT OF 6000 SECONDS EXCEEDED
+05:17:29 Generating programs of size: 2
+05:17:29 Generating programs of size: 3
+05:17:30 ********************
+05:17:30 New best hypothesis:
+05:17:30 tp:17 fn:114 tn:513 fp:8 size:3 mdl:125
+05:17:30 play_target(A):- holding(A,B),laptop(B).
+05:17:30 ********************
+05:17:30 ********************
+05:17:30 New best hypothesis:
+05:17:30 tp:45 fn:86 tn:502 fp:19 size:3 mdl:108
+05:17:30 play_target(A):- phone_camera(B),holding(A,B).
+05:17:30 ********************
+05:17:30 ********************
+05:17:30 New best hypothesis:
+05:17:30 tp:56 fn:75 tn:500 fp:21 size:3 mdl:99
+05:17:30 play_target(A):- in_front_of(B,A),phone_camera(B).
+05:17:30 ********************
+05:17:35 Generating programs of size: 4
+05:17:38 ********************
+05:17:38 New best hypothesis:
+05:17:38 tp:123 fn:8 tn:475 fp:46 size:12 mdl:66
+05:17:38 play_target(A):- phone_camera(B),on_the_side_of(B,A).
+05:17:38 play_target(A):- in_front_of(B,A),phone_camera(B).
+05:17:38 play_target(A):- looking_at(A,B),laptop(B).
+05:17:38 play_target(A):- unsure(A,B),laptop(B).
+05:17:38 ********************
+05:32:47 Generating programs of size: 5
+06:57:30 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.73 Recall:0.97 TP:115 FN:3 TN:409 FP:42 Size:9 MDL:54
+Precision:0.73 Recall:0.94 TP:123 FN:8 TN:475 FP:46 Size:12 MDL:66
 play_target(A):- phone_camera(B),on_the_side_of(B,A).
-play_target(A):- phone_camera(B),in_front_of(B,A).
-play_target(A):- laptop(B),in_front_of(B,A).
+play_target(A):- in_front_of(B,A),phone_camera(B).
+play_target(A):- looking_at(A,B),laptop(B).
+play_target(A):- unsure(A,B),laptop(B).
 ******************************

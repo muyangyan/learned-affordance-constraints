@@ -10,14 +10,11 @@ from models.modules.joint_model import JointModel
 
 import pytorch_lightning as L 
 
-import torchmetrics
-from torchmetrics import MetricCollection, Metric
+from torchmetrics import MetricCollection
 from torchmetrics import Accuracy, Precision, Recall, AveragePrecision, F1Score
-from util.metrics import NLL_Metric, Entropy_Metric
 
-class ActionAnticipator(L.LightningModule):
+class BaseLeaPR(L.LightningModule):
     def __init__(self, model_params, weight, model_type='joint', lr=1e-3):
-
         super().__init__()
         self.model_type = model_type
         self.constraint_mode = None # hard, soft
@@ -35,15 +32,113 @@ class ActionAnticipator(L.LightningModule):
         # Move weight to correct device and store it only once
         self.register_buffer('weight', weight)
 
-        self.criterion = nn.BCEWithLogitsLoss(weight=self.weight)
-        
         # debug vars
         self.ids = []
         self.preds = None
 
-        #epoch metrics
-        #self.train_accuracy = torchmetrics.Accuracy(task='multilabel', average='macro', num_labels=num_classes)
-        #self.val_accuracy = torchmetrics.Accuracy(task='multilabel', average='macro', num_labels=num_classes)
+        self.init_metrics(num_classes)
+        self.save_hyperparameters()
+        
+    def init_metrics(self, num_classes):
+        pass
+        
+    def forward(self, img, sg):
+        if self.model_type == 'rgcn':
+            return self.model(sg)
+        elif self.model_type == 'vit':
+            return self.model(img)
+        else:
+            return self.model(img, sg)
+    
+    def training_step(self, batch, batch_idx):
+        ids, imgs, sgs, labels, constraints, truth_values = batch
+        out = self(imgs, sgs)
+        loss = self.criterion(out, labels)
+        self.log_train_metrics(out, labels, loss)
+        return loss
+
+    def validation_step(self, batch, batch_idx):
+        ids, imgs, sgs, labels, constraints, truth_values = batch
+        out = self(imgs, sgs)
+        loss = self.criterion(out, labels)
+        self.log_val_metrics(out, labels, loss)
+
+    def test_step(self, batch, batch_idx):
+        ids, imgs, sgs, labels, constraints, truth_values = batch
+        out = self(imgs, sgs)
+        out = self.apply_activation(out)
+
+        # multi version
+        if constraints is not None:
+            if self.constraint_mode is None:
+                raise ValueError(f'Constraint mode is not set')
+            constrained_out = self.apply_constraints(out, constraints, weight=self.constraint_weight)
+            out = constrained_out
+
+        # debug, metrics and logging
+        self.ids.extend(ids)
+        if self.preds is not None:
+            self.preds.append(torch.stack([out, labels], dim=1).cpu())
+
+        self.log_test_metrics(out, labels)
+
+    def on_test_epoch_end(self):
+        if self.preds is not None:
+            self.preds = torch.vstack(self.preds)
+            self.preds = self.preds.cpu().numpy()
+
+    def predict_step(self, batch, batch_idx):
+        ids, imgs, sgs, labels, constraints, truth_values = batch
+        out = self(imgs, sgs)
+        out = self.apply_activation(out)
+        if constraints is not None:
+            out = self.apply_constraints(out, constraints, weight=self.constraint_weight)
+        return ids, imgs, sgs, labels, constraints, out
+    
+    def predict_single(self, img, sg, constraints, truth_values, explain=False):
+        self.eval()
+        with torch.no_grad():
+            out = self(img, sg)
+            out = self.apply_activation(out)
+            if constraints is not None:
+                constrained_out = self.apply_constraints(out, constraints, weight=self.constraint_weight)
+                return constrained_out, out, constraints
+            return out
+
+    def apply_activation(self, out):
+        pass
+
+    def apply_constraints(self, out, constraints, weight=1):
+        pass
+
+    def apply_constraints(self, out, constraints, weight=0.5):
+        if self.constraint_mode == 'hard':
+            return out * constraints
+        elif self.constraint_mode == 'soft':
+            return (1-weight) * out + weight * constraints
+        else:
+            raise ValueError(f'Invalid mode: {self.constraint_mode}')
+
+    def configure_optimizers(self):
+        return torch.optim.Adam(self.parameters(), lr=self.lr)
+
+    def log_train_metrics(self, out, labels, loss):
+        pass
+
+    def log_val_metrics(self, out, labels, loss):
+        pass
+
+    def log_test_metrics(self, out, labels):
+        pass
+
+
+class MultiLeaPR(BaseLeaPR):
+
+    def __init__(self, model_params, weight, model_type='joint', lr=1e-3):
+        super().__init__(model_params, weight, model_type, lr)
+        self.criterion = nn.BCEWithLogitsLoss(weight=self.weight)
+
+    def init_metrics(self, num_classes):
         self.train_mAP = AveragePrecision(task='multilabel', average='macro', num_labels=num_classes)
         self.val_mAP = AveragePrecision(task='multilabel', average='macro', num_labels=num_classes)
 
@@ -58,83 +153,10 @@ class ActionAnticipator(L.LightningModule):
             'f1-score': F1Score(task='multilabel', average='macro', num_labels=num_classes),
         })
 
-        self.save_hyperparameters()
-        
-    def forward(self, img, sg):
-        if self.model_type == 'rgcn':
-            return self.model(sg)
-        elif self.model_type == 'vit':
-            return self.model(img)
-        else:
-            return self.model(img, sg)
-    
-    def training_step(self, batch, batch_idx):
-        ids, imgs, sgs, labels, constraints, truth_values = batch
-        out = self(imgs, sgs)
-        loss = self.criterion(out, labels)
-        out = torch.sigmoid(out)
-        mAP = self.train_mAP(out, labels.int())
-        
-        self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True)
-        self.log('train_mAP', mAP, on_step=False, on_epoch=True, prog_bar=True)
-        
-        return loss
+    def apply_activation(self, out):
+        return torch.sigmoid(out)
 
-    def validation_step(self, batch, batch_idx):
-        ids, imgs, sgs, labels, constraints, truth_values = batch
-        out = self(imgs, sgs)
-        loss = self.criterion(out, labels)
-        out = torch.sigmoid(out)
-        mAP = self.val_mAP(out, labels.int())
-        
-        self.log('val_loss', loss, on_step=False, on_epoch=True, prog_bar=True)
-        self.log('val_mAP', mAP, on_step=False, on_epoch=True, prog_bar=True)
-    
-    def test_step(self, batch, batch_idx):
-        ids, imgs, sgs, labels, constraints, truth_values = batch
-        out = self(imgs, sgs)
-        out = torch.sigmoid(out)
-
-        if constraints is not None:
-            if self.constraint_mode is None:
-                raise ValueError(f'Constraint mode is not set')
-            constrained_out = self.apply_constraints(out, constraints, weight=self.constraint_weight)
-            out = constrained_out
-
-        # debug, metrics and logging
-        self.ids.extend(ids)
-        if self.preds is not None:
-            self.preds.append(torch.stack([out, labels], dim=1).cpu())
-        
-        metrics_dict = self.test_metrics(out, labels.int())
-        self.log_dict(metrics_dict, on_step=False, on_epoch=True, prog_bar=True)
-
-    def on_test_epoch_end(self):
-        if self.preds is not None:
-            self.preds = torch.vstack(self.preds)
-            self.preds = self.preds.cpu().numpy()
-
-    def predict_step(self, batch, batch_idx):
-        ids, imgs, sgs, labels, constraints, truth_values = batch
-        out = self(imgs, sgs)
-        out = torch.sigmoid(out)
-        if constraints is not None:
-            out = self.apply_constraints(out, constraints, weight=self.constraint_weight)
-        return ids, imgs, sgs, labels, constraints, out
-    
-    def predict_single(self, img, sg, constraints, truth_values, explain=False):
-        self.eval()
-        with torch.no_grad():
-            out = self(img, sg)
-            out = torch.sigmoid(out)
-            if constraints is not None:
-                constrained_out = self.apply_constraints(out, constraints, weight=self.constraint_weight)
-                return constrained_out, out, constraints
-            return out
-    
     def apply_constraints(self, out, constraints, weight=0.5):
-        if self.constraint_mode is None:
-            raise ValueError(f'Constraint mode is not set')
         if self.constraint_mode == 'hard':
             return out * constraints
         elif self.constraint_mode == 'soft':
@@ -142,12 +164,70 @@ class ActionAnticipator(L.LightningModule):
         else:
             raise ValueError(f'Invalid mode: {self.constraint_mode}')
 
-    def configure_optimizers(self):
-        return torch.optim.Adam(self.parameters(), lr=self.lr)
+    def log_train_metrics(self, out, labels, loss):
+        out = torch.sigmoid(out)
+        mAP = self.train_mAP(out, labels.int())
+        
+        self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True)
+        self.log('train_mAP', mAP, on_step=False, on_epoch=True, prog_bar=True)
 
+    def log_val_metrics(self, out, labels, loss):
+        out = torch.sigmoid(out)
+        mAP = self.val_mAP(out, labels.int())
+        
+        self.log('val_loss', loss, on_step=False, on_epoch=True, prog_bar=True)
+        self.log('val_mAP', mAP, on_step=False, on_epoch=True, prog_bar=True)
 
-class MultiLabelActionAnticipator(ActionAnticipator):
-    pass
+    def log_test_metrics(self, out, labels):
+        metrics_dict = self.test_metrics(out, labels.int())
+        self.log_dict(metrics_dict, on_step=False, on_epoch=True, prog_bar=True)
 
-class SingleLabelActionAnticipator(ActionAnticipator):
-    pass
+class SingleLeaPR(BaseLeaPR):
+    def __init__(self, model_params, weight, model_type='joint', lr=1e-3):
+        super().__init__(model_params, weight, model_type, lr)
+        self.criterion = nn.CrossEntropyLoss(weight=self.weight)
+
+    def init_metrics(self, num_classes):
+        self.train_accuracy = Accuracy(task='multiclass', num_classes=num_classes)
+        self.val_accuracy = Accuracy(task='multiclass', num_classes=num_classes)
+
+        self.test_metrics = MetricCollection({
+            'acc_top1': Accuracy(task='multiclass', num_classes=num_classes),
+            'acc_top5': Accuracy(task='multiclass', num_classes=num_classes, top_k=5),
+            'prec_macro': Precision(task='multiclass', average='macro', num_classes=num_classes),
+            'rec_macro': Recall(task='multiclass', average='macro', num_classes=num_classes),
+            'prec_micro': Precision(task='multiclass', average='micro', num_classes=num_classes),
+            'rec_micro': Recall(task='multiclass', average='micro', num_classes=num_classes),
+            'mAP': AveragePrecision(task='multiclass', average='macro', num_classes=num_classes),
+        })
+
+    def apply_activation(self, out):
+        return torch.softmax(out, dim=1)
+
+    def apply_constraints(self, out, constraints, weight=0.5):
+        if self.constraint_mode == 'hard':
+            return F.normalize(out * constraints, dim=1)
+        elif self.constraint_mode == 'soft':
+            return F.normalize(out * (constraints**weight), dim=1)
+        else:
+            raise ValueError(f'Invalid mode: {self.constraint_mode}')
+
+    def log_train_metrics(self, out, labels, loss):
+        out = torch.argmax(out, dim=1)
+        labels = torch.argmax(labels, dim=1)
+        acc = self.train_accuracy(out, labels)
+        
+        self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True)
+        self.log('train_acc', acc, on_step=False, on_epoch=True, prog_bar=True)
+
+    def log_val_metrics(self, out, labels, loss):
+        out = torch.argmax(out, dim=1)
+        labels = torch.argmax(labels, dim=1)
+        acc = self.val_accuracy(out, labels)
+        
+        self.log('val_loss', loss, on_step=False, on_epoch=True, prog_bar=True)
+        self.log('val_acc', acc, on_step=False, on_epoch=True, prog_bar=True)
+
+    def log_test_metrics(self, out, labels):
+        metrics_dict = self.test_metrics(out, labels.int())
+        self.log_dict(metrics_dict, on_step=False, on_epoch=True, prog_bar=True)

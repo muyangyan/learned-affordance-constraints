@@ -64,61 +64,61 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-15:59:41 Generating programs of size: 2
-15:59:41 Generating programs of size: 3
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:13 fn:580 tn:1933 fp:4 size:3 mdl:587
-15:59:41 walk_target(A):- in(B,A),holding(A,B).
-15:59:41 ********************
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:22 fn:571 tn:1931 fp:6 size:3 mdl:580
-15:59:41 walk_target(A):- holding(A,B),doorway(B).
-15:59:41 ********************
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:35 fn:558 tn:1920 fp:17 size:3 mdl:578
-15:59:41 walk_target(A):- in(B,A),touching(A,B).
-15:59:41 ********************
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:174 fn:419 tn:1845 fp:92 size:3 mdl:514
-15:59:41 walk_target(A):- in(B,A),not_looking_at(A,B).
-15:59:41 ********************
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:165 fn:428 tn:1924 fp:13 size:3 mdl:444
-15:59:41 walk_target(A):- in(B,A),not_contacting(A,B).
-15:59:41 ********************
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:219 fn:374 tn:1919 fp:18 size:3 mdl:395
-15:59:41 walk_target(A):- in(B,A),doorway(B).
-15:59:41 ********************
-15:59:44 ********************
-15:59:44 New best hypothesis:
-15:59:44 tp:455 fn:138 tn:1902 fp:35 size:3 mdl:176
-15:59:44 walk_target(A):- not_looking_at(A,B),doorway(B).
-15:59:44 ********************
-15:59:45 ********************
-15:59:45 New best hypothesis:
-15:59:45 tp:487 fn:106 tn:1905 fp:32 size:3 mdl:141
-15:59:45 walk_target(A):- not_contacting(A,B),doorway(B).
-15:59:45 ********************
-15:59:49 Generating programs of size: 4
-15:59:56 ********************
-15:59:56 New best hypothesis:
-15:59:56 tp:593 fn:0 tn:1887 fp:50 size:9 mdl:59
-15:59:56 walk_target(A):- unsure(A,B),doorway(B).
-15:59:56 walk_target(A):- not_looking_at(A,B),doorway(B).
-15:59:56 walk_target(A):- looking_at(A,B),doorway(B).
-15:59:56 ********************
-16:18:27 Generating programs of size: 5
-17:39:43 TIMEOUT OF 6000 SECONDS EXCEEDED
+05:17:47 Generating programs of size: 2
+05:17:48 Generating programs of size: 3
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:13 fn:580 tn:1933 fp:4 size:3 mdl:587
+05:17:48 walk_target(A):- holding(A,B),in(B,A).
+05:17:48 ********************
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:22 fn:571 tn:1931 fp:6 size:3 mdl:580
+05:17:48 walk_target(A):- holding(A,B),doorway(B).
+05:17:48 ********************
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:35 fn:558 tn:1920 fp:17 size:3 mdl:578
+05:17:48 walk_target(A):- in(B,A),touching(A,B).
+05:17:48 ********************
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:174 fn:419 tn:1845 fp:92 size:3 mdl:514
+05:17:48 walk_target(A):- in(B,A),not_looking_at(A,B).
+05:17:48 ********************
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:165 fn:428 tn:1924 fp:13 size:3 mdl:444
+05:17:48 walk_target(A):- not_contacting(A,B),in(B,A).
+05:17:48 ********************
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:219 fn:374 tn:1919 fp:18 size:3 mdl:395
+05:17:48 walk_target(A):- in(B,A),doorway(B).
+05:17:48 ********************
+05:17:51 ********************
+05:17:51 New best hypothesis:
+05:17:51 tp:455 fn:138 tn:1902 fp:35 size:3 mdl:176
+05:17:51 walk_target(A):- not_looking_at(A,B),doorway(B).
+05:17:51 ********************
+05:17:53 ********************
+05:17:53 New best hypothesis:
+05:17:53 tp:487 fn:106 tn:1905 fp:32 size:3 mdl:141
+05:17:53 walk_target(A):- not_contacting(A,B),doorway(B).
+05:17:53 ********************
+05:17:57 Generating programs of size: 4
+05:18:04 ********************
+05:18:04 New best hypothesis:
+05:18:04 tp:593 fn:0 tn:1887 fp:50 size:9 mdl:59
+05:18:04 walk_target(A):- looking_at(A,B),doorway(B).
+05:18:04 walk_target(A):- not_looking_at(A,B),doorway(B).
+05:18:04 walk_target(A):- unsure(A,B),doorway(B).
+05:18:04 ********************
+05:43:42 Generating programs of size: 5
+06:57:59 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
 Precision:0.92 Recall:1.00 TP:593 FN:0 TN:1887 FP:50 Size:9 MDL:59
-walk_target(A):- unsure(A,B),doorway(B).
-walk_target(A):- not_looking_at(A,B),doorway(B).
 walk_target(A):- looking_at(A,B),doorway(B).
+walk_target(A):- not_looking_at(A,B),doorway(B).
+walk_target(A):- unsure(A,B),doorway(B).
 ******************************

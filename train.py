@@ -13,10 +13,11 @@ from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.loggers import TensorBoardLogger
 
-from models.action_anticipator import ActionAnticipator
+from models.action_anticipator import BaseLeaPR, SingleLeaPR, MultiLeaPR
 
 from util.config_utils import load_yaml
 import argparse
+from functools import partial
 
 torch.set_float32_matmul_precision('medium')
 
@@ -30,16 +31,19 @@ def init_model_train(cfg, train_set):
     rgcn_params = (num_obj_classes, node_feature_size, rgcn_hidden_dim, num_rel_classes)
     model_params = (rgcn_params, vit_hidden_dim, num_verb_classes)
     if cfg.weight_scheme == 'inverse':
-        weight = len(train_set) / (num_verb_classes * train_set.verb_label_counts)
+        weight = len(train_set) / (num_verb_classes * train_set.verb_priors)
     elif cfg.weight_scheme == 'invsqrt':
-        weight = len(train_set) / (num_verb_classes * np.sqrt(train_set.verb_label_counts))
+        weight = len(train_set) / (num_verb_classes * np.sqrt(train_set.verb_priors))
     elif cfg.weight_scheme == 'uniform':
         weight = torch.ones(num_verb_classes)
     else:
         raise ValueError(f'Invalid weight scheme: {cfg.weight_scheme}')
     weight = torch.tensor(weight, dtype=torch.float)
 
-    model = ActionAnticipator(model_params, weight, model_type=cfg.model_type, lr=cfg.lr)
+    if cfg.position == 'both':
+        model = SingleLeaPR(model_params, weight, model_type=cfg.model_type, lr=cfg.lr)
+    else:
+        model = SingleLeaPR(model_params, weight, model_type=cfg.model_type, lr=cfg.lr)
     return model
 
 '''
@@ -54,18 +58,30 @@ train
 '''
 def train(cfg, run_name):
 
-    train_set = AG(cfg.data_root, position=cfg.position, split='train', split_file=cfg.split_file, subset_file=cfg.subset_file, verb_whitelist=cfg.verb_whitelist, verb_prior_file=cfg.verb_prior_file)
-    val_set = AG(cfg.data_root, position=cfg.position, split='val', split_file=cfg.split_file, subset_file=cfg.subset_file, verb_whitelist=cfg.verb_whitelist, verb_prior_file=cfg.verb_prior_file)
+    if cfg.position == 'both':
+        AG = SingleBothAG
+    elif cfg.position == 'pre':
+        AG = SingleAG
+    elif cfg.position == 'post':
+        AG = SingleAG
+    else:
+        raise ValueError(f'Invalid position: {cfg.position}')
+
+    PartialAG = partial(AG, root=cfg.data_root, meta_root=cfg.data_folder, position=cfg.position)
+
+    train_set = PartialAG(split='train')
+    val_set = PartialAG(split='val')
 
     train_loader = DataLoader(train_set, batch_size=cfg.batch_size, collate_fn=train_set.verb_pred_collate, num_workers=16, shuffle=True)
     val_loader = DataLoader(val_set, batch_size=128, collate_fn=val_set.verb_pred_collate, num_workers=16, shuffle=False)
 
     model = init_model_train(cfg, train_set)
 
+    #TODO: change monitor to val_mAP if position is multi
     checkpoint_callback = ModelCheckpoint(
-        monitor='val_mAP',
+        monitor='val_acc',
         dirpath=f'{cfg.runs_folder}/{run_name}/checkpoints/',
-        filename='{epoch:02d}-{val_mAP:.2f}',
+        filename='{epoch:02d}-{val_acc:.2f}',
         save_top_k=1,
         mode='max',
     )
@@ -80,7 +96,6 @@ def train(cfg, run_name):
         logger=logger,
     )
 
-    print('Training the model=====================')
     trainer.fit(model, train_dataloaders=train_loader, val_dataloaders=val_loader)
 
 if __name__ == '__main__':

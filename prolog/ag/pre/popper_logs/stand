@@ -64,46 +64,41 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-17:45:38 Generating programs of size: 2
-17:45:39 Generating programs of size: 3
-17:45:39 ********************
-17:45:39 New best hypothesis:
-17:45:39 tp:46 fn:488 tn:1556 fp:40 size:3 mdl:531
-17:45:39 stand_target(A):- on_the_side_of(B,A),sitting_on(A,B).
-17:45:39 ********************
-17:45:40 ********************
-17:45:40 New best hypothesis:
-17:45:40 tp:188 fn:346 tn:1450 fp:146 size:3 mdl:495
-17:45:40 stand_target(A):- beneath(B,A),behind(B,A).
-17:45:40 ********************
-17:45:40 ********************
-17:45:40 New best hypothesis:
-17:45:40 tp:135 fn:399 tn:1505 fp:91 size:3 mdl:493
-17:45:40 stand_target(A):- beneath(B,A),chair(B).
-17:45:40 ********************
-17:45:41 ********************
-17:45:41 New best hypothesis:
-17:45:41 tp:180 fn:354 tn:1461 fp:135 size:3 mdl:492
-17:45:41 stand_target(A):- sitting_on(A,B),behind(B,A).
-17:45:41 ********************
-17:45:41 ********************
-17:45:41 New best hypothesis:
-17:45:41 tp:133 fn:401 tn:1511 fp:85 size:3 mdl:489
-17:45:41 stand_target(A):- chair(B),sitting_on(A,B).
-17:45:41 ********************
-17:45:46 Generating programs of size: 4
-18:09:14 Generating programs of size: 5
-18:09:24 ********************
-18:09:24 New best hypothesis:
-18:09:24 tp:162 fn:372 tn:1495 fp:101 size:11 mdl:484
-18:09:24 stand_target(A):- above(B,A),behind(B,A).
-18:09:24 stand_target(A):- beneath(B,A),chair(B),sitting_on(A,B).
-18:09:24 stand_target(A):- on_the_side_of(B,A),sitting_on(A,B),sofa_couch(B).
-18:09:24 ********************
-19:26:07 TIMEOUT OF 6000 SECONDS EXCEEDED
+05:17:29 Generating programs of size: 2
+05:17:29 Generating programs of size: 3
+05:17:30 ********************
+05:17:30 New best hypothesis:
+05:17:30 tp:19 fn:590 tn:1874 fp:8 size:3 mdl:601
+05:17:30 stand_target(A):- in_front_of(B,A),wearing(A,B).
+05:17:30 ********************
+05:17:31 ********************
+05:17:31 New best hypothesis:
+05:17:31 tp:300 fn:309 tn:1594 fp:288 size:3 mdl:600
+05:17:31 stand_target(A):- sitting_on(A,B),beneath(B,A).
+05:17:31 ********************
+05:17:38 Generating programs of size: 4
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:107 fn:502 tn:1805 fp:77 size:12 mdl:591
+05:17:48 stand_target(A):- in_front_of(B,A),wearing(A,B).
+05:17:48 stand_target(A):- floor(B),lying_on(A,B).
+05:17:48 stand_target(A):- leaning_on(A,B),sitting_on(A,B).
+05:17:48 stand_target(A):- leaning_on(A,B),bed(B).
+05:17:48 ********************
+05:48:26 Generating programs of size: 5
+05:48:36 ********************
+05:48:36 New best hypothesis:
+05:48:36 tp:115 fn:494 tn:1801 fp:81 size:14 mdl:589
+05:48:36 stand_target(A):- floor(B),lying_on(A,B).
+05:48:36 stand_target(A):- leaning_on(A,B),sitting_on(A,B).
+05:48:36 stand_target(A):- floor(B),not_looking_at(A,B),other_relationship(A,B).
+05:48:36 stand_target(A):- shoe(B),in_front_of(B,A),wearing(A,B).
+05:48:36 ********************
+07:00:24 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.62 Recall:0.30 TP:162 FN:372 TN:1495 FP:101 Size:11 MDL:484
-stand_target(A):- above(B,A),behind(B,A).
-stand_target(A):- beneath(B,A),chair(B),sitting_on(A,B).
-stand_target(A):- on_the_side_of(B,A),sitting_on(A,B),sofa_couch(B).
+Precision:0.59 Recall:0.19 TP:115 FN:494 TN:1801 FP:81 Size:14 MDL:589
+stand_target(A):- floor(B),lying_on(A,B).
+stand_target(A):- leaning_on(A,B),sitting_on(A,B).
+stand_target(A):- floor(B),not_looking_at(A,B),other_relationship(A,B).
+stand_target(A):- shoe(B),in_front_of(B,A),wearing(A,B).
 ******************************

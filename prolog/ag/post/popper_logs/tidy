@@ -64,41 +64,41 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-15:59:41 Generating programs of size: 2
-15:59:41 Generating programs of size: 3
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:77 fn:455 tn:1871 fp:40 size:3 mdl:498
-15:59:41 tidy_target(A):- broom(B),holding(A,B).
-15:59:41 ********************
-15:59:42 ********************
-15:59:42 New best hypothesis:
-15:59:42 tp:64 fn:468 tn:1890 fp:21 size:3 mdl:492
-15:59:42 tidy_target(A):- looking_at(A,B),standing_on(A,B).
-15:59:42 ********************
-15:59:43 ********************
-15:59:43 New best hypothesis:
-15:59:43 tp:145 fn:387 tn:1847 fp:64 size:3 mdl:454
-15:59:43 tidy_target(A):- beneath(B,A),standing_on(A,B).
-15:59:43 ********************
-15:59:43 ********************
-15:59:43 New best hypothesis:
-15:59:43 tp:144 fn:388 tn:1849 fp:62 size:3 mdl:453
-15:59:43 tidy_target(A):- floor(B),standing_on(A,B).
-15:59:43 ********************
-15:59:48 Generating programs of size: 4
-15:59:58 ********************
-15:59:58 New best hypothesis:
-15:59:58 tp:247 fn:285 tn:1770 fp:141 size:9 mdl:435
-15:59:58 tidy_target(A):- shelf(B),in_front_of(B,A).
-15:59:58 tidy_target(A):- floor(B),standing_on(A,B).
-15:59:58 tidy_target(A):- in(B,A),closet_cabinet(B).
-15:59:58 ********************
-16:11:03 Generating programs of size: 5
-17:39:39 TIMEOUT OF 6000 SECONDS EXCEEDED
+05:17:47 Generating programs of size: 2
+05:17:48 Generating programs of size: 3
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:77 fn:455 tn:1871 fp:40 size:3 mdl:498
+05:17:48 tidy_target(A):- broom(B),holding(A,B).
+05:17:48 ********************
+05:17:49 ********************
+05:17:49 New best hypothesis:
+05:17:49 tp:74 fn:458 tn:1879 fp:32 size:3 mdl:493
+05:17:49 tidy_target(A):- in_front_of(B,A),broom(B).
+05:17:49 ********************
+05:17:50 ********************
+05:17:50 New best hypothesis:
+05:17:50 tp:145 fn:387 tn:1847 fp:64 size:3 mdl:454
+05:17:50 tidy_target(A):- beneath(B,A),standing_on(A,B).
+05:17:50 ********************
+05:17:51 ********************
+05:17:51 New best hypothesis:
+05:17:51 tp:144 fn:388 tn:1849 fp:62 size:3 mdl:453
+05:17:51 tidy_target(A):- floor(B),standing_on(A,B).
+05:17:51 ********************
+05:17:57 Generating programs of size: 4
+05:18:07 ********************
+05:18:07 New best hypothesis:
+05:18:07 tp:247 fn:285 tn:1770 fp:141 size:9 mdl:435
+05:18:07 tidy_target(A):- in_front_of(B,A),shelf(B).
+05:18:07 tidy_target(A):- in(B,A),closet_cabinet(B).
+05:18:07 tidy_target(A):- floor(B),standing_on(A,B).
+05:18:07 ********************
+05:48:29 Generating programs of size: 5
+06:58:02 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
 Precision:0.64 Recall:0.46 TP:247 FN:285 TN:1770 FP:141 Size:9 MDL:435
-tidy_target(A):- shelf(B),in_front_of(B,A).
-tidy_target(A):- floor(B),standing_on(A,B).
+tidy_target(A):- in_front_of(B,A),shelf(B).
 tidy_target(A):- in(B,A),closet_cabinet(B).
+tidy_target(A):- floor(B),standing_on(A,B).
 ******************************

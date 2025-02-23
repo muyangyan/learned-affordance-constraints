@@ -64,63 +64,57 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-17:45:38 Generating programs of size: 2
-17:45:39 Generating programs of size: 3
-17:45:39 ********************
-17:45:39 New best hypothesis:
-17:45:39 tp:58 fn:1286 tn:2643 fp:22 size:3 mdl:1311
-17:45:39 put_target(A):- holding(A,B),drinking_from(A,B).
-17:45:39 ********************
-17:45:39 ********************
-17:45:39 New best hypothesis:
-17:45:39 tp:166 fn:1178 tn:2556 fp:109 size:3 mdl:1290
-17:45:39 put_target(A):- dish(B),holding(A,B).
-17:45:39 ********************
-17:45:49 Generating programs of size: 4
-17:45:59 ********************
-17:45:59 New best hypothesis:
-17:45:59 tp:567 fn:777 tn:2286 fp:379 size:30 mdl:1186
-17:45:59 put_target(A):- clothes(B),holding(A,B).
-17:45:59 put_target(A):- sandwich(B),holding(A,B).
-17:45:59 put_target(A):- holding(A,B),box(B).
-17:45:59 put_target(A):- dish(B),holding(A,B).
-17:45:59 put_target(A):- touching(A,B),blanket(B).
-17:45:59 put_target(A):- not_looking_at(A,B),shelf(B).
-17:45:59 put_target(A):- broom(B),not_looking_at(A,B).
-17:45:59 put_target(A):- in_front_of(B,A),drinking_from(A,B).
-17:45:59 put_target(A):- clothes(B),other_relationship(A,B).
-17:45:59 put_target(A):- in_front_of(B,A),groceries(B).
-17:45:59 ********************
-18:07:00 Generating programs of size: 5
-18:07:10 ********************
-18:07:10 New best hypothesis:
-18:07:10 tp:578 fn:766 tn:2291 fp:374 size:41 mdl:1181
-18:07:10 put_target(A):- clothes(B),holding(A,B).
-18:07:10 put_target(A):- sandwich(B),holding(A,B).
-18:07:10 put_target(A):- holding(A,B),box(B).
-18:07:10 put_target(A):- dish(B),holding(A,B).
-18:07:10 put_target(A):- not_looking_at(A,B),shelf(B).
-18:07:10 put_target(A):- cup_glass_bottle(B),drinking_from(A,B).
-18:07:10 put_target(A):- clothes(B),other_relationship(A,B).
-18:07:10 put_target(A):- looking_at(A,B),touching(A,B),pillow(B).
-18:07:10 put_target(A):- bag(B),holding(A,B),unsure(A,B).
-18:07:10 put_target(A):- in_front_of(B,A),towel(B),unsure(A,B).
-18:07:10 put_target(A):- in_front_of(B,A),not_looking_at(A,B),groceries(B).
-18:07:10 put_target(A):- in_front_of(B,A),broom(B),not_looking_at(A,B).
-18:07:10 ********************
-19:25:47 TIMEOUT OF 6000 SECONDS EXCEEDED
+05:17:29 Generating programs of size: 2
+05:17:29 Generating programs of size: 3
+05:17:30 ********************
+05:17:30 New best hypothesis:
+05:17:30 tp:86 fn:1581 tn:3555 fp:32 size:3 mdl:1616
+05:17:30 put_target(A):- drinking_from(A,B),holding(A,B).
+05:17:30 ********************
+05:17:30 ********************
+05:17:30 New best hypothesis:
+05:17:30 tp:206 fn:1461 tn:3450 fp:137 size:3 mdl:1601
+05:17:30 put_target(A):- holding(A,B),dish(B).
+05:17:30 ********************
+05:17:40 Generating programs of size: 4
+05:17:50 ********************
+05:17:50 New best hypothesis:
+05:17:50 tp:685 fn:982 tn:3093 fp:494 size:30 mdl:1506
+05:17:50 put_target(A):- clothes(B),holding(A,B).
+05:17:50 put_target(A):- holding(A,B),dish(B).
+05:17:50 put_target(A):- groceries(B),holding(A,B).
+05:17:50 put_target(A):- looking_at(A,B),carrying(A,B).
+05:17:50 put_target(A):- on_the_side_of(B,A),table(B).
+05:17:50 put_target(A):- behind(B,A),table(B).
+05:17:50 put_target(A):- drinking_from(A,B),cup_glass_bottle(B).
+05:17:50 put_target(A):- other_relationship(A,B),book(B).
+05:17:50 put_target(A):- not_looking_at(A,B),shelf(B).
+05:17:50 put_target(A):- shelf(B),not_contacting(A,B).
+05:17:50 ********************
+06:09:49 Generating programs of size: 5
+06:09:59 ********************
+06:09:59 New best hypothesis:
+06:09:59 tp:663 fn:1004 tn:3115 fp:472 size:29 mdl:1505
+06:09:59 put_target(A):- holding(A,B),dish(B).
+06:09:59 put_target(A):- groceries(B),holding(A,B).
+06:09:59 put_target(A):- on_the_side_of(B,A),table(B).
+06:09:59 put_target(A):- drinking_from(A,B),in_front_of(B,A).
+06:09:59 put_target(A):- behind(B,A),table(B).
+06:09:59 put_target(A):- not_looking_at(A,B),shelf(B).
+06:09:59 put_target(A):- shelf(B),not_contacting(A,B).
+06:09:59 put_target(A):- paper_notebook(B),unsure(A,B),holding(A,B).
+06:09:59 put_target(A):- clothes(B),in_front_of(B,A),holding(A,B).
+06:09:59 ********************
+06:57:30 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.61 Recall:0.43 TP:578 FN:766 TN:2291 FP:374 Size:41 MDL:1181
-put_target(A):- clothes(B),holding(A,B).
-put_target(A):- sandwich(B),holding(A,B).
-put_target(A):- holding(A,B),box(B).
-put_target(A):- dish(B),holding(A,B).
+Precision:0.58 Recall:0.40 TP:663 FN:1004 TN:3115 FP:472 Size:29 MDL:1505
+put_target(A):- holding(A,B),dish(B).
+put_target(A):- groceries(B),holding(A,B).
+put_target(A):- on_the_side_of(B,A),table(B).
+put_target(A):- drinking_from(A,B),in_front_of(B,A).
+put_target(A):- behind(B,A),table(B).
 put_target(A):- not_looking_at(A,B),shelf(B).
-put_target(A):- cup_glass_bottle(B),drinking_from(A,B).
-put_target(A):- clothes(B),other_relationship(A,B).
-put_target(A):- looking_at(A,B),touching(A,B),pillow(B).
-put_target(A):- bag(B),holding(A,B),unsure(A,B).
-put_target(A):- in_front_of(B,A),towel(B),unsure(A,B).
-put_target(A):- in_front_of(B,A),not_looking_at(A,B),groceries(B).
-put_target(A):- in_front_of(B,A),broom(B),not_looking_at(A,B).
+put_target(A):- shelf(B),not_contacting(A,B).
+put_target(A):- paper_notebook(B),unsure(A,B),holding(A,B).
+put_target(A):- clothes(B),in_front_of(B,A),holding(A,B).
 ******************************

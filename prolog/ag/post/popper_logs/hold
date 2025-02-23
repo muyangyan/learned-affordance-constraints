@@ -64,44 +64,46 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-15:59:41 Generating programs of size: 2
-15:59:41 Generating programs of size: 3
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:81 fn:2451 tn:6213 fp:56 size:3 mdl:2510
-15:59:41 hold_target(A):- holding(A,B),medicine(B).
-15:59:41 ********************
-15:59:51 Generating programs of size: 4
-16:00:01 ********************
-16:00:01 New best hypothesis:
-16:00:01 tp:177 fn:2355 tn:6146 fp:123 size:12 mdl:2490
-16:00:01 hold_target(A):- holding(A,B),medicine(B).
-16:00:01 hold_target(A):- holding(A,B),mirror(B).
-16:00:01 hold_target(A):- looking_at(A,B),vacuum(B).
-16:00:01 hold_target(A):- carrying(A,B),towel(B).
-16:00:01 ********************
-17:09:44 Generating programs of size: 5
-17:09:54 ********************
-17:09:54 New best hypothesis:
-17:09:54 tp:239 fn:2293 tn:6114 fp:155 size:28 mdl:2476
-17:09:54 hold_target(A):- holding(A,B),medicine(B).
-17:09:54 hold_target(A):- holding(A,B),mirror(B).
-17:09:54 hold_target(A):- looking_at(A,B),vacuum(B).
-17:09:54 hold_target(A):- carrying(A,B),towel(B).
-17:09:54 hold_target(A):- holding(A,B),unsure(A,B),laptop(B).
-17:09:54 hold_target(A):- box(B),on_the_side_of(B,A),holding(A,B).
-17:09:54 hold_target(A):- dish(B),on_the_side_of(B,A),holding(A,B).
-17:09:54 hold_target(A):- above(B,A),window(B),not_contacting(A,B).
-17:09:54 ********************
-17:40:48 TIMEOUT OF 6000 SECONDS EXCEEDED
+05:17:47 Generating programs of size: 2
+05:17:48 Generating programs of size: 3
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:81 fn:2451 tn:6213 fp:56 size:3 mdl:2510
+05:17:48 hold_target(A):- holding(A,B),medicine(B).
+05:17:48 ********************
+05:18:00 Generating programs of size: 4
+05:18:10 ********************
+05:18:10 New best hypothesis:
+05:18:10 tp:177 fn:2355 tn:6146 fp:123 size:12 mdl:2490
+05:18:10 hold_target(A):- holding(A,B),medicine(B).
+05:18:10 hold_target(A):- holding(A,B),mirror(B).
+05:18:10 hold_target(A):- vacuum(B),looking_at(A,B).
+05:18:10 hold_target(A):- towel(B),carrying(A,B).
+05:18:10 ********************
+06:00:08 Generating programs of size: 5
+06:00:18 ********************
+06:00:18 New best hypothesis:
+06:00:18 tp:238 fn:2294 tn:6120 fp:149 size:33 mdl:2476
+06:00:18 hold_target(A):- holding(A,B),medicine(B).
+06:00:18 hold_target(A):- holding(A,B),mirror(B).
+06:00:18 hold_target(A):- towel(B),carrying(A,B).
+06:00:18 hold_target(A):- holding(A,B),laptop(B),unsure(A,B).
+06:00:18 hold_target(A):- holding(A,B),vacuum(B),looking_at(A,B).
+06:00:18 hold_target(A):- holding(A,B),on_the_side_of(B,A),dish(B).
+06:00:18 hold_target(A):- box(B),holding(A,B),on_the_side_of(B,A).
+06:00:18 hold_target(A):- not_contacting(A,B),vacuum(B),looking_at(A,B).
+06:00:18 hold_target(A):- window(B),not_contacting(A,B),above(B,A).
+06:00:18 ********************
+06:59:13 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.61 Recall:0.09 TP:239 FN:2293 TN:6114 FP:155 Size:28 MDL:2476
+Precision:0.61 Recall:0.09 TP:238 FN:2294 TN:6120 FP:149 Size:33 MDL:2476
 hold_target(A):- holding(A,B),medicine(B).
 hold_target(A):- holding(A,B),mirror(B).
-hold_target(A):- looking_at(A,B),vacuum(B).
-hold_target(A):- carrying(A,B),towel(B).
-hold_target(A):- holding(A,B),unsure(A,B),laptop(B).
-hold_target(A):- box(B),on_the_side_of(B,A),holding(A,B).
-hold_target(A):- dish(B),on_the_side_of(B,A),holding(A,B).
-hold_target(A):- above(B,A),window(B),not_contacting(A,B).
+hold_target(A):- towel(B),carrying(A,B).
+hold_target(A):- holding(A,B),laptop(B),unsure(A,B).
+hold_target(A):- holding(A,B),vacuum(B),looking_at(A,B).
+hold_target(A):- holding(A,B),on_the_side_of(B,A),dish(B).
+hold_target(A):- box(B),holding(A,B),on_the_side_of(B,A).
+hold_target(A):- not_contacting(A,B),vacuum(B),looking_at(A,B).
+hold_target(A):- window(B),not_contacting(A,B),above(B,A).
 ******************************

@@ -64,24 +64,24 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-15:59:41 Generating programs of size: 2
-15:59:41 Generating programs of size: 3
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:34 fn:48 tn:385 fp:0 size:3 mdl:51
-15:59:41 grasp_target(A):- holding(A,B),doorknob(B).
-15:59:41 ********************
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:54 fn:28 tn:382 fp:3 size:3 mdl:34
-15:59:41 grasp_target(A):- not_looking_at(A,B),doorknob(B).
-15:59:41 ********************
-15:59:46 Generating programs of size: 4
-15:59:52 ********************
-15:59:52 New best hypothesis:
-15:59:52 tp:82 fn:0 tn:381 fp:4 size:9 mdl:13
-15:59:52 grasp_target(A):- not_looking_at(A,B),doorknob(B).
-15:59:52 grasp_target(A):- doorknob(B),unsure(A,B).
-15:59:52 grasp_target(A):- looking_at(A,B),doorknob(B).
-15:59:52 ********************
-16:05:28 Generating programs of size: 5
+05:17:47 Generating programs of size: 2
+05:17:48 Generating programs of size: 3
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:34 fn:48 tn:385 fp:0 size:3 mdl:51
+05:17:48 grasp_target(A):- holding(A,B),doorknob(B).
+05:17:48 ********************
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:54 fn:28 tn:382 fp:3 size:3 mdl:34
+05:17:48 grasp_target(A):- not_looking_at(A,B),doorknob(B).
+05:17:48 ********************
+05:17:53 Generating programs of size: 4
+05:17:59 ********************
+05:17:59 New best hypothesis:
+05:17:59 tp:82 fn:0 tn:381 fp:4 size:9 mdl:13
+05:17:59 grasp_target(A):- not_looking_at(A,B),doorknob(B).
+05:17:59 grasp_target(A):- unsure(A,B),doorknob(B).
+05:17:59 grasp_target(A):- looking_at(A,B),doorknob(B).
+05:17:59 ********************
+05:22:25 Generating programs of size: 5

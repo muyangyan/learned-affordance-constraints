@@ -106,4 +106,7 @@ if __name__ == '__main__':
 
     config = load_yaml(args.config)
 
-    write_rules(config.rules_folder, config.log_folder, config.rules_name, config.fn_weight, config.ilp_timeout)
+    rules_folder = os.path.join(config.prolog_folder, config.position, "learned_rules")
+    log_folder = os.path.join(config.prolog_folder, config.position, "popper_logs")
+
+    write_rules(rules_folder, log_folder, config.rules_name, config.fn_weight, config.ilp_timeout)

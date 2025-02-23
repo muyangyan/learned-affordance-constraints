@@ -64,28 +64,28 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-17:45:38 Generating programs of size: 2
-17:45:39 Generating programs of size: 3
-17:45:39 ********************
-17:45:39 New best hypothesis:
-17:45:39 tp:141 fn:56 tn:697 fp:68 size:3 mdl:127
-17:45:39 eat_target(A):- holding(A,B),food(B).
-17:45:39 ********************
-17:45:51 Generating programs of size: 4
-17:45:56 ********************
-17:45:56 New best hypothesis:
-17:45:56 tp:171 fn:26 tn:689 fp:76 size:12 mdl:114
-17:45:56 eat_target(A):- holding(A,B),food(B).
-17:45:56 eat_target(A):- holding(A,B),medicine(B).
-17:45:56 eat_target(A):- in_front_of(B,A),sandwich(B).
-17:45:56 eat_target(A):- not_contacting(A,B),medicine(B).
-17:45:56 ********************
-18:04:58 Generating programs of size: 5
-19:29:39 TIMEOUT OF 6000 SECONDS EXCEEDED
+05:17:29 Generating programs of size: 2
+05:17:29 Generating programs of size: 3
+05:17:29 ********************
+05:17:29 New best hypothesis:
+05:17:29 tp:200 fn:77 tn:977 fp:99 size:3 mdl:179
+05:17:29 eat_target(A):- holding(A,B),food(B).
+05:17:29 ********************
+05:17:42 Generating programs of size: 4
+05:17:49 ********************
+05:17:49 New best hypothesis:
+05:17:49 tp:244 fn:33 tn:957 fp:119 size:12 mdl:164
+05:17:49 eat_target(A):- holding(A,B),food(B).
+05:17:49 eat_target(A):- holding(A,B),medicine(B).
+05:17:49 eat_target(A):- sandwich(B),looking_at(A,B).
+05:17:49 eat_target(A):- on_the_side_of(B,A),sandwich(B).
+05:17:49 ********************
+05:43:22 Generating programs of size: 5
+06:57:46 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.69 Recall:0.87 TP:171 FN:26 TN:689 FP:76 Size:12 MDL:114
+Precision:0.67 Recall:0.88 TP:244 FN:33 TN:957 FP:119 Size:12 MDL:164
 eat_target(A):- holding(A,B),food(B).
 eat_target(A):- holding(A,B),medicine(B).
-eat_target(A):- in_front_of(B,A),sandwich(B).
-eat_target(A):- not_contacting(A,B),medicine(B).
+eat_target(A):- sandwich(B),looking_at(A,B).
+eat_target(A):- on_the_side_of(B,A),sandwich(B).
 ******************************

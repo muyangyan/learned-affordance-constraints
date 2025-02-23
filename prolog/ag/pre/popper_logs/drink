@@ -64,34 +64,29 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-17:45:38 Generating programs of size: 2
-17:45:39 Generating programs of size: 3
-17:45:39 ********************
-17:45:39 New best hypothesis:
-17:45:39 tp:11 fn:175 tn:711 fp:7 size:3 mdl:185
-17:45:39 drink_target(A):- medicine(B),holding(A,B).
-17:45:39 ********************
-17:45:39 ********************
-17:45:39 New best hypothesis:
-17:45:39 tp:132 fn:54 tn:659 fp:59 size:3 mdl:116
-17:45:39 drink_target(A):- cup_glass_bottle(B),holding(A,B).
-17:45:39 ********************
-17:45:42 ********************
-17:45:42 New best hypothesis:
-17:45:42 tp:174 fn:12 tn:641 fp:77 size:3 mdl:92
-17:45:42 drink_target(A):- cup_glass_bottle(B),in_front_of(B,A).
-17:45:42 ********************
-17:45:45 Generating programs of size: 4
-17:45:50 ********************
-17:45:50 New best hypothesis:
-17:45:50 tp:186 fn:0 tn:637 fp:81 size:6 mdl:87
-17:45:50 drink_target(A):- cup_glass_bottle(B),on_the_side_of(B,A).
-17:45:50 drink_target(A):- cup_glass_bottle(B),in_front_of(B,A).
-17:45:50 ********************
-17:57:49 Generating programs of size: 5
-19:38:06 TIMEOUT OF 6000 SECONDS EXCEEDED
+05:17:29 Generating programs of size: 2
+05:17:29 Generating programs of size: 3
+05:17:30 ********************
+05:17:30 New best hypothesis:
+05:17:30 tp:192 fn:99 tn:913 fp:81 size:3 mdl:183
+05:17:30 drink_target(A):- holding(A,B),cup_glass_bottle(B).
+05:17:30 ********************
+05:17:32 ********************
+05:17:32 New best hypothesis:
+05:17:32 tp:266 fn:25 tn:886 fp:108 size:3 mdl:136
+05:17:32 drink_target(A):- in_front_of(B,A),cup_glass_bottle(B).
+05:17:32 ********************
+05:17:38 Generating programs of size: 4
+05:17:44 ********************
+05:17:44 New best hypothesis:
+05:17:44 tp:291 fn:0 tn:880 fp:114 size:6 mdl:120
+05:17:44 drink_target(A):- in_front_of(B,A),cup_glass_bottle(B).
+05:17:44 drink_target(A):- on_the_side_of(B,A),cup_glass_bottle(B).
+05:17:44 ********************
+05:50:54 Generating programs of size: 5
+06:57:33 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.70 Recall:1.00 TP:186 FN:0 TN:637 FP:81 Size:6 MDL:87
-drink_target(A):- cup_glass_bottle(B),on_the_side_of(B,A).
-drink_target(A):- cup_glass_bottle(B),in_front_of(B,A).
+Precision:0.72 Recall:1.00 TP:291 FN:0 TN:880 FP:114 Size:6 MDL:120
+drink_target(A):- in_front_of(B,A),cup_glass_bottle(B).
+drink_target(A):- on_the_side_of(B,A),cup_glass_bottle(B).
 ******************************

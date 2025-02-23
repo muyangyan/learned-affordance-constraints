@@ -64,22 +64,27 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-15:59:41 Generating programs of size: 2
-15:59:41 Generating programs of size: 3
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:47 fn:3 tn:184 fp:14 size:3 mdl:20
-15:59:41 photograph_target(A):- phone_camera(B),holding(A,B).
-15:59:41 ********************
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:47 fn:3 tn:188 fp:10 size:3 mdl:16
-15:59:41 photograph_target(A):- looking_at(A,B),phone_camera(B).
-15:59:41 ********************
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:50 fn:0 tn:187 fp:11 size:3 mdl:14
-15:59:41 photograph_target(A):- in_front_of(B,A),phone_camera(B).
-15:59:41 ********************
-15:59:45 Generating programs of size: 4
-16:03:31 Generating programs of size: 5
+05:17:47 Generating programs of size: 2
+05:17:47 Generating programs of size: 3
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:47 fn:3 tn:184 fp:14 size:3 mdl:20
+05:17:48 photograph_target(A):- phone_camera(B),holding(A,B).
+05:17:48 ********************
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:47 fn:3 tn:188 fp:10 size:3 mdl:16
+05:17:48 photograph_target(A):- phone_camera(B),looking_at(A,B).
+05:17:48 ********************
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:50 fn:0 tn:187 fp:11 size:3 mdl:14
+05:17:48 photograph_target(A):- phone_camera(B),in_front_of(B,A).
+05:17:48 ********************
+05:17:52 Generating programs of size: 4
+05:25:02 Generating programs of size: 5
+11:24:17 TIMEOUT OF 6000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.82 Recall:1.00 TP:50 FN:0 TN:187 FP:11 Size:3 MDL:14
+photograph_target(A):- phone_camera(B),in_front_of(B,A).
+******************************

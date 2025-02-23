@@ -40,12 +40,15 @@ def main(config):
     """Run Popper ILP system for all verbs in parallel"""
     
     # Define paths
-    prolog_path = config.prolog_folder
-    log_folder = config.log_folder
+    data_folder = config.data_folder
+    prolog_path = os.path.join(config.prolog_folder, config.position)
+    position = config.position
     popper_path = config.popper_path
     fn_weight = config.fn_weight
     ilp_timeout = config.ilp_timeout
-    verb_whitelist = config.verb_whitelist
+
+    log_folder = os.path.join(prolog_path, "popper_logs")
+    verb_whitelist = os.path.join(data_folder, "verb_whitelist.txt")
 
     if type(verb_whitelist) == str and os.path.exists(verb_whitelist):
         with open(verb_whitelist, 'r') as f:

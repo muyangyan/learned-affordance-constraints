@@ -64,53 +64,53 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-15:59:41 Generating programs of size: 2
-15:59:41 Generating programs of size: 3
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:11 fn:167 tn:682 fp:5 size:3 mdl:175
-15:59:41 awaken_target(A):- on_the_side_of(B,A),above(B,A).
-15:59:41 ********************
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:25 fn:153 tn:678 fp:9 size:3 mdl:165
-15:59:41 awaken_target(A):- not_looking_at(A,B),above(B,A).
-15:59:41 ********************
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:19 fn:159 tn:685 fp:2 size:3 mdl:164
-15:59:41 awaken_target(A):- above(B,A),lying_on(A,B).
-15:59:41 ********************
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:43 fn:135 tn:674 fp:13 size:3 mdl:151
-15:59:41 awaken_target(A):- behind(B,A),bed(B).
-15:59:41 ********************
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:43 fn:135 tn:677 fp:10 size:3 mdl:148
-15:59:41 awaken_target(A):- on_the_side_of(B,A),bed(B).
-15:59:41 ********************
-15:59:42 ********************
-15:59:42 New best hypothesis:
-15:59:42 tp:82 fn:96 tn:664 fp:23 size:3 mdl:122
-15:59:42 awaken_target(A):- not_looking_at(A,B),bed(B).
-15:59:42 ********************
-15:59:48 Generating programs of size: 4
-15:59:53 ********************
-15:59:53 New best hypothesis:
-15:59:53 tp:129 fn:49 tn:643 fp:44 size:12 mdl:105
-15:59:53 awaken_target(A):- not_looking_at(A,B),bed(B).
-15:59:53 awaken_target(A):- not_looking_at(A,B),lying_on(A,B).
-15:59:53 awaken_target(A):- on_the_side_of(B,A),sitting_on(A,B).
-15:59:53 awaken_target(A):- on_the_side_of(B,A),floor(B).
-15:59:53 ********************
-16:18:36 Generating programs of size: 5
-17:39:53 TIMEOUT OF 6000 SECONDS EXCEEDED
+05:17:47 Generating programs of size: 2
+05:17:47 Generating programs of size: 3
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:11 fn:167 tn:682 fp:5 size:3 mdl:175
+05:17:48 awaken_target(A):- on_the_side_of(B,A),above(B,A).
+05:17:48 ********************
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:25 fn:153 tn:678 fp:9 size:3 mdl:165
+05:17:48 awaken_target(A):- not_looking_at(A,B),above(B,A).
+05:17:48 ********************
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:19 fn:159 tn:685 fp:2 size:3 mdl:164
+05:17:48 awaken_target(A):- lying_on(A,B),above(B,A).
+05:17:48 ********************
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:43 fn:135 tn:674 fp:13 size:3 mdl:151
+05:17:48 awaken_target(A):- behind(B,A),bed(B).
+05:17:48 ********************
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:43 fn:135 tn:677 fp:10 size:3 mdl:148
+05:17:48 awaken_target(A):- on_the_side_of(B,A),bed(B).
+05:17:48 ********************
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:82 fn:96 tn:664 fp:23 size:3 mdl:122
+05:17:48 awaken_target(A):- not_looking_at(A,B),bed(B).
+05:17:48 ********************
+05:17:55 Generating programs of size: 4
+05:18:00 ********************
+05:18:00 New best hypothesis:
+05:18:00 tp:129 fn:49 tn:643 fp:44 size:12 mdl:105
+05:18:00 awaken_target(A):- not_looking_at(A,B),bed(B).
+05:18:00 awaken_target(A):- on_the_side_of(B,A),sitting_on(A,B).
+05:18:00 awaken_target(A):- on_the_side_of(B,A),floor(B).
+05:18:00 awaken_target(A):- lying_on(A,B),not_looking_at(A,B).
+05:18:00 ********************
+05:38:01 Generating programs of size: 5
+06:57:51 TIMEOUT OF 6000 SECONDS EXCEEDED
 ********** SOLUTION **********
 Precision:0.75 Recall:0.72 TP:129 FN:49 TN:643 FP:44 Size:12 MDL:105
 awaken_target(A):- not_looking_at(A,B),bed(B).
-awaken_target(A):- not_looking_at(A,B),lying_on(A,B).
 awaken_target(A):- on_the_side_of(B,A),sitting_on(A,B).
 awaken_target(A):- on_the_side_of(B,A),floor(B).
+awaken_target(A):- lying_on(A,B),not_looking_at(A,B).
 ******************************

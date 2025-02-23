@@ -20,19 +20,23 @@ def check_edge_exists(data, edge_label, src_label, dst_label):
 # frame_validity_df row: {'id': '[vid]_[frame idx]', 'pre': True/False, 'post': True/False}
 # row: {'vid': [vid], 'pre_frame': [frame idx], 'post_frame': [frame idx], ...}
 def apply_subset(row, frame_validity_df, position):
-    pre_id = get_id(row['vid'], row['pre_frame'])
-    post_id = get_id(row['vid'], row['post_frame'])
-    valid_pre = frame_validity_df.loc[frame_validity_df['id'] == pre_id, 'pre']
-    valid_post = frame_validity_df.loc[frame_validity_df['id'] == post_id, 'post']
 
     if position == 'pre':
+        pre_id = get_id(row['vid'], row['pre_frame'])
+        valid_pre = frame_validity_df.loc[frame_validity_df['id'] == pre_id, 'pre'].values[0]
         return valid_pre
     elif position == 'post':
+        post_id = get_id(row['vid'], row['post_frame'])
+        valid_post = frame_validity_df.loc[frame_validity_df['id'] == post_id, 'post'].values[0]
         return valid_post
     elif position == 'both':
+        pre_id = get_id(row['vid'], row['pre_frame'])
+        post_id = get_id(row['vid'], row['post_frame'])
+        valid_pre = frame_validity_df.loc[frame_validity_df['id'] == pre_id, 'pre'].values[0]
+        valid_post = frame_validity_df.loc[frame_validity_df['id'] == post_id, 'post'].values[0]
         return valid_pre and valid_post
 
-def clean_df(df, split_ids, action_map, framerate_df):
+def clean_df(df, split_ids, action_map):
     df = df[['id', 'actions']]
     df = df.rename(columns={'id': 'vid'})
 
@@ -51,7 +55,7 @@ def clean_df(df, split_ids, action_map, framerate_df):
     cleaned_df.dropna(inplace=True)
     cleaned_df.reset_index(drop=True, inplace=True)
 
-    cleaned_df['fps'] = cleaned_df['vid'].apply(lambda x: framerate_df.loc[framerate_df['video_id'] == x, 'frame_rate'].values[0])
+    #cleaned_df['fps'] = cleaned_df['vid'].apply(lambda x: framerate_df.loc[framerate_df['video_id'] == x, 'frame_rate'].values[0])
 
     return cleaned_df
 
@@ -87,7 +91,7 @@ gets all usable frame-action pairs, where the frame should be the very beginning
 threshold: the maximum deviation in seconds between the start time of the action and the frame time
 position: 'pre' or 'post'
 '''
-def extract_usable_frames(root, object_annotations, examples_df, position, threshold):
+def extract_usable_frames(root, object_annotations, examples_df, position, threshold, fps_dict):
     if position == 'both':
         positions = ['pre', 'post']
     else:
@@ -100,7 +104,7 @@ def extract_usable_frames(root, object_annotations, examples_df, position, thres
 
         for pos in positions:
             timestep = row[f'{pos}_time']
-            fps = row['fps']
+            fps = fps_dict[video_id]
             frame_idx = time_to_frame(root, video_id, timestep, fps, threshold, object_annotations)
             if frame_idx:
                 examples_df.at[index, f'{pos}_frame'] = frame_idx

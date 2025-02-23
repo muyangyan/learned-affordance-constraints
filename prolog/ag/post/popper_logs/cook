@@ -64,33 +64,39 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-15:59:41 Generating programs of size: 2
-15:59:41 Generating programs of size: 3
-15:59:41 ********************
-15:59:41 New best hypothesis:
-15:59:41 tp:10 fn:71 tn:330 fp:2 size:3 mdl:76
-15:59:41 cook_target(A):- food(B),on_the_side_of(B,A).
-15:59:41 ********************
-15:59:42 ********************
-15:59:42 New best hypothesis:
-15:59:42 tp:36 fn:45 tn:306 fp:26 size:3 mdl:74
-15:59:42 cook_target(A):- looking_at(A,B),food(B).
-15:59:42 ********************
-15:59:42 ********************
-15:59:42 New best hypothesis:
-15:59:42 tp:26 fn:55 tn:318 fp:14 size:3 mdl:72
-15:59:42 cook_target(A):- not_looking_at(A,B),food(B).
-15:59:42 ********************
-15:59:42 ********************
-15:59:42 New best hypothesis:
-15:59:42 tp:34 fn:47 tn:317 fp:15 size:3 mdl:65
-15:59:42 cook_target(A):- not_contacting(A,B),food(B).
-15:59:42 ********************
-15:59:45 Generating programs of size: 4
-15:59:47 ********************
-15:59:47 New best hypothesis:
-15:59:47 tp:41 fn:40 tn:317 fp:15 size:6 mdl:61
-15:59:47 cook_target(A):- touching(A,B),food(B).
-15:59:47 cook_target(A):- not_contacting(A,B),food(B).
-15:59:47 ********************
-16:03:24 Generating programs of size: 5
+05:17:47 Generating programs of size: 2
+05:17:48 Generating programs of size: 3
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:10 fn:71 tn:330 fp:2 size:3 mdl:76
+05:17:48 cook_target(A):- on_the_side_of(B,A),food(B).
+05:17:48 ********************
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:36 fn:45 tn:306 fp:26 size:3 mdl:74
+05:17:48 cook_target(A):- food(B),looking_at(A,B).
+05:17:48 ********************
+05:17:48 ********************
+05:17:48 New best hypothesis:
+05:17:48 tp:26 fn:55 tn:318 fp:14 size:3 mdl:72
+05:17:48 cook_target(A):- not_looking_at(A,B),food(B).
+05:17:48 ********************
+05:17:49 ********************
+05:17:49 New best hypothesis:
+05:17:49 tp:34 fn:47 tn:317 fp:15 size:3 mdl:65
+05:17:49 cook_target(A):- food(B),not_contacting(A,B).
+05:17:49 ********************
+05:17:52 Generating programs of size: 4
+05:17:54 ********************
+05:17:54 New best hypothesis:
+05:17:54 tp:41 fn:40 tn:317 fp:15 size:6 mdl:61
+05:17:54 cook_target(A):- food(B),touching(A,B).
+05:17:54 cook_target(A):- food(B),not_contacting(A,B).
+05:17:54 ********************
+05:23:46 Generating programs of size: 5
+12:09:43 TIMEOUT OF 6000 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.73 Recall:0.51 TP:41 FN:40 TN:317 FP:15 Size:6 MDL:61
+cook_target(A):- food(B),touching(A,B).
+cook_target(A):- food(B),not_contacting(A,B).
+******************************

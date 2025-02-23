@@ -7,11 +7,11 @@ import argparse
 import torch
 
 from torch.utils.data import DataLoader
-from data.ag.action_genome import AG
+from data.ag.action_genome import SingleAG, MultiAG, SingleBothAG
 
 from pytorch_lightning import Trainer
 
-from models.action_anticipator import ActionAnticipator
+from models.action_anticipator import BaseLeaPR, SingleLeaPR, MultiLeaPR
 
 from util.rule_utils import apply_rules
 from util.metrics import analyze_preds_ml
@@ -62,12 +62,12 @@ def test(cfg, run_name, test_run_name):
     checkpoints = os.listdir(checkpoints_folder)
     checkpoint = os.path.join(checkpoints_folder, checkpoints[0])
 
-    model = ActionAnticipator.load_from_checkpoint(checkpoint)
+    model = SingleLeaPR.load_from_checkpoint(checkpoint)
     trainer = Trainer(accelerator='gpu', devices=[0], logger=False)
 
     assert cfg.data_split in ['test', 'val'], 'Invalid test split'
 
-    dataset = AG(cfg.data_root, split=cfg.data_split, split_file=cfg.split_file, subset_file=cfg.subset_file, verb_whitelist=cfg.verb_whitelist)
+    dataset = SingleAG(cfg.data_root, cfg.data_folder, position=cfg.position, split=cfg.data_split)
     loader = DataLoader(dataset, batch_size=128, collate_fn=dataset.verb_pred_collate, num_workers=16, shuffle=False)
 
     print(f"Dataset length: {len(dataset)}")
