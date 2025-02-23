@@ -30,8 +30,9 @@ def test_routine(cfg, run_name, test_run_name, trainer, model, dataset, loader):
     trainer.test(model, dataloaders=loader)
 
     print('With constraints---------------------')
-    constraints, truth_values = apply_rules(cfg.rules_name, cfg.rules_folder, 
-        os.path.join(cfg.prolog_folder, f'{cfg.data_split}_bk.pl'),
+    constraints, truth_values = apply_rules(cfg.rules_name, 
+        os.path.join(cfg.prolog_folder, cfg.position, 'learned_rules'),
+        os.path.join(cfg.prolog_folder, cfg.position, f'{cfg.data_split}_bk.pl'),
         len(dataset), dataset.verb_classes,
         mode=cfg.mode,
         recall_threshold=cfg.recall_threshold,
@@ -68,7 +69,7 @@ def test(cfg, run_name, test_run_name):
     assert cfg.data_split in ['test', 'val'], 'Invalid test split'
 
     dataset = SingleAG(cfg.data_root, cfg.data_folder, position=cfg.position, split=cfg.data_split)
-    loader = DataLoader(dataset, batch_size=128, collate_fn=dataset.verb_pred_collate, num_workers=16, shuffle=False)
+    loader = DataLoader(dataset, batch_size=16, collate_fn=dataset.verb_pred_collate, num_workers=16, shuffle=False)
 
     print(f"Dataset length: {len(dataset)}")
 

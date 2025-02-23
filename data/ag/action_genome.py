@@ -407,7 +407,6 @@ class SingleAG(ActionGenome):
         return id, image, scene_graph, action_classes, constraints, truth_values
 
     def verb_pred_collate(self, batch):
-        # action_labels is multilabel
         ids, images, scene_graphs, action_labels, constraints, truth_values = zip(*batch)
         sg_batch = Batch.from_data_list(scene_graphs, exclude_keys=['o'])
         

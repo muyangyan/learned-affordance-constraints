@@ -68,7 +68,6 @@ class BaseLeaPR(L.LightningModule):
         out = self(imgs, sgs)
         out = self.apply_activation(out)
 
-        # multi version
         if constraints is not None:
             if self.constraint_mode is None:
                 raise ValueError(f'Constraint mode is not set')
@@ -179,7 +178,7 @@ class MultiLeaPR(BaseLeaPR):
         self.log('val_mAP', mAP, on_step=False, on_epoch=True, prog_bar=True)
 
     def log_test_metrics(self, out, labels):
-        metrics_dict = self.test_metrics(out, labels.int())
+        metrics_dict = self.test_metrics(out, labels)
         self.log_dict(metrics_dict, on_step=False, on_epoch=True, prog_bar=True)
 
 class SingleLeaPR(BaseLeaPR):
@@ -208,7 +207,8 @@ class SingleLeaPR(BaseLeaPR):
         if self.constraint_mode == 'hard':
             return F.normalize(out * constraints, dim=1)
         elif self.constraint_mode == 'soft':
-            return F.normalize(out * (constraints**weight), dim=1)
+            return constraints
+            #return F.normalize(out * (constraints**weight), dim=1)
         else:
             raise ValueError(f'Invalid mode: {self.constraint_mode}')
 
@@ -229,5 +229,7 @@ class SingleLeaPR(BaseLeaPR):
         self.log('val_acc', acc, on_step=False, on_epoch=True, prog_bar=True)
 
     def log_test_metrics(self, out, labels):
-        metrics_dict = self.test_metrics(out, labels.int())
+        #print(out.shape, labels.shape)
+        labels = torch.argmax(labels, dim=1)
+        metrics_dict = self.test_metrics(out, labels)
         self.log_dict(metrics_dict, on_step=False, on_epoch=True, prog_bar=True)

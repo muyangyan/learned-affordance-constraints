@@ -25,8 +25,8 @@ lr: 1e-3
 
 #Testing parameters========================
 #rules
-data_split: 'val'
+data_split: 'test'
 rules_name: 'pre_rules'
 mode: 'soft'
 recall_threshold: 0.8
-constraint_weight: 20
+constraint_weight: 1
