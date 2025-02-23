@@ -10,7 +10,7 @@ from util.config_utils import load_yaml
 
 warnings.filterwarnings("ignore")
 
-from data.ag.action_genome import MultiAG
+from data.ag.action_genome import MultiAG, SingleAG
 
 
 '''
@@ -174,13 +174,13 @@ def main(config, args):
             train_pd.write_verb(verb_name, keep_prob=exp_curve(4, ratio)) 
     
     if args.val:
-        val_ag = MultiAG(root, data_folder, position=position, no_img=True, split='val')
+        val_ag = SingleAG(root, data_folder, position=position, no_img=True, split='val')
 
         val_pd = PrologData(prolog_folder, val_ag, val_ag.object_classes, val_ag.relationship_classes, val_ag.verb_classes, model=None, split='val')
         val_pd.write_bk()
 
     if args.test:
-        test_ag = MultiAG(root, data_folder, position=position, no_img=True, split='test')
+        test_ag = SingleAG(root, data_folder, position=position, no_img=True, split='test')
         
         test_pd = PrologData(prolog_folder, test_ag, test_ag.object_classes, test_ag.relationship_classes, test_ag.verb_classes, model=None, split='test')
         test_pd.write_bk()

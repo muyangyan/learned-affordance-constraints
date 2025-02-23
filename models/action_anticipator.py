@@ -207,8 +207,8 @@ class SingleLeaPR(BaseLeaPR):
         if self.constraint_mode == 'hard':
             return F.normalize(out * constraints, dim=1)
         elif self.constraint_mode == 'soft':
-            return constraints
-            #return F.normalize(out * (constraints**weight), dim=1)
+            #return constraints
+            return F.normalize(out * (constraints**weight), dim=1)
         else:
             raise ValueError(f'Invalid mode: {self.constraint_mode}')
 

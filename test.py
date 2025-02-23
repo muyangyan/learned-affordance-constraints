@@ -69,7 +69,7 @@ def test(cfg, run_name, test_run_name):
     assert cfg.data_split in ['test', 'val'], 'Invalid test split'
 
     dataset = SingleAG(cfg.data_root, cfg.data_folder, position=cfg.position, split=cfg.data_split)
-    loader = DataLoader(dataset, batch_size=16, collate_fn=dataset.verb_pred_collate, num_workers=16, shuffle=False)
+    loader = DataLoader(dataset, batch_size=128, collate_fn=dataset.verb_pred_collate, num_workers=16, shuffle=False)
 
     print(f"Dataset length: {len(dataset)}")
 
