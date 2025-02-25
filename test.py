@@ -14,7 +14,7 @@ from pytorch_lightning import Trainer
 from models.action_anticipator import BaseLeaPR, SingleLeaPR, MultiLeaPR
 
 from util.rule_utils import apply_rules
-from util.metrics import analyze_preds_ml, analyze_preds_mc
+from util.metrics import analyze_preds_ml, analyze_preds_mc, analyze_preds
 
 from util.config_utils import load_yaml
 
@@ -29,7 +29,7 @@ def test_routine(cfg, run_name, test_run_name, trainer, model, dataset, loader):
     model.preds = {'unconstrained': [], 'constrained': []}
 
     trainer.test(model, dataloaders=loader)
-    analyze_preds_mc(cfg, run_name, test_run_name, model.preds['unconstrained'], class_names=dataset.verb_classes)
+    analyze_preds(cfg, run_name, test_run_name, model.preds['unconstrained'], class_names=dataset.verb_classes)
 
     print('With constraints---------------------')
     constraints, truth_values = apply_rules(cfg.rules_name, 
@@ -46,7 +46,7 @@ def test_routine(cfg, run_name, test_run_name, trainer, model, dataset, loader):
     model.constraint_weight = cfg.constraint_weight
 
     trainer.test(model, dataloaders=loader)
-    analyze_preds_mc(cfg, run_name, test_run_name, model.preds['constrained'], class_names=dataset.verb_classes)
+    analyze_preds(cfg, run_name, test_run_name, model.preds['constrained'], class_names=dataset.verb_classes)
 
 '''
 with run folders set up, we can test the model

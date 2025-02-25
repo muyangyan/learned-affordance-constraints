@@ -4,12 +4,127 @@ from torch import Tensor
 import torch.nn.functional as F
 
 from sklearn.metrics import accuracy_score, precision_score, recall_score
-from sklearn.metrics import average_precision_score
+from sklearn.metrics import average_precision_score, top_k_accuracy_score
 from sklearn.metrics import confusion_matrix, multilabel_confusion_matrix
 
 import matplotlib.pyplot as plt
 import numpy as np
     
+def analyze_preds(cfg, run_name, test_run_name, preds, class_names=None):
+    save_folder = f'{cfg.runs_folder}/{run_name}/test_runs/{test_run_name}'
+
+    # each pred is: [output logits, label logits]
+    output_logits = preds[:, 0]
+    label_logits = preds[:, 1]
+    # Dump the predictions into a text file
+
+    with open(f'{save_folder}/preds.txt', 'w') as f:
+        for i in range(len(preds)):
+            f.write(f'Outputs-Labels:\n{np.round(output_logits[i], 2)}\n{np.round(label_logits[i], 2)}\n')
+
+
+    threshold = 0.5
+    # Convert logits to binary predictions using a threshold (e.g., 0.5)
+    pred_labels = np.argmax(output_logits, axis=1)
+    true_labels = np.argmax(label_logits, axis=1)
+
+    # Calculate metrics using sklearn for multilabel classification
+    acc = accuracy_score(true_labels, pred_labels)
+    top3_acc = top_k_accuracy_score(true_labels, output_logits, k=3)
+    top5_acc = top_k_accuracy_score(true_labels, output_logits, k=5)
+    macro_precision = precision_score(true_labels, pred_labels, average='macro', zero_division=1)
+    macro_recall = recall_score(true_labels, pred_labels, average='macro', zero_division=1)
+    micro_precision = precision_score(true_labels, pred_labels, average='micro', zero_division=1)
+    micro_recall = recall_score(true_labels, pred_labels, average='micro', zero_division=1)
+    average_precision = average_precision_score(true_labels, output_logits, average='macro')
+
+    print('SKLEARN METRICS')
+    print(f'Accuracy: {acc}')
+    print(f'Top-3 Accuracy: {top3_acc}')
+    print(f'Top-5 Accuracy: {top5_acc}')
+    print(f'Macro Precision: {macro_precision}')
+    print(f'Macro Recall: {macro_recall}')
+    print(f'Micro Precision: {micro_precision}')
+    print(f'Micro Recall: {micro_recall}')
+    print(f'Mean Average Precision: {average_precision}')
+
+    def plot_distribution_of_predictions_and_labels(pred_labels, true_labels, class_names, save_folder):
+        plt.figure(figsize=(15, 8))
+        num_classes = output_logits.shape[1]
+        width = 0.2
+        x = np.arange(num_classes)
+
+        pred_counts = pred_labels.sum(axis=0)
+        true_counts = true_labels.sum(axis=0)
+
+        plt.bar(x - width/2, pred_counts, width, label='Predicted', alpha=0.7)
+        plt.bar(x + width/2, true_counts, width, label='True', alpha=0.7)
+
+        plt.xlabel('Action Class')
+        plt.ylabel('Count')
+        plt.title('Distribution of Predictions and Labels by Action Class')
+        plt.legend()
+        if class_names is not None:
+            plt.xticks(x, class_names, rotation=45, ha='right')
+        else:
+            plt.xticks(x)
+        plt.tight_layout()
+        plt.savefig(f'{save_folder}/pred_dist.png')
+        plt.close()
+
+    def plot_per_class_precision_and_recall(true_labels, pred_labels, class_names, save_folder):
+        per_class_precision = precision_score(true_labels, pred_labels, average=None)
+        per_class_recall = recall_score(true_labels, pred_labels, average=None)
+
+        fig, ax = plt.subplots(figsize=(12, 8))
+        width = 0.2
+        x = np.arange(true_labels.shape[1])
+
+        ax.bar(x - width/2, per_class_precision, width, label='Precision')
+        ax.bar(x + width/2, per_class_recall, width, label='Recall')
+
+        ax.set_xlabel('Class')
+        ax.set_ylabel('Scores')
+        ax.set_title('Per-class Precision and Recall')
+        ax.set_xticks(x)
+        if class_names is not None:
+            ax.set_xticklabels(class_names, rotation=45, ha='right')
+        else:
+            ax.set_xticklabels(x)
+        ax.legend()
+
+        fig.tight_layout()
+        plt.savefig(f'{save_folder}/per_class_metrics.png')
+        plt.close()
+
+    def plot_confusion_matrix(true_labels, pred_labels, class_names, save_folder):
+        conf_matrix = confusion_matrix(true_labels.argmax(axis=1), pred_labels.argmax(axis=1))
+        
+        fig, ax = plt.subplots(figsize=(10, 8))
+        im = ax.imshow(conf_matrix, interpolation='nearest', cmap=plt.cm.Blues)
+        ax.set_title('Confusion Matrix for All Classes')
+        ax.set_ylabel('True label')
+        ax.set_xlabel('Predicted label')
+        tick_marks = np.arange(conf_matrix.shape[0])
+        ax.set_xticks(tick_marks)
+        ax.set_yticks(tick_marks)
+        if class_names is not None:
+            ax.set_xticklabels(class_names, rotation=45, ha='right')
+            ax.set_yticklabels(class_names)
+        else:
+            ax.set_xticklabels(tick_marks)
+            ax.set_yticklabels(tick_marks)
+        fig.colorbar(im, ax=ax)
+        
+        plt.tight_layout()
+        plt.savefig(f'{save_folder}/confusion_matrix.png')
+        plt.close()
+
+    # Call the modularized functions
+    #plot_distribution_of_predictions_and_labels(pred_labels, true_labels, class_names, save_folder)
+    #plot_per_class_precision_and_recall(true_labels, pred_labels, class_names, save_folder)
+    #plot_confusion_matrix(true_labels, pred_labels, class_names, save_folder)
+
 #multilabel
 def analyze_preds_ml(cfg, run_name, test_run_name, preds, class_names=None):
     save_folder = f'{cfg.runs_folder}/{run_name}/test_runs/{test_run_name}'
