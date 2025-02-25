@@ -30,10 +30,15 @@ def init_model_train(cfg, train_set):
     rgcn_hidden_dim, vit_hidden_dim = 32, 32
     rgcn_params = (num_obj_classes, node_feature_size, rgcn_hidden_dim, num_rel_classes)
     model_params = (rgcn_params, vit_hidden_dim, num_verb_classes)
+
+    freq = train_set.verb_priors
+    #add 1 to each frequency to smooth, and avoid division by zero
+    freq = freq + 1
+
     if cfg.weight_scheme == 'inverse':
-        weight = len(train_set) / (num_verb_classes * train_set.verb_priors)
+        weight = len(train_set) / (num_verb_classes * freq)
     elif cfg.weight_scheme == 'invsqrt':
-        weight = len(train_set) / (num_verb_classes * np.sqrt(train_set.verb_priors))
+        weight = len(train_set) / (num_verb_classes * np.sqrt(freq))
     elif cfg.weight_scheme == 'uniform':
         weight = torch.ones(num_verb_classes)
     else:
@@ -60,9 +65,7 @@ def train(cfg, run_name):
 
     if cfg.position == 'both':
         AG = SingleBothAG
-    elif cfg.position == 'pre':
-        AG = SingleAG
-    elif cfg.position == 'post':
+    elif cfg.position == 'pre' or cfg.position == 'post':
         AG = SingleAG
     else:
         raise ValueError(f'Invalid position: {cfg.position}')
@@ -71,6 +74,8 @@ def train(cfg, run_name):
 
     train_set = PartialAG(split='train')
     val_set = PartialAG(split='val')
+    print('train set length:', len(train_set))
+    print('val set length:', len(val_set))
 
     train_loader = DataLoader(train_set, batch_size=cfg.batch_size, collate_fn=train_set.verb_pred_collate, num_workers=16, shuffle=True)
     val_loader = DataLoader(val_set, batch_size=128, collate_fn=val_set.verb_pred_collate, num_workers=16, shuffle=False)

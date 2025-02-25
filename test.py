@@ -26,8 +26,10 @@ def test_routine(cfg, run_name, test_run_name, trainer, model, dataset, loader):
     dataset.truth_values = None
     model.constraint_mode = None
     model.constraint_weight = 1
+    model.preds = {'unconstrained': [], 'constrained': []}
 
     trainer.test(model, dataloaders=loader)
+    analyze_preds_ml(cfg, run_name, test_run_name, model.preds['unconstrained'], class_names=dataset.verb_classes)
 
     print('With constraints---------------------')
     constraints, truth_values = apply_rules(cfg.rules_name, 
@@ -43,9 +45,8 @@ def test_routine(cfg, run_name, test_run_name, trainer, model, dataset, loader):
     model.constraint_mode = cfg.mode
     model.constraint_weight = cfg.constraint_weight
 
-    model.preds = []
     trainer.test(model, dataloaders=loader)
-    analyze_preds_ml(cfg, run_name, test_run_name, model.preds, class_names=dataset.verb_classes)
+    analyze_preds_ml(cfg, run_name, test_run_name, model.preds['constrained'], class_names=dataset.verb_classes)
 
 '''
 with run folders set up, we can test the model

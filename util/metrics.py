@@ -30,10 +30,10 @@ def analyze_preds_ml(cfg, run_name, test_run_name, preds, class_names=None):
 
     # Calculate metrics using sklearn for multilabel classification
     acc = accuracy_score(true_labels, pred_labels)
-    macro_precision = precision_score(true_labels, pred_labels, average='macro', zero_division=0)
-    macro_recall = recall_score(true_labels, pred_labels, average='macro', zero_division=0)
-    micro_precision = precision_score(true_labels, pred_labels, average='micro', zero_division=0)
-    micro_recall = recall_score(true_labels, pred_labels, average='micro', zero_division=0)
+    macro_precision = precision_score(true_labels, pred_labels, average='macro', zero_division=1)
+    macro_recall = recall_score(true_labels, pred_labels, average='macro', zero_division=1)
+    micro_precision = precision_score(true_labels, pred_labels, average='micro', zero_division=1)
+    micro_recall = recall_score(true_labels, pred_labels, average='micro', zero_division=1)
 
     print('SKLEARN METRICS')
     print(f'Accuracy: {acc}')

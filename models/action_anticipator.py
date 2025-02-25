@@ -76,15 +76,17 @@ class BaseLeaPR(L.LightningModule):
 
         # debug, metrics and logging
         self.ids.extend(ids)
+        key = 'constrained' if constraints is not None else 'unconstrained'
         if self.preds is not None:
-            self.preds.append(torch.stack([out, labels], dim=1).cpu())
+            self.preds[key].append(torch.stack([out, labels], dim=1).cpu())
 
         self.log_test_metrics(out, labels)
 
     def on_test_epoch_end(self):
+        key = 'constrained' if self.constraint_mode is not None else 'unconstrained'
         if self.preds is not None:
-            self.preds = torch.vstack(self.preds)
-            self.preds = self.preds.cpu().numpy()
+            self.preds[key] = torch.vstack(self.preds[key])
+            self.preds[key] = self.preds[key].cpu().numpy()
 
     def predict_step(self, batch, batch_idx):
         ids, imgs, sgs, labels, constraints, truth_values = batch

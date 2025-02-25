@@ -75,10 +75,14 @@ def generate_subset(pre_ag, post_ag, output_csv_path):
             total_invalid += 1
 
         # Update the post status in the dataframe
+        found = False
         for entry in frame_validity_data:
             if entry['id'] == id:
                 entry['post'] = post_status
+                found = True
                 break
+        if not found:
+            frame_validity_data.append({'id': id, 'pre': True, 'post': post_status})
 
     # Convert the list of dictionaries to a DataFrame
     frame_validity_df = pd.DataFrame(frame_validity_data)

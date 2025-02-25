@@ -23,3 +23,5 @@ class ViT(nn.Module):
         if self.head:
             return F.softmax(x, dim=-1)
         return x
+
+

@@ -23,17 +23,29 @@ def apply_subset(row, frame_validity_df, position):
 
     if position == 'pre':
         pre_id = get_id(row['vid'], row['pre_frame'])
-        valid_pre = frame_validity_df.loc[frame_validity_df['id'] == pre_id, 'pre'].values[0]
+        selection = frame_validity_df.loc[frame_validity_df['id'] == pre_id, 'pre']
+        if selection.empty:
+            print(f'pre_id: {pre_id}')
+            return False
+        valid_pre = selection.values[0]
         return valid_pre
     elif position == 'post':
         post_id = get_id(row['vid'], row['post_frame'])
-        valid_post = frame_validity_df.loc[frame_validity_df['id'] == post_id, 'post'].values[0]
+        selection = frame_validity_df.loc[frame_validity_df['id'] == post_id, 'post']
+        if selection.empty:
+            print(f'post_id: {post_id}')
+            return False
+        valid_post = selection.values[0]
         return valid_post
     elif position == 'both':
         pre_id = get_id(row['vid'], row['pre_frame'])
         post_id = get_id(row['vid'], row['post_frame'])
-        valid_pre = frame_validity_df.loc[frame_validity_df['id'] == pre_id, 'pre'].values[0]
-        valid_post = frame_validity_df.loc[frame_validity_df['id'] == post_id, 'post'].values[0]
+        selection_pre = frame_validity_df.loc[frame_validity_df['id'] == pre_id, 'pre']
+        selection_post = frame_validity_df.loc[frame_validity_df['id'] == post_id, 'post']
+        if selection_pre.empty or selection_post.empty:
+            return False
+        valid_pre = selection_pre.values[0]
+        valid_post = selection_post.values[0]
         return valid_pre and valid_post
 
 def clean_df(df, split_ids, action_map):

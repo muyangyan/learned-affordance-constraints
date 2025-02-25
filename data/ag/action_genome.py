@@ -164,23 +164,35 @@ class ActionGenome(Dataset):
         pass
 
     def init_priors(self, verb_prior_file, single_df, length):
-
         if self.split == 'train' or self.split == None:
-            #expand actions into verb, nouns. used only for priors.
+            # Expand actions into verb, nouns. Used only for priors.
             single_df['verb'] = single_df['action'].apply(lambda x: self.action_verb_obj_map[x][0])
             single_df['noun'] = single_df['action'].apply(lambda x: self.action_verb_obj_map[x][1])
             verb_counts = dict(sorted(single_df['verb'].value_counts().to_dict().items()))
+            for i in range(len(self.verb_classes)):
+                if i not in verb_counts:
+                    verb_counts[i] = 0
             self.verb_priors = [verb_counts[verb]/length for verb in verb_counts]
-            if self.split == 'train':
-                with open(verb_prior_file, 'w') as f:
-                    prior_dict = {'verbs': self.verb_classes, 'priors': list(self.verb_priors)}
-                    json.dump(prior_dict, f)
             self.verb_priors = np.array(self.verb_priors)
+
+            if self.split == 'train':
+                # Read existing prior file and update it
+                with open(verb_prior_file, 'r') as f:
+                    prior_dict = json.load(f)
+                
+                # Determine the key based on position
+                position_key = self.position
+                prior_dict[position_key] = {'verbs': self.verb_classes, 'priors': list(self.verb_priors)}
+
+                # Write updated priors back to the file
+                with open(verb_prior_file, 'w') as f:
+                    json.dump(prior_dict, f)
         else:
             with open(verb_prior_file, 'r') as f:
                 prior_dict = json.load(f)
-                self.verb_priors = np.array(prior_dict['priors'])
-
+                # Determine the key based on position
+                position_key = self.position
+                self.verb_priors = np.array(prior_dict.get(position_key, {}).get('priors', []))
     def init_vocab(self, verb_whitelist_file):
 
         self.verb_whitelist = load_verb_whitelist(verb_whitelist_file)
