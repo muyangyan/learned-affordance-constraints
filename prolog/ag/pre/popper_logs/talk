@@ -60,21 +60,13 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
-body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-05:17:29 Generating programs of size: 2
-05:17:29 Generating programs of size: 3
-05:17:30 ********************
-05:17:30 New best hypothesis:
-05:17:30 tp:19 fn:1 tn:95 fp:3 size:3 mdl:7
-05:17:30 talk_target(A):- holding(A,B),phone_camera(B).
-05:17:30 ********************
-05:17:33 Generating programs of size: 4
-05:20:55 Generating programs of size: 5
-06:58:57 TIMEOUT OF 6000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.86 Recall:0.95 TP:19 FN:1 TN:95 FP:3 Size:3 MDL:7
-talk_target(A):- holding(A,B),phone_camera(B).
-******************************
+01:45:01 Generating programs of size: 2
+01:45:01 Generating programs of size: 3
+01:45:02 Generating programs of size: 4
+01:45:07 Generating programs of size: 5
+01:45:11 Generating programs of size: 6
+01:45:14 Generating programs of size: 7
+NO SOLUTION

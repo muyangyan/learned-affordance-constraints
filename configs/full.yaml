@@ -8,7 +8,8 @@ runs_folder: "runs/"
 
 #data parameters
 train_split_ratio: 0.6
-position: 'post'
+position: 'pre'
+num_samples: -1
 
 #ILP
 ilp_timeout: 6000
@@ -20,13 +21,13 @@ model_type: 'joint' # joint, rgcn, vit
 weight_scheme: 'inverse' # uniform, inverse, invsqrt
 epochs: 30
 batch_size: 16
-devices: [0,1,2,3]
+devices: [0, 1, 2, 3]
 lr: 1e-3
 
 #Testing parameters========================
 #rules
 data_split: 'val'
-rules_name: 'post_rules'
+rules_name: '8693_full'
 mode: 'soft'
 recall_threshold: 0.8
 constraint_weight: 20

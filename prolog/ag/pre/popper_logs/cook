@@ -60,35 +60,13 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
-body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-05:17:29 Generating programs of size: 2
-05:17:29 Generating programs of size: 3
-05:17:30 ********************
-05:17:30 New best hypothesis:
-05:17:30 tp:4 fn:57 tn:238 fp:0 size:3 mdl:60
-05:17:30 cook_target(A):- other_relationship(A,B),food(B).
-05:17:30 ********************
-05:17:30 ********************
-05:17:30 New best hypothesis:
-05:17:30 tp:54 fn:7 tn:207 fp:31 size:3 mdl:41
-05:17:30 cook_target(A):- in_front_of(B,A),food(B).
-05:17:30 ********************
-05:17:32 Generating programs of size: 4
-05:17:34 ********************
-05:17:34 New best hypothesis:
-05:17:34 tp:56 fn:5 tn:218 fp:20 size:9 mdl:34
-05:17:34 cook_target(A):- looking_at(A,B),food(B).
-05:17:34 cook_target(A):- unsure(A,B),food(B).
-05:17:34 cook_target(A):- not_contacting(A,B),food(B).
-05:17:34 ********************
-05:21:23 Generating programs of size: 5
-07:47:38 TIMEOUT OF 6000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.74 Recall:0.92 TP:56 FN:5 TN:218 FP:20 Size:9 MDL:34
-cook_target(A):- looking_at(A,B),food(B).
-cook_target(A):- unsure(A,B),food(B).
-cook_target(A):- not_contacting(A,B),food(B).
-******************************
+01:45:01 Generating programs of size: 2
+01:45:01 Generating programs of size: 3
+01:45:03 Generating programs of size: 4
+01:46:14 Generating programs of size: 5
+01:47:55 Generating programs of size: 6
+01:50:03 Generating programs of size: 7
+NO SOLUTION

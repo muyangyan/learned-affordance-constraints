@@ -19,7 +19,7 @@ import subprocess
 
 
 def create_run_directories(cfg, args):
-    run_name = randomname.get_name()
+    run_name = args.config.split('/')[-1].split('.')[0] + '_' + randomname.get_name()
     run_folder = f'{cfg.runs_folder}/{run_name}'
     
     os.makedirs(run_folder, exist_ok=False)

@@ -138,14 +138,15 @@ class PrologData:
         with open(self.general_bk_filename, 'w+') as f:
             f.write(':- style_check(-discontiguous).\n')
 
-    def init_general_bias(self):
+    def init_general_bias(self, forbidden_nodes, forbidden_edges):
         with open(self.general_bias_filename, 'w+') as f:
             for node in self.node_vocab:
-                f.write(f'body_pred({node}, 1).\n')
+                if node not in forbidden_nodes:
+                    f.write(f'body_pred({node}, 1).\n')
             for edge in self.edge_vocab:
                 #disallow use of attentional relationships
-                #if edge not in ['looking_at', 'not_looking_at', 'unsure']:
-                f.write(f'body_pred({edge}, 2).\n')
+                if edge not in forbidden_edges:
+                    f.write(f'body_pred({edge}, 2).\n')
 
 
 def exp_curve(b,x):
@@ -159,13 +160,13 @@ def main(config, args):
     position = config.position
 
     if args.train:
-        train_ag = MultiAG(root, data_folder, position=position, no_img=True, split='train')
+        train_ag = MultiAG(root, data_folder, position=position, no_img=True, split='train', num_samples=config.num_samples)
 
         train_pd = PrologData(prolog_folder, train_ag, train_ag.object_classes, train_ag.relationship_classes, train_ag.verb_classes, model=None, split='train')
 
         train_pd.init_general_bk()
         train_pd.write_bk()
-        train_pd.init_general_bias()
+        train_pd.init_general_bias(config.forbidden_nodes, config.forbidden_edges)
 
         for verb_idx, verb_name in enumerate(train_ag.verb_classes):
             ratio = train_ag.verb_priors[verb_idx]

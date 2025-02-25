@@ -60,13 +60,13 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
-body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-05:17:29 Generating programs of size: 2
-05:17:29 Generating programs of size: 3
-05:17:35 Generating programs of size: 4
-05:37:18 Generating programs of size: 5
-07:43:58 TIMEOUT OF 6000 SECONDS EXCEEDED
+01:45:01 Generating programs of size: 2
+01:45:01 Generating programs of size: 3
+01:45:03 Generating programs of size: 4
+01:45:46 Generating programs of size: 5
+01:58:55 Generating programs of size: 6
+02:00:30 Generating programs of size: 7
 NO SOLUTION

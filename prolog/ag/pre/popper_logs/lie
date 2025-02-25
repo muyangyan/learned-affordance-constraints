@@ -60,40 +60,13 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
-body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-05:17:29 Generating programs of size: 2
-05:17:29 Generating programs of size: 3
-05:17:30 ********************
-05:17:30 New best hypothesis:
-05:17:30 tp:6 fn:41 tn:209 fp:2 size:3 mdl:46
-05:17:30 lie_target(A):- leaning_on(A,B),on_the_side_of(B,A).
-05:17:30 ********************
-05:17:30 ********************
-05:17:30 New best hypothesis:
-05:17:30 tp:13 fn:34 tn:206 fp:5 size:3 mdl:42
-05:17:30 lie_target(A):- beneath(B,A),standing_on(A,B).
-05:17:30 ********************
-05:17:30 ********************
-05:17:30 New best hypothesis:
-05:17:30 tp:14 fn:33 tn:206 fp:5 size:3 mdl:41
-05:17:30 lie_target(A):- floor(B),standing_on(A,B).
-05:17:30 ********************
-05:17:35 Generating programs of size: 4
-05:17:37 ********************
-05:17:37 New best hypothesis:
-05:17:37 tp:25 fn:22 tn:203 fp:8 size:9 mdl:39
-05:17:37 lie_target(A):- leaning_on(A,B),on_the_side_of(B,A).
-05:17:37 lie_target(A):- floor(B),standing_on(A,B).
-05:17:37 lie_target(A):- other_relationship(A,B),bed(B).
-05:17:37 ********************
-05:28:55 Generating programs of size: 5
-06:57:44 TIMEOUT OF 6000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.76 Recall:0.53 TP:25 FN:22 TN:203 FP:8 Size:9 MDL:39
-lie_target(A):- leaning_on(A,B),on_the_side_of(B,A).
-lie_target(A):- floor(B),standing_on(A,B).
-lie_target(A):- other_relationship(A,B),bed(B).
-******************************
+01:45:01 Generating programs of size: 2
+01:45:01 Generating programs of size: 3
+01:45:07 Generating programs of size: 4
+01:46:00 Generating programs of size: 5
+01:49:28 Generating programs of size: 6
+01:55:22 Generating programs of size: 7
+NO SOLUTION

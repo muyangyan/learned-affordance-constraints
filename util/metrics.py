@@ -4,6 +4,7 @@ from torch import Tensor
 import torch.nn.functional as F
 
 from sklearn.metrics import accuracy_score, precision_score, recall_score
+from sklearn.metrics import average_precision_score
 from sklearn.metrics import confusion_matrix, multilabel_confusion_matrix
 
 import matplotlib.pyplot as plt

@@ -60,57 +60,15 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
-body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-05:17:29 Generating programs of size: 2
-05:17:29 Generating programs of size: 3
-05:17:29 ********************
-05:17:29 New best hypothesis:
-05:17:29 tp:30 fn:242 tn:1069 fp:24 size:3 mdl:269
-05:17:29 tidy_target(A):- holding(A,B),broom(B).
-05:17:29 ********************
-05:17:30 ********************
-05:17:30 New best hypothesis:
-05:17:30 tp:24 fn:248 tn:1077 fp:16 size:3 mdl:267
-05:17:30 tidy_target(A):- looking_at(A,B),standing_on(A,B).
-05:17:30 ********************
-05:17:30 ********************
-05:17:30 New best hypothesis:
-05:17:30 tp:25 fn:247 tn:1081 fp:12 size:3 mdl:262
-05:17:30 tidy_target(A):- towel(B),looking_at(A,B).
-05:17:30 ********************
-05:17:30 ********************
-05:17:30 New best hypothesis:
-05:17:30 tp:30 fn:242 tn:1086 fp:7 size:3 mdl:252
-05:17:30 tidy_target(A):- standing_on(A,B),unsure(A,B).
-05:17:30 ********************
-05:17:30 ********************
-05:17:30 New best hypothesis:
-05:17:30 tp:68 fn:204 tn:1057 fp:36 size:3 mdl:243
-05:17:30 tidy_target(A):- beneath(B,A),standing_on(A,B).
-05:17:30 ********************
-05:17:30 ********************
-05:17:30 New best hypothesis:
-05:17:30 tp:68 fn:204 tn:1058 fp:35 size:3 mdl:242
-05:17:30 tidy_target(A):- floor(B),standing_on(A,B).
-05:17:30 ********************
-05:17:36 Generating programs of size: 4
-05:17:46 ********************
-05:17:46 New best hypothesis:
-05:17:46 tp:138 fn:134 tn:1018 fp:75 size:12 mdl:221
-05:17:46 tidy_target(A):- towel(B),looking_at(A,B).
-05:17:46 tidy_target(A):- not_looking_at(A,B),shelf(B).
-05:17:46 tidy_target(A):- not_looking_at(A,B),broom(B).
-05:17:46 tidy_target(A):- floor(B),standing_on(A,B).
-05:17:46 ********************
-05:48:38 Generating programs of size: 5
-06:57:35 TIMEOUT OF 6000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.65 Recall:0.51 TP:138 FN:134 TN:1018 FP:75 Size:12 MDL:221
-tidy_target(A):- towel(B),looking_at(A,B).
-tidy_target(A):- not_looking_at(A,B),shelf(B).
-tidy_target(A):- not_looking_at(A,B),broom(B).
-tidy_target(A):- floor(B),standing_on(A,B).
-******************************
+01:45:01 Generating programs of size: 2
+01:45:01 ********************
+01:45:01 New best hypothesis:
+01:45:01 tp:40 fn:0 tn:0 fp:12 size:2 mdl:14
+01:45:01 tidy_target(A):- person(A).
+01:45:01 ********************
+01:45:01 Generating programs of size: 3
+01:45:13 Generating programs of size: 4
+01:48:33 Generating programs of size: 5

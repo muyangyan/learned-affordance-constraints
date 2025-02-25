@@ -60,75 +60,15 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
-body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-05:17:29 Generating programs of size: 2
-05:17:29 Generating programs of size: 3
-05:17:30 ********************
-05:17:30 New best hypothesis:
-05:17:30 tp:7 fn:602 tn:2026 fp:3 size:3 mdl:608
-05:17:30 open_target(A):- refrigerator(B),holding(A,B).
-05:17:30 ********************
-05:17:30 ********************
-05:17:30 New best hypothesis:
-05:17:30 tp:15 fn:594 tn:2021 fp:8 size:3 mdl:605
-05:17:30 open_target(A):- door(B),holding(A,B).
-05:17:30 ********************
-05:17:30 ********************
-05:17:30 New best hypothesis:
-05:17:30 tp:65 fn:544 tn:1988 fp:41 size:3 mdl:588
-05:17:30 open_target(A):- closet_cabinet(B),not_looking_at(A,B).
-05:17:30 ********************
-05:17:31 ********************
-05:17:31 New best hypothesis:
-05:17:31 tp:77 fn:532 tn:2005 fp:24 size:3 mdl:559
-05:17:31 open_target(A):- looking_at(A,B),door(B).
-05:17:31 ********************
-05:17:32 ********************
-05:17:32 New best hypothesis:
-05:17:32 tp:140 fn:469 tn:1957 fp:72 size:3 mdl:544
-05:17:32 open_target(A):- door(B),not_contacting(A,B).
-05:17:32 ********************
-05:17:32 ********************
-05:17:32 New best hypothesis:
-05:17:32 tp:114 fn:495 tn:1984 fp:45 size:3 mdl:543
-05:17:32 open_target(A):- door(B),in_front_of(B,A).
-05:17:32 ********************
-05:17:36 Generating programs of size: 4
-05:17:46 ********************
-05:17:46 New best hypothesis:
-05:17:46 tp:372 fn:237 tn:1795 fp:234 size:18 mdl:489
-05:17:46 open_target(A):- looking_at(A,B),door(B).
-05:17:46 open_target(A):- looking_at(A,B),bag(B).
-05:17:46 open_target(A):- box(B),touching(A,B).
-05:17:46 open_target(A):- not_contacting(A,B),closet_cabinet(B).
-05:17:46 open_target(A):- door(B),not_contacting(A,B).
-05:17:46 open_target(A):- refrigerator(B),not_contacting(A,B).
-05:17:46 ********************
-05:58:06 Generating programs of size: 5
-05:58:16 ********************
-05:58:16 New best hypothesis:
-05:58:16 tp:367 fn:242 tn:1810 fp:219 size:27 mdl:488
-05:58:16 open_target(A):- looking_at(A,B),door(B).
-05:58:16 open_target(A):- looking_at(A,B),bag(B).
-05:58:16 open_target(A):- box(B),touching(A,B).
-05:58:16 open_target(A):- not_contacting(A,B),closet_cabinet(B).
-05:58:16 open_target(A):- refrigerator(B),not_contacting(A,B).
-05:58:16 open_target(A):- door(B),holding(A,B),not_looking_at(A,B).
-05:58:16 open_target(A):- door(B),not_contacting(A,B),in_front_of(B,A).
-05:58:16 open_target(A):- on_the_side_of(B,A),door(B),not_contacting(A,B).
-05:58:16 ********************
-06:57:39 TIMEOUT OF 6000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.63 Recall:0.60 TP:367 FN:242 TN:1810 FP:219 Size:27 MDL:488
-open_target(A):- looking_at(A,B),door(B).
-open_target(A):- looking_at(A,B),bag(B).
-open_target(A):- box(B),touching(A,B).
-open_target(A):- not_contacting(A,B),closet_cabinet(B).
-open_target(A):- refrigerator(B),not_contacting(A,B).
-open_target(A):- door(B),holding(A,B),not_looking_at(A,B).
-open_target(A):- door(B),not_contacting(A,B),in_front_of(B,A).
-open_target(A):- on_the_side_of(B,A),door(B),not_contacting(A,B).
-******************************
+01:45:01 Generating programs of size: 2
+01:45:01 ********************
+01:45:01 New best hypothesis:
+01:45:01 tp:84 fn:0 tn:0 fp:26 size:2 mdl:28
+01:45:01 open_target(A):- person(A).
+01:45:01 ********************
+01:45:01 Generating programs of size: 3
+01:45:08 Generating programs of size: 4
+01:49:22 Generating programs of size: 5

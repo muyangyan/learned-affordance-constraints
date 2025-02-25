@@ -60,14 +60,22 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
-body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-05:17:29 Generating programs of size: 2
-05:17:29 Generating programs of size: 3
-05:17:31 Generating programs of size: 4
-05:17:58 Generating programs of size: 5
-05:18:14 Generating programs of size: 6
-05:18:22 Generating programs of size: 7
-NO SOLUTION
+Traceback (most recent call last):
+  File "/home/muyang/Popper/popper.py", line 8, in <module>
+    prog, score, stats = learn_solution(settings)
+  File "/home/muyang/Popper/popper/loop.py", line 1090, in learn_solution
+    timeout(settings, popper, (settings,), timeout_duration=int(settings.timeout),)
+  File "/home/muyang/Popper/popper/util.py", line 88, in timeout
+    result = func(*args, **kwargs)
+  File "/home/muyang/Popper/popper/loop.py", line 516, in popper
+    tester = Tester(settings)
+  File "/home/muyang/Popper/popper/tester.py", line 42, in __init__
+    self.pos_index = self.query('findall(K,pos_index(K,Atom),Xs)', 'Xs')
+  File "/home/muyang/Popper/popper/tester.py", line 20, in query
+    result = next(self.prolog.query(query))[key]
+  File "/home/muyang/miniconda3/envs/ilp/lib/python3.9/site-packages/pyswip/prolog.py", line 171, in __call__
+    raise PrologError(
+pyswip.prolog.PrologError: Caused by: 'findall(K,pos_index(K,Atom),Xs)'. Returned: 'error(existence_error(procedure, /(pos_index, 2)), context(:($bags, /(findall_loop, 4)), _8310))'.

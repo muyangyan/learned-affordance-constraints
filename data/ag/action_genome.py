@@ -22,7 +22,7 @@ from util.data_utils import get_id, extract_usable_frames, clean_df, load_verb_w
 
 class ActionGenome(Dataset):
 
-    def __init__(self, root, meta_root, position='both', label_mode='single', no_img=False, subset=True, split=None, threshold=1):
+    def __init__(self, root, meta_root, position='both', label_mode='single', no_img=False, num_samples=None, subset=True, split=None, threshold=1):
         assert position in ['pre', 'post', 'both']
         assert label_mode in ['single', 'multi']
         assert not (position == 'both' and label_mode == 'multi')
@@ -80,7 +80,15 @@ class ActionGenome(Dataset):
             final_df = usable_df
 
         #up until here each row is a single action
-        single_df = final_df
+        # FOR SAMPLE EFFICIENCY EXPERIMENTS
+        if num_samples is not None and num_samples > 0:
+            with open(os.path.join(meta_root, 'randomized_idxs.json'), 'r') as f:
+                randomized_idxs = json.load(f)
+            single_df = final_df.iloc[randomized_idxs[:num_samples]]
+            print(f'Using {len(single_df)} samples')
+        else:
+            single_df = final_df
+            print(f'Using all {len(final_df)} samples')
 
         #differentiate between single and multi-label
         if label_mode == 'single':
@@ -307,8 +315,8 @@ class ActionGenome(Dataset):
 
 class SingleBothAG(ActionGenome):
 
-    def __init__(self, root, meta_root, no_img=False, subset=True, split=None):
-        super().__init__(root, meta_root, position='both', label_mode='single', no_img=no_img, subset=subset, split=split)
+    def __init__(self, root, meta_root, no_img=False, subset=True, split=None, num_samples=None):
+        super().__init__(root, meta_root, position='both', label_mode='single', no_img=no_img, subset=subset, split=split, num_samples=num_samples)
 
     def create_labels(self, action_classes):
         #in this case action_classes is a single action
@@ -384,8 +392,8 @@ class SingleAG(ActionGenome):
     determines whether we use the start or end of the action as the frame. in other words, are we anticipating the next action or inferring the previous/causal action?
     '''
     
-    def __init__(self, root, meta_root, position='pre', no_img=False, subset=True, split=None):
-        super().__init__(root, meta_root, position, label_mode='single', no_img=no_img, subset=subset, split=split)
+    def __init__(self, root, meta_root, position='pre', no_img=False, subset=True, split=None, num_samples=None):
+        super().__init__(root, meta_root, position, label_mode='single', no_img=no_img, subset=subset, split=split, num_samples=num_samples)
 
     def create_labels(self, action_classes):
         #in this case action_classes is a single action
@@ -446,8 +454,8 @@ class MultiAG(ActionGenome):
     determines whether we use the start or end of the action as the frame. in other words, are we anticipating the next action or inferring the previous/causal action?
     '''
     
-    def __init__(self, root, meta_root, position='pre', no_img=False, subset=True, split=None):
-        super().__init__(root, meta_root, position, label_mode='multi', no_img=no_img, subset=subset, split=split)
+    def __init__(self, root, meta_root, position='pre', no_img=False, subset=True, split=None, num_samples=None):
+        super().__init__(root, meta_root, position, label_mode='multi', no_img=no_img, subset=subset, split=split, num_samples=num_samples)
 
     def create_labels(self, action_classes):
         verb_classes, obj_classes = zip(*[self.action_verb_obj_map[action_class] for action_class in action_classes])

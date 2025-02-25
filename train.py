@@ -72,7 +72,7 @@ def train(cfg, run_name):
 
     PartialAG = partial(AG, root=cfg.data_root, meta_root=cfg.data_folder, position=cfg.position)
 
-    train_set = PartialAG(split='train')
+    train_set = PartialAG(split='train', num_samples=cfg.num_samples)
     val_set = PartialAG(split='val')
     print('train set length:', len(train_set))
     print('val set length:', len(val_set))

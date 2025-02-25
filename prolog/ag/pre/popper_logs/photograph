@@ -60,26 +60,13 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
-body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-05:17:29 Generating programs of size: 2
-05:17:29 Generating programs of size: 3
-05:17:30 ********************
-05:17:30 New best hypothesis:
-05:17:30 tp:41 fn:2 tn:160 fp:11 size:3 mdl:16
-05:17:30 photograph_target(A):- holding(A,B),phone_camera(B).
-05:17:30 ********************
-05:17:30 ********************
-05:17:30 New best hypothesis:
-05:17:30 tp:42 fn:1 tn:162 fp:9 size:3 mdl:13
-05:17:30 photograph_target(A):- in_front_of(B,A),phone_camera(B).
-05:17:30 ********************
-05:17:34 Generating programs of size: 4
-05:23:48 Generating programs of size: 5
-10:23:03 TIMEOUT OF 6000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.82 Recall:0.98 TP:42 FN:1 TN:162 FP:9 Size:3 MDL:13
-photograph_target(A):- in_front_of(B,A),phone_camera(B).
-******************************
+01:45:01 Generating programs of size: 2
+01:45:01 Generating programs of size: 3
+01:45:03 Generating programs of size: 4
+01:45:57 Generating programs of size: 5
+01:47:22 Generating programs of size: 6
+01:47:54 Generating programs of size: 7
+NO SOLUTION

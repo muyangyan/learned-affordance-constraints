@@ -60,45 +60,10 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
-body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-05:17:29 Generating programs of size: 2
-05:17:29 Generating programs of size: 3
-05:17:30 ********************
-05:17:30 New best hypothesis:
-05:17:30 tp:19 fn:590 tn:1874 fp:8 size:3 mdl:601
-05:17:30 stand_target(A):- in_front_of(B,A),wearing(A,B).
-05:17:30 ********************
-05:17:31 ********************
-05:17:31 New best hypothesis:
-05:17:31 tp:300 fn:309 tn:1594 fp:288 size:3 mdl:600
-05:17:31 stand_target(A):- sitting_on(A,B),beneath(B,A).
-05:17:31 ********************
-05:17:38 Generating programs of size: 4
-05:17:48 ********************
-05:17:48 New best hypothesis:
-05:17:48 tp:107 fn:502 tn:1805 fp:77 size:12 mdl:591
-05:17:48 stand_target(A):- in_front_of(B,A),wearing(A,B).
-05:17:48 stand_target(A):- floor(B),lying_on(A,B).
-05:17:48 stand_target(A):- leaning_on(A,B),sitting_on(A,B).
-05:17:48 stand_target(A):- leaning_on(A,B),bed(B).
-05:17:48 ********************
-05:48:26 Generating programs of size: 5
-05:48:36 ********************
-05:48:36 New best hypothesis:
-05:48:36 tp:115 fn:494 tn:1801 fp:81 size:14 mdl:589
-05:48:36 stand_target(A):- floor(B),lying_on(A,B).
-05:48:36 stand_target(A):- leaning_on(A,B),sitting_on(A,B).
-05:48:36 stand_target(A):- floor(B),not_looking_at(A,B),other_relationship(A,B).
-05:48:36 stand_target(A):- shoe(B),in_front_of(B,A),wearing(A,B).
-05:48:36 ********************
-07:00:24 TIMEOUT OF 6000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.59 Recall:0.19 TP:115 FN:494 TN:1801 FP:81 Size:14 MDL:589
-stand_target(A):- floor(B),lying_on(A,B).
-stand_target(A):- leaning_on(A,B),sitting_on(A,B).
-stand_target(A):- floor(B),not_looking_at(A,B),other_relationship(A,B).
-stand_target(A):- shoe(B),in_front_of(B,A),wearing(A,B).
-******************************
+01:45:01 Generating programs of size: 2
+01:45:01 Generating programs of size: 3
+01:45:10 Generating programs of size: 4
+01:51:52 Generating programs of size: 5
