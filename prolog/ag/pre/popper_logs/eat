@@ -60,14 +60,28 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
+body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-01:45:01 Generating programs of size: 2
-01:45:01 Generating programs of size: 3
-01:45:09 Generating programs of size: 4
-01:48:59 Generating programs of size: 5
-02:31:56 Generating programs of size: 6
-03:03:19 Generating programs of size: 7
-03:27:35 TIMEOUT OF 6000 SECONDS EXCEEDED
-NO SOLUTION
+00:49:04 Generating programs of size: 2
+00:49:05 Generating programs of size: 3
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:183 fn:72 tn:871 fp:86 size:3 mdl:161
+00:49:05 eat_target(A):- food(B),holding(A,B).
+00:49:05 ********************
+00:49:14 ********************
+00:49:14 New best hypothesis:
+00:49:14 tp:205 fn:50 tn:850 fp:107 size:3 mdl:160
+00:49:14 eat_target(A):- food(B),in_front_of(B,A).
+00:49:14 ********************
+00:49:18 Generating programs of size: 4
+00:49:24 ********************
+00:49:24 New best hypothesis:
+00:49:24 tp:236 fn:19 tn:853 fp:104 size:12 mdl:135
+00:49:24 eat_target(A):- food(B),holding(A,B).
+00:49:24 eat_target(A):- medicine(B),holding(A,B).
+00:49:24 eat_target(A):- sandwich(B),looking_at(A,B).
+00:49:24 eat_target(A):- not_looking_at(A,B),food(B).
+00:49:24 ********************

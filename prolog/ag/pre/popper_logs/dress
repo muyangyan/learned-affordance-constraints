@@ -60,13 +60,32 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
+body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-01:45:01 Generating programs of size: 2
-01:45:01 Generating programs of size: 3
-01:45:05 Generating programs of size: 4
-01:46:51 Generating programs of size: 5
-01:55:32 Generating programs of size: 6
-04:08:22 TIMEOUT OF 6000 SECONDS EXCEEDED
-NO SOLUTION
+00:49:04 Generating programs of size: 2
+00:49:05 Generating programs of size: 3
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:38 fn:34 tn:254 fp:12 size:3 mdl:49
+00:49:05 dress_target(A):- clothes(B),holding(A,B).
+00:49:05 ********************
+00:49:09 Generating programs of size: 4
+00:49:12 ********************
+00:49:12 New best hypothesis:
+00:49:12 tp:70 fn:2 tn:240 fp:26 size:12 mdl:40
+00:49:12 dress_target(A):- clothes(B),holding(A,B).
+00:49:12 dress_target(A):- holding(A,B),shoe(B).
+00:49:12 dress_target(A):- not_contacting(A,B),shoe(B).
+00:49:12 dress_target(A):- clothes(B),not_contacting(A,B).
+00:49:12 ********************
+00:54:13 Generating programs of size: 5
+00:59:04 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.73 Recall:0.97 TP:70 FN:2 TN:240 FP:26 Size:12 MDL:40
+dress_target(A):- clothes(B),holding(A,B).
+dress_target(A):- holding(A,B),shoe(B).
+dress_target(A):- not_contacting(A,B),shoe(B).
+dress_target(A):- clothes(B),not_contacting(A,B).
+******************************

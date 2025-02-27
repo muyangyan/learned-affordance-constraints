@@ -60,13 +60,26 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
+body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-01:45:01 Generating programs of size: 2
-01:45:01 Generating programs of size: 3
-01:45:04 Generating programs of size: 4
-01:46:04 Generating programs of size: 5
-01:51:09 Generating programs of size: 6
-01:52:22 Generating programs of size: 7
-NO SOLUTION
+00:49:05 Generating programs of size: 2
+00:49:05 Generating programs of size: 3
+00:49:06 ********************
+00:49:06 New best hypothesis:
+00:49:06 tp:44 fn:24 tn:246 fp:26 size:3 mdl:53
+00:49:06 pour_target(A):- cup_glass_bottle(B),holding(A,B).
+00:49:06 ********************
+00:49:08 ********************
+00:49:08 New best hypothesis:
+00:49:08 tp:64 fn:4 tn:236 fp:36 size:3 mdl:43
+00:49:08 pour_target(A):- cup_glass_bottle(B),in_front_of(B,A).
+00:49:08 ********************
+00:49:13 Generating programs of size: 4
+00:53:54 Generating programs of size: 5
+00:59:25 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.64 Recall:0.94 TP:64 FN:4 TN:236 FP:36 Size:3 MDL:43
+pour_target(A):- cup_glass_bottle(B),in_front_of(B,A).
+******************************

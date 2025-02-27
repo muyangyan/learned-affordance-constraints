@@ -56,6 +56,7 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
+body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).

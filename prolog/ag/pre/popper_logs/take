@@ -60,15 +60,44 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
+body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-01:45:01 Generating programs of size: 2
-01:45:01 ********************
-01:45:01 New best hypothesis:
-01:45:01 tp:68 fn:0 tn:0 fp:18 size:2 mdl:20
-01:45:01 take_target(A):- person(A).
-01:45:01 ********************
-01:45:01 Generating programs of size: 3
-01:45:09 Generating programs of size: 4
-01:49:51 Generating programs of size: 5
+00:49:04 Generating programs of size: 2
+00:49:05 Generating programs of size: 3
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:21 fn:469 tn:1631 fp:11 size:3 mdl:483
+00:49:05 take_target(A):- phone_camera(B),not_contacting(A,B).
+00:49:05 ********************
+00:49:07 ********************
+00:49:07 New best hypothesis:
+00:49:07 tp:26 fn:464 tn:1632 fp:10 size:3 mdl:477
+00:49:07 take_target(A):- pillow(B),not_contacting(A,B).
+00:49:07 ********************
+00:49:07 ********************
+00:49:07 New best hypothesis:
+00:49:07 tp:42 fn:448 tn:1624 fp:18 size:3 mdl:469
+00:49:07 take_target(A):- not_contacting(A,B),box(B).
+00:49:07 ********************
+00:49:07 ********************
+00:49:07 New best hypothesis:
+00:49:07 tp:78 fn:412 tn:1596 fp:46 size:3 mdl:461
+00:49:07 take_target(A):- cup_glass_bottle(B),not_contacting(A,B).
+00:49:07 ********************
+00:49:14 Generating programs of size: 4
+00:49:24 ********************
+00:49:24 New best hypothesis:
+00:49:24 tp:311 fn:179 tn:1476 fp:166 size:30 mdl:375
+00:49:24 take_target(A):- phone_camera(B),not_contacting(A,B).
+00:49:24 take_target(A):- sandwich(B),on_the_side_of(B,A).
+00:49:24 take_target(A):- pillow(B),not_contacting(A,B).
+00:49:24 take_target(A):- picture(B),not_contacting(A,B).
+00:49:24 take_target(A):- broom(B),not_contacting(A,B).
+00:49:24 take_target(A):- not_contacting(A,B),box(B).
+00:49:24 take_target(A):- dish(B),not_contacting(A,B).
+00:49:24 take_target(A):- cup_glass_bottle(B),not_contacting(A,B).
+00:49:24 take_target(A):- towel(B),not_contacting(A,B).
+00:49:24 take_target(A):- clothes(B),not_contacting(A,B).
+00:49:24 ********************

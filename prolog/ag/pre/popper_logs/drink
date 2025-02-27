@@ -60,12 +60,32 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
+body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-01:45:01 Generating programs of size: 2
-01:45:01 Generating programs of size: 3
-01:45:09 Generating programs of size: 4
-01:48:36 Generating programs of size: 5
-03:57:04 TIMEOUT OF 6000 SECONDS EXCEEDED
-NO SOLUTION
+00:49:04 Generating programs of size: 2
+00:49:05 Generating programs of size: 3
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:182 fn:86 tn:900 fp:94 size:3 mdl:183
+00:49:05 drink_target(A):- holding(A,B),cup_glass_bottle(B).
+00:49:05 ********************
+00:49:09 ********************
+00:49:09 New best hypothesis:
+00:49:09 tp:249 fn:19 tn:872 fp:122 size:3 mdl:144
+00:49:09 drink_target(A):- cup_glass_bottle(B),in_front_of(B,A).
+00:49:09 ********************
+00:49:12 Generating programs of size: 4
+00:49:19 ********************
+00:49:19 New best hypothesis:
+00:49:19 tp:268 fn:0 tn:861 fp:133 size:6 mdl:139
+00:49:19 drink_target(A):- on_the_side_of(B,A),cup_glass_bottle(B).
+00:49:19 drink_target(A):- cup_glass_bottle(B),in_front_of(B,A).
+00:49:19 ********************
+00:59:05 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.67 Recall:1.00 TP:268 FN:0 TN:861 FP:133 Size:6 MDL:139
+drink_target(A):- on_the_side_of(B,A),cup_glass_bottle(B).
+drink_target(A):- cup_glass_bottle(B),in_front_of(B,A).
+******************************

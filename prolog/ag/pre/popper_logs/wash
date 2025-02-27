@@ -60,15 +60,26 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
+body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-01:45:01 Generating programs of size: 2
-01:45:01 Generating programs of size: 3
-01:45:07 Generating programs of size: 4
-01:46:29 Generating programs of size: 5
-01:52:44 Generating programs of size: 6
-01:58:59 Generating programs of size: 7
-02:00:03 Generating programs of size: 8
-02:00:20 Generating programs of size: 9
-NO SOLUTION
+00:49:04 Generating programs of size: 2
+00:49:05 Generating programs of size: 3
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:25 fn:60 tn:385 fp:11 size:3 mdl:74
+00:49:05 wash_target(A):- towel(B),holding(A,B).
+00:49:05 ********************
+00:49:08 ********************
+00:49:08 New best hypothesis:
+00:49:08 tp:28 fn:57 tn:383 fp:13 size:3 mdl:73
+00:49:08 wash_target(A):- towel(B),in_front_of(B,A).
+00:49:08 ********************
+00:49:11 Generating programs of size: 4
+00:55:04 Generating programs of size: 5
+00:59:03 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.68 Recall:0.33 TP:28 FN:57 TN:383 FP:13 Size:3 MDL:73
+wash_target(A):- towel(B),in_front_of(B,A).
+******************************

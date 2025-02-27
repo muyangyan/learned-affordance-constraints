@@ -60,15 +60,32 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
+body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-01:45:01 Generating programs of size: 2
-01:45:01 ********************
-01:45:01 New best hypothesis:
-01:45:01 tp:192 fn:0 tn:0 fp:19 size:2 mdl:21
-01:45:01 put_target(A):- person(A).
-01:45:01 ********************
-01:45:01 Generating programs of size: 3
-01:45:13 Generating programs of size: 4
-01:54:44 Generating programs of size: 5
+00:49:05 Generating programs of size: 2
+00:49:05 Generating programs of size: 3
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:79 fn:1466 tn:3296 fp:21 size:3 mdl:1490
+00:49:05 put_target(A):- drinking_from(A,B),holding(A,B).
+00:49:05 ********************
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:189 fn:1356 tn:3198 fp:119 size:3 mdl:1478
+00:49:05 put_target(A):- holding(A,B),dish(B).
+00:49:05 ********************
+00:49:13 Generating programs of size: 4
+00:49:24 ********************
+00:49:24 New best hypothesis:
+00:49:24 tp:430 fn:1115 tn:3062 fp:255 size:24 mdl:1394
+00:49:24 put_target(A):- holding(A,B),groceries(B).
+00:49:24 put_target(A):- holding(A,B),dish(B).
+00:49:24 put_target(A):- unsure(A,B),paper_notebook(B).
+00:49:24 put_target(A):- drinking_from(A,B),cup_glass_bottle(B).
+00:49:24 put_target(A):- shelf(B),not_looking_at(A,B).
+00:49:24 put_target(A):- food(B),eating(A,B).
+00:49:24 put_target(A):- shelf(B),not_contacting(A,B).
+00:49:24 put_target(A):- other_relationship(A,B),dish(B).
+00:49:24 ********************

@@ -3,27 +3,33 @@ from torchmetrics import Metric
 from torch import Tensor
 import torch.nn.functional as F
 
-from sklearn.metrics import accuracy_score, precision_score, recall_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from sklearn.metrics import average_precision_score, top_k_accuracy_score
 from sklearn.metrics import confusion_matrix, multilabel_confusion_matrix
+from scipy.stats import entropy
 
 import matplotlib.pyplot as plt
 import numpy as np
-    
-def analyze_preds(cfg, run_name, test_run_name, preds, class_names=None):
+import argparse
+import os
+import json
+from util.config_utils import load_yaml
+
+def pretty_print_dict(d):
+    for key, value in d.items():
+        print(f'{key:25} {value:.4f}')
+
+def analyze_preds(cfg, run_name, test_run_name, preds=None, class_names=None):
     save_folder = f'{cfg.runs_folder}/{run_name}/test_runs/{test_run_name}'
+
+    if type(preds) == str:
+        with open(f'{save_folder}/{preds}.npy', 'rb') as f:
+            preds = np.load(f)
 
     # each pred is: [output logits, label logits]
     output_logits = preds[:, 0]
     label_logits = preds[:, 1]
-    # Dump the predictions into a text file
 
-    with open(f'{save_folder}/preds.txt', 'w') as f:
-        for i in range(len(preds)):
-            f.write(f'Outputs-Labels:\n{np.round(output_logits[i], 2)}\n{np.round(label_logits[i], 2)}\n')
-
-
-    threshold = 0.5
     # Convert logits to binary predictions using a threshold (e.g., 0.5)
     pred_labels = np.argmax(output_logits, axis=1)
     true_labels = np.argmax(label_logits, axis=1)
@@ -32,21 +38,29 @@ def analyze_preds(cfg, run_name, test_run_name, preds, class_names=None):
     acc = accuracy_score(true_labels, pred_labels)
     top3_acc = top_k_accuracy_score(true_labels, output_logits, k=3)
     top5_acc = top_k_accuracy_score(true_labels, output_logits, k=5)
-    macro_precision = precision_score(true_labels, pred_labels, average='macro', zero_division=1)
-    macro_recall = recall_score(true_labels, pred_labels, average='macro', zero_division=1)
-    micro_precision = precision_score(true_labels, pred_labels, average='micro', zero_division=1)
-    micro_recall = recall_score(true_labels, pred_labels, average='micro', zero_division=1)
-    average_precision = average_precision_score(true_labels, output_logits, average='macro')
+    macro_precision = precision_score(true_labels, pred_labels, average='macro', zero_division=0)
+    macro_recall = recall_score(true_labels, pred_labels, average='macro', zero_division=0)
+    micro_precision = precision_score(true_labels, pred_labels, average='micro', zero_division=0)
+    micro_recall = recall_score(true_labels, pred_labels, average='micro', zero_division=0)
+    f1 = f1_score(true_labels, pred_labels, average='macro', zero_division=0)
+    mean_average_precision = average_precision_score(true_labels, output_logits, average='macro')
+    mean_entropy = entropy(output_logits.T, base=2, nan_policy='raise').mean()
 
-    print('SKLEARN METRICS')
-    print(f'Accuracy: {acc}')
-    print(f'Top-3 Accuracy: {top3_acc}')
-    print(f'Top-5 Accuracy: {top5_acc}')
-    print(f'Macro Precision: {macro_precision}')
-    print(f'Macro Recall: {macro_recall}')
-    print(f'Micro Precision: {micro_precision}')
-    print(f'Micro Recall: {micro_recall}')
-    print(f'Mean Average Precision: {average_precision}')
+    metrics_dict = {
+        'accuracy': acc,
+        'top3_accuracy': top3_acc,
+        'top5_accuracy': top5_acc,
+        'macro_precision': macro_precision,
+        'macro_recall': macro_recall,
+        'micro_precision': micro_precision,
+        'micro_recall': micro_recall,
+        'f1_score': f1,
+        'mean_average_precision': mean_average_precision,
+        'mean_entropy': mean_entropy
+    }
+    print('================')
+    pretty_print_dict(metrics_dict)
+    print('================')
 
     def plot_distribution_of_predictions_and_labels(pred_labels, true_labels, class_names, save_folder):
         plt.figure(figsize=(15, 8))
@@ -124,6 +138,8 @@ def analyze_preds(cfg, run_name, test_run_name, preds, class_names=None):
     #plot_distribution_of_predictions_and_labels(pred_labels, true_labels, class_names, save_folder)
     #plot_per_class_precision_and_recall(true_labels, pred_labels, class_names, save_folder)
     #plot_confusion_matrix(true_labels, pred_labels, class_names, save_folder)
+
+    return metrics_dict
 
 #multilabel
 def analyze_preds_ml(cfg, run_name, test_run_name, preds, class_names=None):
@@ -395,3 +411,15 @@ class Entropy_Metric(Metric):
 
     def compute(self) -> Tensor:
         return self.entropy / self.count
+
+
+if __name__ == "__main__":
+
+    args = argparse.ArgumentParser()
+    args.add_argument('--run', type=str, default='none')
+    args.add_argument('--test_run', type=str, default='none')
+    args.add_argument('--pred_name', type=str, default='constrained')
+    args = args.parse_args()
+
+    cfg = load_yaml(os.path.join('runs/', args.run, 'test_runs', args.test_run, 'config.yaml'))
+    analyze_preds(cfg, args.run, args.test_run, preds=args.pred_name)

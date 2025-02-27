@@ -60,15 +60,46 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
+body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-01:45:01 Generating programs of size: 2
-01:45:01 Generating programs of size: 3
-01:45:20 Generating programs of size: 4
-01:46:45 Generating programs of size: 5
-02:08:29 Generating programs of size: 6
-02:15:22 Generating programs of size: 7
-02:18:44 Generating programs of size: 8
-02:19:56 Generating programs of size: 9
-NO SOLUTION
+00:49:04 Generating programs of size: 2
+00:49:05 Generating programs of size: 3
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:13 fn:110 tn:481 fp:4 size:3 mdl:117
+00:49:05 undress_target(A):- wearing(A,B),looking_at(A,B).
+00:49:05 ********************
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:49 fn:74 tn:464 fp:21 size:3 mdl:98
+00:49:05 undress_target(A):- not_looking_at(A,B),in(B,A).
+00:49:05 ********************
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:62 fn:61 tn:475 fp:10 size:3 mdl:74
+00:49:05 undress_target(A):- not_looking_at(A,B),wearing(A,B).
+00:49:05 ********************
+00:49:06 ********************
+00:49:06 New best hypothesis:
+00:49:06 tp:76 fn:47 tn:474 fp:11 size:3 mdl:61
+00:49:06 undress_target(A):- in(B,A),wearing(A,B).
+00:49:06 ********************
+00:49:06 ********************
+00:49:06 New best hypothesis:
+00:49:06 tp:81 fn:42 tn:470 fp:15 size:3 mdl:60
+00:49:06 undress_target(A):- wearing(A,B),clothes(B).
+00:49:06 ********************
+00:49:10 Generating programs of size: 4
+00:49:13 ********************
+00:49:13 New best hypothesis:
+00:49:13 tp:104 fn:19 tn:466 fp:19 size:6 mdl:44
+00:49:13 undress_target(A):- wearing(A,B),clothes(B).
+00:49:13 undress_target(A):- shoe(B),wearing(A,B).
+00:49:13 ********************
+00:49:37 ********************
+00:49:37 New best hypothesis:
+00:49:37 tp:104 fn:19 tn:466 fp:19 size:4 mdl:42
+00:49:37 undress_target(A):- wearing(A,C),person(B),wearing(B,C).
+00:49:37 ********************

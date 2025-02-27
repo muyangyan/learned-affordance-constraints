@@ -60,23 +60,55 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
+body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-01:45:01 Generating programs of size: 2
-01:45:01 Generating programs of size: 3
-01:45:05 Generating programs of size: 4
-01:45:19 ********************
-01:45:19 New best hypothesis:
-01:45:19 tp:15 fn:1 tn:12 fp:10 size:4 mdl:15
-01:45:19 play_target(A):- not_looking_at(A,B),person(C),not_looking_at(C,B).
-01:45:19 ********************
-01:46:25 Generating programs of size: 5
-01:58:45 Generating programs of size: 6
-02:23:48 Generating programs of size: 7
-02:36:03 Generating programs of size: 8
-03:01:47 Generating programs of size: 9
+00:49:04 Generating programs of size: 2
+00:49:05 Generating programs of size: 3
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:15 fn:105 tn:459 fp:8 size:3 mdl:116
+00:49:05 play_target(A):- laptop(B),holding(A,B).
+00:49:05 ********************
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:41 fn:79 tn:441 fp:26 size:3 mdl:108
+00:49:05 play_target(A):- phone_camera(B),holding(A,B).
+00:49:05 ********************
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:28 fn:92 tn:460 fp:7 size:3 mdl:102
+00:49:05 play_target(A):- phone_camera(B),not_looking_at(A,B).
+00:49:05 ********************
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:50 fn:70 tn:445 fp:22 size:3 mdl:95
+00:49:05 play_target(A):- phone_camera(B),in_front_of(B,A).
+00:49:05 ********************
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:45 fn:75 tn:455 fp:12 size:3 mdl:90
+00:49:05 play_target(A):- laptop(B),looking_at(A,B).
+00:49:05 ********************
+00:49:06 ********************
+00:49:06 New best hypothesis:
+00:49:06 tp:56 fn:64 tn:448 fp:19 size:3 mdl:86
+00:49:06 play_target(A):- laptop(B),in_front_of(B,A).
+00:49:06 ********************
+00:49:10 Generating programs of size: 4
+00:49:13 ********************
+00:49:13 New best hypothesis:
+00:49:13 tp:116 fn:4 tn:420 fp:47 size:9 mdl:60
+00:49:13 play_target(A):- phone_camera(B),on_the_side_of(B,A).
+00:49:13 play_target(A):- phone_camera(B),in_front_of(B,A).
+00:49:13 play_target(A):- laptop(B),in_front_of(B,A).
+00:49:13 ********************
+00:58:48 Generating programs of size: 5
+00:59:02 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.60 Recall:0.94 TP:15 FN:1 TN:12 FP:10 Size:4 MDL:15
-play_target(A):- not_looking_at(A,B),person(C),not_looking_at(C,B).
+Precision:0.71 Recall:0.97 TP:116 FN:4 TN:420 FP:47 Size:9 MDL:60
+play_target(A):- phone_camera(B),on_the_side_of(B,A).
+play_target(A):- phone_camera(B),in_front_of(B,A).
+play_target(A):- laptop(B),in_front_of(B,A).
 ******************************

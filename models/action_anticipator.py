@@ -80,7 +80,7 @@ class BaseLeaPR(L.LightningModule):
         if self.preds is not None:
             self.preds[key].append(torch.stack([out, labels], dim=1).cpu())
 
-        self.log_test_metrics(out, labels)
+        #self.log_test_metrics(out, labels)
 
     def on_test_epoch_end(self):
         key = 'constrained' if self.constraint_mode is not None else 'unconstrained'
@@ -111,14 +111,6 @@ class BaseLeaPR(L.LightningModule):
 
     def apply_constraints(self, out, constraints, weight=1):
         pass
-
-    def apply_constraints(self, out, constraints, weight=0.5):
-        if self.constraint_mode == 'hard':
-            return out * constraints
-        elif self.constraint_mode == 'soft':
-            return (1-weight) * out + weight * constraints
-        else:
-            raise ValueError(f'Invalid mode: {self.constraint_mode}')
 
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=self.lr)
@@ -160,6 +152,8 @@ class MultiLeaPR(BaseLeaPR):
     def apply_constraints(self, out, constraints, weight=0.5):
         if self.constraint_mode == 'hard':
             return out * constraints
+        elif self.constraint_mode == 'pure':
+            return constraints
         elif self.constraint_mode == 'soft':
             return (1-weight) * out + weight * constraints
         else:
@@ -208,8 +202,9 @@ class SingleLeaPR(BaseLeaPR):
     def apply_constraints(self, out, constraints, weight=0.5):
         if self.constraint_mode == 'hard':
             return F.normalize(out * constraints, dim=1)
+        elif self.constraint_mode == 'pure':
+            return constraints
         elif self.constraint_mode == 'soft':
-            #return constraints
             return F.normalize(out * (constraints**weight), dim=1)
         else:
             raise ValueError(f'Invalid mode: {self.constraint_mode}')

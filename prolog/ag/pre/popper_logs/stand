@@ -60,10 +60,49 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
+body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-01:45:01 Generating programs of size: 2
-01:45:01 Generating programs of size: 3
-01:45:10 Generating programs of size: 4
-01:51:52 Generating programs of size: 5
+00:49:04 Generating programs of size: 2
+00:49:05 Generating programs of size: 3
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:46 fn:518 tn:1717 fp:42 size:3 mdl:563
+00:49:05 stand_target(A):- on_the_side_of(B,A),sitting_on(A,B).
+00:49:05 ********************
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:7 fn:557 tn:1757 fp:2 size:3 mdl:562
+00:49:05 stand_target(A):- lying_on(A,B),in_front_of(B,A).
+00:49:05 ********************
+00:49:06 ********************
+00:49:06 New best hypothesis:
+00:49:06 tp:18 fn:546 tn:1747 fp:12 size:3 mdl:561
+00:49:06 stand_target(A):- other_relationship(A,B),sitting_on(A,B).
+00:49:06 ********************
+00:49:07 ********************
+00:49:07 New best hypothesis:
+00:49:07 tp:281 fn:283 tn:1486 fp:273 size:3 mdl:559
+00:49:07 stand_target(A):- beneath(B,A),sitting_on(A,B).
+00:49:07 ********************
+00:49:07 ********************
+00:49:07 New best hypothesis:
+00:49:07 tp:69 fn:495 tn:1700 fp:59 size:3 mdl:557
+00:49:07 stand_target(A):- leaning_on(A,B),beneath(B,A).
+00:49:07 ********************
+00:49:09 ********************
+00:49:09 New best hypothesis:
+00:49:09 tp:155 fn:409 tn:1620 fp:139 size:3 mdl:551
+00:49:09 stand_target(A):- chair(B),sitting_on(A,B).
+00:49:09 ********************
+00:49:13 Generating programs of size: 4
+00:49:23 ********************
+00:49:23 New best hypothesis:
+00:49:23 tp:189 fn:375 tn:1601 fp:158 size:15 mdl:548
+00:49:23 stand_target(A):- holding(A,B),wearing(A,B).
+00:49:23 stand_target(A):- lying_on(A,B),in_front_of(B,A).
+00:49:23 stand_target(A):- leaning_on(A,B),sitting_on(A,B).
+00:49:23 stand_target(A):- bed(B),leaning_on(A,B).
+00:49:23 stand_target(A):- chair(B),sitting_on(A,B).
+00:49:23 ********************

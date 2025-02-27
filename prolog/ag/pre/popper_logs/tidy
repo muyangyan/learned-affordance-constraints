@@ -60,15 +60,38 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
+body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-01:45:01 Generating programs of size: 2
-01:45:01 ********************
-01:45:01 New best hypothesis:
-01:45:01 tp:40 fn:0 tn:0 fp:12 size:2 mdl:14
-01:45:01 tidy_target(A):- person(A).
-01:45:01 ********************
-01:45:01 Generating programs of size: 3
-01:45:13 Generating programs of size: 4
-01:48:33 Generating programs of size: 5
+00:49:04 Generating programs of size: 2
+00:49:05 Generating programs of size: 3
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:28 fn:230 tn:940 fp:14 size:3 mdl:247
+00:49:05 tidy_target(A):- broom(B),holding(A,B).
+00:49:05 ********************
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:33 fn:225 tn:938 fp:16 size:3 mdl:244
+00:49:05 tidy_target(A):- not_looking_at(A,B),shelf(B).
+00:49:05 ********************
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:44 fn:214 tn:933 fp:21 size:3 mdl:238
+00:49:05 tidy_target(A):- in_front_of(B,A),shelf(B).
+00:49:05 ********************
+00:49:06 ********************
+00:49:06 New best hypothesis:
+00:49:06 tp:64 fn:194 tn:919 fp:35 size:3 mdl:232
+00:49:06 tidy_target(A):- beneath(B,A),standing_on(A,B).
+00:49:06 ********************
+00:49:11 Generating programs of size: 4
+00:49:21 ********************
+00:49:21 New best hypothesis:
+00:49:21 tp:139 fn:119 tn:887 fp:67 size:12 mdl:198
+00:49:21 tidy_target(A):- not_looking_at(A,B),broom(B).
+00:49:21 tidy_target(A):- beneath(B,A),standing_on(A,B).
+00:49:21 tidy_target(A):- not_contacting(A,B),shelf(B).
+00:49:21 tidy_target(A):- touching(A,B),shelf(B).
+00:49:21 ********************

@@ -60,13 +60,26 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
+body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-01:45:01 Generating programs of size: 2
-01:45:01 Generating programs of size: 3
-01:45:03 Generating programs of size: 4
-01:46:14 Generating programs of size: 5
-01:47:55 Generating programs of size: 6
-01:50:03 Generating programs of size: 7
-NO SOLUTION
+00:49:04 Generating programs of size: 2
+00:49:05 Generating programs of size: 3
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:24 fn:33 tn:224 fp:5 size:3 mdl:41
+00:49:05 cook_target(A):- food(B),unsure(A,B).
+00:49:05 ********************
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:50 fn:7 tn:204 fp:25 size:3 mdl:35
+00:49:05 cook_target(A):- food(B),in_front_of(B,A).
+00:49:05 ********************
+00:49:08 Generating programs of size: 4
+00:52:34 Generating programs of size: 5
+00:59:18 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.67 Recall:0.88 TP:50 FN:7 TN:204 FP:25 Size:3 MDL:35
+cook_target(A):- food(B),in_front_of(B,A).
+******************************

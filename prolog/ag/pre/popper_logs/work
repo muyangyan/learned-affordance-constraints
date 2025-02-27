@@ -60,11 +60,38 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
+body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-01:45:01 Generating programs of size: 2
+00:49:04 Generating programs of size: 2
+00:49:05 Generating programs of size: 3
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:10 fn:50 tn:210 fp:3 size:3 mdl:56
+00:49:05 work_target(A):- holding(A,B),paper_notebook(B).
+00:49:05 ********************
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:30 fn:30 tn:206 fp:7 size:3 mdl:40
+00:49:05 work_target(A):- looking_at(A,B),paper_notebook(B).
+00:49:05 ********************
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:34 fn:26 tn:205 fp:8 size:3 mdl:37
+00:49:05 work_target(A):- paper_notebook(B),in_front_of(B,A).
+00:49:05 ********************
+00:49:09 Generating programs of size: 4
+00:49:11 ********************
+00:49:11 New best hypothesis:
+00:49:11 tp:39 fn:21 tn:204 fp:9 size:6 mdl:36
+00:49:11 work_target(A):- paper_notebook(B),in_front_of(B,A).
+00:49:11 work_target(A):- on_the_side_of(B,A),paper_notebook(B).
+00:49:11 ********************
+00:53:27 Generating programs of size: 5
+00:59:03 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:1.00 Recall:1.00 TP:9 FN:0 TN:0 FP:0 Size:2 MDL:2
-work_target(A):- person(A).
+Precision:0.81 Recall:0.65 TP:39 FN:21 TN:204 FP:9 Size:6 MDL:36
+work_target(A):- paper_notebook(B),in_front_of(B,A).
+work_target(A):- on_the_side_of(B,A),paper_notebook(B).
 ******************************

@@ -5,6 +5,8 @@ warnings.filterwarnings("ignore")
 import os
 import argparse
 import torch
+import numpy as np
+import json
 
 from torch.utils.data import DataLoader
 from data.ag.action_genome import SingleAG, MultiAG, SingleBothAG
@@ -20,6 +22,15 @@ from util.config_utils import load_yaml
 
 torch.set_float32_matmul_precision('medium')
 
+def save_and_analyze_preds(cfg, run_name, test_run_name, pred_name, preds, class_names):
+    save_folder = f'{cfg.runs_folder}/{run_name}/test_runs/{test_run_name}'
+
+    # Dump the predictions into a text file
+    with open(f'{save_folder}/{pred_name}.npy', 'wb') as f:
+        np.save(f, preds)
+
+    analyze_preds(cfg, run_name, test_run_name, preds=preds, class_names=class_names)
+
 def test_routine(cfg, run_name, test_run_name, trainer, model, dataset, loader):
     print('Without constraints---------------------')
     dataset.constraints = None
@@ -29,7 +40,7 @@ def test_routine(cfg, run_name, test_run_name, trainer, model, dataset, loader):
     model.preds = {'unconstrained': [], 'constrained': []}
 
     trainer.test(model, dataloaders=loader)
-    analyze_preds(cfg, run_name, test_run_name, model.preds['unconstrained'], class_names=dataset.verb_classes)
+    save_and_analyze_preds(cfg, run_name, test_run_name, 'unconstrained', model.preds['unconstrained'], dataset.verb_classes)
 
     print('With constraints---------------------')
     constraints, truth_values = apply_rules(cfg.rules_name, 
@@ -46,7 +57,7 @@ def test_routine(cfg, run_name, test_run_name, trainer, model, dataset, loader):
     model.constraint_weight = cfg.constraint_weight
 
     trainer.test(model, dataloaders=loader)
-    analyze_preds(cfg, run_name, test_run_name, model.preds['constrained'], class_names=dataset.verb_classes)
+    save_and_analyze_preds(cfg, run_name, test_run_name, 'constrained', model.preds['constrained'], dataset.verb_classes)
 
 '''
 with run folders set up, we can test the model

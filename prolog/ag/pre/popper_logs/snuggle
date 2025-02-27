@@ -60,13 +60,33 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
+body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-01:45:01 Generating programs of size: 2
-01:45:01 Generating programs of size: 3
-01:45:03 Generating programs of size: 4
-01:46:06 Generating programs of size: 5
-01:52:17 Generating programs of size: 6
-01:58:25 Generating programs of size: 7
-NO SOLUTION
+00:49:05 Generating programs of size: 2
+00:49:05 Generating programs of size: 3
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:27 fn:56 tn:302 fp:4 size:3 mdl:63
+00:49:05 snuggle_target(A):- blanket(B),holding(A,B).
+00:49:05 ********************
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:28 fn:55 tn:303 fp:3 size:3 mdl:61
+00:49:05 snuggle_target(A):- blanket(B),looking_at(A,B).
+00:49:05 ********************
+00:49:08 ********************
+00:49:08 New best hypothesis:
+00:49:08 tp:36 fn:47 tn:300 fp:6 size:3 mdl:56
+00:49:08 snuggle_target(A):- in_front_of(B,A),blanket(B).
+00:49:08 ********************
+00:49:11 Generating programs of size: 4
+00:49:13 ********************
+00:49:13 New best hypothesis:
+00:49:13 tp:75 fn:8 tn:292 fp:14 size:12 mdl:34
+00:49:13 snuggle_target(A):- blanket(B),holding(A,B).
+00:49:13 snuggle_target(A):- blanket(B),looking_at(A,B).
+00:49:13 snuggle_target(A):- blanket(B),not_looking_at(A,B).
+00:49:13 snuggle_target(A):- in_front_of(B,A),pillow(B).
+00:49:13 ********************

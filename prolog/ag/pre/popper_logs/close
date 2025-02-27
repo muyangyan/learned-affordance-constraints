@@ -60,20 +60,47 @@ body_pred(other_relationship, 2).
 body_pred(sitting_on, 2).
 body_pred(standing_on, 2).
 body_pred(touching, 2).
+body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-01:45:01 Generating programs of size: 2
-01:45:01 Generating programs of size: 3
-01:45:04 ********************
-01:45:04 New best hypothesis:
-01:45:04 tp:5 fn:70 tn:237 fp:1 size:3 mdl:74
-01:45:04 close_target(A):- not_contacting(A,B),box(B).
-01:45:04 ********************
-01:45:18 Generating programs of size: 4
-01:51:50 Generating programs of size: 5
-03:37:02 TIMEOUT OF 6000 SECONDS EXCEEDED
+00:49:04 Generating programs of size: 2
+00:49:05 Generating programs of size: 3
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:49 fn:478 tn:1715 fp:17 size:3 mdl:498
+00:49:05 close_target(A):- closet_cabinet(B),holding(A,B).
+00:49:05 ********************
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:114 fn:413 tn:1672 fp:60 size:3 mdl:476
+00:49:05 close_target(A):- looking_at(A,B),closet_cabinet(B).
+00:49:05 ********************
+00:49:07 ********************
+00:49:07 New best hypothesis:
+00:49:07 tp:133 fn:394 tn:1657 fp:75 size:3 mdl:472
+00:49:07 close_target(A):- closet_cabinet(B),in_front_of(B,A).
+00:49:07 ********************
+00:49:12 Generating programs of size: 4
+00:49:22 ********************
+00:49:22 New best hypothesis:
+00:49:22 tp:360 fn:167 tn:1544 fp:188 size:21 mdl:376
+00:49:22 close_target(A):- not_contacting(A,B),closet_cabinet(B).
+00:49:22 close_target(A):- door(B),in(B,A).
+00:49:22 close_target(A):- door(B),in_front_of(B,A).
+00:49:22 close_target(A):- refrigerator(B),in_front_of(B,A).
+00:49:22 close_target(A):- closet_cabinet(B),in_front_of(B,A).
+00:49:22 close_target(A):- on_the_side_of(B,A),door(B).
+00:49:22 close_target(A):- touching(A,B),laptop(B).
+00:49:22 ********************
+01:00:43 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.83 Recall:0.07 TP:5 FN:70 TN:237 FP:1 Size:3 MDL:74
-close_target(A):- not_contacting(A,B),box(B).
+Precision:0.66 Recall:0.68 TP:360 FN:167 TN:1544 FP:188 Size:21 MDL:376
+close_target(A):- not_contacting(A,B),closet_cabinet(B).
+close_target(A):- door(B),in(B,A).
+close_target(A):- door(B),in_front_of(B,A).
+close_target(A):- refrigerator(B),in_front_of(B,A).
+close_target(A):- closet_cabinet(B),in_front_of(B,A).
+close_target(A):- on_the_side_of(B,A),door(B).
+close_target(A):- touching(A,B),laptop(B).
 ******************************

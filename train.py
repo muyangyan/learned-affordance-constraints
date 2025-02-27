@@ -70,7 +70,10 @@ def train(cfg, run_name):
     else:
         raise ValueError(f'Invalid position: {cfg.position}')
 
-    PartialAG = partial(AG, root=cfg.data_root, meta_root=cfg.data_folder, position=cfg.position)
+    PartialAG = partial(AG, root=cfg.data_root,
+                        meta_root=cfg.data_folder,
+                        position=cfg.position,
+                        prior_path=f'{cfg.runs_folder}/{run_name}/verb_priors.json')
 
     train_set = PartialAG(split='train', num_samples=cfg.num_samples)
     val_set = PartialAG(split='val')
