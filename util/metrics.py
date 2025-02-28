@@ -54,16 +54,16 @@ def analyze_preds(cfg, run_name, test_run_name, preds=None, class_names=None, do
     mean_entropy = entropy(output_logits.T, base=2, nan_policy='raise').mean()
 
     metrics_dict = {
-        'accuracy': acc,
-        'top3_accuracy': top3_acc,
-        'top5_accuracy': top5_acc,
-        'macro_precision': macro_precision,
-        'macro_recall': macro_recall,
+        'Top1 Accuracy(%)': acc,
+        'Top3 Accuracy(%)': top3_acc,
+        'Top5 Accuracy(%)': top5_acc,
+        'Macro Precision(%)': macro_precision,
+        'Macro Recall(%)': macro_recall,
         #'micro_precision': micro_precision,
         #'micro_recall': micro_recall,
-        'f1_score': f1,
-        'mean_average_precision': mean_average_precision,
-        'mean_entropy': mean_entropy
+        'F1 Score(%)': f1,
+        'Mean Average Precision(%)': mean_average_precision,
+        'Mean Entropy(lower is better)': mean_entropy
     }
 
     if do_print:
