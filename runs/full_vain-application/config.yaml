@@ -26,7 +26,7 @@ lr: 1e-3
 
 #Testing parameters========================
 #rules
-data_split: 'val'
+data_split: 'test'
 rules_name: '8693_full'
 mode: 'soft'
 recall_threshold: 0.8

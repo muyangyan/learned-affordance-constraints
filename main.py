@@ -31,9 +31,13 @@ def create_run_directories(cfg, args):
 
 def create_test_directories(cfg, args):
     run_name = args.run
-    test_run_name = randomname.get_name()
+    #test_run_name = cfg.data_split + '_' + cfg.constraint_weight + '_' + randomname.get_name().split('-')[0]
+    rand_noun = randomname.get_name().split('-')[1]
+    test_run_name = f'{cfg.data_split}_{cfg.constraint_weight}_{rand_noun}'
     run_folder = f'{cfg.runs_folder}/{run_name}' #folder for the training run we are testing
     test_run_folder = f'{run_folder}/test_runs/{test_run_name}' #new folder for the specific test run
+    if os.path.exists(test_run_folder):
+        raise ValueError(f'Test run {test_run_name} already exists')
     config_file = os.path.join(run_folder, 'config.yaml')
     
     os.makedirs(test_run_folder, exist_ok=False)

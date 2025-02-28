@@ -68,22 +68,20 @@ class BaseLeaPR(L.LightningModule):
         out = self(imgs, sgs)
         out = self.apply_activation(out)
 
-        if constraints is not None:
-            if self.constraint_mode is None:
-                raise ValueError(f'Constraint mode is not set')
-            constrained_out = self.apply_constraints(out, constraints, weight=self.constraint_weight)
-            out = constrained_out
+        if self.constraint_mode is None:
+            raise ValueError(f'Constraint mode is not set') # use mode 'neural' for unconstrained predictions
+        out = self.apply_constraints(out, constraints, weight=self.constraint_weight)
 
         # debug, metrics and logging
         self.ids.extend(ids)
-        key = 'constrained' if constraints is not None else 'unconstrained'
+        key = self.constraint_mode
         if self.preds is not None:
             self.preds[key].append(torch.stack([out, labels], dim=1).cpu())
 
         #self.log_test_metrics(out, labels)
 
     def on_test_epoch_end(self):
-        key = 'constrained' if self.constraint_mode is not None else 'unconstrained'
+        key = self.constraint_mode
         if self.preds is not None:
             self.preds[key] = torch.vstack(self.preds[key])
             self.preds[key] = self.preds[key].cpu().numpy()
@@ -150,14 +148,8 @@ class MultiLeaPR(BaseLeaPR):
         return torch.sigmoid(out)
 
     def apply_constraints(self, out, constraints, weight=0.5):
-        if self.constraint_mode == 'hard':
-            return out * constraints
-        elif self.constraint_mode == 'pure':
-            return constraints
-        elif self.constraint_mode == 'soft':
-            return (1-weight) * out + weight * constraints
-        else:
-            raise ValueError(f'Invalid mode: {self.constraint_mode}')
+        raise NotImplementedError('MultiLeaPR does not apply constraints')
+       
 
     def log_train_metrics(self, out, labels, loss):
         out = torch.sigmoid(out)
@@ -200,11 +192,11 @@ class SingleLeaPR(BaseLeaPR):
         return torch.softmax(out, dim=1)
 
     def apply_constraints(self, out, constraints, weight=0.5):
-        if self.constraint_mode == 'hard':
-            return F.normalize(out * constraints, dim=1)
-        elif self.constraint_mode == 'pure':
+        if self.constraint_mode == 'neural':
+            return out
+        elif self.constraint_mode == 'rules':
             return constraints
-        elif self.constraint_mode == 'soft':
+        elif self.constraint_mode == 'joint':
             return F.normalize(out * (constraints**weight), dim=1)
         else:
             raise ValueError(f'Invalid mode: {self.constraint_mode}')

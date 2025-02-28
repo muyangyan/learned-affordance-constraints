@@ -19,12 +19,17 @@ def pretty_print_dict(d):
     for key, value in d.items():
         print(f'{key:25} {value:.4f}')
 
-def analyze_preds(cfg, run_name, test_run_name, preds=None, class_names=None):
+def load_preds(cfg, run_name, test_run_name, preds):
     save_folder = f'{cfg.runs_folder}/{run_name}/test_runs/{test_run_name}'
 
-    if type(preds) == str:
-        with open(f'{save_folder}/{preds}.npy', 'rb') as f:
-            preds = np.load(f)
+    with open(f'{save_folder}/{preds}.npy', 'rb') as f:
+        preds = np.load(f)
+
+    return preds
+
+def analyze_preds(cfg, run_name, test_run_name, preds=None, class_names=None, do_print=True):
+    if type(preds) == str:  
+        preds = load_preds(cfg, run_name, test_run_name, preds)
 
     # each pred is: [output logits, label logits]
     output_logits = preds[:, 0]
@@ -33,17 +38,19 @@ def analyze_preds(cfg, run_name, test_run_name, preds=None, class_names=None):
     # Convert logits to binary predictions using a threshold (e.g., 0.5)
     pred_labels = np.argmax(output_logits, axis=1)
     true_labels = np.argmax(label_logits, axis=1)
+    label_vec = np.arange(output_logits.shape[1])
+    true_labels_one_hot = np.eye(output_logits.shape[1])[true_labels]
 
     # Calculate metrics using sklearn for multilabel classification
     acc = accuracy_score(true_labels, pred_labels)
-    top3_acc = top_k_accuracy_score(true_labels, output_logits, k=3)
-    top5_acc = top_k_accuracy_score(true_labels, output_logits, k=5)
-    macro_precision = precision_score(true_labels, pred_labels, average='macro', zero_division=0)
-    macro_recall = recall_score(true_labels, pred_labels, average='macro', zero_division=0)
-    micro_precision = precision_score(true_labels, pred_labels, average='micro', zero_division=0)
-    micro_recall = recall_score(true_labels, pred_labels, average='micro', zero_division=0)
-    f1 = f1_score(true_labels, pred_labels, average='macro', zero_division=0)
-    mean_average_precision = average_precision_score(true_labels, output_logits, average='macro')
+    top3_acc = top_k_accuracy_score(true_labels, output_logits, k=3, labels=label_vec)
+    top5_acc = top_k_accuracy_score(true_labels, output_logits, k=5, labels=label_vec)
+    macro_precision = precision_score(true_labels, pred_labels, average='macro', zero_division=0, labels=label_vec)
+    macro_recall = recall_score(true_labels, pred_labels, average='macro', zero_division=0, labels=label_vec)
+    #micro_precision = precision_score(true_labels, pred_labels, average='micro', zero_division=0)
+    #micro_recall = recall_score(true_labels, pred_labels, average='micro', zero_division=0)
+    f1 = f1_score(true_labels, pred_labels, average='macro', zero_division=0, labels=label_vec)
+    mean_average_precision = average_precision_score(true_labels_one_hot, output_logits, average='macro')
     mean_entropy = entropy(output_logits.T, base=2, nan_policy='raise').mean()
 
     metrics_dict = {
@@ -52,15 +59,17 @@ def analyze_preds(cfg, run_name, test_run_name, preds=None, class_names=None):
         'top5_accuracy': top5_acc,
         'macro_precision': macro_precision,
         'macro_recall': macro_recall,
-        'micro_precision': micro_precision,
-        'micro_recall': micro_recall,
+        #'micro_precision': micro_precision,
+        #'micro_recall': micro_recall,
         'f1_score': f1,
         'mean_average_precision': mean_average_precision,
         'mean_entropy': mean_entropy
     }
-    print('================')
-    pretty_print_dict(metrics_dict)
-    print('================')
+
+    if do_print:
+        print('================')
+        pretty_print_dict(metrics_dict)
+        print('================')
 
     def plot_distribution_of_predictions_and_labels(pred_labels, true_labels, class_names, save_folder):
         plt.figure(figsize=(15, 8))

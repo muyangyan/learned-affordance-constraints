@@ -32,17 +32,18 @@ def save_and_analyze_preds(cfg, run_name, test_run_name, pred_name, preds, class
     analyze_preds(cfg, run_name, test_run_name, preds=preds, class_names=class_names)
 
 def test_routine(cfg, run_name, test_run_name, trainer, model, dataset, loader):
-    print('Without constraints---------------------')
     dataset.constraints = None
     dataset.truth_values = None
     model.constraint_mode = None
     model.constraint_weight = 1
-    model.preds = {'unconstrained': [], 'constrained': []}
+    model.preds = {'neural': [], 'rules': [], 'joint': []}
 
+    print('Without rules---------------------')
+    model.constraint_mode = 'neural'
     trainer.test(model, dataloaders=loader)
-    save_and_analyze_preds(cfg, run_name, test_run_name, 'unconstrained', model.preds['unconstrained'], dataset.verb_classes)
+    save_and_analyze_preds(cfg, run_name, test_run_name, 'neural', model.preds['neural'], dataset.verb_classes)
 
-    print('With constraints---------------------')
+    print('Only rules---------------------')
     constraints, truth_values = apply_rules(cfg.rules_name, 
         os.path.join(cfg.prolog_folder, cfg.position, 'learned_rules'),
         os.path.join(cfg.prolog_folder, cfg.position, f'{cfg.data_split}_bk.pl'),
@@ -53,11 +54,16 @@ def test_routine(cfg, run_name, test_run_name, trainer, model, dataset, loader):
 
     dataset.constraints = constraints
     dataset.truth_values = truth_values
-    model.constraint_mode = cfg.mode
+    model.constraint_mode = 'rules'
     model.constraint_weight = cfg.constraint_weight
 
     trainer.test(model, dataloaders=loader)
-    save_and_analyze_preds(cfg, run_name, test_run_name, 'constrained', model.preds['constrained'], dataset.verb_classes)
+    save_and_analyze_preds(cfg, run_name, test_run_name, 'rules', model.preds['rules'], dataset.verb_classes)
+
+    print('Integrated---------------------')
+    model.constraint_mode = 'joint'
+    trainer.test(model, dataloaders=loader)
+    save_and_analyze_preds(cfg, run_name, test_run_name, 'joint', model.preds['joint'], dataset.verb_classes)
 
 '''
 with run folders set up, we can test the model
