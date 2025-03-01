@@ -23,7 +23,7 @@ model_type: 'joint' # joint, rgcn, vit
 weight_scheme: 'inverse' # uniform, inverse, invsqrt
 epochs: 30
 batch_size: 16
-devices: [0, 1, 2, 3]
+devices: [0,1,2,3]
 lr: 1e-3
 
 #Testing parameters========================
@@ -32,4 +32,4 @@ data_split: 'test'
 rules_name: '6000'
 mode: 'soft'
 recall_threshold: 0.8
-constraint_weight: 2
+constraint_weight: 5

@@ -45,25 +45,25 @@ def analyze_preds(cfg, run_name, test_run_name, preds=None, class_names=None, do
     acc = accuracy_score(true_labels, pred_labels)
     top3_acc = top_k_accuracy_score(true_labels, output_logits, k=3, labels=label_vec)
     top5_acc = top_k_accuracy_score(true_labels, output_logits, k=5, labels=label_vec)
+    mean_average_precision = average_precision_score(true_labels_one_hot, output_logits, average='macro')
     macro_precision = precision_score(true_labels, pred_labels, average='macro', zero_division=0, labels=label_vec)
     macro_recall = recall_score(true_labels, pred_labels, average='macro', zero_division=0, labels=label_vec)
     #micro_precision = precision_score(true_labels, pred_labels, average='micro', zero_division=0)
     #micro_recall = recall_score(true_labels, pred_labels, average='micro', zero_division=0)
     f1 = f1_score(true_labels, pred_labels, average='macro', zero_division=0, labels=label_vec)
-    mean_average_precision = average_precision_score(true_labels_one_hot, output_logits, average='macro')
     mean_entropy = entropy(output_logits.T, base=2, nan_policy='raise').mean()
 
     metrics_dict = {
         'Top1 Accuracy(%)': acc,
         'Top3 Accuracy(%)': top3_acc,
         'Top5 Accuracy(%)': top5_acc,
+        'Mean Average Precision(%)': mean_average_precision,
         'Macro Precision(%)': macro_precision,
         'Macro Recall(%)': macro_recall,
         #'micro_precision': micro_precision,
         #'micro_recall': micro_recall,
         'F1 Score(%)': f1,
-        'Mean Average Precision(%)': mean_average_precision,
-        'Mean Entropy(lower is better)': mean_entropy
+        'Mean Entropy(lower better)': mean_entropy
     }
 
     if do_print:

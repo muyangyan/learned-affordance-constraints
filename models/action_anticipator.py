@@ -6,6 +6,7 @@ import torch.nn as nn
 
 from models.modules.rgcn import RGCN
 from models.modules.vit import ViT
+from models.modules.mvit import MViT
 from models.modules.joint_model import JointModel
 
 import pytorch_lightning as L 
@@ -14,7 +15,7 @@ from torchmetrics import MetricCollection
 from torchmetrics import Accuracy, Precision, Recall, AveragePrecision, F1Score
 
 class BaseLeaPR(L.LightningModule):
-    def __init__(self, model_params, weight, model_type='joint', lr=1e-3):
+    def __init__(self, model_params, weight, model_type='joint_mvit', lr=1e-3):
         super().__init__()
         self.model_type = model_type
         self.constraint_mode = None # hard, soft
@@ -22,12 +23,16 @@ class BaseLeaPR(L.LightningModule):
         self.constraint_weight = 1
         rgcn_params, vit_hidden_dim, num_classes = model_params 
         if model_type == 'joint':
-            self.model = JointModel(rgcn_params, vit_hidden_dim, num_classes)
+            self.model = JointModel(rgcn_params, vit_hidden_dim, num_classes, visual_type='vit')
+        elif model_type == 'joint_mvit':
+            self.model = JointModel(rgcn_params, vit_hidden_dim, num_classes, visual_type='mvit')
         elif model_type == 'rgcn':
             num_obj_classes, node_feature_size, rgcn_hidden_dim, num_rel_classes = rgcn_params
             self.model = RGCN(num_obj_classes, node_feature_size, num_classes, num_rel_classes, head=True)
         elif model_type == 'vit':
             self.model = ViT(num_classes, head=True)
+        elif model_type == 'mvit':
+            self.model = MViT(num_classes, head=True)
         
         # Move weight to correct device and store it only once
         self.register_buffer('weight', weight)
@@ -45,7 +50,7 @@ class BaseLeaPR(L.LightningModule):
     def forward(self, img, sg):
         if self.model_type == 'rgcn':
             return self.model(sg)
-        elif self.model_type == 'vit':
+        elif self.model_type == 'vit' or self.model_type == 'mvit':
             return self.model(img)
         else:
             return self.model(img, sg)

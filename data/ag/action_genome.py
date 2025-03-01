@@ -123,7 +123,8 @@ class ActionGenome(Dataset):
 
                 data = self.create_scene_graph(id, action_classes)
                 self.scene_graphs[id] = data
-
+        # This transform works for both ViT and MViT models
+        # MViT also expects 224x224 input with the same normalization values
         self.im_transform = T.Compose([
             T.Resize(size=(224, 224)),
             T.ToTensor(),

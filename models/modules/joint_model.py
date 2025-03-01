@@ -3,17 +3,21 @@ import torch.nn as nn
 import torch.nn.functional as F
 from models.modules.rgcn import RGCN
 from models.modules.vit import ViT
+from models.modules.mvit import MViT
 
 class JointModel(nn.Module):
-    def __init__(self, rgcn_params, vit_hidden_dim, num_classes):
+    def __init__(self, rgcn_params, vit_hidden_dim, num_classes, visual_type='vit'):
         super(JointModel, self).__init__()
         num_obj_classes, node_feature_size, rgcn_hidden_dim, num_rel_classes = rgcn_params
         self.rgcn = RGCN(num_obj_classes, node_feature_size, rgcn_hidden_dim, num_rel_classes, head=False)
-        self.vit = ViT(vit_hidden_dim, head=False)
+        if visual_type == 'vit':
+            self.visual = ViT(vit_hidden_dim, head=False)
+        elif visual_type == 'mvit':
+            self.visual = MViT(vit_hidden_dim, head=False)
         self.head = nn.Linear(vit_hidden_dim + rgcn_hidden_dim, num_classes)
     
     def forward(self, img, sg):
-        img = self.vit(img)
+        img = self.visual(img)
         sg = self.rgcn(sg)
         hidden_state = torch.cat((img, sg), dim=1)
         return self.head(hidden_state)
