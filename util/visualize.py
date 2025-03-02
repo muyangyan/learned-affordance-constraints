@@ -36,8 +36,8 @@ def show_pyg_graph(graph, nodes, rels, layout='circular', curve=None, ax=None):
     edge_labels = nx.get_edge_attributes(G, 'label')
 
     if curve:
-        #connectionstyle = 'arc3,rad=%f' % curve
-        connectionstyle = [f"arc3,rad={r}" for r in it.accumulate([0.15] * 4)]
+        connectionstyle = 'arc3,rad=%f' % curve
+        #connectionstyle = [f"arc3,rad={r}" for r in it.accumulate([0.15] * 4)]
     else:
         connectionstyle = 'arc3'
     

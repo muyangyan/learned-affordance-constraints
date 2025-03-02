@@ -14,16 +14,16 @@ forbidden_nodes: []
 forbidden_edges: []
 
 #ILP
-ilp_timeout: 6000
+ilp_timeout: 600
 fn_weight: 1
 
 #Training parameters========================
 #model
-model_type: 'joint' # joint, rgcn, vit
+model_type: 'joint_mvit' # joint, rgcn, vit
 weight_scheme: 'inverse' # uniform, inverse, invsqrt
 epochs: 30
 batch_size: 16
-devices: [0, 1, 2, 3]
+devices: [0,1,2,3]
 lr: 1e-3
 
 #Testing parameters========================
@@ -32,4 +32,4 @@ data_split: 'test'
 rules_name: '8693_full'
 mode: 'soft'
 recall_threshold: 0.8
-constraint_weight: 1
+constraint_weight: 0.5

@@ -20,7 +20,8 @@ def pretty_print_dict(d):
         print(f'{key:25} {value:.4f}')
 
 def load_preds(cfg, run_name, test_run_name, preds):
-    save_folder = f'{cfg.runs_folder}/{run_name}/test_runs/{test_run_name}'
+    #save_folder = f'{cfg.runs_folder}/{run_name}/test_runs/{test_run_name}'
+    save_folder = os.path.join(cfg.runs_folder, run_name, 'test_runs', test_run_name)
 
     with open(f'{save_folder}/{preds}.npy', 'rb') as f:
         preds = np.load(f)
@@ -60,8 +61,6 @@ def analyze_preds(cfg, run_name, test_run_name, preds=None, class_names=None, do
         'Mean Average Precision(%)': mean_average_precision,
         'Macro Precision(%)': macro_precision,
         'Macro Recall(%)': macro_recall,
-        #'micro_precision': micro_precision,
-        #'micro_recall': micro_recall,
         'F1 Score(%)': f1,
         'Mean Entropy(lower better)': mean_entropy
     }
@@ -427,7 +426,7 @@ if __name__ == "__main__":
     args = argparse.ArgumentParser()
     args.add_argument('--run', type=str, default='none')
     args.add_argument('--test_run', type=str, default='none')
-    args.add_argument('--pred_name', type=str, default='constrained')
+    args.add_argument('--pred_name', type=str, default='neural')
     args = args.parse_args()
 
     cfg = load_yaml(os.path.join('runs/', args.run, 'test_runs', args.test_run, 'config.yaml'))
