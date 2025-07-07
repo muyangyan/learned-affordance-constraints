@@ -32,4 +32,4 @@ data_split: 'test'
 rules_name: '8693_full'
 mode: 'soft'
 recall_threshold: 0.8
-constraint_weight: 5
+constraint_weight: 2
