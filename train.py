@@ -89,9 +89,10 @@ def train(cfg, run_name):
     checkpoint_callback = ModelCheckpoint(
         monitor='val_acc',
         dirpath=f'{cfg.runs_folder}/{run_name}/checkpoints/',
-        filename='{epoch:02d}-{val_acc:.2f}',
-        save_top_k=1,
+        filename='{epoch:02d}-{val_acc:.4f}',
+        save_top_k=1,  # Save top 3 checkpoints instead of just 1
         mode='max',
+        verbose=False,
     )
     logger = TensorBoardLogger(save_dir=f'{cfg.runs_folder}/{run_name}/logs/')
     trainer = Trainer(

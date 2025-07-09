@@ -4,15 +4,16 @@ import torch.nn.functional as F
 from torchvision.models import vit_b_16, ViT_B_16_Weights
 
 class ViT(nn.Module):
-    def __init__(self, num_classes, head=True):
+    def __init__(self, num_classes, head=True, freeze_backbone=False):
         super(ViT, self).__init__()
         vit = vit_b_16(weights=ViT_B_16_Weights.DEFAULT)
         vit.heads = torch.nn.Identity()
         self.head = head
 
         #freeze the backbone
-        for param in vit.parameters():
-            param.requires_grad = False
+        if freeze_backbone:
+            for param in vit.parameters():
+                param.requires_grad = False
 
         #set the head to use our num classes
         vit.heads = torch.nn.Linear(vit.hidden_dim, num_classes)

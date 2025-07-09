@@ -76,7 +76,6 @@ test
 '''
 def test(cfg, run_name, test_run_name):
 
-
     checkpoints_folder = os.path.join(cfg.runs_folder, run_name, 'checkpoints')
     checkpoints = os.listdir(checkpoints_folder)
     checkpoint = os.path.join(checkpoints_folder, checkpoints[0])

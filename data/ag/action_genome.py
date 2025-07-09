@@ -2,6 +2,8 @@ import os
 import csv
 import pickle
 import shelve
+import hashlib
+import json
 
 from PIL import Image
 
@@ -22,6 +24,63 @@ from util.data_utils import get_id, extract_usable_frames, clean_df, load_verb_w
 
 class ActionGenome(Dataset):
 
+    def _get_cache_file(self, root, meta_root, position, label_mode, no_img, num_samples, subset, split, threshold):
+        """Generate a cache key based on dataset parameters"""
+        params = {
+            'root': root,
+            'meta_root': meta_root, 
+            'position': position,
+            'label_mode': label_mode,
+            'no_img': no_img,
+            'num_samples': num_samples,
+            'subset': subset,
+            'split': split,
+            'threshold': threshold
+        }
+        param_str = json.dumps(params, sort_keys=True)
+        cache_key = hashlib.md5(param_str.encode()).hexdigest()
+        cache_dir = os.path.join(self.meta_root, 'cache')
+        cache_path = os.path.join(cache_dir, f'dataset_{cache_key}.pkl')
+        return cache_path
+
+    def _load_from_cache(self, cache_file):
+        """Load dataset from cache file, returns True if successful"""
+        if not os.path.exists(cache_file):
+            return False
+        
+        print(f"Loading dataset from cache: {cache_file}")
+        with open(cache_file, 'rb') as f:
+            cache_data = pickle.load(f)
+            self.df = cache_data['df']
+            self.scene_graphs = cache_data['scene_graphs']
+            self.verb_priors = cache_data['verb_priors']
+            # Load vocabulary data
+            for attr_name in ['verb_classes', 'action_classes', 'object_classes', 'relationship_classes', 
+                            'action_mapper', 'verb_mapper', 'action_verb_obj_map', 'verb_result_rel_map']:
+                setattr(self, attr_name, cache_data[attr_name])
+        return True
+
+    def _save_to_cache(self, cache_file):
+        """Save processed dataset to cache file"""
+        cache_dir = os.path.dirname(cache_file)
+        os.makedirs(cache_dir, exist_ok=True)
+        cache_data = {
+            'df': self.df,
+            'scene_graphs': self.scene_graphs,
+            'verb_priors': self.verb_priors,
+            'verb_classes': self.verb_classes,
+            'action_classes': self.action_classes,
+            'object_classes': self.object_classes,
+            'relationship_classes': self.relationship_classes,
+            'action_mapper': self.action_mapper,
+            'verb_mapper': self.verb_mapper,
+            'action_verb_obj_map': self.action_verb_obj_map,
+            'verb_result_rel_map': self.verb_result_rel_map
+        }
+        print(f"Saving dataset to cache: {cache_file}")
+        with open(cache_file, 'wb') as f:
+            pickle.dump(cache_data, f)
+
     def __init__(self, root, meta_root, prior_path=None, position='both', label_mode='single', no_img=False, num_samples=None, subset=True, split=None, threshold=1):
         assert position in ['pre', 'post', 'both']
         assert label_mode in ['single', 'multi']
@@ -37,6 +96,23 @@ class ActionGenome(Dataset):
         self.no_img = no_img
         self.split = split
         self.constraints = None
+
+        # This transform is constant and works for both ViT and MViT models
+        self.im_transform = T.Compose([
+            T.Resize(size=(224, 224)),
+            T.ToTensor(),
+            T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+        ])
+
+        # Generate cache key and check for cached data
+        cache_file = self._get_cache_file(root, meta_root, position, label_mode, no_img, num_samples, subset, split, threshold)
+        
+        # Try to load from cache
+        if self._load_from_cache(cache_file):
+            return
+
+        print("Cache not found, creating dataset from scratch...")
+
 
         split_file = os.path.join(meta_root, 'split_train_val.json')
         frame_validity_file = os.path.join(meta_root, 'frame_validity.csv')
@@ -123,13 +199,11 @@ class ActionGenome(Dataset):
 
                 data = self.create_scene_graph(id, action_classes)
                 self.scene_graphs[id] = data
-        # This transform works for both ViT and MViT models
-        # MViT also expects 224x224 input with the same normalization values
-        self.im_transform = T.Compose([
-            T.Resize(size=(224, 224)),
-            T.ToTensor(),
-            T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-        ])
+        
+
+        # Save to cache for future use
+        self._save_to_cache(cache_file)
+        
 
     def __len__(self):
         return len(self.df)

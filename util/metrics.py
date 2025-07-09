@@ -56,10 +56,10 @@ def analyze_preds(cfg, run_name, test_run_name, preds=None, class_names=None, do
 
     metrics_dict = {
         'Top1 Accuracy(%)': acc,
-        #'Top3 Accuracy(%)': top3_acc,
+        'Top3 Accuracy(%)': top3_acc,
         'Top5 Accuracy(%)': top5_acc,
         #'Mean Average Precision(%)': mean_average_precision,
-        #'Macro Precision(%)': macro_precision,
+        'Macro Precision(%)': macro_precision,
         'F1 Score(%)': f1,
         'Macro Recall(%)': macro_recall,
         #'Mean Entropy(lower better)': mean_entropy

@@ -4,7 +4,7 @@ import torch.nn.functional as F
 import timm
 
 class MViT(nn.Module):
-    def __init__(self, num_classes, head=True):
+    def __init__(self, num_classes, head=True, freeze_backbone=False):
         super(MViT, self).__init__()
         # Use timm's implementation of MViT for single images
         self.backbone = timm.create_model('mvitv2_small', pretrained=True)
@@ -17,13 +17,14 @@ class MViT(nn.Module):
         
         self.head = head
 
-        # Freeze the backbone
-        for param in self.backbone.parameters():
-            param.requires_grad = False
-            
-        # Unfreeze the classification head
-        for param in self.backbone.head.fc.parameters():
-            param.requires_grad = True
+        if freeze_backbone:
+            # Freeze the backbone
+            for param in self.backbone.parameters():
+                param.requires_grad = False
+                
+            # Unfreeze the classification head
+            for param in self.backbone.head.fc.parameters():
+                param.requires_grad = True
 
     def forward(self, x):
         x = self.backbone(x)

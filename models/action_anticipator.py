@@ -1,5 +1,6 @@
 import numpy as np
 import torch
+import torch.optim
 from torch import Tensor
 import torch.nn.functional as F
 import torch.nn as nn
@@ -221,6 +222,9 @@ class SingleLeaPR(BaseLeaPR):
         
         self.log('val_loss', loss, on_step=False, on_epoch=True, prog_bar=True)
         self.log('val_acc', acc, on_step=False, on_epoch=True, prog_bar=True)
+        
+        # Debug: Print val_acc to verify checkpoint callback sees correct values
+        print(f"Epoch val_acc: {acc:.4f}")
 
     def log_test_metrics(self, out, labels):
         #print(out.shape, labels.shape)
