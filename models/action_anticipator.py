@@ -5,10 +5,7 @@ from torch import Tensor
 import torch.nn.functional as F
 import torch.nn as nn
 
-from models.modules.rgcn import RGCN
-from models.modules.vit import ViT
-from models.modules.mvit import MViT
-from models.modules.joint_model import JointModel
+from models.modules import get_model
 
 import pytorch_lightning as L 
 
@@ -23,18 +20,9 @@ class BaseLeaPR(L.LightningModule):
         self.lr = float(lr)
         self.constraint_weight = 1
         self.rule_loss_coeff = rule_loss_coeff
-        rgcn_params, vit_hidden_dim, num_classes = model_params 
-        if model_type == 'joint':
-            self.model = JointModel(rgcn_params, vit_hidden_dim, num_classes, visual_type='vit')
-        elif model_type == 'joint_mvit':
-            self.model = JointModel(rgcn_params, vit_hidden_dim, num_classes, visual_type='mvit')
-        elif model_type == 'rgcn':
-            num_obj_classes, node_feature_size, rgcn_hidden_dim, num_rel_classes = rgcn_params
-            self.model = RGCN(num_obj_classes, node_feature_size, num_classes, num_rel_classes, head=True)
-        elif model_type == 'vit':
-            self.model = ViT(num_classes, head=True)
-        elif model_type == 'mvit':
-            self.model = MViT(num_classes, head=True)
+
+        num_classes = model_params[2]
+        self.model = get_model(model_type, model_params)
         
         # Move weight to correct device and store it only once
         self.register_buffer('weight', weight)

@@ -65,6 +65,38 @@ def test_routine(cfg, run_name, test_run_name, trainer, model, dataset, loader):
     trainer.test(model, dataloaders=loader)
     save_and_analyze_preds(cfg, run_name, test_run_name, 'joint', model.preds['joint'], dataset.verb_classes)
 
+
+def test_routine_new(cfg, run_name, test_run_name, trainer, model, dataset, loader):
+
+    print('Without rules---------------------')
+    model.constraint_mode = 'neural'
+    trainer.test(model, dataloaders=loader)
+    save_and_analyze_preds(cfg, run_name, test_run_name, 'neural', model.preds['neural'], dataset.verb_classes)
+
+    print('Only rules---------------------')
+    constraints, truth_values = apply_rules(cfg.rules_name, 
+        os.path.join(cfg.prolog_folder, cfg.position, 'learned_rules'),
+        os.path.join(cfg.prolog_folder, cfg.position, f'{cfg.data_split}_bk.pl'),
+        len(dataset), dataset.verb_classes,
+        mode=cfg.mode,
+        recall_threshold=cfg.recall_threshold,
+        priors=dataset.verb_priors)
+
+    dataset.constraints = constraints
+    dataset.truth_values = truth_values
+    model.constraint_mode = 'rules'
+    model.constraint_weight = cfg.constraint_weight
+
+    trainer.test(model, dataloaders=loader)
+    save_and_analyze_preds(cfg, run_name, test_run_name, 'rules', model.preds['rules'], dataset.verb_classes)
+
+    print('Integrated---------------------')
+    model.constraint_mode = 'joint'
+    trainer.test(model, dataloaders=loader)
+    save_and_analyze_preds(cfg, run_name, test_run_name, 'joint', model.preds['joint'], dataset.verb_classes)
+
+
+
 '''
 with run folders set up, we can test the model
 save test results, metrics, and plots to runs/run_name/test_run_name/
