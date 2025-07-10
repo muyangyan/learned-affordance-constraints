@@ -63,9 +63,9 @@ def init_model_train(cfg, train_set):
     weight = torch.tensor(weight, dtype=torch.float)
 
     if cfg.data.position == 'both':
-        model = SingleLeaPR(cfg, model_params, weight, priors)
+        model = SingleLeaPR(cfg, model_params, weight, priors, train_set.verb_classes)
     else:
-        model = SingleLeaPR(cfg, model_params, weight, priors) # TODO: add both model
+        model = SingleLeaPR(cfg, model_params, weight, priors, train_set.verb_classes) # TODO: add both model
     return model
 
 '''

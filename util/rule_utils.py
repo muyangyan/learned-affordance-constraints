@@ -69,7 +69,12 @@ def compute_rule_preds(rules_name, rules_folder, truth_values,
     return result
 
 
-def get_rule_precisions_recalls(rules_json, priors):
+def get_rule_precisions_recalls(rules_json, priors, classes):
+    '''
+    Get the precisions and recalls for all rules for converting rule binary truth values to predictions
+    classes should be the same as targets in apply_rules. list of strings, for ordering
+    '''
+
     with open(rules_json, 'r') as f:
         rules = json.load(f)
     
@@ -77,14 +82,14 @@ def get_rule_precisions_recalls(rules_json, priors):
     recalls = np.zeros(len(rules))
     precisions = np.zeros(len(rules))
     
-    for j in range(len(rules)):
-        if rules[j] is not None:
-            recalls[j] = rules[j][1]['recall']
-            precisions[j] = rules[j][1]['precision']
+    for i, verb in enumerate(classes):
+        if rules[verb] is not None:
+            recalls[i] = rules[verb][1]['recall']
+            precisions[i] = rules[verb][1]['precision']
         else:
             # If rule doesn't exist: recall=1, precision=prior
-            recalls[j] = 1.0
-            precisions[j] = priors[j]
+            recalls[i] = 1.0
+            precisions[i] = priors[i]
     return precisions, recalls
 
 # evaluate each rule - just get the binary truth values
