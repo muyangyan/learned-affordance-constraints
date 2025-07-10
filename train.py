@@ -5,6 +5,7 @@ warnings.filterwarnings("ignore")
 import os
 import matplotlib.pyplot as plt
 import numpy as np
+import json
 import torch
 from torch.utils.data import DataLoader
 from data.ag.action_genome import ActionGenome, MultiAG, SingleAG, SingleBothAG
@@ -21,7 +22,7 @@ from functools import partial
 
 torch.set_float32_matmul_precision('medium')
 
-def get_datasets(cfg, run_name):
+def get_datasets(cfg, prior_path):
     if cfg.data.position == 'both':
         AG = SingleBothAG
     elif cfg.data.position == 'pre' or cfg.data.position == 'post':
@@ -29,7 +30,6 @@ def get_datasets(cfg, run_name):
     else:
         raise ValueError(f'Invalid position: {cfg.data.position}')
 
-    prior_path = f'{cfg.runs_folder}/{run_name}/verb_priors.json'
     PartialAG = partial(AG, cfg, prior_path=prior_path)
 
     train_set = PartialAG(split='train')
@@ -37,7 +37,7 @@ def get_datasets(cfg, run_name):
 
     return train_set, val_set
 
-def init_model_train(cfg, train_set):
+def init_model_train(cfg, train_set, prior_path):
     num_obj_classes = len(train_set.object_classes)
     num_verb_classes = len(train_set.verb_classes)
     num_rel_classes = len(train_set.relationship_classes)
@@ -49,13 +49,15 @@ def init_model_train(cfg, train_set):
                     'vit_hidden_dim': vit_hidden_dim,
                     'num_verb_classes': num_verb_classes
                     }
+    
+    with open(prior_path, 'r') as f:
+        priors = json.load(f)['priors']
+        priors = np.array(priors)
 
-    freq = train_set.verb_priors
-    freq = freq + 1 #add 1 to each frequency to smooth, and avoid division by zero
     if cfg.model.weight_scheme == 'inverse':
-        weight = len(train_set) / (num_verb_classes * freq)
+        weight = 1 / (num_verb_classes * (priors + 1e-6))
     elif cfg.model.weight_scheme == 'invsqrt':
-        weight = len(train_set) / (num_verb_classes * np.sqrt(freq))
+        weight = 1 / (num_verb_classes * np.sqrt(priors + 1e-6))
     elif cfg.model.weight_scheme == 'uniform':
         weight = torch.ones(num_verb_classes)
     else:
@@ -63,9 +65,9 @@ def init_model_train(cfg, train_set):
     weight = torch.tensor(weight, dtype=torch.float)
 
     if cfg.data.position == 'both':
-        model = SingleLeaPR(cfg, model_params, weight)
+        model = SingleLeaPR(cfg, model_params, weight, priors)
     else:
-        model = SingleLeaPR(cfg, model_params, weight) # TODO: add both model
+        model = SingleLeaPR(cfg, model_params, weight, priors) # TODO: add both model
     return model
 
 '''
@@ -80,7 +82,8 @@ train
 '''
 def train(cfg, run_name):
 
-    train_set, val_set = get_datasets(cfg, run_name)
+    prior_path = f'{cfg.runs_folder}/{run_name}/verb_priors.json'
+    train_set, val_set = get_datasets(cfg, prior_path)
 
     print('train set length:', len(train_set))
     print('val set length:', len(val_set))
@@ -88,7 +91,7 @@ def train(cfg, run_name):
     train_loader = DataLoader(train_set, batch_size=cfg.train.batch_size, collate_fn=train_set.verb_pred_collate, num_workers=16, shuffle=True)
     val_loader = DataLoader(val_set, batch_size=128, collate_fn=val_set.verb_pred_collate, num_workers=16, shuffle=False)
 
-    model = init_model_train(cfg, train_set)
+    model = init_model_train(cfg, train_set, prior_path)
 
     #TODO: change monitor to val_mAP if position is multi
     checkpoint_callback = ModelCheckpoint(

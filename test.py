@@ -31,41 +31,6 @@ def save_and_analyze_preds(cfg, run_name, test_run_name, pred_name, preds, class
 
     analyze_preds(cfg, run_name, test_run_name, preds=preds, class_names=class_names)
 
-def test_routine_old(cfg, run_name, test_run_name, trainer, model, dataset, loader):
-    dataset.constraints = None
-    dataset.truth_values = None
-    model.constraint_mode = None
-    model.constraint_weight = 1
-    model.preds = {'neural': [], 'rules': [], 'joint': []}
-
-    print('Without rules---------------------')
-    model.constraint_mode = 'neural'
-    trainer.test(model, dataloaders=loader)
-    save_and_analyze_preds(cfg, run_name, test_run_name, 'neural', model.preds['neural'], dataset.verb_classes)
-
-    print('Only rules---------------------')
-    constraints, truth_values = apply_rules(cfg.rules_name, 
-        os.path.join(cfg.prolog_folder, cfg.position, 'learned_rules'),
-        os.path.join(cfg.prolog_folder, cfg.position, f'{cfg.data_split}_bk.pl'),
-        len(dataset), dataset.verb_classes,
-        mode=cfg.mode,
-        recall_threshold=cfg.recall_threshold,
-        priors=dataset.verb_priors)
-
-    dataset.constraints = constraints
-    dataset.truth_values = truth_values
-    model.constraint_mode = 'rules'
-    model.constraint_weight = cfg.constraint_weight
-
-    trainer.test(model, dataloaders=loader)
-    save_and_analyze_preds(cfg, run_name, test_run_name, 'rules', model.preds['rules'], dataset.verb_classes)
-
-    print('Integrated---------------------')
-    model.constraint_mode = 'joint'
-    trainer.test(model, dataloaders=loader)
-    save_and_analyze_preds(cfg, run_name, test_run_name, 'joint', model.preds['joint'], dataset.verb_classes)
-
-
 def test_routine(cfg, run_name, test_run_name, trainer, model, dataset, loader):
 
     print('Without rules---------------------')
@@ -100,7 +65,7 @@ def test(cfg, run_name, test_run_name):
     checkpoint = os.path.join(checkpoints_folder, checkpoints[0])
 
     model = SingleLeaPR.load_from_checkpoint(checkpoint)
-    model.set_rule_parms(cfg.rules)
+    model.set_rule_params(cfg.rules)
     trainer = Trainer(accelerator='gpu', devices=[0], logger=False)
 
     assert cfg.test.data_split in ['test', 'val'], 'Invalid test split'

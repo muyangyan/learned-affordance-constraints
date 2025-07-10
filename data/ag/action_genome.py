@@ -1,26 +1,29 @@
-import os
 import csv
-import pickle
-import shelve
+from functools import partial
 import hashlib
 import json
+import os
+import pickle
+import shelve
+import warnings
 
 from PIL import Image
-
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-
-from functools import partial
-
 import torch
 import torch.nn.functional as F
+from torch.utils.data import DataLoader, Dataset
+from torch_geometric.data import Batch, Data
 import torchvision.transforms as T
-from torch.utils.data import Dataset, DataLoader
-from torch_geometric.data import Data, Batch
 
-import matplotlib.pyplot as plt
-
-from util.data_utils import get_id, extract_usable_frames, clean_df, load_verb_whitelist, apply_subset
+from util.data_utils import (
+    apply_subset,
+    clean_df,
+    extract_usable_frames,
+    get_id,
+    load_verb_whitelist,
+)
 from util.rule_utils import apply_rules
 
 FRAME_MATCH_THRESHOLD = 1
@@ -111,10 +114,6 @@ class ActionGenome(Dataset):
         frame_validity_file = os.path.join(self.meta_root, 'frame_validity.csv')
         verb_whitelist_file = os.path.join(self.meta_root, 'verb_whitelist.txt')
         random_idxs_file = os.path.join(self.meta_root, 'randomized_idxs.json')
-        if prior_path is None:
-            verb_priors_file = os.path.join(self.meta_root, 'verb_priors.json')
-        else:
-            verb_priors_file = prior_path
 
         self.init_vocab(verb_whitelist_file)
 
@@ -181,11 +180,14 @@ class ActionGenome(Dataset):
             self.df = multi_df
             length = len(multi_df)
 
-        self.init_priors(verb_priors_file, single_df, length)
+        if prior_path is not None:
+            if self.split == 'test' or self.split == 'val':
+                warnings.warn("Writing priors from a test or validation split.", UserWarning)
+            self.write_priors(prior_path, single_df, length)
 
         #create pyg scene graphs
         self.scene_graphs = {}
-        for idx, row in self.df.iterrows():
+        for idx, row in self.df.iterrows(): # type: ignore
             for pos in ['pre', 'post'] if self.position == 'both' else [self.position]:
                 id = get_id(row['vid'], row[f'{pos}_frame'])
                 action_classes = row['action']
@@ -195,17 +197,13 @@ class ActionGenome(Dataset):
         
         # TODO: this is just because we didn't generate the bk for non-split dataset
         if self.split is None:
-            self.constraints = None
             self.truth_values = None
         else:
             # TODO: maybe add an option to not have rules even when split valid?
-            self.constraints, self.truth_values = apply_rules(self.rules_name, 
+            self.truth_values = apply_rules(self.rules_name, 
                 os.path.join(self.prolog_folder, self.position, 'learned_rules'),
                 os.path.join(self.prolog_folder, self.position, f'{self.split}_bk.pl'),
-                len(self.df), self.verb_classes,
-                mode=cfg.rules.mode,
-                recall_threshold=cfg.rules.recall_threshold,
-                priors=self.verb_priors)
+                len(self.df), self.verb_classes)
 
         cache_data = { # all the actual data we need to save
             'df': self.df,
@@ -268,27 +266,21 @@ class ActionGenome(Dataset):
     def create_labels(self, action_classes):
         pass
 
-    def init_priors(self, verb_prior_file, single_df, length):
-        if self.split == 'train' or self.split == None:
-            # Expand actions into verb, nouns. Used only for priors.
-            single_df['verb'] = single_df['action'].apply(lambda x: self.action_verb_obj_map[x][0])
-            single_df['noun'] = single_df['action'].apply(lambda x: self.action_verb_obj_map[x][1])
-            verb_counts = dict(sorted(single_df['verb'].value_counts().to_dict().items()))
-            for i in range(len(self.verb_classes)):
-                if i not in verb_counts:
-                    verb_counts[i] = 0
-            self.verb_priors = [verb_counts[verb]/length for verb in verb_counts]
-            self.verb_priors = np.array(self.verb_priors)
+    def write_priors(self, verb_prior_file, single_df, length):
+        # Expand actions into verb, nouns. Used only for priors.
+        single_df['verb'] = single_df['action'].apply(lambda x: self.action_verb_obj_map[x][0])
+        single_df['noun'] = single_df['action'].apply(lambda x: self.action_verb_obj_map[x][1])
+        verb_counts = dict(sorted(single_df['verb'].value_counts().to_dict().items()))
+        for i in range(len(self.verb_classes)):
+            if i not in verb_counts:
+                verb_counts[i] = 0
+        verb_priors = np.array([verb_counts[verb]/length for verb in verb_counts])
 
-            if self.split == 'train':
-                prior_dict = {'verbs': self.verb_classes, 'priors': list(self.verb_priors)}
+        if self.split == 'train':
+            prior_dict = {'verbs': self.verb_classes, 'priors': verb_priors.tolist()}
+            with open(verb_prior_file, 'w') as f:
+                json.dump(prior_dict, f)
 
-                with open(verb_prior_file, 'w') as f:
-                    json.dump(prior_dict, f)
-        else:
-            with open(verb_prior_file, 'r') as f:
-                prior_dict = json.load(f)
-                self.verb_priors = np.array(prior_dict.get('priors', []))
 
     def init_vocab(self, verb_whitelist_file):
 
@@ -438,26 +430,22 @@ class SingleBothAG(ActionGenome):
             pre_image = Image.open(pre_image_path).convert('RGB')
             post_image = Image.open(post_image_path).convert('RGB')
 
-        if self.constraints is not None:
-            pre_constraints = torch.tensor(self.constraints[index]).float()
-            post_constraints = torch.tensor(self.constraints[index]).float()
+        if self.truth_values is not None:
             pre_truth_values = torch.tensor(self.truth_values[index]).float()
             post_truth_values = torch.tensor(self.truth_values[index]).float()
-        else:
-            pre_constraints = None
-            post_constraints = None
+        else: 
             pre_truth_values = None
             post_truth_values = None
 
-        pre_data = (pre_id, pre_image, pre_scene_graph, action_classes, pre_constraints, pre_truth_values)  
-        post_data = (post_id, post_image, post_scene_graph, action_classes, post_constraints, post_truth_values)
+        pre_data = (pre_id, pre_image, pre_scene_graph, action_classes, pre_truth_values)  
+        post_data = (post_id, post_image, post_scene_graph, action_classes, post_truth_values)
         
         return pre_data, post_data
 
     def verb_pred_collate(self, batch):
         # action_labels is multilabel
         pre_batch, post_batch = zip(*batch)
-        ids, images, scene_graphs, action_labels, constraints, truth_values = zip(*pre_batch)
+        ids, images, scene_graphs, action_labels, truth_values = zip(*pre_batch)
         sg_batch = Batch.from_data_list(scene_graphs, exclude_keys=['o'])
         
         verbs = torch.tensor([self.action_verb_obj_map[a][0] for a in action_labels])
@@ -469,14 +457,12 @@ class SingleBothAG(ActionGenome):
             resized_images = [self.im_transform(img) for img in images]
             resized_images = torch.stack(resized_images)
         
-        if self.constraints is not None:
-            constraints = torch.stack(constraints)
+        if self.truth_values is not None:
             truth_values = torch.stack(truth_values)
         else:
-            constraints = None
             truth_values = None
 
-        return ids, resized_images, sg_batch, verb_labels, constraints, truth_values
+        return ids, resized_images, sg_batch, verb_labels, truth_values
         
 class SingleAG(ActionGenome):
     
@@ -508,17 +494,15 @@ class SingleAG(ActionGenome):
             image_path = os.path.join(self.root, 'frames', id)
             image = Image.open(image_path).convert('RGB')
 
-        if self.constraints is not None:
-            constraints = torch.tensor(self.constraints[index]).float()
+        if self.truth_values is not None:
             truth_values = torch.tensor(self.truth_values[index]).float()
         else:
-            constraints = None
             truth_values = None
 
-        return id, image, scene_graph, action_classes, constraints, truth_values
+        return id, image, scene_graph, action_classes, truth_values
 
     def verb_pred_collate(self, batch):
-        ids, images, scene_graphs, action_labels, constraints, truth_values = zip(*batch)
+        ids, images, scene_graphs, action_labels, truth_values = zip(*batch)
         sg_batch = Batch.from_data_list(scene_graphs, exclude_keys=['o'])
         
         verbs = torch.tensor([self.action_verb_obj_map[a][0] for a in action_labels])
@@ -530,14 +514,12 @@ class SingleAG(ActionGenome):
             resized_images = [self.im_transform(img) for img in images]
             resized_images = torch.stack(resized_images)
         
-        if self.constraints is not None:
-            constraints = torch.stack(constraints)
+        if self.truth_values is not None:
             truth_values = torch.stack(truth_values)
         else:
-            constraints = None
             truth_values = None
 
-        return ids, resized_images, sg_batch, verb_labels, constraints, truth_values
+        return ids, resized_images, sg_batch, verb_labels, truth_values
 
 class MultiAG(ActionGenome):
     
@@ -569,18 +551,16 @@ class MultiAG(ActionGenome):
             image_path = os.path.join(self.root, 'frames', id)
             image = Image.open(image_path).convert('RGB')
 
-        if self.constraints is not None:
-            constraints = torch.tensor(self.constraints[index]).float()
+        if self.truth_values is not None:
             truth_values = torch.tensor(self.truth_values[index]).float()
         else:
-            constraints = None
             truth_values = None
 
-        return id, image, scene_graph, action_classes, constraints, truth_values
+        return id, image, scene_graph, action_classes, truth_values
 
     def verb_pred_collate(self, batch):
         # action_labels is multilabel
-        ids, images, scene_graphs, action_labels, constraints, truth_values = zip(*batch)
+        ids, images, scene_graphs, action_labels, truth_values = zip(*batch)
         sg_batch = Batch.from_data_list(scene_graphs, exclude_keys=['o'])
         
         # Create a 2D tensor for multi-label verbs with shape Batch x Classes
@@ -596,11 +576,9 @@ class MultiAG(ActionGenome):
             resized_images = [self.im_transform(img) for img in images]
             resized_images = torch.stack(resized_images)
         
-        if self.constraints is not None:
-            constraints = torch.stack(constraints)
+        if self.truth_values is not None:
             truth_values = torch.stack(truth_values)
         else:
-            constraints = None
             truth_values = None
 
-        return ids, resized_images, sg_batch, verb_labels, constraints, truth_values
+        return ids, resized_images, sg_batch, verb_labels, truth_values
