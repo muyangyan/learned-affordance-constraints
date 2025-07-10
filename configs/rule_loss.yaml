@@ -7,30 +7,34 @@ popper_path: "/home/muyang/Popper/popper.py"
 runs_folder: "runs/"
 
 #data parameters
-train_split_ratio: 0.6
-position: 'pre'
-num_samples: -1
-forbidden_nodes: []
-forbidden_edges: []
+data:
+  train_split_ratio: 0.6
+  position: 'pre'
+  num_samples: -1
+  label_mode: 'single'
+  forbidden_nodes: []
+  forbidden_edges: []
 
-#ILP
-ilp_timeout: 600
-fn_weight: 1
+ilp:
+  timeout: 600
+  fn_weight: 1
 
-#Training parameters========================
-#model
-model_type: 'joint_mvit' # joint, rgcn, vit
-weight_scheme: 'inverse' # uniform, inverse, invsqrt
-rule_loss_coeff: 1 # uniform, inverse, invsqrt
-epochs: 30
-batch_size: 16
-devices: [0,1,2,3]
-lr: 1e-3
+model:
+  type: 'joint_mvit' # joint, rgcn, vit
+  weight_scheme: 'inverse' # uniform, inverse, invsqrt
 
-#Testing parameters========================
-#rules
-data_split: 'test'
-rules_name: '8693_full'
-mode: 'soft'
-recall_threshold: 0.8
-constraint_weight: 1
+rules: # used in training time as well
+  name: '8693_full'
+  mode: 'soft'
+  recall_threshold: 0.8
+  constraint_weight: 1 # can be changed at test time
+
+train:
+  rule_loss_coeff: 1 # use 0 to disable rule loss
+  epochs: 30
+  batch_size: 16
+  devices: [0,1,2,3]
+  lr: 1e-3
+
+test:
+  data_split: 'test' #val or test

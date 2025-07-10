@@ -31,9 +31,9 @@ def create_run_directories(cfg, args):
 
 def create_test_directories(cfg, args):
     run_name = args.run
-    #test_run_name = cfg.data_split + '_' + cfg.constraint_weight + '_' + randomname.get_name().split('-')[0]
+
     rand_noun = randomname.get_name().split('-')[1]
-    test_run_name = f'{cfg.data_split}_{cfg.constraint_weight}_{rand_noun}'
+    test_run_name = f'{rand_noun}'
     run_folder = f'{cfg.runs_folder}/{run_name}' #folder for the training run we are testing
     test_run_folder = f'{run_folder}/test_runs/{test_run_name}' #new folder for the specific test run
     if os.path.exists(test_run_folder):
@@ -82,8 +82,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Train and test joint model')
 
     #config
-    parser.add_argument('--config', type=str, default='none', help='Path to config file')
-    parser.add_argument('--run', type=str, default='none', help='Run name')
+    parser.add_argument('-c', '--config', type=str, default='none', help='Path to config file')
+    parser.add_argument('-r', '--run', type=str, default='none', help='Run name')
 
     args = parser.parse_args()
 

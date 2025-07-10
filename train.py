@@ -21,6 +21,22 @@ from functools import partial
 
 torch.set_float32_matmul_precision('medium')
 
+def get_datasets(cfg, run_name):
+    if cfg.data.position == 'both':
+        AG = SingleBothAG
+    elif cfg.data.position == 'pre' or cfg.data.position == 'post':
+        AG = SingleAG
+    else:
+        raise ValueError(f'Invalid position: {cfg.data.position}')
+
+    prior_path = f'{cfg.runs_folder}/{run_name}/verb_priors.json'
+    PartialAG = partial(AG, cfg, prior_path=prior_path)
+
+    train_set = PartialAG(split='train')
+    val_set = PartialAG(split='val')
+
+    return train_set, val_set
+
 def init_model_train(cfg, train_set):
     num_obj_classes = len(train_set.object_classes)
     num_verb_classes = len(train_set.verb_classes)
@@ -29,12 +45,13 @@ def init_model_train(cfg, train_set):
     node_feature_size = 32
     rgcn_hidden_dim, vit_hidden_dim = 32, 32
     rgcn_params = (num_obj_classes, node_feature_size, rgcn_hidden_dim, num_rel_classes)
-    model_params = (rgcn_params, vit_hidden_dim, num_verb_classes)
+    model_params = {'rgcn_params': rgcn_params,
+                    'vit_hidden_dim': vit_hidden_dim,
+                    'num_verb_classes': num_verb_classes
+                    }
 
     freq = train_set.verb_priors
-    #add 1 to each frequency to smooth, and avoid division by zero
-    freq = freq + 1
-
+    freq = freq + 1 #add 1 to each frequency to smooth, and avoid division by zero
     if cfg.weight_scheme == 'inverse':
         weight = len(train_set) / (num_verb_classes * freq)
     elif cfg.weight_scheme == 'invsqrt':
@@ -45,15 +62,10 @@ def init_model_train(cfg, train_set):
         raise ValueError(f'Invalid weight scheme: {cfg.weight_scheme}')
     weight = torch.tensor(weight, dtype=torch.float)
 
-    if cfg.rule_loss_coeff > 0:
-        constraint_mode = 'joint'
-    else:
-        constraint_mode = None
-
     if cfg.position == 'both':
-        model = SingleLeaPR(model_params, weight, model_type=cfg.model_type, lr=cfg.lr, rule_loss_coeff=cfg.rule_loss_coeff, constraint_mode = constraint_mode)
+        model = SingleLeaPR(cfg, model_params, weight)
     else:
-        model = SingleLeaPR(model_params, weight, model_type=cfg.model_type, lr=cfg.lr, rule_loss_coeff=cfg.rule_loss_coeff, constraint_mode = constraint_mode)
+        model = SingleLeaPR(cfg, model_params, weight) # TODO: add both model
     return model
 
 '''
@@ -68,20 +80,8 @@ train
 '''
 def train(cfg, run_name):
 
-    if cfg.position == 'both':
-        AG = SingleBothAG
-    elif cfg.position == 'pre' or cfg.position == 'post':
-        AG = SingleAG
-    else:
-        raise ValueError(f'Invalid position: {cfg.position}')
+    train_set, val_set = get_datasets(cfg, run_name)
 
-    PartialAG = partial(AG, root=cfg.data_root,
-                        meta_root=cfg.data_folder,
-                        position=cfg.position,
-                        prior_path=f'{cfg.runs_folder}/{run_name}/verb_priors.json')
-
-    train_set = PartialAG(split='train', num_samples=cfg.num_samples)
-    val_set = PartialAG(split='val')
     print('train set length:', len(train_set))
     print('val set length:', len(val_set))
 

@@ -13,18 +13,21 @@ from torchmetrics import MetricCollection
 from torchmetrics import Accuracy, Precision, Recall, AveragePrecision, F1Score
 
 class BaseLeaPR(L.LightningModule):
-    def __init__(self, model_params, weight, model_type='joint_mvit', lr=1e-3, rule_loss_coeff=0, constraint_mode=None):
+    def __init__(self, cfg, model_params, weight):
         super().__init__()
-        self.model_type = model_type
-        self.constraint_mode = constraint_mode # neural, rules, joint
-        self.lr = float(lr)
-        self.constraint_weight = 1
-        self.rule_loss_coeff = rule_loss_coeff
+        self.model_type = cfg.model.type
+        self.lr = float(cfg.train.lr)
+        self.constraint_weight = cfg.rules.constraint_weight
+        self.rule_loss_coeff = cfg.train.rule_loss_coeff
 
-        num_classes = model_params[2]
-        self.model = get_model(model_type, model_params)
-        
-        # Move weight to correct device and store it only once
+        if cfg.rule_loss_coeff > 0:
+            self.constraint_mode = 'joint'
+        else:
+            self.constraint_mode = 'neural'
+
+        num_classes = model_params['num_verb_classes']
+        self.model = get_model(self.model_type, model_params)
+
         self.register_buffer('weight', weight)
 
         # debug vars
@@ -33,6 +36,13 @@ class BaseLeaPR(L.LightningModule):
 
         self.init_metrics(num_classes)
         self.save_hyperparameters()
+    
+    def init_rule_parms(self, rule_parms):
+        '''
+        Since the checkpoint just saves the NN model weights, we can freely change the rule parameters at test time
+        For now, we only support changing the constraint weight. Technically one should also be able to change the rule mode and recall threshold.
+        '''
+        self.constraint_weight = rule_parms.constraint_weight
         
     def init_metrics(self, num_classes):
         pass
@@ -136,8 +146,8 @@ class BaseLeaPR(L.LightningModule):
 
 class MultiLeaPR(BaseLeaPR):
 
-    def __init__(self, model_params, weight, model_type='joint', lr=1e-3, rule_loss_coeff=0, constraint_mode=None):
-        super().__init__(model_params, weight, model_type, lr, rule_loss_coeff, constraint_mode)
+    def __init__(self, cfg, model_params, weight):
+        super().__init__(cfg, model_params, weight)
         self.criterion = nn.BCEWithLogitsLoss(weight=self.weight)
 
     def init_metrics(self, num_classes):
@@ -160,7 +170,6 @@ class MultiLeaPR(BaseLeaPR):
 
     def apply_constraints(self, out, constraints, weight=0.5):
         raise NotImplementedError('MultiLeaPR does not apply constraints')
-       
 
     def log_train_metrics(self, out, labels, metrics):
         out = torch.sigmoid(out)
@@ -182,8 +191,8 @@ class MultiLeaPR(BaseLeaPR):
         self.log_dict(metrics_dict, on_step=False, on_epoch=True, prog_bar=True)
 
 class SingleLeaPR(BaseLeaPR):
-    def __init__(self, model_params, weight, model_type='joint', lr=1e-3, rule_loss_coeff=0, constraint_mode=None):
-        super().__init__(model_params, weight, model_type, lr, rule_loss_coeff, constraint_mode)
+    def __init__(self, cfg, model_params, weight):
+        super().__init__(cfg, model_params, weight)
         self.criterion = nn.CrossEntropyLoss(weight=self.weight)
 
     def init_metrics(self, num_classes):
