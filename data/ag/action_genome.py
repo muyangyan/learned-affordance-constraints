@@ -218,7 +218,6 @@ class ActionGenome(Dataset):
             'verb_mapper': self.verb_mapper,
             'action_verb_obj_map': self.action_verb_obj_map,
             'verb_result_rel_map': self.verb_result_rel_map,
-            'constraints': self.constraints,
             'truth_values': self.truth_values
         }
         # Save to cache for future use
