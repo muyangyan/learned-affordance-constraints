@@ -22,7 +22,7 @@ from functools import partial
 
 torch.set_float32_matmul_precision('medium')
 
-def get_datasets(cfg, prior_path):
+def get_datasets(cfg):
     if cfg.data.position == 'both':
         AG = SingleBothAG
     elif cfg.data.position == 'pre' or cfg.data.position == 'post':
@@ -30,14 +30,14 @@ def get_datasets(cfg, prior_path):
     else:
         raise ValueError(f'Invalid position: {cfg.data.position}')
 
-    PartialAG = partial(AG, cfg, prior_path=prior_path)
+    PartialAG = partial(AG, cfg)
 
     train_set = PartialAG(split='train')
     val_set = PartialAG(split='val')
 
     return train_set, val_set
 
-def init_model_train(cfg, train_set, prior_path):
+def init_model_train(cfg, train_set):
     num_obj_classes = len(train_set.object_classes)
     num_verb_classes = len(train_set.verb_classes)
     num_rel_classes = len(train_set.relationship_classes)
@@ -49,11 +49,9 @@ def init_model_train(cfg, train_set, prior_path):
                     'vit_hidden_dim': vit_hidden_dim,
                     'num_verb_classes': num_verb_classes
                     }
-    
-    with open(prior_path, 'r') as f:
-        priors = json.load(f)['priors']
-        priors = np.array(priors)
 
+    priors = train_set.verb_priors
+    
     if cfg.model.weight_scheme == 'inverse':
         weight = 1 / (num_verb_classes * (priors + 1e-6))
     elif cfg.model.weight_scheme == 'invsqrt':
@@ -82,8 +80,7 @@ train
 '''
 def train(cfg, run_name):
 
-    prior_path = f'{cfg.runs_folder}/{run_name}/verb_priors.json'
-    train_set, val_set = get_datasets(cfg, prior_path)
+    train_set, val_set = get_datasets(cfg)
 
     print('train set length:', len(train_set))
     print('val set length:', len(val_set))
@@ -91,14 +88,14 @@ def train(cfg, run_name):
     train_loader = DataLoader(train_set, batch_size=cfg.train.batch_size, collate_fn=train_set.verb_pred_collate, num_workers=16, shuffle=True)
     val_loader = DataLoader(val_set, batch_size=128, collate_fn=val_set.verb_pred_collate, num_workers=16, shuffle=False)
 
-    model = init_model_train(cfg, train_set, prior_path)
+    model = init_model_train(cfg, train_set)
 
     #TODO: change monitor to val_mAP if position is multi
     checkpoint_callback = ModelCheckpoint(
         monitor='val_acc',
         dirpath=f'{cfg.runs_folder}/{run_name}/checkpoints/',
         filename='{epoch:02d}-{val_acc:.4f}',
-        save_top_k=1,  # Save top 3 checkpoints instead of just 1
+        save_top_k=1,  
         mode='max',
         verbose=False,
     )

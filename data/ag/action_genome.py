@@ -65,7 +65,7 @@ class ActionGenome(Dataset):
             pickle.dump(cache_data, f)
 
 
-    def __init__(self, cfg, prior_path=None,
+    def __init__(self, cfg,
                 no_img=False, subset=True, split=None): # debug params
         assert cfg.data.position in ['pre', 'post', 'both']
         assert cfg.data.label_mode in ['single', 'multi']
@@ -180,10 +180,10 @@ class ActionGenome(Dataset):
             self.df = multi_df
             length = len(multi_df)
 
-        if prior_path is not None:
-            if self.split == 'test' or self.split == 'val':
-                warnings.warn("Writing priors from a test or validation split.", UserWarning)
-            self.write_priors(prior_path, single_df, length)
+        if self.split == 'train' or self.split == None:
+            self.verb_priors = self.compute_priors(single_df, length)
+        else:
+            self.verb_priors = None
 
         #create pyg scene graphs
         self.scene_graphs = {}
@@ -216,7 +216,8 @@ class ActionGenome(Dataset):
             'verb_mapper': self.verb_mapper,
             'action_verb_obj_map': self.action_verb_obj_map,
             'verb_result_rel_map': self.verb_result_rel_map,
-            'truth_values': self.truth_values
+            'truth_values': self.truth_values,
+            'verb_priors': self.verb_priors
         }
         # Save to cache for future use
         self._save_to_cache(cache_file, cache_data)
@@ -266,7 +267,7 @@ class ActionGenome(Dataset):
     def create_labels(self, action_classes):
         pass
 
-    def write_priors(self, verb_prior_file, single_df, length):
+    def compute_priors(self, single_df, length):
         # Expand actions into verb, nouns. Used only for priors.
         single_df['verb'] = single_df['action'].apply(lambda x: self.action_verb_obj_map[x][0])
         single_df['noun'] = single_df['action'].apply(lambda x: self.action_verb_obj_map[x][1])
@@ -275,11 +276,11 @@ class ActionGenome(Dataset):
             if i not in verb_counts:
                 verb_counts[i] = 0
         verb_priors = np.array([verb_counts[verb]/length for verb in verb_counts])
+        # prior_dict = {'verbs': self.verb_classes, 'priors': verb_priors.tolist()}
+        # with open(verb_prior_file, 'w') as f:
+        #     json.dump(prior_dict, f)
+        return verb_priors
 
-        if self.split == 'train':
-            prior_dict = {'verbs': self.verb_classes, 'priors': verb_priors.tolist()}
-            with open(verb_prior_file, 'w') as f:
-                json.dump(prior_dict, f)
 
 
     def init_vocab(self, verb_whitelist_file):
@@ -396,10 +397,9 @@ class ActionGenome(Dataset):
 
 class SingleBothAG(ActionGenome):
 
-    def __init__(self, cfg, prior_path=None,
+    def __init__(self, cfg,
                 no_img=False, subset=True, split=None): # debug params
-        super().__init__(cfg, prior_path,
-                        no_img, subset, split)
+        super().__init__(cfg, no_img, subset, split)
         assert self.position == 'both'
 
     def create_labels(self, action_classes):
@@ -466,10 +466,9 @@ class SingleBothAG(ActionGenome):
         
 class SingleAG(ActionGenome):
     
-    def __init__(self, cfg, prior_path=None,
+    def __init__(self, cfg,
                 no_img=False, subset=True, split=None): # debug params
-        super().__init__(cfg, prior_path,
-                        no_img, subset, split)
+        super().__init__(cfg, no_img, subset, split)
         assert self.position == 'pre' or self.position == 'post'
 
     def create_labels(self, action_classes):
@@ -524,10 +523,8 @@ class SingleAG(ActionGenome):
 class MultiAG(ActionGenome):
     
     def __init__(self, cfg,
-                prior_path=None,
                 no_img=False, subset=True, split=None): # debug params
-        super().__init__(cfg, prior_path,
-                        no_img, subset, split)
+        super().__init__(cfg, no_img, subset, split)
 
     def create_labels(self, action_classes):
         verb_classes, obj_classes = zip(*[self.action_verb_obj_map[action_class] for action_class in action_classes])
