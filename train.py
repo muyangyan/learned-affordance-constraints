@@ -45,10 +45,15 @@ def init_model_train(cfg, train_set):
         raise ValueError(f'Invalid weight scheme: {cfg.weight_scheme}')
     weight = torch.tensor(weight, dtype=torch.float)
 
-    if cfg.position == 'both':
-        model = SingleLeaPR(model_params, weight, model_type=cfg.model_type, lr=cfg.lr)
+    if cfg.rule_loss_coeff > 0:
+        constraint_mode = 'joint'
     else:
-        model = SingleLeaPR(model_params, weight, model_type=cfg.model_type, lr=cfg.lr)
+        constraint_mode = None
+
+    if cfg.position == 'both':
+        model = SingleLeaPR(model_params, weight, model_type=cfg.model_type, lr=cfg.lr, rule_loss_coeff=cfg.rule_loss_coeff, constraint_mode = constraint_mode)
+    else:
+        model = SingleLeaPR(model_params, weight, model_type=cfg.model_type, lr=cfg.lr, rule_loss_coeff=cfg.rule_loss_coeff, constraint_mode = constraint_mode)
     return model
 
 '''

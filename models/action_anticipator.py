@@ -16,12 +16,13 @@ from torchmetrics import MetricCollection
 from torchmetrics import Accuracy, Precision, Recall, AveragePrecision, F1Score
 
 class BaseLeaPR(L.LightningModule):
-    def __init__(self, model_params, weight, model_type='joint_mvit', lr=1e-3):
+    def __init__(self, model_params, weight, model_type='joint_mvit', lr=1e-3, rule_loss_coeff=0, constraint_mode=None):
         super().__init__()
         self.model_type = model_type
-        self.constraint_mode = None # hard, soft
+        self.constraint_mode = constraint_mode # neural, rules, joint
         self.lr = float(lr)
         self.constraint_weight = 1
+        self.rule_loss_coeff = rule_loss_coeff
         rgcn_params, vit_hidden_dim, num_classes = model_params 
         if model_type == 'joint':
             self.model = JointModel(rgcn_params, vit_hidden_dim, num_classes, visual_type='vit')
@@ -59,8 +60,24 @@ class BaseLeaPR(L.LightningModule):
     def training_step(self, batch, batch_idx):
         ids, imgs, sgs, labels, constraints, truth_values = batch
         out = self(imgs, sgs)
-        loss = self.criterion(out, labels)
-        self.log_train_metrics(out, labels, loss)
+        nn_loss = self.criterion(out, labels)
+
+        if self.rule_loss_coeff > 0:
+            pre_rules = self.apply_activation(out)
+            post_rules = self.apply_constraints(pre_rules, constraints, weight=self.constraint_weight)
+            rule_loss = F.binary_cross_entropy(pre_rules, post_rules) # type: ignore
+            loss = nn_loss + self.rule_loss_coeff * rule_loss
+        else:
+            loss = nn_loss
+
+        metrics = {
+            'loss': loss,
+            'nn_loss': nn_loss,
+            'rule_loss': rule_loss if self.rule_loss_coeff > 0 else 0,
+        }
+
+        self.log_train_metrics(out, labels, metrics)
+
         return loss
 
     def validation_step(self, batch, batch_idx):
@@ -119,7 +136,7 @@ class BaseLeaPR(L.LightningModule):
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=self.lr)
 
-    def log_train_metrics(self, out, labels, loss):
+    def log_train_metrics(self, out, labels, metrics):
         pass
 
     def log_val_metrics(self, out, labels, loss):
@@ -131,8 +148,8 @@ class BaseLeaPR(L.LightningModule):
 
 class MultiLeaPR(BaseLeaPR):
 
-    def __init__(self, model_params, weight, model_type='joint', lr=1e-3):
-        super().__init__(model_params, weight, model_type, lr)
+    def __init__(self, model_params, weight, model_type='joint', lr=1e-3, rule_loss_coeff=0, constraint_mode=None):
+        super().__init__(model_params, weight, model_type, lr, rule_loss_coeff, constraint_mode)
         self.criterion = nn.BCEWithLogitsLoss(weight=self.weight)
 
     def init_metrics(self, num_classes):
@@ -157,9 +174,10 @@ class MultiLeaPR(BaseLeaPR):
         raise NotImplementedError('MultiLeaPR does not apply constraints')
        
 
-    def log_train_metrics(self, out, labels, loss):
+    def log_train_metrics(self, out, labels, metrics):
         out = torch.sigmoid(out)
         mAP = self.train_mAP(out, labels.int())
+        loss = metrics['loss']
         
         self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True)
         self.log('train_mAP', mAP, on_step=False, on_epoch=True, prog_bar=True)
@@ -176,8 +194,8 @@ class MultiLeaPR(BaseLeaPR):
         self.log_dict(metrics_dict, on_step=False, on_epoch=True, prog_bar=True)
 
 class SingleLeaPR(BaseLeaPR):
-    def __init__(self, model_params, weight, model_type='joint', lr=1e-3):
-        super().__init__(model_params, weight, model_type, lr)
+    def __init__(self, model_params, weight, model_type='joint', lr=1e-3, rule_loss_coeff=0, constraint_mode=None):
+        super().__init__(model_params, weight, model_type, lr, rule_loss_coeff, constraint_mode)
         self.criterion = nn.CrossEntropyLoss(weight=self.weight)
 
     def init_metrics(self, num_classes):
@@ -207,12 +225,13 @@ class SingleLeaPR(BaseLeaPR):
         else:
             raise ValueError(f'Invalid mode: {self.constraint_mode}')
 
-    def log_train_metrics(self, out, labels, loss):
+    def log_train_metrics(self, out, labels, metrics):
+
         out = torch.argmax(out, dim=1)
         labels = torch.argmax(labels, dim=1)
         acc = self.train_accuracy(out, labels)
-        
-        self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True)
+        for key, value in metrics.items():
+            self.log(f'train_{key}', value, on_step=True, on_epoch=True, prog_bar=True)
         self.log('train_acc', acc, on_step=False, on_epoch=True, prog_bar=True)
 
     def log_val_metrics(self, out, labels, loss):
@@ -222,9 +241,6 @@ class SingleLeaPR(BaseLeaPR):
         
         self.log('val_loss', loss, on_step=False, on_epoch=True, prog_bar=True)
         self.log('val_acc', acc, on_step=False, on_epoch=True, prog_bar=True)
-        
-        # Debug: Print val_acc to verify checkpoint callback sees correct values
-        print(f"Epoch val_acc: {acc:.4f}")
 
     def log_test_metrics(self, out, labels):
         #print(out.shape, labels.shape)

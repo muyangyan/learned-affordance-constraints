@@ -9,9 +9,9 @@ runs_folder: "runs/"
 #data parameters
 train_split_ratio: 0.6
 position: 'pre'
-num_samples: 3000
+num_samples: -1
 forbidden_nodes: []
-forbidden_edges: ['twisting']
+forbidden_edges: []
 
 #ILP
 ilp_timeout: 600
@@ -19,17 +19,18 @@ fn_weight: 1
 
 #Training parameters========================
 #model
-model_type: 'joint' # joint, rgcn, vit
+model_type: 'joint_mvit' # joint, rgcn, vit
 weight_scheme: 'inverse' # uniform, inverse, invsqrt
+rule_loss_coeff: 1 # uniform, inverse, invsqrt
 epochs: 30
 batch_size: 16
-devices: [0, 1, 2, 3]
+devices: [0,1,2,3]
 lr: 1e-3
 
 #Testing parameters========================
 #rules
-data_split: 'val'
-rules_name: '3000'
+data_split: 'test'
+rules_name: '8693_full'
 mode: 'soft'
 recall_threshold: 0.8
-constraint_weight: 20
+constraint_weight: 1
