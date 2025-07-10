@@ -64,17 +64,22 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-05:17:29 Generating programs of size: 2
-05:17:29 Generating programs of size: 3
-05:17:30 ********************
-05:17:30 New best hypothesis:
-05:17:30 tp:48 fn:27 tn:258 fp:27 size:3 mdl:57
-05:17:30 pour_target(A):- holding(A,B),cup_glass_bottle(B).
-05:17:30 ********************
-05:17:31 ********************
-05:17:31 New best hypothesis:
-05:17:31 tp:70 fn:5 tn:245 fp:40 size:3 mdl:48
-05:17:31 pour_target(A):- cup_glass_bottle(B),in_front_of(B,A).
-05:17:31 ********************
-05:17:34 Generating programs of size: 4
-05:25:21 Generating programs of size: 5
+00:49:05 Generating programs of size: 2
+00:49:05 Generating programs of size: 3
+00:49:06 ********************
+00:49:06 New best hypothesis:
+00:49:06 tp:44 fn:24 tn:246 fp:26 size:3 mdl:53
+00:49:06 pour_target(A):- cup_glass_bottle(B),holding(A,B).
+00:49:06 ********************
+00:49:08 ********************
+00:49:08 New best hypothesis:
+00:49:08 tp:64 fn:4 tn:236 fp:36 size:3 mdl:43
+00:49:08 pour_target(A):- cup_glass_bottle(B),in_front_of(B,A).
+00:49:08 ********************
+00:49:13 Generating programs of size: 4
+00:53:54 Generating programs of size: 5
+00:59:25 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.64 Recall:0.94 TP:64 FN:4 TN:236 FP:36 Size:3 MDL:43
+pour_target(A):- cup_glass_bottle(B),in_front_of(B,A).
+******************************

@@ -5,6 +5,7 @@ warnings.filterwarnings("ignore")
 import os
 import matplotlib.pyplot as plt
 import numpy as np
+import json
 import torch
 from torch.utils.data import DataLoader
 from data.ag.action_genome import ActionGenome, MultiAG, SingleAG, SingleBothAG
@@ -21,6 +22,21 @@ from functools import partial
 
 torch.set_float32_matmul_precision('medium')
 
+def get_datasets(cfg):
+    if cfg.data.position == 'both':
+        AG = SingleBothAG
+    elif cfg.data.position == 'pre' or cfg.data.position == 'post':
+        AG = SingleAG
+    else:
+        raise ValueError(f'Invalid position: {cfg.data.position}')
+
+    PartialAG = partial(AG, cfg)
+
+    train_set = PartialAG(split='train')
+    val_set = PartialAG(split='val')
+
+    return train_set, val_set
+
 def init_model_train(cfg, train_set):
     num_obj_classes = len(train_set.object_classes)
     num_verb_classes = len(train_set.verb_classes)
@@ -29,26 +45,27 @@ def init_model_train(cfg, train_set):
     node_feature_size = 32
     rgcn_hidden_dim, vit_hidden_dim = 32, 32
     rgcn_params = (num_obj_classes, node_feature_size, rgcn_hidden_dim, num_rel_classes)
-    model_params = (rgcn_params, vit_hidden_dim, num_verb_classes)
+    model_params = {'rgcn_params': rgcn_params,
+                    'vit_hidden_dim': vit_hidden_dim,
+                    'num_verb_classes': num_verb_classes
+                    }
 
-    freq = train_set.verb_priors
-    #add 1 to each frequency to smooth, and avoid division by zero
-    freq = freq + 1
-
-    if cfg.weight_scheme == 'inverse':
-        weight = len(train_set) / (num_verb_classes * freq)
-    elif cfg.weight_scheme == 'invsqrt':
-        weight = len(train_set) / (num_verb_classes * np.sqrt(freq))
-    elif cfg.weight_scheme == 'uniform':
+    priors = train_set.verb_priors
+    
+    if cfg.model.weight_scheme == 'inverse':
+        weight = 1 / (num_verb_classes * (priors + 1e-6))
+    elif cfg.model.weight_scheme == 'invsqrt':
+        weight = 1 / (num_verb_classes * np.sqrt(priors + 1e-6))
+    elif cfg.model.weight_scheme == 'uniform':
         weight = torch.ones(num_verb_classes)
     else:
-        raise ValueError(f'Invalid weight scheme: {cfg.weight_scheme}')
+        raise ValueError(f'Invalid weight scheme: {cfg.model.weight_scheme}')
     weight = torch.tensor(weight, dtype=torch.float)
 
-    if cfg.position == 'both':
-        model = SingleLeaPR(model_params, weight, model_type=cfg.model_type, lr=cfg.lr)
+    if cfg.data.position == 'both':
+        model = SingleLeaPR(cfg, model_params, weight, priors)
     else:
-        model = SingleLeaPR(model_params, weight, model_type=cfg.model_type, lr=cfg.lr)
+        model = SingleLeaPR(cfg, model_params, weight, priors) # TODO: add both model
     return model
 
 '''
@@ -63,21 +80,12 @@ train
 '''
 def train(cfg, run_name):
 
-    if cfg.position == 'both':
-        AG = SingleBothAG
-    elif cfg.position == 'pre' or cfg.position == 'post':
-        AG = SingleAG
-    else:
-        raise ValueError(f'Invalid position: {cfg.position}')
+    train_set, val_set = get_datasets(cfg)
 
-    PartialAG = partial(AG, root=cfg.data_root, meta_root=cfg.data_folder, position=cfg.position)
-
-    train_set = PartialAG(split='train')
-    val_set = PartialAG(split='val')
     print('train set length:', len(train_set))
     print('val set length:', len(val_set))
 
-    train_loader = DataLoader(train_set, batch_size=cfg.batch_size, collate_fn=train_set.verb_pred_collate, num_workers=16, shuffle=True)
+    train_loader = DataLoader(train_set, batch_size=cfg.train.batch_size, collate_fn=train_set.verb_pred_collate, num_workers=16, shuffle=True)
     val_loader = DataLoader(val_set, batch_size=128, collate_fn=val_set.verb_pred_collate, num_workers=16, shuffle=False)
 
     model = init_model_train(cfg, train_set)
@@ -86,15 +94,16 @@ def train(cfg, run_name):
     checkpoint_callback = ModelCheckpoint(
         monitor='val_acc',
         dirpath=f'{cfg.runs_folder}/{run_name}/checkpoints/',
-        filename='{epoch:02d}-{val_acc:.2f}',
-        save_top_k=1,
+        filename='{epoch:02d}-{val_acc:.4f}',
+        save_top_k=1,  
         mode='max',
+        verbose=False,
     )
     logger = TensorBoardLogger(save_dir=f'{cfg.runs_folder}/{run_name}/logs/')
     trainer = Trainer(
-        max_epochs=cfg.epochs,
+        max_epochs=cfg.train.epochs,
         accelerator='gpu',
-        devices=cfg.devices,
+        devices=cfg.train.devices,
         strategy='ddp',
         sync_batchnorm=True,
         callbacks=[checkpoint_callback],

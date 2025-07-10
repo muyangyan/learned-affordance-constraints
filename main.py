@@ -19,7 +19,7 @@ import subprocess
 
 
 def create_run_directories(cfg, args):
-    run_name = randomname.get_name()
+    run_name = args.config.split('/')[-1].split('.')[0] + '_' + randomname.get_name()
     run_folder = f'{cfg.runs_folder}/{run_name}'
     
     os.makedirs(run_folder, exist_ok=False)
@@ -31,9 +31,13 @@ def create_run_directories(cfg, args):
 
 def create_test_directories(cfg, args):
     run_name = args.run
-    test_run_name = randomname.get_name()
+
+    rand_noun = randomname.get_name().split('-')[1]
+    test_run_name = f'{rand_noun}'
     run_folder = f'{cfg.runs_folder}/{run_name}' #folder for the training run we are testing
     test_run_folder = f'{run_folder}/test_runs/{test_run_name}' #new folder for the specific test run
+    if os.path.exists(test_run_folder):
+        raise ValueError(f'Test run {test_run_name} already exists')
     config_file = os.path.join(run_folder, 'config.yaml')
     
     os.makedirs(test_run_folder, exist_ok=False)
@@ -57,7 +61,7 @@ def main(cfg, args):
         print('Training new model - source config: ', args.config, 'run: ', run_name)
         
         #subprocess.run(['python', 'train.py', '--config', args.config, '--run_name', run_name])
-        if len(cfg.devices) == 1:
+        if len(cfg.train.devices) == 1:
             train(cfg, run_name)
         else:
             #print('Distributed training not supported yet, please run train.py manually')
@@ -78,8 +82,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Train and test joint model')
 
     #config
-    parser.add_argument('--config', type=str, default='none', help='Path to config file')
-    parser.add_argument('--run', type=str, default='none', help='Run name')
+    parser.add_argument('-c', '--config', type=str, default='none', help='Path to config file')
+    parser.add_argument('-r', '--run', type=str, default='none', help='Run name')
 
     args = parser.parse_args()
 

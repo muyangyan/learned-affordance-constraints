@@ -1,55 +1,127 @@
-import os
 import csv
+from functools import partial
+import hashlib
+import json
+import os
 import pickle
 import shelve
+import warnings
 
 from PIL import Image
-
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-
-from functools import partial
-
 import torch
 import torch.nn.functional as F
+from torch.utils.data import DataLoader, Dataset
+from torch_geometric.data import Batch, Data
 import torchvision.transforms as T
-from torch.utils.data import Dataset, DataLoader
-from torch_geometric.data import Data, Batch
 
-import matplotlib.pyplot as plt
+from util.data_utils import (
+    apply_subset,
+    clean_df,
+    extract_usable_frames,
+    get_id,
+    load_verb_whitelist,
+)
+from util.rule_utils import apply_rules
 
-from util.data_utils import get_id, extract_usable_frames, clean_df, load_verb_whitelist, apply_subset
+FRAME_MATCH_THRESHOLD = 1
+TRANSFORM = T.Compose([
+                T.Resize(size=(224, 224)),
+                T.ToTensor(),
+                T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+            ])
 
 class ActionGenome(Dataset):
 
-    def __init__(self, root, meta_root, position='both', label_mode='single', no_img=False, subset=True, split=None, threshold=1):
-        assert position in ['pre', 'post', 'both']
-        assert label_mode in ['single', 'multi']
-        assert not (position == 'both' and label_mode == 'multi')
+    def _get_cache_file(self, params):
+        """Generate a cache key based on dataset parameters"""
+        param_str = json.dumps(params, sort_keys=True)
+        cache_key = hashlib.md5(param_str.encode()).hexdigest()
+        cache_dir = os.path.join(self.meta_root, 'cache')
+        cache_path = os.path.join(cache_dir, f'dataset_{cache_key}.pkl')
+        return cache_path
+
+    def _load_from_cache(self, cache_file):
+        """Load dataset from cache file, returns True if successful"""
+        if not os.path.exists(cache_file):
+            return False
+        
+        print(f"Loading dataset from cache: {cache_file}")
+        with open(cache_file, 'rb') as f:
+            cache_data = pickle.load(f)
+            for attr_name in cache_data.keys():
+                setattr(self, attr_name, cache_data[attr_name])
+        return True
+
+    def _save_to_cache(self, cache_file, cache_data):
+        """Save processed dataset to cache file"""
+        cache_dir = os.path.dirname(cache_file)
+        os.makedirs(cache_dir, exist_ok=True)
+
+        print(f"Saving dataset to cache: {cache_file}")
+        with open(cache_file, 'wb') as f:
+            pickle.dump(cache_data, f)
+
+
+    def __init__(self, cfg,
+                no_img=False, subset=True, split=None): # debug params
+        assert cfg.data.position in ['pre', 'post', 'both']
+        assert cfg.data.label_mode in ['single', 'multi']
+        assert split in ['train', 'test', 'val', None]
+        assert not (cfg.data.position == 'both' and cfg.data.label_mode == 'multi')
 
         super().__init__()
-        self.root = root
-        self.meta_root = meta_root
+        self.root = cfg.data_root
+        self.meta_root = cfg.data_folder
+        self.prolog_folder = cfg.prolog_folder
+        self.rules_name = cfg.rules.name
 
-        self.position = position
-        self.label_mode = label_mode
-        self.threshold = threshold
+        self.position = cfg.data.position
+        self.label_mode = cfg.data.label_mode
+        num_samples = cfg.data.num_samples
+
         self.no_img = no_img
         self.split = split
-        self.constraints = None
 
-        split_file = os.path.join(meta_root, 'split_train_val.json')
-        frame_validity_file = os.path.join(meta_root, 'frame_validity.csv')
-        verb_priors_file = os.path.join(meta_root, 'verb_priors.json')
-        verb_whitelist_file = os.path.join(meta_root, 'verb_whitelist.txt')
+        # This transform is constant and works for both ViT and MViT models
+        self.im_transform = TRANSFORM
+
+        params = { # params that actually affect the dataset
+            'root': self.root,
+            'meta_root': self.meta_root, 
+            'prolog_folder': self.prolog_folder,
+            'rules_name': self.rules_name,
+            'position': self.position,
+            'label_mode': self.label_mode,
+            'num_samples': num_samples,
+            'no_img': no_img,
+            'subset': subset,
+            'split': split
+        }
+
+        # Generate cache key and check for cached data
+        cache_file = self._get_cache_file(params)
+        
+        # Try to load from cache
+        if self._load_from_cache(cache_file):
+            return
+
+        print("Cache not found, creating dataset from scratch...")
+
+        split_file = os.path.join(self.meta_root, 'split_train_val.json')
+        frame_validity_file = os.path.join(self.meta_root, 'frame_validity.csv')
+        verb_whitelist_file = os.path.join(self.meta_root, 'verb_whitelist.txt')
+        random_idxs_file = os.path.join(self.meta_root, 'randomized_idxs.json')
 
         self.init_vocab(verb_whitelist_file)
 
-        with open(os.path.join(root, 'annotations/person_bbox.pkl'), 'rb') as f:
+        with open(os.path.join(self.root, 'annotations/person_bbox.pkl'), 'rb') as f:
             self.person_annotations = pickle.load(f)
-        with open(os.path.join(root, 'annotations/object_bbox_and_relationship.pkl'), 'rb') as f:
+        with open(os.path.join(self.root, 'annotations/object_bbox_and_relationship.pkl'), 'rb') as f:
             self.object_annotations = pickle.load(f)
-        with open(os.path.join(root, 'annotations/Muyang/framerates.csv'), 'r') as f:
+        with open(os.path.join(self.root, 'annotations/Muyang/framerates.csv'), 'r') as f:
             fps_df = pd.read_csv(f)
             fps_dict = fps_df.set_index('video_id')['frame_rate'].to_dict()
 
@@ -57,66 +129,98 @@ class ActionGenome(Dataset):
             split_dict = json.load(f)
         if split == None:
             split_ids = split_dict['train']+split_dict['val']+split_dict['test']
-            with open(os.path.join(root, f'annotations/Charades/Charades_v1_train.csv'), 'r') as f:
+            with open(os.path.join(self.root, f'annotations/Charades/Charades_v1_train.csv'), 'r') as f:
                 raw_df = pd.read_csv(f)
-            with open(os.path.join(root, f'annotations/Charades/Charades_v1_test.csv'), 'r') as f:
+            with open(os.path.join(self.root, f'annotations/Charades/Charades_v1_test.csv'), 'r') as f:
                 raw_df = pd.concat([raw_df, pd.read_csv(f)])
         else:
             split_ids = split_dict[split]
             if split == 'test':
-                with open(os.path.join(root, f'annotations/Charades/Charades_v1_test.csv'), 'r') as f:
+                with open(os.path.join(self.root, f'annotations/Charades/Charades_v1_test.csv'), 'r') as f:
                     raw_df = pd.read_csv(f)
             else:
-                with open(os.path.join(root, f'annotations/Charades/Charades_v1_train.csv'), 'r') as f:
+                with open(os.path.join(self.root, f'annotations/Charades/Charades_v1_train.csv'), 'r') as f:
                     raw_df = pd.read_csv(f)
 
         cleaned_df = clean_df(raw_df, split_ids, self.action_mapper)
-        usable_df = extract_usable_frames(self.root, self.object_annotations, cleaned_df, position, threshold, fps_dict)
+        usable_df = extract_usable_frames(self.root, self.object_annotations, cleaned_df, self.position, FRAME_MATCH_THRESHOLD, fps_dict)
         if subset:
             frame_validity_df = pd.read_csv(frame_validity_file)
-            apply_subset_partial = partial(apply_subset, frame_validity_df=frame_validity_df, position=position)
+            apply_subset_partial = partial(apply_subset, frame_validity_df=frame_validity_df, position=self.position)
             final_df = usable_df[usable_df.apply(apply_subset_partial, axis=1)]
         else:
             final_df = usable_df
 
         #up until here each row is a single action
-        single_df = final_df
+        # FOR SAMPLE EFFICIENCY EXPERIMENTS
+        if num_samples is not None and num_samples > 0:
+            with open(random_idxs_file, 'r') as f:
+                randomized_idxs = json.load(f)
+            single_df = final_df.iloc[randomized_idxs[:num_samples]]
+            print(f'Using {len(single_df)} samples')
+        else:
+            single_df = final_df
+            print(f'Using all {len(final_df)} samples')
 
         #differentiate between single and multi-label
-        if label_mode == 'single':
+        if self.label_mode == 'single':
             length = len(single_df)
-            if position != 'both':
-                self.df = single_df[['vid', f'{position}_frame', 'action']]
+            if self.position != 'both':
+                self.df = single_df[['vid', f'{self.position}_frame', 'action']]
             else:
                 self.df = single_df[['vid', 'pre_frame', 'post_frame', 'action']]
         else:
             multi_df = single_df.copy()
-            multi_df[f'video_{position}'] = multi_df['vid'] + '_' + multi_df[f'{position}_frame'].astype(str)
-            multi_df = multi_df.groupby(f'video_{position}').agg({
+            multi_df[f'video_{self.position}'] = multi_df['vid'] + '_' + multi_df[f'{self.position}_frame'].astype(str)
+            multi_df = multi_df.groupby(f'video_{self.position}').agg({
                 'vid': 'first',
-                f'{position}_frame': 'first',
+                f'{self.position}_frame': 'first',
                 'action': lambda x: list(x.astype(int))
             }).reset_index(drop=True)
             self.df = multi_df
             length = len(multi_df)
 
-        self.init_priors(verb_priors_file, single_df, length)
+        if self.split == 'train' or self.split == None:
+            self.verb_priors = self.compute_priors(single_df, length)
+        else:
+            self.verb_priors = None
 
         #create pyg scene graphs
         self.scene_graphs = {}
-        for idx, row in self.df.iterrows():
-            for pos in ['pre', 'post'] if position == 'both' else [position]:
+        for idx, row in self.df.iterrows(): # type: ignore
+            for pos in ['pre', 'post'] if self.position == 'both' else [self.position]:
                 id = get_id(row['vid'], row[f'{pos}_frame'])
                 action_classes = row['action']
 
                 data = self.create_scene_graph(id, action_classes)
                 self.scene_graphs[id] = data
+        
+        # TODO: this is just because we didn't generate the bk for non-split dataset
+        if self.split is None:
+            self.truth_values = None
+        else:
+            # TODO: maybe add an option to not have rules even when split valid?
+            self.truth_values = apply_rules(self.rules_name, 
+                os.path.join(self.prolog_folder, self.position, 'learned_rules'),
+                os.path.join(self.prolog_folder, self.position, f'{self.split}_bk.pl'),
+                len(self.df), self.verb_classes)
 
-        self.im_transform = T.Compose([
-            T.Resize(size=(224, 224)),
-            T.ToTensor(),
-            T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-        ])
+        cache_data = { # all the actual data we need to save
+            'df': self.df,
+            'scene_graphs': self.scene_graphs,
+            'verb_classes': self.verb_classes,
+            'action_classes': self.action_classes,
+            'object_classes': self.object_classes,
+            'relationship_classes': self.relationship_classes,
+            'action_mapper': self.action_mapper,
+            'verb_mapper': self.verb_mapper,
+            'action_verb_obj_map': self.action_verb_obj_map,
+            'verb_result_rel_map': self.verb_result_rel_map,
+            'truth_values': self.truth_values,
+            'verb_priors': self.verb_priors
+        }
+        # Save to cache for future use
+        self._save_to_cache(cache_file, cache_data)
 
     def __len__(self):
         return len(self.df)
@@ -163,36 +267,22 @@ class ActionGenome(Dataset):
     def create_labels(self, action_classes):
         pass
 
-    def init_priors(self, verb_prior_file, single_df, length):
-        if self.split == 'train' or self.split == None:
-            # Expand actions into verb, nouns. Used only for priors.
-            single_df['verb'] = single_df['action'].apply(lambda x: self.action_verb_obj_map[x][0])
-            single_df['noun'] = single_df['action'].apply(lambda x: self.action_verb_obj_map[x][1])
-            verb_counts = dict(sorted(single_df['verb'].value_counts().to_dict().items()))
-            for i in range(len(self.verb_classes)):
-                if i not in verb_counts:
-                    verb_counts[i] = 0
-            self.verb_priors = [verb_counts[verb]/length for verb in verb_counts]
-            self.verb_priors = np.array(self.verb_priors)
+    def compute_priors(self, single_df, length):
+        # Expand actions into verb, nouns. Used only for priors.
+        single_df['verb'] = single_df['action'].apply(lambda x: self.action_verb_obj_map[x][0])
+        single_df['noun'] = single_df['action'].apply(lambda x: self.action_verb_obj_map[x][1])
+        verb_counts = dict(sorted(single_df['verb'].value_counts().to_dict().items()))
+        for i in range(len(self.verb_classes)):
+            if i not in verb_counts:
+                verb_counts[i] = 0
+        verb_priors = np.array([verb_counts[verb]/length for verb in verb_counts])
+        # prior_dict = {'verbs': self.verb_classes, 'priors': verb_priors.tolist()}
+        # with open(verb_prior_file, 'w') as f:
+        #     json.dump(prior_dict, f)
+        return verb_priors
 
-            if self.split == 'train':
-                # Read existing prior file and update it
-                with open(verb_prior_file, 'r') as f:
-                    prior_dict = json.load(f)
-                
-                # Determine the key based on position
-                position_key = self.position
-                prior_dict[position_key] = {'verbs': self.verb_classes, 'priors': list(self.verb_priors)}
 
-                # Write updated priors back to the file
-                with open(verb_prior_file, 'w') as f:
-                    json.dump(prior_dict, f)
-        else:
-            with open(verb_prior_file, 'r') as f:
-                prior_dict = json.load(f)
-                # Determine the key based on position
-                position_key = self.position
-                self.verb_priors = np.array(prior_dict.get(position_key, {}).get('priors', []))
+
     def init_vocab(self, verb_whitelist_file):
 
         self.verb_whitelist = load_verb_whitelist(verb_whitelist_file)
@@ -307,8 +397,10 @@ class ActionGenome(Dataset):
 
 class SingleBothAG(ActionGenome):
 
-    def __init__(self, root, meta_root, no_img=False, subset=True, split=None):
-        super().__init__(root, meta_root, position='both', label_mode='single', no_img=no_img, subset=subset, split=split)
+    def __init__(self, cfg,
+                no_img=False, subset=True, split=None): # debug params
+        super().__init__(cfg, no_img, subset, split)
+        assert self.position == 'both'
 
     def create_labels(self, action_classes):
         #in this case action_classes is a single action
@@ -338,26 +430,22 @@ class SingleBothAG(ActionGenome):
             pre_image = Image.open(pre_image_path).convert('RGB')
             post_image = Image.open(post_image_path).convert('RGB')
 
-        if self.constraints is not None:
-            pre_constraints = torch.tensor(self.constraints[index]).float()
-            post_constraints = torch.tensor(self.constraints[index]).float()
+        if self.truth_values is not None:
             pre_truth_values = torch.tensor(self.truth_values[index]).float()
             post_truth_values = torch.tensor(self.truth_values[index]).float()
-        else:
-            pre_constraints = None
-            post_constraints = None
+        else: 
             pre_truth_values = None
             post_truth_values = None
 
-        pre_data = (pre_id, pre_image, pre_scene_graph, action_classes, pre_constraints, pre_truth_values)  
-        post_data = (post_id, post_image, post_scene_graph, action_classes, post_constraints, post_truth_values)
+        pre_data = (pre_id, pre_image, pre_scene_graph, action_classes, pre_truth_values)  
+        post_data = (post_id, post_image, post_scene_graph, action_classes, post_truth_values)
         
         return pre_data, post_data
 
     def verb_pred_collate(self, batch):
         # action_labels is multilabel
         pre_batch, post_batch = zip(*batch)
-        ids, images, scene_graphs, action_labels, constraints, truth_values = zip(*pre_batch)
+        ids, images, scene_graphs, action_labels, truth_values = zip(*pre_batch)
         sg_batch = Batch.from_data_list(scene_graphs, exclude_keys=['o'])
         
         verbs = torch.tensor([self.action_verb_obj_map[a][0] for a in action_labels])
@@ -369,23 +457,19 @@ class SingleBothAG(ActionGenome):
             resized_images = [self.im_transform(img) for img in images]
             resized_images = torch.stack(resized_images)
         
-        if self.constraints is None:
-            constraints = None
-            truth_values = None
-        else:
-            constraints = torch.stack(constraints)
+        if self.truth_values is not None:
             truth_values = torch.stack(truth_values)
+        else:
+            truth_values = None
 
-        return ids, resized_images, sg_batch, verb_labels, constraints, truth_values
+        return ids, resized_images, sg_batch, verb_labels, truth_values
         
 class SingleAG(ActionGenome):
-    '''
-    location: 'pre', 'post', 'both'
-    determines whether we use the start or end of the action as the frame. in other words, are we anticipating the next action or inferring the previous/causal action?
-    '''
     
-    def __init__(self, root, meta_root, position='pre', no_img=False, subset=True, split=None):
-        super().__init__(root, meta_root, position, label_mode='single', no_img=no_img, subset=subset, split=split)
+    def __init__(self, cfg,
+                no_img=False, subset=True, split=None): # debug params
+        super().__init__(cfg, no_img, subset, split)
+        assert self.position == 'pre' or self.position == 'post'
 
     def create_labels(self, action_classes):
         #in this case action_classes is a single action
@@ -409,17 +493,15 @@ class SingleAG(ActionGenome):
             image_path = os.path.join(self.root, 'frames', id)
             image = Image.open(image_path).convert('RGB')
 
-        if self.constraints is not None:
-            constraints = torch.tensor(self.constraints[index]).float()
+        if self.truth_values is not None:
             truth_values = torch.tensor(self.truth_values[index]).float()
         else:
-            constraints = None
             truth_values = None
 
-        return id, image, scene_graph, action_classes, constraints, truth_values
+        return id, image, scene_graph, action_classes, truth_values
 
     def verb_pred_collate(self, batch):
-        ids, images, scene_graphs, action_labels, constraints, truth_values = zip(*batch)
+        ids, images, scene_graphs, action_labels, truth_values = zip(*batch)
         sg_batch = Batch.from_data_list(scene_graphs, exclude_keys=['o'])
         
         verbs = torch.tensor([self.action_verb_obj_map[a][0] for a in action_labels])
@@ -431,23 +513,18 @@ class SingleAG(ActionGenome):
             resized_images = [self.im_transform(img) for img in images]
             resized_images = torch.stack(resized_images)
         
-        if self.constraints is None:
-            constraints = None
-            truth_values = None
-        else:
-            constraints = torch.stack(constraints)
+        if self.truth_values is not None:
             truth_values = torch.stack(truth_values)
+        else:
+            truth_values = None
 
-        return ids, resized_images, sg_batch, verb_labels, constraints, truth_values
+        return ids, resized_images, sg_batch, verb_labels, truth_values
 
 class MultiAG(ActionGenome):
-    '''
-    location: 'pre', 'post', 'both'
-    determines whether we use the start or end of the action as the frame. in other words, are we anticipating the next action or inferring the previous/causal action?
-    '''
     
-    def __init__(self, root, meta_root, position='pre', no_img=False, subset=True, split=None):
-        super().__init__(root, meta_root, position, label_mode='multi', no_img=no_img, subset=subset, split=split)
+    def __init__(self, cfg,
+                no_img=False, subset=True, split=None): # debug params
+        super().__init__(cfg, no_img, subset, split)
 
     def create_labels(self, action_classes):
         verb_classes, obj_classes = zip(*[self.action_verb_obj_map[action_class] for action_class in action_classes])
@@ -471,18 +548,16 @@ class MultiAG(ActionGenome):
             image_path = os.path.join(self.root, 'frames', id)
             image = Image.open(image_path).convert('RGB')
 
-        if self.constraints is not None:
-            constraints = torch.tensor(self.constraints[index]).float()
+        if self.truth_values is not None:
             truth_values = torch.tensor(self.truth_values[index]).float()
         else:
-            constraints = None
             truth_values = None
 
-        return id, image, scene_graph, action_classes, constraints, truth_values
+        return id, image, scene_graph, action_classes, truth_values
 
     def verb_pred_collate(self, batch):
         # action_labels is multilabel
-        ids, images, scene_graphs, action_labels, constraints, truth_values = zip(*batch)
+        ids, images, scene_graphs, action_labels, truth_values = zip(*batch)
         sg_batch = Batch.from_data_list(scene_graphs, exclude_keys=['o'])
         
         # Create a 2D tensor for multi-label verbs with shape Batch x Classes
@@ -498,210 +573,9 @@ class MultiAG(ActionGenome):
             resized_images = [self.im_transform(img) for img in images]
             resized_images = torch.stack(resized_images)
         
-        if self.constraints is None:
-            constraints = None
-            truth_values = None
-        else:
-            constraints = torch.stack(constraints)
+        if self.truth_values is not None:
             truth_values = torch.stack(truth_values)
-
-        return ids, resized_images, sg_batch, verb_labels, constraints, truth_values
-
-
-
-import os
-import csv
-import json
-import shelve
-
-from PIL import Image
-import matplotlib.pyplot as plt
-from util.visualize import show_pyg_graph
-import networkx as nx
-from IPython.display import clear_output
-from tqdm import tqdm
-
-'''
-interface/visualizer for AG
-used for annotating the dataset
-can also be used to analyze the dataset in relation to a subset
-'''
-class AGViewer:
-    def __init__(self, ag, subset_dict, human_test=False):
-        self.ag = ag
-        self.subset_dict = subset_dict
-        self.index = 0
-        self.key = None
-        self.id = None
-        self.human_test = human_test
-        self.message = "Enter/space : navigate by search key | \
-                n/p : sequential navigation | \
-                j : jump to index | \
-                g/b/f/u : label GOOD, BAD, FLAGGED, UNMARKED | \
-                k : change search key | \
-                q : quit | "
-
-    def view(self, index):
-        #check index
-        if index < 0:
-            _ = input('first index reached, enter to continue')
-            index = 0
-        elif index >= len(self.ag):
-            _ = input('max index reached, enter to continue')
-            index = len(self.ag) - 1
-
-        id, img, sg, action, constraints, truth_values = self.ag[index]
-        verb, obj = self.ag.action_verb_obj_map[action]
-
-        self.index = index
-        self.id = id
-
-        clear_output(wait=True)
-
-        print('INDEX:', index)
-        if not self.human_test:
-            print('LABEL:', self.subset_dict[id] if id in self.subset_dict else 'ABSENT')
-            print('ACTION:', self.ag.action_classes[action])
-            print('VERB-OBJ:', self.ag.verb_classes[verb], None if obj is None else self.ag.object_classes[obj])
-            print('VIDEO-FRAME-ACTION ID:', id)
-        nodes = [self.ag.object_classes[t] for t in sg.node_type]
-        print([ (nodes[sg.edge_index[0][i].item()], \
-                self.ag.relationship_classes[t], \
-                nodes[sg.edge_index[1][i].item()], \
-                ) for i,t in enumerate(sg.edge_type)])
-
-        fig, axs = plt.subplots(1, 2, figsize=(20, 10))
-
-        show_pyg_graph(sg, self.ag.object_classes, self.ag.relationship_classes, layout='circular', curve=0.1, ax=axs[0])
-        axs[1].imshow(img)
-        plt.show(fig)
-
-        if self.human_test:
-            return self.ag.action_classes[action], self.ag.verb_classes[verb]
-    
-    def find_next(self, key, prev=False):
-        index = self.index
-        print(index)
-
-        if prev:
-            index -= 1
         else:
-            index += 1
+            truth_values = None
 
-        while index <= len(self.ag) - 1 and index >= 0:
-
-            id, img, sg, action, constraints = self.ag[index]
-            verb, obj = self.ag.action_verb_obj_map[action]
-            strings = [self.subset_dict[id], self.ag.action_classes[action], \
-                       self.ag.verb_classes[verb], \
-                       None if obj is None else self.ag.object_classes[obj]]
-            if type(key) is str and key in strings:
-                return index
-            elif type(key) is str and key in id:
-                return index
-            elif type(key) is int and action == key:
-                return index
-
-            if prev:
-                index -= 1
-            else:
-                index += 1
-
-        return None
-    
-    def next(self, prev=False):
-        if self.key is not None:
-            next_idx = self.find_next(self.key, prev=prev)
-            if next_idx is not None:
-                return next_idx
-            else:
-                _ = input('key not found')
-                return self.index
-        else:
-            return self.index + 1
-
-    def process_command(self, option):
-        if option == 'q':
-            return None
-        
-        #navigation
-        elif option == '': #next by key
-            return self.next()
-        elif option == ' ': #previous by key
-            return self.next(prev=True)
-        elif option == 'n': #immediate next
-            return self.index + 1
-        elif option == 'p': #immediate prev
-            return self.index - 1
-        elif option == 'j':
-            jump_idx = input('enter index to jump to')
-            try:
-                jump_idx = int(jump_idx)
-                return jump_idx
-            except:
-                _ = input('invalid index')
-                return self.index
-        
-        #change key
-        elif option == 'k':
-            new_key = input('enter new key')
-            if new_key == '':
-                self.key = None
-            else:
-                try:
-                    new_key_int = int(new_key)
-                    self.key = new_key_int #setting key to be a certain action class
-                except ValueError:
-                    self.key = str(new_key) #setting key to be string label
-            return self.index
-
-        #labeling
-        elif option == 'g': #good
-            self.subset_dict[self.id] = 'True'
-            return self.next()
-        elif option == 'b': #bad
-            self.subset_dict[self.id] = 'False'
-            return self.next()
-        elif option == 'f': #flag
-            self.subset_dict[self.id] = 'FLAGGED'
-            return self.next()
-        elif option == 'u': #flag
-            self.subset_dict[self.id] = 'UNMARKED'
-            return self.next()
-        else:
-            _ = input('invalid command')
-            return self.index
-    
-    def analyze_vocab_frequencies(self):
-        total = 0
-        action_freq = {}
-        verb_freq = {}
-        obj_freq = {}
-        for idx in range(len(self.ag)):
-            if self.ag.no_img:
-                id, _, sg, action, _ = self.ag[idx]
-            else:
-                id, img, sg, action, _ = self.ag[idx]
-            
-            if self.subset_dict[id] == 'False':
-                continue
-                
-            total+=1
-
-            verb, obj = self.ag.action_verb_obj_map[action]
-
-            if action not in action_freq:
-                action_freq[action] = 0
-            action_freq[action]+=1
-
-            if verb not in verb_freq:
-                verb_freq[verb] = 0
-            verb_freq[verb]+=1
-
-            if obj not in obj_freq:
-                obj_freq[obj] = 0
-            obj_freq[obj]+=1
-        
-        return total, action_freq, verb_freq, obj_freq
-
-
+        return ids, resized_images, sg_batch, verb_labels, truth_values

@@ -64,10 +64,10 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-05:17:29 Generating programs of size: 2
-05:17:29 Generating programs of size: 3
-05:17:31 Generating programs of size: 4
-05:17:58 Generating programs of size: 5
-05:18:14 Generating programs of size: 6
-05:18:22 Generating programs of size: 7
+00:49:04 Generating programs of size: 2
+00:49:05 Generating programs of size: 3
+00:49:07 Generating programs of size: 4
+00:49:27 Generating programs of size: 5
+00:49:46 Generating programs of size: 6
+00:49:51 Generating programs of size: 7
 NO SOLUTION

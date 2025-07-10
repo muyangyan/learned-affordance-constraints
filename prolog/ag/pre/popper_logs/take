@@ -64,82 +64,40 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-05:17:29 Generating programs of size: 2
-05:17:29 Generating programs of size: 3
-05:17:30 ********************
-05:17:30 New best hypothesis:
-05:17:30 tp:23 fn:502 tn:1779 fp:13 size:3 mdl:518
-05:17:30 take_target(A):- not_contacting(A,B),phone_camera(B).
-05:17:30 ********************
-05:17:32 ********************
-05:17:32 New best hypothesis:
-05:17:32 tp:24 fn:501 tn:1783 fp:9 size:3 mdl:513
-05:17:32 take_target(A):- broom(B),not_contacting(A,B).
-05:17:32 ********************
-05:17:32 ********************
-05:17:32 New best hypothesis:
-05:17:32 tp:43 fn:482 tn:1767 fp:25 size:3 mdl:510
-05:17:32 take_target(A):- not_contacting(A,B),box(B).
-05:17:32 ********************
-05:17:32 ********************
-05:17:32 New best hypothesis:
-05:17:32 tp:85 fn:440 tn:1728 fp:64 size:3 mdl:507
-05:17:32 take_target(A):- cup_glass_bottle(B),not_contacting(A,B).
-05:17:32 ********************
-05:17:32 ********************
-05:17:32 New best hypothesis:
-05:17:32 tp:41 fn:484 tn:1780 fp:12 size:3 mdl:499
-05:17:32 take_target(A):- not_contacting(A,B),towel(B).
-05:17:32 ********************
-05:17:38 Generating programs of size: 4
-05:17:48 ********************
-05:17:48 New best hypothesis:
-05:17:48 tp:407 fn:118 tn:1538 fp:254 size:36 mdl:408
-05:17:48 take_target(A):- not_contacting(A,B),phone_camera(B).
-05:17:48 take_target(A):- broom(B),not_contacting(A,B).
-05:17:48 take_target(A):- book(B),not_contacting(A,B).
-05:17:48 take_target(A):- not_contacting(A,B),box(B).
-05:17:48 take_target(A):- not_contacting(A,B),picture(B).
-05:17:48 take_target(A):- cup_glass_bottle(B),not_contacting(A,B).
-05:17:48 take_target(A):- dish(B),not_contacting(A,B).
-05:17:48 take_target(A):- not_contacting(A,B),bag(B).
-05:17:48 take_target(A):- not_contacting(A,B),pillow(B).
-05:17:48 take_target(A):- not_contacting(A,B),towel(B).
-05:17:48 take_target(A):- clothes(B),not_contacting(A,B).
-05:17:48 take_target(A):- not_contacting(A,B),blanket(B).
-05:17:48 ********************
-05:40:28 Generating programs of size: 5
-05:40:38 ********************
-05:40:38 New best hypothesis:
-05:40:38 tp:389 fn:136 tn:1565 fp:227 size:42 mdl:405
-05:40:38 take_target(A):- not_contacting(A,B),phone_camera(B).
-05:40:38 take_target(A):- broom(B),not_contacting(A,B).
-05:40:38 take_target(A):- book(B),not_contacting(A,B).
-05:40:38 take_target(A):- not_contacting(A,B),box(B).
-05:40:38 take_target(A):- not_contacting(A,B),picture(B).
-05:40:38 take_target(A):- dish(B),not_contacting(A,B).
-05:40:38 take_target(A):- not_contacting(A,B),pillow(B).
-05:40:38 take_target(A):- not_contacting(A,B),towel(B).
-05:40:38 take_target(A):- clothes(B),not_contacting(A,B).
-05:40:38 take_target(A):- not_contacting(A,B),blanket(B).
-05:40:38 take_target(A):- on_the_side_of(B,A),not_contacting(A,B),bag(B).
-05:40:38 take_target(A):- sandwich(B),not_contacting(A,B),not_looking_at(A,B).
-05:40:38 take_target(A):- cup_glass_bottle(B),in_front_of(B,A),not_contacting(A,B).
-05:40:38 ********************
-06:57:35 TIMEOUT OF 6000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.63 Recall:0.74 TP:389 FN:136 TN:1565 FP:227 Size:42 MDL:405
-take_target(A):- not_contacting(A,B),phone_camera(B).
-take_target(A):- broom(B),not_contacting(A,B).
-take_target(A):- book(B),not_contacting(A,B).
-take_target(A):- not_contacting(A,B),box(B).
-take_target(A):- not_contacting(A,B),picture(B).
-take_target(A):- dish(B),not_contacting(A,B).
-take_target(A):- not_contacting(A,B),pillow(B).
-take_target(A):- not_contacting(A,B),towel(B).
-take_target(A):- clothes(B),not_contacting(A,B).
-take_target(A):- not_contacting(A,B),blanket(B).
-take_target(A):- on_the_side_of(B,A),not_contacting(A,B),bag(B).
-take_target(A):- sandwich(B),not_contacting(A,B),not_looking_at(A,B).
-take_target(A):- cup_glass_bottle(B),in_front_of(B,A),not_contacting(A,B).
-******************************
+00:49:04 Generating programs of size: 2
+00:49:05 Generating programs of size: 3
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:21 fn:469 tn:1631 fp:11 size:3 mdl:483
+00:49:05 take_target(A):- phone_camera(B),not_contacting(A,B).
+00:49:05 ********************
+00:49:07 ********************
+00:49:07 New best hypothesis:
+00:49:07 tp:26 fn:464 tn:1632 fp:10 size:3 mdl:477
+00:49:07 take_target(A):- pillow(B),not_contacting(A,B).
+00:49:07 ********************
+00:49:07 ********************
+00:49:07 New best hypothesis:
+00:49:07 tp:42 fn:448 tn:1624 fp:18 size:3 mdl:469
+00:49:07 take_target(A):- not_contacting(A,B),box(B).
+00:49:07 ********************
+00:49:07 ********************
+00:49:07 New best hypothesis:
+00:49:07 tp:78 fn:412 tn:1596 fp:46 size:3 mdl:461
+00:49:07 take_target(A):- cup_glass_bottle(B),not_contacting(A,B).
+00:49:07 ********************
+00:49:14 Generating programs of size: 4
+00:49:24 ********************
+00:49:24 New best hypothesis:
+00:49:24 tp:311 fn:179 tn:1476 fp:166 size:30 mdl:375
+00:49:24 take_target(A):- phone_camera(B),not_contacting(A,B).
+00:49:24 take_target(A):- sandwich(B),on_the_side_of(B,A).
+00:49:24 take_target(A):- pillow(B),not_contacting(A,B).
+00:49:24 take_target(A):- picture(B),not_contacting(A,B).
+00:49:24 take_target(A):- broom(B),not_contacting(A,B).
+00:49:24 take_target(A):- not_contacting(A,B),box(B).
+00:49:24 take_target(A):- dish(B),not_contacting(A,B).
+00:49:24 take_target(A):- cup_glass_bottle(B),not_contacting(A,B).
+00:49:24 take_target(A):- towel(B),not_contacting(A,B).
+00:49:24 take_target(A):- clothes(B),not_contacting(A,B).
+00:49:24 ********************

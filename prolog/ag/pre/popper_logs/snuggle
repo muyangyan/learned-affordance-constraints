@@ -64,33 +64,29 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-05:17:29 Generating programs of size: 2
-05:17:29 Generating programs of size: 3
-05:17:29 ********************
-05:17:29 New best hypothesis:
-05:17:29 tp:29 fn:60 tn:335 fp:3 size:3 mdl:66
-05:17:29 snuggle_target(A):- holding(A,B),blanket(B).
-05:17:29 ********************
-05:17:32 ********************
-05:17:32 New best hypothesis:
-05:17:32 tp:38 fn:51 tn:329 fp:9 size:3 mdl:63
-05:17:32 snuggle_target(A):- in_front_of(B,A),blanket(B).
-05:17:32 ********************
-05:17:36 Generating programs of size: 4
-05:17:39 ********************
-05:17:39 New best hypothesis:
-05:17:39 tp:79 fn:10 tn:316 fp:22 size:12 mdl:44
-05:17:39 snuggle_target(A):- holding(A,B),blanket(B).
-05:17:39 snuggle_target(A):- not_looking_at(A,B),blanket(B).
-05:17:39 snuggle_target(A):- in_front_of(B,A),pillow(B).
-05:17:39 snuggle_target(A):- on_the_side_of(B,A),pillow(B).
-05:17:39 ********************
-05:31:56 Generating programs of size: 5
-06:58:43 TIMEOUT OF 6000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.78 Recall:0.89 TP:79 FN:10 TN:316 FP:22 Size:12 MDL:44
-snuggle_target(A):- holding(A,B),blanket(B).
-snuggle_target(A):- not_looking_at(A,B),blanket(B).
-snuggle_target(A):- in_front_of(B,A),pillow(B).
-snuggle_target(A):- on_the_side_of(B,A),pillow(B).
-******************************
+00:49:05 Generating programs of size: 2
+00:49:05 Generating programs of size: 3
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:27 fn:56 tn:302 fp:4 size:3 mdl:63
+00:49:05 snuggle_target(A):- blanket(B),holding(A,B).
+00:49:05 ********************
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:28 fn:55 tn:303 fp:3 size:3 mdl:61
+00:49:05 snuggle_target(A):- blanket(B),looking_at(A,B).
+00:49:05 ********************
+00:49:08 ********************
+00:49:08 New best hypothesis:
+00:49:08 tp:36 fn:47 tn:300 fp:6 size:3 mdl:56
+00:49:08 snuggle_target(A):- in_front_of(B,A),blanket(B).
+00:49:08 ********************
+00:49:11 Generating programs of size: 4
+00:49:13 ********************
+00:49:13 New best hypothesis:
+00:49:13 tp:75 fn:8 tn:292 fp:14 size:12 mdl:34
+00:49:13 snuggle_target(A):- blanket(B),holding(A,B).
+00:49:13 snuggle_target(A):- blanket(B),looking_at(A,B).
+00:49:13 snuggle_target(A):- blanket(B),not_looking_at(A,B).
+00:49:13 snuggle_target(A):- in_front_of(B,A),pillow(B).
+00:49:13 ********************

@@ -64,29 +64,28 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-05:17:29 Generating programs of size: 2
-05:17:29 Generating programs of size: 3
-05:17:30 ********************
-05:17:30 New best hypothesis:
-05:17:30 tp:192 fn:99 tn:913 fp:81 size:3 mdl:183
-05:17:30 drink_target(A):- holding(A,B),cup_glass_bottle(B).
-05:17:30 ********************
-05:17:32 ********************
-05:17:32 New best hypothesis:
-05:17:32 tp:266 fn:25 tn:886 fp:108 size:3 mdl:136
-05:17:32 drink_target(A):- in_front_of(B,A),cup_glass_bottle(B).
-05:17:32 ********************
-05:17:38 Generating programs of size: 4
-05:17:44 ********************
-05:17:44 New best hypothesis:
-05:17:44 tp:291 fn:0 tn:880 fp:114 size:6 mdl:120
-05:17:44 drink_target(A):- in_front_of(B,A),cup_glass_bottle(B).
-05:17:44 drink_target(A):- on_the_side_of(B,A),cup_glass_bottle(B).
-05:17:44 ********************
-05:50:54 Generating programs of size: 5
-06:57:33 TIMEOUT OF 6000 SECONDS EXCEEDED
+00:49:04 Generating programs of size: 2
+00:49:05 Generating programs of size: 3
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:182 fn:86 tn:900 fp:94 size:3 mdl:183
+00:49:05 drink_target(A):- holding(A,B),cup_glass_bottle(B).
+00:49:05 ********************
+00:49:09 ********************
+00:49:09 New best hypothesis:
+00:49:09 tp:249 fn:19 tn:872 fp:122 size:3 mdl:144
+00:49:09 drink_target(A):- cup_glass_bottle(B),in_front_of(B,A).
+00:49:09 ********************
+00:49:12 Generating programs of size: 4
+00:49:19 ********************
+00:49:19 New best hypothesis:
+00:49:19 tp:268 fn:0 tn:861 fp:133 size:6 mdl:139
+00:49:19 drink_target(A):- on_the_side_of(B,A),cup_glass_bottle(B).
+00:49:19 drink_target(A):- cup_glass_bottle(B),in_front_of(B,A).
+00:49:19 ********************
+00:59:05 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.72 Recall:1.00 TP:291 FN:0 TN:880 FP:114 Size:6 MDL:120
-drink_target(A):- in_front_of(B,A),cup_glass_bottle(B).
+Precision:0.67 Recall:1.00 TP:268 FN:0 TN:861 FP:133 Size:6 MDL:139
 drink_target(A):- on_the_side_of(B,A),cup_glass_bottle(B).
+drink_target(A):- cup_glass_bottle(B),in_front_of(B,A).
 ******************************

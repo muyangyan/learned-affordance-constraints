@@ -5,6 +5,8 @@ warnings.filterwarnings("ignore")
 import os
 import argparse
 import torch
+import numpy as np
+import json
 
 from torch.utils.data import DataLoader
 from data.ag.action_genome import SingleAG, MultiAG, SingleBothAG
@@ -14,39 +16,38 @@ from pytorch_lightning import Trainer
 from models.action_anticipator import BaseLeaPR, SingleLeaPR, MultiLeaPR
 
 from util.rule_utils import apply_rules
-from util.metrics import analyze_preds_ml
+from util.metrics import analyze_preds_ml, analyze_preds_mc, analyze_preds
 
 from util.config_utils import load_yaml
 
 torch.set_float32_matmul_precision('medium')
 
+def save_and_analyze_preds(cfg, run_name, test_run_name, pred_name, preds, class_names):
+    save_folder = f'{cfg.runs_folder}/{run_name}/test_runs/{test_run_name}'
+
+    # Dump the predictions into a text file
+    with open(f'{save_folder}/{pred_name}.npy', 'wb') as f:
+        np.save(f, preds)
+
+    analyze_preds(cfg, run_name, test_run_name, preds=preds, class_names=class_names)
+
 def test_routine(cfg, run_name, test_run_name, trainer, model, dataset, loader):
-    print('Without constraints---------------------')
-    dataset.constraints = None
-    dataset.truth_values = None
-    model.constraint_mode = None
-    model.constraint_weight = 1
-    model.preds = {'unconstrained': [], 'constrained': []}
 
+    print('Without rules---------------------')
+    model.constraint_mode = 'neural'
     trainer.test(model, dataloaders=loader)
-    analyze_preds_ml(cfg, run_name, test_run_name, model.preds['unconstrained'], class_names=dataset.verb_classes)
+    save_and_analyze_preds(cfg, run_name, test_run_name, 'neural', model.preds['neural'], dataset.verb_classes)
 
-    print('With constraints---------------------')
-    constraints, truth_values = apply_rules(cfg.rules_name, 
-        os.path.join(cfg.prolog_folder, cfg.position, 'learned_rules'),
-        os.path.join(cfg.prolog_folder, cfg.position, f'{cfg.data_split}_bk.pl'),
-        len(dataset), dataset.verb_classes,
-        mode=cfg.mode,
-        recall_threshold=cfg.recall_threshold,
-        priors=dataset.verb_priors)
-
-    dataset.constraints = constraints
-    dataset.truth_values = truth_values
-    model.constraint_mode = cfg.mode
-    model.constraint_weight = cfg.constraint_weight
-
+    print('Only rules---------------------')
+    model.constraint_mode = 'rules'
     trainer.test(model, dataloaders=loader)
-    analyze_preds_ml(cfg, run_name, test_run_name, model.preds['constrained'], class_names=dataset.verb_classes)
+    save_and_analyze_preds(cfg, run_name, test_run_name, 'rules', model.preds['rules'], dataset.verb_classes)
+
+    print('Integrated---------------------')
+    model.constraint_mode = 'joint'
+    trainer.test(model, dataloaders=loader)
+    save_and_analyze_preds(cfg, run_name, test_run_name, 'joint', model.preds['joint'], dataset.verb_classes)
+
 
 '''
 with run folders set up, we can test the model
@@ -59,17 +60,17 @@ test
 '''
 def test(cfg, run_name, test_run_name):
 
-
     checkpoints_folder = os.path.join(cfg.runs_folder, run_name, 'checkpoints')
     checkpoints = os.listdir(checkpoints_folder)
     checkpoint = os.path.join(checkpoints_folder, checkpoints[0])
 
     model = SingleLeaPR.load_from_checkpoint(checkpoint)
+    model.set_rule_params(cfg.rules)
     trainer = Trainer(accelerator='gpu', devices=[0], logger=False)
 
-    assert cfg.data_split in ['test', 'val'], 'Invalid test split'
+    assert cfg.test.data_split in ['test', 'val'], 'Invalid test split'
 
-    dataset = SingleAG(cfg.data_root, cfg.data_folder, position=cfg.position, split=cfg.data_split)
+    dataset = SingleAG(cfg, split=cfg.test.data_split)
     loader = DataLoader(dataset, batch_size=128, collate_fn=dataset.verb_pred_collate, num_workers=16, shuffle=False)
 
     print(f"Dataset length: {len(dataset)}")

@@ -64,28 +64,24 @@ body_pred(twisting, 2).
 body_pred(wearing, 2).
 body_pred(wiping, 2).
 body_pred(writing_on, 2).
-05:17:29 Generating programs of size: 2
-05:17:29 Generating programs of size: 3
-05:17:29 ********************
-05:17:29 New best hypothesis:
-05:17:29 tp:200 fn:77 tn:977 fp:99 size:3 mdl:179
-05:17:29 eat_target(A):- holding(A,B),food(B).
-05:17:29 ********************
-05:17:42 Generating programs of size: 4
-05:17:49 ********************
-05:17:49 New best hypothesis:
-05:17:49 tp:244 fn:33 tn:957 fp:119 size:12 mdl:164
-05:17:49 eat_target(A):- holding(A,B),food(B).
-05:17:49 eat_target(A):- holding(A,B),medicine(B).
-05:17:49 eat_target(A):- sandwich(B),looking_at(A,B).
-05:17:49 eat_target(A):- on_the_side_of(B,A),sandwich(B).
-05:17:49 ********************
-05:43:22 Generating programs of size: 5
-06:57:46 TIMEOUT OF 6000 SECONDS EXCEEDED
-********** SOLUTION **********
-Precision:0.67 Recall:0.88 TP:244 FN:33 TN:957 FP:119 Size:12 MDL:164
-eat_target(A):- holding(A,B),food(B).
-eat_target(A):- holding(A,B),medicine(B).
-eat_target(A):- sandwich(B),looking_at(A,B).
-eat_target(A):- on_the_side_of(B,A),sandwich(B).
-******************************
+00:49:04 Generating programs of size: 2
+00:49:05 Generating programs of size: 3
+00:49:05 ********************
+00:49:05 New best hypothesis:
+00:49:05 tp:183 fn:72 tn:871 fp:86 size:3 mdl:161
+00:49:05 eat_target(A):- food(B),holding(A,B).
+00:49:05 ********************
+00:49:14 ********************
+00:49:14 New best hypothesis:
+00:49:14 tp:205 fn:50 tn:850 fp:107 size:3 mdl:160
+00:49:14 eat_target(A):- food(B),in_front_of(B,A).
+00:49:14 ********************
+00:49:18 Generating programs of size: 4
+00:49:24 ********************
+00:49:24 New best hypothesis:
+00:49:24 tp:236 fn:19 tn:853 fp:104 size:12 mdl:135
+00:49:24 eat_target(A):- food(B),holding(A,B).
+00:49:24 eat_target(A):- medicine(B),holding(A,B).
+00:49:24 eat_target(A):- sandwich(B),looking_at(A,B).
+00:49:24 eat_target(A):- not_looking_at(A,B),food(B).
+00:49:24 ********************

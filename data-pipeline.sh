@@ -16,7 +16,8 @@ fi
 # Generates the prolog background knowledge, biases, and examples for each verb
 if [ "$START_PART" -le 2 ]; then
     echo "Generating background files for ILP==================="
-    python prolog/prolog_generation.py --config $CONFIG_FILE --train --val --test
+    #python prolog/prolog_generation.py --config $CONFIG_FILE --train --val --test
+    python prolog/prolog_generation.py --config $CONFIG_FILE --train
 fi
 
 

@@ -1,0 +1,35 @@
+#paths and files
+dataset: "ag"
+data_root: "/data/Datasets/ag/"
+data_folder: "data/ag/" #meta root
+prolog_folder: "prolog/ag/"
+popper_path: "/home/muyang/Popper/popper.py"
+runs_folder: "runs/"
+
+#data parameters
+train_split_ratio: 0.6
+position: 'pre'
+num_samples: 8000
+forbidden_nodes: []
+forbidden_edges: []
+
+#ILP
+ilp_timeout: 600
+fn_weight: 1
+
+#Training parameters========================
+#model
+model_type: 'joint' # joint, rgcn, vit
+weight_scheme: 'inverse' # uniform, inverse, invsqrt
+epochs: 1
+batch_size: 16
+devices: [0]
+lr: 1e-3
+
+#Testing parameters========================
+#rules
+data_split: 'test'
+rules_name: '8000'
+mode: 'soft'
+recall_threshold: 0.8
+constraint_weight: 1
