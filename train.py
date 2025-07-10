@@ -52,17 +52,17 @@ def init_model_train(cfg, train_set):
 
     freq = train_set.verb_priors
     freq = freq + 1 #add 1 to each frequency to smooth, and avoid division by zero
-    if cfg.weight_scheme == 'inverse':
+    if cfg.model.weight_scheme == 'inverse':
         weight = len(train_set) / (num_verb_classes * freq)
-    elif cfg.weight_scheme == 'invsqrt':
+    elif cfg.model.weight_scheme == 'invsqrt':
         weight = len(train_set) / (num_verb_classes * np.sqrt(freq))
-    elif cfg.weight_scheme == 'uniform':
+    elif cfg.model.weight_scheme == 'uniform':
         weight = torch.ones(num_verb_classes)
     else:
-        raise ValueError(f'Invalid weight scheme: {cfg.weight_scheme}')
+        raise ValueError(f'Invalid weight scheme: {cfg.model.weight_scheme}')
     weight = torch.tensor(weight, dtype=torch.float)
 
-    if cfg.position == 'both':
+    if cfg.data.position == 'both':
         model = SingleLeaPR(cfg, model_params, weight)
     else:
         model = SingleLeaPR(cfg, model_params, weight) # TODO: add both model
@@ -85,7 +85,7 @@ def train(cfg, run_name):
     print('train set length:', len(train_set))
     print('val set length:', len(val_set))
 
-    train_loader = DataLoader(train_set, batch_size=cfg.batch_size, collate_fn=train_set.verb_pred_collate, num_workers=16, shuffle=True)
+    train_loader = DataLoader(train_set, batch_size=cfg.train.batch_size, collate_fn=train_set.verb_pred_collate, num_workers=16, shuffle=True)
     val_loader = DataLoader(val_set, batch_size=128, collate_fn=val_set.verb_pred_collate, num_workers=16, shuffle=False)
 
     model = init_model_train(cfg, train_set)
@@ -101,9 +101,9 @@ def train(cfg, run_name):
     )
     logger = TensorBoardLogger(save_dir=f'{cfg.runs_folder}/{run_name}/logs/')
     trainer = Trainer(
-        max_epochs=cfg.epochs,
+        max_epochs=cfg.train.epochs,
         accelerator='gpu',
-        devices=cfg.devices,
+        devices=cfg.train.devices,
         strategy='ddp',
         sync_batchnorm=True,
         callbacks=[checkpoint_callback],

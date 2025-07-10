@@ -61,7 +61,7 @@ def main(cfg, args):
         print('Training new model - source config: ', args.config, 'run: ', run_name)
         
         #subprocess.run(['python', 'train.py', '--config', args.config, '--run_name', run_name])
-        if len(cfg.devices) == 1:
+        if len(cfg.train.devices) == 1:
             train(cfg, run_name)
         else:
             #print('Distributed training not supported yet, please run train.py manually')

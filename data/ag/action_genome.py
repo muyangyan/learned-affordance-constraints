@@ -66,6 +66,7 @@ class ActionGenome(Dataset):
                 no_img=False, subset=True, split=None): # debug params
         assert cfg.data.position in ['pre', 'post', 'both']
         assert cfg.data.label_mode in ['single', 'multi']
+        assert split in ['train', 'test', 'val', None]
         assert not (cfg.data.position == 'both' and cfg.data.label_mode == 'multi')
 
         super().__init__()
@@ -87,7 +88,6 @@ class ActionGenome(Dataset):
         params = { # params that actually affect the dataset
             'root': self.root,
             'meta_root': self.meta_root, 
-            'prior_path': prior_path,
             'prolog_folder': self.prolog_folder,
             'rules_name': self.rules_name,
             'position': self.position,
@@ -193,18 +193,23 @@ class ActionGenome(Dataset):
                 data = self.create_scene_graph(id, action_classes)
                 self.scene_graphs[id] = data
         
-        self.constraints, self.truth_values = apply_rules(self.rules_name, 
-            os.path.join(self.prolog_folder, self.position, 'learned_rules'),
-            os.path.join(self.prolog_folder, self.position, f'{cfg.test.data_split}_bk.pl'),
-            len(self.df), self.verb_classes,
-            mode=cfg.mode,
-            recall_threshold=cfg.rules.recall_threshold,
-            priors=self.verb_priors)
+        # TODO: this is just because we didn't generate the bk for non-split dataset
+        if self.split is None:
+            self.constraints = None
+            self.truth_values = None
+        else:
+            # TODO: maybe add an option to not have rules even when split valid?
+            self.constraints, self.truth_values = apply_rules(self.rules_name, 
+                os.path.join(self.prolog_folder, self.position, 'learned_rules'),
+                os.path.join(self.prolog_folder, self.position, f'{self.split}_bk.pl'),
+                len(self.df), self.verb_classes,
+                mode=cfg.rules.mode,
+                recall_threshold=cfg.rules.recall_threshold,
+                priors=self.verb_priors)
 
         cache_data = { # all the actual data we need to save
             'df': self.df,
             'scene_graphs': self.scene_graphs,
-            'verb_priors': self.verb_priors,
             'verb_classes': self.verb_classes,
             'action_classes': self.action_classes,
             'object_classes': self.object_classes,
@@ -434,10 +439,16 @@ class SingleBothAG(ActionGenome):
             pre_image = Image.open(pre_image_path).convert('RGB')
             post_image = Image.open(post_image_path).convert('RGB')
 
-        pre_constraints = torch.tensor(self.constraints[index]).float()
-        post_constraints = torch.tensor(self.constraints[index]).float()
-        pre_truth_values = torch.tensor(self.truth_values[index]).float()
-        post_truth_values = torch.tensor(self.truth_values[index]).float()
+        if self.constraints is not None:
+            pre_constraints = torch.tensor(self.constraints[index]).float()
+            post_constraints = torch.tensor(self.constraints[index]).float()
+            pre_truth_values = torch.tensor(self.truth_values[index]).float()
+            post_truth_values = torch.tensor(self.truth_values[index]).float()
+        else:
+            pre_constraints = None
+            post_constraints = None
+            pre_truth_values = None
+            post_truth_values = None
 
         pre_data = (pre_id, pre_image, pre_scene_graph, action_classes, pre_constraints, pre_truth_values)  
         post_data = (post_id, post_image, post_scene_graph, action_classes, post_constraints, post_truth_values)
@@ -459,8 +470,12 @@ class SingleBothAG(ActionGenome):
             resized_images = [self.im_transform(img) for img in images]
             resized_images = torch.stack(resized_images)
         
-        constraints = torch.stack(constraints)
-        truth_values = torch.stack(truth_values)
+        if self.constraints is not None:
+            constraints = torch.stack(constraints)
+            truth_values = torch.stack(truth_values)
+        else:
+            constraints = None
+            truth_values = None
 
         return ids, resized_images, sg_batch, verb_labels, constraints, truth_values
         
@@ -494,8 +509,12 @@ class SingleAG(ActionGenome):
             image_path = os.path.join(self.root, 'frames', id)
             image = Image.open(image_path).convert('RGB')
 
-        constraints = torch.tensor(self.constraints[index]).float()
-        truth_values = torch.tensor(self.truth_values[index]).float()
+        if self.constraints is not None:
+            constraints = torch.tensor(self.constraints[index]).float()
+            truth_values = torch.tensor(self.truth_values[index]).float()
+        else:
+            constraints = None
+            truth_values = None
 
         return id, image, scene_graph, action_classes, constraints, truth_values
 
@@ -512,8 +531,12 @@ class SingleAG(ActionGenome):
             resized_images = [self.im_transform(img) for img in images]
             resized_images = torch.stack(resized_images)
         
-        constraints = torch.stack(constraints)
-        truth_values = torch.stack(truth_values)
+        if self.constraints is not None:
+            constraints = torch.stack(constraints)
+            truth_values = torch.stack(truth_values)
+        else:
+            constraints = None
+            truth_values = None
 
         return ids, resized_images, sg_batch, verb_labels, constraints, truth_values
 
@@ -547,8 +570,12 @@ class MultiAG(ActionGenome):
             image_path = os.path.join(self.root, 'frames', id)
             image = Image.open(image_path).convert('RGB')
 
-        constraints = torch.tensor(self.constraints[index]).float()
-        truth_values = torch.tensor(self.truth_values[index]).float()
+        if self.constraints is not None:
+            constraints = torch.tensor(self.constraints[index]).float()
+            truth_values = torch.tensor(self.truth_values[index]).float()
+        else:
+            constraints = None
+            truth_values = None
 
         return id, image, scene_graph, action_classes, constraints, truth_values
 
@@ -570,7 +597,11 @@ class MultiAG(ActionGenome):
             resized_images = [self.im_transform(img) for img in images]
             resized_images = torch.stack(resized_images)
         
-        constraints = torch.stack(constraints)
-        truth_values = torch.stack(truth_values)
+        if self.constraints is not None:
+            constraints = torch.stack(constraints)
+            truth_values = torch.stack(truth_values)
+        else:
+            constraints = None
+            truth_values = None
 
         return ids, resized_images, sg_batch, verb_labels, constraints, truth_values

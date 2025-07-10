@@ -20,7 +20,7 @@ class BaseLeaPR(L.LightningModule):
         self.constraint_weight = cfg.rules.constraint_weight
         self.rule_loss_coeff = cfg.train.rule_loss_coeff
 
-        if cfg.rule_loss_coeff > 0:
+        if self.rule_loss_coeff > 0:
             self.constraint_mode = 'joint'
         else:
             self.constraint_mode = 'neural'
@@ -37,7 +37,7 @@ class BaseLeaPR(L.LightningModule):
         self.init_metrics(num_classes)
         self.save_hyperparameters()
     
-    def init_rule_parms(self, rule_parms):
+    def set_rule_parms(self, rule_parms):
         '''
         Since the checkpoint just saves the NN model weights, we can freely change the rule parameters at test time
         For now, we only support changing the constraint weight. Technically one should also be able to change the rule mode and recall threshold.
