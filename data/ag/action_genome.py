@@ -40,7 +40,7 @@ class ActionGenome(Dataset):
         param_str = json.dumps(params, sort_keys=True)
         cache_key = hashlib.md5(param_str.encode()).hexdigest()
         cache_dir = os.path.join(self.meta_root, 'cache')
-        cache_path = os.path.join(cache_dir, f'dataset_{cache_key}.pkl')
+        cache_path = os.path.join(cache_dir, f'{self.split}_{params["num_samples"]}_{cache_key}.pkl')
         return cache_path
 
     def _load_from_cache(self, cache_file):
@@ -217,7 +217,7 @@ class ActionGenome(Dataset):
             'action_verb_obj_map': self.action_verb_obj_map,
             'verb_result_rel_map': self.verb_result_rel_map,
             'truth_values': self.truth_values,
-            'verb_priors': self.verb_priors
+            'verb_priors': self.verb_priors,
         }
         # Save to cache for future use
         self._save_to_cache(cache_file, cache_data)

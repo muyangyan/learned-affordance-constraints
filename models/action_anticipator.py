@@ -89,8 +89,11 @@ class BaseLeaPR(L.LightningModule):
 
         if self.rule_loss_coeff > 0:
             pre_rules = self.apply_activation(out)
-            post_rules = self.apply_constraints(pre_rules, truth_values, weight=self.constraint_weight)
-            rule_loss = F.binary_cross_entropy(pre_rules, post_rules) # type: ignore
+            post_rules, constraints = self.apply_constraints(pre_rules, truth_values, weight=self.constraint_weight, return_constraints=True)
+            
+            #rule_loss = F.binary_cross_entropy(pre_rules, post_rules) # type: ignore #1
+            rule_loss = F.binary_cross_entropy(pre_rules, constraints) # type: ignore #2
+
             loss = nn_loss + self.rule_loss_coeff * rule_loss
         else:
             loss = nn_loss
@@ -142,16 +145,6 @@ class BaseLeaPR(L.LightningModule):
             out = self.apply_constraints(out, truth_values, weight=self.constraint_weight)
         return ids, imgs, sgs, labels, truth_values, out
     
-    def predict_single(self, img, sg, truth_values, explain=False):
-        self.eval()
-        with torch.no_grad():
-            out = self(img, sg)
-            out = self.apply_activation(out)
-            if truth_values is not None:
-                constrained_out = self.apply_constraints(out, truth_values, weight=self.constraint_weight)
-                return constrained_out, out, truth_values
-            return out
-
     def apply_activation(self, out):
         pass
 
@@ -239,18 +232,26 @@ class SingleLeaPR(BaseLeaPR):
     def apply_activation(self, out):
         return torch.softmax(out, dim=1)
 
-    def apply_constraints(self, out, truth_values, weight=0.5):
+    def apply_constraints(self, out, truth_values, weight=0.5, return_constraints=False):
 
         constraints = self.compute_constraints(truth_values)
 
         if self.constraint_mode == 'neural':
-            return out
+            output = out
         elif self.constraint_mode == 'rules':
-            return constraints
+            output = constraints
         elif self.constraint_mode == 'joint':
-            return F.normalize(out * (constraints**weight), dim=1)
+            #output = F.normalize(out * (constraints**weight), dim=1)
+            output = (out * (1/self.priors)**weight) + (out * self.priors**weight)
+            #output = F.normalize(out * (torch.pow(constraints, 1/self.priors)**weight), dim=1)
+        #elif self.constraint_mode == 'feature':
+        #    output = F.normalize(out * (constraints**weight), dim=1)
         else:
             raise ValueError(f'Invalid mode: {self.constraint_mode}')
+        if return_constraints:
+            return output, constraints
+        else:
+            return output
 
     def log_train_metrics(self, out, labels, metrics):
 

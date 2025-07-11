@@ -4,7 +4,7 @@ from torch import Tensor
 import torch.nn.functional as F
 
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-from sklearn.metrics import average_precision_score, top_k_accuracy_score
+from sklearn.metrics import average_precision_score, top_k_accuracy_score, balanced_accuracy_score
 from sklearn.metrics import confusion_matrix, multilabel_confusion_matrix
 from scipy.stats import entropy
 
@@ -44,6 +44,7 @@ def analyze_preds(cfg, run_name, test_run_name, preds=None, class_names=None, do
 
     # Calculate metrics using sklearn for multilabel classification
     acc = accuracy_score(true_labels, pred_labels)
+    bal_acc = balanced_accuracy_score(true_labels, pred_labels)
     top3_acc = top_k_accuracy_score(true_labels, output_logits, k=3, labels=label_vec)
     top5_acc = top_k_accuracy_score(true_labels, output_logits, k=5, labels=label_vec)
     #mean_average_precision = average_precision_score(true_labels_one_hot, output_logits, average='macro')
@@ -56,6 +57,7 @@ def analyze_preds(cfg, run_name, test_run_name, preds=None, class_names=None, do
 
     metrics_dict = {
         'Top1 Accuracy(%)': acc,
+        'Balanced Accuracy(%)': bal_acc,
         'Top3 Accuracy(%)': top3_acc,
         'Top5 Accuracy(%)': top5_acc,
         #'Mean Average Precision(%)': mean_average_precision,

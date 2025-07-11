@@ -96,6 +96,7 @@ def train(cfg, run_name):
         dirpath=f'{cfg.runs_folder}/{run_name}/checkpoints/',
         filename='{epoch:02d}-{val_acc:.4f}',
         save_top_k=1,  
+        every_n_epochs=1,
         mode='max',
         verbose=False,
     )

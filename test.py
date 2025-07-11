@@ -35,6 +35,11 @@ def test_routine(cfg, run_name, test_run_name, trainer, model, dataset, loader):
 
     model.preds = {'neural': [], 'rules': [], 'joint': []}
 
+    print('Integrated---------------------')
+    model.constraint_mode = 'joint'
+    trainer.test(model, dataloaders=loader)
+    save_and_analyze_preds(cfg, run_name, test_run_name, 'joint', model.preds['joint'], dataset.verb_classes)
+
     print('Without rules---------------------')
     model.constraint_mode = 'neural'
     trainer.test(model, dataloaders=loader)
@@ -45,10 +50,6 @@ def test_routine(cfg, run_name, test_run_name, trainer, model, dataset, loader):
     trainer.test(model, dataloaders=loader)
     save_and_analyze_preds(cfg, run_name, test_run_name, 'rules', model.preds['rules'], dataset.verb_classes)
 
-    print('Integrated---------------------')
-    model.constraint_mode = 'joint'
-    trainer.test(model, dataloaders=loader)
-    save_and_analyze_preds(cfg, run_name, test_run_name, 'joint', model.preds['joint'], dataset.verb_classes)
 
 
 '''
