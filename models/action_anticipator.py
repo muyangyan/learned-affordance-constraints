@@ -72,17 +72,20 @@ class BaseLeaPR(L.LightningModule):
     def init_metrics(self, num_classes):
         pass
         
-    def forward(self, img, sg):
+    def forward(self, img, sg, truth_values):
         if self.model_type == 'rgcn':
             return self.model(sg)
         elif self.model_type == 'vit' or self.model_type == 'mvit':
             return self.model(img)
+        elif self.model_type == 'rule_feats':
+            return self.model(img, sg, truth_values)
         else:
             return self.model(img, sg)
+        
     
     def training_step(self, batch, batch_idx):
         ids, imgs, sgs, labels, truth_values = batch
-        out = self(imgs, sgs)
+        out = self(imgs, sgs, truth_values)
         nn_loss = self.criterion(out, labels)
 
         if self.rule_loss_coeff > 0:
@@ -108,13 +111,13 @@ class BaseLeaPR(L.LightningModule):
 
     def validation_step(self, batch, batch_idx):
         ids, imgs, sgs, labels, truth_values = batch
-        out = self(imgs, sgs)
+        out = self(imgs, sgs, truth_values)
         loss = self.criterion(out, labels)
         self.log_val_metrics(out, labels, loss)
 
     def test_step(self, batch, batch_idx):
         ids, imgs, sgs, labels, truth_values = batch
-        out = self(imgs, sgs)
+        out = self(imgs, sgs, truth_values)
         out = self.apply_activation(out)
 
         if self.constraint_mode is None:
@@ -137,7 +140,7 @@ class BaseLeaPR(L.LightningModule):
 
     def predict_step(self, batch, batch_idx):
         ids, imgs, sgs, labels, truth_values = batch
-        out = self(imgs, sgs)
+        out = self(imgs, sgs, truth_values)
         out = self.apply_activation(out)
         if truth_values is not None:
             out = self.apply_constraints(out, truth_values, weight=self.constraint_weight)

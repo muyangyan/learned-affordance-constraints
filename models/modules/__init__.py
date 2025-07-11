@@ -2,8 +2,9 @@ from .joint_model import JointModel
 from .rgcn import RGCN
 from .vit import ViT
 from .mvit import MViT
+from .rule_feat_model import RuleFeatModel
 
-__all__ = ['JointModel', 'RGCN', 'ViT', 'MViT']
+__all__ = ['JointModel', 'RGCN', 'ViT', 'MViT', 'RuleFeatModel']
 
 def get_model(model_type, model_params):
     rgcn_params = model_params['rgcn_params']
@@ -21,4 +22,6 @@ def get_model(model_type, model_params):
         model = ViT(num_classes, head=True)
     elif model_type == 'mvit':
         model = MViT(num_classes, head=True)
+    elif model_type == 'rule_feats':
+        model = RuleFeatModel(rgcn_params, vit_hidden_dim, num_classes, visual_type='vit')
     return model
