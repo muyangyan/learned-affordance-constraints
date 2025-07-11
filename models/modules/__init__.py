@@ -6,7 +6,9 @@ from .mvit import MViT
 __all__ = ['JointModel', 'RGCN', 'ViT', 'MViT']
 
 def get_model(model_type, model_params):
-    rgcn_params, vit_hidden_dim, num_classes = model_params 
+    rgcn_params = model_params['rgcn_params']
+    vit_hidden_dim = model_params['vit_hidden_dim']
+    num_classes = model_params['num_verb_classes']
 
     if model_type == 'joint':
         model = JointModel(rgcn_params, vit_hidden_dim, num_classes, visual_type='vit')

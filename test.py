@@ -33,6 +33,8 @@ def save_and_analyze_preds(cfg, run_name, test_run_name, pred_name, preds, class
 
 def test_routine(cfg, run_name, test_run_name, trainer, model, dataset, loader):
 
+    model.preds = {'neural': [], 'rules': [], 'joint': []}
+
     print('Without rules---------------------')
     model.constraint_mode = 'neural'
     trainer.test(model, dataloaders=loader)

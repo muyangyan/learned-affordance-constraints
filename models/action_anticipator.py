@@ -14,7 +14,7 @@ from torchmetrics import MetricCollection
 from torchmetrics import Accuracy, Precision, Recall, AveragePrecision, F1Score
 
 class BaseLeaPR(L.LightningModule):
-    def __init__(self, cfg, model_params, weight, priors):
+    def __init__(self, cfg, model_params, weight, priors, classes):
         super().__init__()
         self.model_type = cfg.model.type
         self.lr = float(cfg.train.lr)
@@ -25,14 +25,17 @@ class BaseLeaPR(L.LightningModule):
         else:
             self.constraint_mode = 'neural'
 
-        num_classes = model_params['num_verb_classes']
+        num_classes = len(classes)
         self.model = get_model(self.model_type, model_params)
-        self.register_buffer('weight', weight)
-
-        self.priors = priors
 
         rules_json = os.path.join(cfg.prolog_folder, cfg.data.position, 'learned_rules', f'{cfg.rules.name}.json')
-        self.precisions, self.recalls = get_rule_precisions_recalls(rules_json, priors)
+        precisions, recalls = get_rule_precisions_recalls(rules_json, priors, classes)
+
+        # Cache rule tensors as buffers (automatically move with model)
+        self.register_buffer('weight', weight)
+        self.register_buffer('precisions', torch.tensor(precisions))
+        self.register_buffer('recalls', torch.tensor(recalls))
+        self.register_buffer('priors', torch.tensor(priors))
 
         # debug vars
         self.ids = []
@@ -41,19 +44,24 @@ class BaseLeaPR(L.LightningModule):
         self.init_metrics(num_classes)
         self.save_hyperparameters()
 
+
     def compute_constraints(self, truth_values):
-        satisfied_mask = truth_values.astype(bool)
+        """
+        Compute rule constraints from binary truth values using pure PyTorch operations.
+        Much more efficient than converting to numpy and back.
+        """
+        satisfied_mask = truth_values.bool()
+        
         if truth_values.ndim == 2:
-            precisions = self.precisions[None, :]
-            recalls = self.recalls[None, :]
-            priors = self.priors[None, :]
+            precisions = self.precisions.unsqueeze(0)
+            recalls = self.recalls.unsqueeze(0) 
+            priors = self.priors.unsqueeze(0)
         else:
             precisions = self.precisions
             recalls = self.recalls
             priors = self.priors
-        result = np.where(satisfied_mask, 
-                         precisions,  # if satisfied: use precision
-                         (1 - recalls) * priors)  # if not satisfied: (1-recall) * prior
+        
+        result = torch.where(satisfied_mask, precisions, (1 - recalls) * priors).float()
         return result
     
     def set_rule_params(self, rule_params):
@@ -165,8 +173,8 @@ class BaseLeaPR(L.LightningModule):
 
 class MultiLeaPR(BaseLeaPR):
 
-    def __init__(self, cfg, model_params, weight, priors):
-        super().__init__(cfg, model_params, weight, priors)
+    def __init__(self, cfg, model_params, weight, priors, classes):
+        super().__init__(cfg, model_params, weight, priors, classes)
         self.criterion = nn.BCEWithLogitsLoss(weight=self.weight)
 
     def init_metrics(self, num_classes):
@@ -210,8 +218,8 @@ class MultiLeaPR(BaseLeaPR):
         self.log_dict(metrics_dict, on_step=False, on_epoch=True, prog_bar=True)
 
 class SingleLeaPR(BaseLeaPR):
-    def __init__(self, cfg, model_params, weight, priors):
-        super().__init__(cfg, model_params, weight, priors)
+    def __init__(self, cfg, model_params, weight, priors, classes):
+        super().__init__(cfg, model_params, weight, priors, classes)
         self.criterion = nn.CrossEntropyLoss(weight=self.weight)
 
     def init_metrics(self, num_classes):
