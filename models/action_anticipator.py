@@ -20,9 +20,7 @@ class BaseLeaPR(L.LightningModule):
         self.lr = float(cfg.train.lr)
         self.constraint_weight = cfg.rules.constraint_weight
         self.rule_loss_coeff = cfg.train.rule_loss_coeff
-        if self.rule_loss_coeff > 0:
-            self.constraint_mode = 'joint'
-        else:
+        if self.rule_loss_coeff == 0:
             self.constraint_mode = 'neural'
 
         num_classes = len(classes)
