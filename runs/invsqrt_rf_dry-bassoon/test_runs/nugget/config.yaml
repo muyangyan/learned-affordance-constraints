@@ -20,7 +20,7 @@ ilp:
   fn_weight: 1
 
 model:
-  type: 'joint_mvit' # joint, rgcn, vit
+  type: 'rule_feats' # joint, rgcn, vit
   weight_scheme: 'invsqrt' # uniform, inverse, invsqrt
 
 rules: # used in training time as well
@@ -33,7 +33,7 @@ train:
   rule_loss_coeff: 0 # use 0 to disable rule loss
   epochs: 30
   batch_size: 16
-  devices: [2,3]
+  devices: [6,7]
   lr: 1e-3
 
 test:

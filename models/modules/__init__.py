@@ -23,5 +23,5 @@ def get_model(model_type, model_params):
     elif model_type == 'mvit':
         model = MViT(num_classes, head=True)
     elif model_type == 'rule_feats':
-        model = RuleFeatModel(rgcn_params, vit_hidden_dim, num_classes, visual_type='vit')
+        model = RuleFeatModel(rgcn_params, vit_hidden_dim, num_classes, visual_type='mvit')
     return model
