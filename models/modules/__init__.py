@@ -2,9 +2,8 @@ from .joint_model import JointModel
 from .rgcn import RGCN
 from .vit import ViT
 from .mvit import MViT
-from .rule_feat_model import RuleFeatModel
 
-__all__ = ['JointModel', 'RGCN', 'ViT', 'MViT', 'RuleFeatModel']
+__all__ = ['JointModel', 'RGCN', 'ViT', 'MViT']
 
 def get_model(model_type, model_params):
     rgcn_params = model_params['rgcn_params']

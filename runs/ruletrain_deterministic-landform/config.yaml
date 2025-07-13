@@ -33,7 +33,7 @@ rules: # used in training time as well
 train:
   # the constraint mode to use during training. 'neural' for no rules, 'joint_X' otherwise
   constraint_mode: 'joint_v1'
-  epochs: 9999
+  epochs: 30
   batch_size: 16
   devices: [0,1,2,3]
   lr: 1e-3

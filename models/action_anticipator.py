@@ -19,8 +19,7 @@ class BaseLeaPR(L.LightningModule):
         self.model_type = cfg.model.type
         self.lr = float(cfg.train.lr)
         self.label_type = cfg.data.label_type  # Store label_type for use in training/validation/test
-        self.use_rules_in_training = cfg.train.use_rules_in_training
-        self.constraint_mode = 'neural'
+        self.constraint_mode = cfg.train.constraint_mode
 
         num_classes = len(classes)
         self.classes = classes
@@ -28,19 +27,27 @@ class BaseLeaPR(L.LightningModule):
         rules_json = os.path.join(cfg.prolog_folder, cfg.data.position, 'learned_rules', f'{cfg.rules.name}.json')
         precisions, recalls = get_rule_precisions_recalls(rules_json, priors, classes)
 
-        self.model = get_model(self.model_type, model_params)
+        self.nn_model = get_model(self.model_type, model_params)
 
         # Initialize constraint_weight as a learnable parameter vector
         initial_constraint_weight = cfg.rules.constraint_weight
         self.constraint_weight = nn.Parameter(torch.full((num_classes,), initial_constraint_weight, dtype=torch.float))
+        
+        # Cross-attention module for neural output and rule truth values
+        self.rule_attn = nn.MultiheadAttention(
+            embed_dim=num_classes,
+            num_heads=1,
+            batch_first=True
+        )
 
-        # Cache rule tensors as buffers (automatically move with model)
+
+        # Cache rule tensors as buffers (automatically move with model) =================
         self.register_buffer('weight', weight)
         self.register_buffer('precisions', torch.tensor(precisions))
         self.register_buffer('recalls', torch.tensor(recalls))
         self.register_buffer('priors', torch.tensor(priors))
 
-        # debug vars
+        # debug vars ======================================
         self.ids = []
         self.preds = None
 
@@ -91,10 +98,26 @@ class BaseLeaPR(L.LightningModule):
         
     def forward(self, img, sg, truth_values):
         inputs = {'img': img, 'sg': sg, 'truth_values': truth_values}
-        output = self.model(inputs)
-        if self.use_rules_in_training:
+        output = self.nn_model(inputs)
+        if self.constraint_mode not in ['neural', 'rules']: # TODO: a little ugly
+
+            neural_output_expanded = output.unsqueeze(1)  # [batch_size, 1, num_classes]
+            truth_values_expanded = truth_values.unsqueeze(1)    # [batch_size, 1, num_classes]
+            
+            # Apply cross-attention: neural_output attends to rule truth values
+            attn_output, _ = self.rule_attn(
+                query=neural_output_expanded,      # What we want to enhance
+                key=truth_values_expanded,         # What we attend to
+                value=truth_values_expanded        # What we use to enhance
+            )
+            
+            # Squeeze back to original shape and combine with neural output
+            attn_output = attn_output.squeeze(1)   # [batch_size, num_classes]
+            enhanced_output = output + attn_output  # Residual connection
+            
+            # Apply constraints to the enhanced output
             constraints = self.compute_constraints(truth_values)
-            output = self.apply_constraints(output, constraints)
+            output = self.apply_constraints(enhanced_output, constraints)
         return output
         
     

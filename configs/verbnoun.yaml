@@ -31,8 +31,6 @@ rules: # used in training time as well
   constraint_weight: 0.5 # can be changed at test time
 
 train:
-  rule_loss_coeff: 0 # use 0 to disable rule loss
-  use_rules_in_training: False
   epochs: 30
   batch_size: 16
   devices: [0]
