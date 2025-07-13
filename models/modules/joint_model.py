@@ -20,7 +20,10 @@ class JointModel(nn.Module):
             nn.Linear(fusion_dim, num_classes),
         )
     
-    def forward(self, img, sg):
+    def forward(self, inputs):
+        img = inputs['img']
+        sg = inputs['sg']
+
         img = self.visual(img)
         sg = self.rgcn(sg)
         hidden_state = torch.cat((img, sg), dim=1)

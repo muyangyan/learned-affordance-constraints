@@ -23,7 +23,11 @@ class RGCN(torch.nn.Module):
         self.fc1 = torch.nn.Linear(32, 16)
         self.fc2 = torch.nn.Linear(16, num_classes)
 
-    def forward(self, data):
+    def forward(self, inputs):
+        if isinstance(inputs, dict):
+            data = inputs['sg']
+        else:
+            data = inputs
         x, edge_index, edge_type, batch = data.x, data.edge_index, data.edge_type, data.batch
 
         #assume x is a one-hot tensor encoding the node type

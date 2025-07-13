@@ -18,11 +18,9 @@ class BaseLeaPR(L.LightningModule):
         super().__init__()
         self.model_type = cfg.model.type
         self.lr = float(cfg.train.lr)
-        self.constraint_weight = cfg.rules.constraint_weight
-        self.rule_loss_coeff = cfg.train.rule_loss_coeff
         self.label_type = cfg.data.label_type  # Store label_type for use in training/validation/test
-        if self.rule_loss_coeff == 0:
-            self.constraint_mode = 'neural'
+        self.use_rules_in_training = cfg.train.use_rules_in_training
+        self.constraint_mode = 'neural'
 
         num_classes = len(classes)
         self.classes = classes
@@ -30,7 +28,11 @@ class BaseLeaPR(L.LightningModule):
         rules_json = os.path.join(cfg.prolog_folder, cfg.data.position, 'learned_rules', f'{cfg.rules.name}.json')
         precisions, recalls = get_rule_precisions_recalls(rules_json, priors, classes)
 
-        self.model = get_model(self.model_type, model_params, precisions, recalls)
+        self.model = get_model(self.model_type, model_params)
+
+        # Initialize constraint_weight as a learnable parameter vector
+        initial_constraint_weight = cfg.rules.constraint_weight
+        self.constraint_weight = nn.Parameter(torch.full((num_classes,), initial_constraint_weight, dtype=torch.float))
 
         # Cache rule tensors as buffers (automatically move with model)
         self.register_buffer('weight', weight)
@@ -88,14 +90,12 @@ class BaseLeaPR(L.LightningModule):
         pass
         
     def forward(self, img, sg, truth_values):
-        if self.model_type == 'rgcn':
-            return self.model(sg)
-        elif self.model_type == 'vit' or self.model_type == 'mvit':
-            return self.model(img)
-        elif self.model_type == 'rule_feats':
-            return self.model(img, sg, truth_values)
-        else:
-            return self.model(img, sg)
+        inputs = {'img': img, 'sg': sg, 'truth_values': truth_values}
+        output = self.model(inputs)
+        if self.use_rules_in_training:
+            constraints = self.compute_constraints(truth_values)
+            output = self.apply_constraints(output, constraints)
+        return output
         
     
     def training_step(self, batch, batch_idx):
@@ -108,24 +108,10 @@ class BaseLeaPR(L.LightningModule):
         labels = self.get_labels_from_batch(batch)
         
         out = self(imgs, sgs, truth_values)
-        nn_loss = self.criterion(out, labels)
-
-        if self.rule_loss_coeff > 0:
-            pre_rules = self.apply_activation(out)
-            constraints = self.compute_constraints(truth_values)
-            post_rules = self.apply_constraints(pre_rules, constraints, weight=self.constraint_weight)
-            
-            #rule_loss = F.binary_cross_entropy(pre_rules, post_rules) # type: ignore #1
-            rule_loss = F.binary_cross_entropy(pre_rules, constraints) # type: ignore #2
-
-            loss = nn_loss + self.rule_loss_coeff * rule_loss
-        else:
-            loss = nn_loss
+        loss = self.criterion(out, labels)
 
         metrics = {
             'loss': loss,
-            'nn_loss': nn_loss,
-            'rule_loss': rule_loss if self.rule_loss_coeff > 0 else 0,
         }
 
         self.log_train_metrics(out, labels, metrics)
@@ -160,7 +146,7 @@ class BaseLeaPR(L.LightningModule):
         if self.constraint_mode is None:
             raise ValueError(f'Constraint mode is not set') # use mode 'neural' for unconstrained predictions
         constraints = self.compute_constraints(truth_values)
-        out = self.apply_constraints(out, constraints, weight=self.constraint_weight)
+        out = self.apply_constraints(out, constraints)
 
         # debug, metrics and logging
         self.ids.extend(ids)
@@ -194,13 +180,13 @@ class BaseLeaPR(L.LightningModule):
         out = self.apply_activation(out)
         if truth_values is not None:
             constraints = self.compute_constraints(truth_values)
-            out = self.apply_constraints(out, constraints, weight=self.constraint_weight)
+            out = self.apply_constraints(out, constraints)
         return ids, imgs, sgs, labels, truth_values, out
     
     def apply_activation(self, out):
         pass
 
-    def apply_constraints(self, out, constraints, weight=1):
+    def apply_constraints(self, out, constraints, weight=None):
         pass
 
     def configure_optimizers(self):
@@ -284,8 +270,12 @@ class SingleLeaPR(BaseLeaPR):
     def apply_activation(self, out):
         return torch.softmax(out, dim=1)
 
-    def apply_constraints(self, out, constraints, weight=0.5, return_constraints=False):
-
+    def apply_constraints(self, out, constraints, weight=None):
+        # This function should be differentiable to the learnable constraint_weight parameter
+        # Use the learnable constraint_weight parameter if weight is not provided
+        if weight is None:
+            weight = self.constraint_weight
+        
         if self.constraint_mode == 'neural':
             output = out
         elif self.constraint_mode == 'rules':
@@ -295,19 +285,10 @@ class SingleLeaPR(BaseLeaPR):
         elif self.constraint_mode == 'joint_v2':
             output = out * (constraints**(weight * 1/(len(self.classes) * self.priors) ) )
         elif self.constraint_mode == 'joint':
-            # Keep original joint for backward compatibility - defaults to joint_v1
             output = out * (constraints**weight)
-            #output = (constraints * (1/self.priors)**weight) + (out * self.priors**weight)
-            #output = (out * (1/self.priors)**weight) + (out * self.priors**weight)
-            #output = F.normalize(out * (torch.pow(constraints, 1/self.priors)**weight), dim=1)
-        #elif self.constraint_mode == 'feature':
-        #    output = F.normalize(out * (constraints**weight), dim=1)
         else:
             raise ValueError(f'Invalid mode: {self.constraint_mode}')
-        if return_constraints:
-            return output, constraints
-        else:
-            return output
+        return output
 
     def log_train_metrics(self, out, labels, metrics):
 

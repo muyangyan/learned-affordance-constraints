@@ -26,7 +26,11 @@ class MViT(nn.Module):
             for param in self.backbone.head.fc.parameters():
                 param.requires_grad = True
 
-    def forward(self, x):
+    def forward(self, inputs):
+        if isinstance(inputs, dict):
+            x = inputs['img']
+        else:
+            x = inputs
         x = self.backbone(x)
         if self.head:
             return F.softmax(x, dim=-1)
