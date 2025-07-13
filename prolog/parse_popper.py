@@ -3,6 +3,7 @@ import json
 import argparse
 
 from util.config_utils import load_yaml
+from util.rule_utils import normalize_predicate_name
 
 def parse_metrics(line):
     metrics = {}
@@ -85,11 +86,12 @@ def write_rules(rules_folder, logs_folder, rules_name, weight, timeout):
 
     with open(os.path.join(rules_folder, rules_name + '.pl'), 'w') as f: 
         f.write(f'%%{rules_name} weight: {weight} timeout: {timeout}\n')
-        for verb, rule_pair in rules.items():
-            f.write(f'%%{verb}\n')
+        for predicate, rule_pair in rules.items():
+            predicate = normalize_predicate_name(predicate)
+            f.write(f'%%{predicate}\n')
             if rule_pair is None:
                 f.write('%%No solution\n')
-                f.write(f'{verb}_target(_).\n\n')
+                f.write(f'{predicate}_target(_).\n\n')
                 continue
 
             rule, metrics = rule_pair
@@ -106,7 +108,7 @@ if __name__ == '__main__':
 
     config = load_yaml(args.config)
 
-    rules_folder = os.path.join(config.prolog_folder, config.position, "learned_rules")
-    log_folder = os.path.join(config.prolog_folder, config.position, "popper_logs")
+    rules_folder = os.path.join(config.prolog_folder, config.data.position, "learned_rules")
+    log_folder = os.path.join(config.prolog_folder, config.data.position, "popper_logs")
 
-    write_rules(rules_folder, log_folder, config.rules_name, config.fn_weight, config.ilp_timeout)
+    write_rules(rules_folder, log_folder, config.rules.name, config.ilp.fn_weight, config.ilp.timeout)

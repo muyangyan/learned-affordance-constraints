@@ -1,0 +1,31 @@
+%%keep negative probability: 0.0038017605174716085
+:- style_check(-discontiguous).
+neg(throwing_a_broom_somewhere_target(x214_0)).
+neg(throwing_a_broom_somewhere_target(x389_0)).
+neg(throwing_a_broom_somewhere_target(x696_0)).
+pos(throwing_a_broom_somewhere_target(x698_0)).
+pos(throwing_a_broom_somewhere_target(x1135_0)).
+neg(throwing_a_broom_somewhere_target(x1653_0)).
+neg(throwing_a_broom_somewhere_target(x1843_0)).
+neg(throwing_a_broom_somewhere_target(x2075_0)).
+neg(throwing_a_broom_somewhere_target(x2342_0)).
+pos(throwing_a_broom_somewhere_target(x2451_0)).
+pos(throwing_a_broom_somewhere_target(x2648_0)).
+neg(throwing_a_broom_somewhere_target(x2885_0)).
+neg(throwing_a_broom_somewhere_target(x3000_0)).
+neg(throwing_a_broom_somewhere_target(x3011_0)).
+neg(throwing_a_broom_somewhere_target(x3143_0)).
+neg(throwing_a_broom_somewhere_target(x3422_0)).
+neg(throwing_a_broom_somewhere_target(x3805_0)).
+neg(throwing_a_broom_somewhere_target(x3809_0)).
+pos(throwing_a_broom_somewhere_target(x4556_0)).
+neg(throwing_a_broom_somewhere_target(x4692_0)).
+pos(throwing_a_broom_somewhere_target(x5559_0)).
+neg(throwing_a_broom_somewhere_target(x6020_0)).
+neg(throwing_a_broom_somewhere_target(x6432_0)).
+neg(throwing_a_broom_somewhere_target(x6528_0)).
+neg(throwing_a_broom_somewhere_target(x6532_0)).
+neg(throwing_a_broom_somewhere_target(x6540_0)).
+neg(throwing_a_broom_somewhere_target(x6691_0)).
+neg(throwing_a_broom_somewhere_target(x7140_0)).
+pos(throwing_a_broom_somewhere_target(x7212_0)).

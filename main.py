@@ -91,6 +91,8 @@ if __name__ == '__main__':
     assert args.config == 'none' or args.run == 'none', 'Must specify either config or run'
 
     if args.config == 'none':
+        if args.run.startswith('runs/'):
+            args.run = args.run.split('/')[1]
         cfg = load_yaml(os.path.join('runs/', args.run, 'config.yaml'))
     else:
         cfg = load_yaml(args.config)

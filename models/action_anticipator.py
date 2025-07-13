@@ -1,6 +1,6 @@
 import numpy as np
 import torch
-import torch.optim
+from torch.optim.adam import Adam
 from torch import Tensor
 import torch.nn.functional as F
 import torch.nn as nn
@@ -20,11 +20,13 @@ class BaseLeaPR(L.LightningModule):
         self.lr = float(cfg.train.lr)
         self.constraint_weight = cfg.rules.constraint_weight
         self.rule_loss_coeff = cfg.train.rule_loss_coeff
+        self.label_type = cfg.data.label_type  # Store label_type for use in training/validation/test
         if self.rule_loss_coeff == 0:
             self.constraint_mode = 'neural'
 
         num_classes = len(classes)
         self.model = get_model(self.model_type, model_params)
+        self.classes = classes
 
         rules_json = os.path.join(cfg.prolog_folder, cfg.data.position, 'learned_rules', f'{cfg.rules.name}.json')
         precisions, recalls = get_rule_precisions_recalls(rules_json, priors, classes)
@@ -42,6 +44,14 @@ class BaseLeaPR(L.LightningModule):
         self.init_metrics(num_classes)
         self.save_hyperparameters()
 
+    def get_labels_from_batch(self, batch):
+        """Get the appropriate labels from batch based on label_type"""
+        if self.label_type == 'verb':
+            return batch['verb_labels']
+        elif self.label_type == 'verbnoun':
+            return batch['action_labels']
+        else:
+            raise ValueError(f"Unsupported label_type: {self.label_type}")
 
     def compute_constraints(self, truth_values):
         """
@@ -62,12 +72,16 @@ class BaseLeaPR(L.LightningModule):
         result = torch.where(satisfied_mask, precisions, (1 - recalls) * priors).float()
         return result
     
-    def set_rule_params(self, rule_params):
+    def set_rule_params(self, rule_params, rules_json_path=None):
         '''
         Since the checkpoint just saves the NN model weights, we can freely change the rule parameters at test time
         For now, we only support changing the constraint weight. Technically one should also be able to change the rule mode and recall threshold.
         '''
         self.constraint_weight = rule_params.constraint_weight
+        if rules_json_path is not None:
+            precisions, recalls = get_rule_precisions_recalls(rules_json_path, self.priors, self.classes)
+            self.precisions = torch.tensor(precisions)
+            self.recalls = torch.tensor(recalls)
         
     def init_metrics(self, num_classes):
         pass
@@ -84,13 +98,21 @@ class BaseLeaPR(L.LightningModule):
         
     
     def training_step(self, batch, batch_idx):
-        ids, imgs, sgs, labels, truth_values = batch
+        ids = batch['ids']
+        imgs = batch['images']
+        sgs = batch['scene_graphs']
+        truth_values = batch['truth_values']
+        
+        # Use appropriate labels based on label_type
+        labels = self.get_labels_from_batch(batch)
+        
         out = self(imgs, sgs, truth_values)
         nn_loss = self.criterion(out, labels)
 
         if self.rule_loss_coeff > 0:
             pre_rules = self.apply_activation(out)
-            post_rules, constraints = self.apply_constraints(pre_rules, truth_values, weight=self.constraint_weight, return_constraints=True)
+            constraints = self.compute_constraints(truth_values)
+            post_rules = self.apply_constraints(pre_rules, constraints, weight=self.constraint_weight)
             
             #rule_loss = F.binary_cross_entropy(pre_rules, post_rules) # type: ignore #1
             rule_loss = F.binary_cross_entropy(pre_rules, constraints) # type: ignore #2
@@ -110,25 +132,45 @@ class BaseLeaPR(L.LightningModule):
         return loss
 
     def validation_step(self, batch, batch_idx):
-        ids, imgs, sgs, labels, truth_values = batch
+        ids = batch['ids']
+        imgs = batch['images']
+        sgs = batch['scene_graphs']
+        truth_values = batch['truth_values']
+        
+        # Use appropriate labels based on label_type
+        labels = self.get_labels_from_batch(batch)
+        
         out = self(imgs, sgs, truth_values)
         loss = self.criterion(out, labels)
         self.log_val_metrics(out, labels, loss)
 
     def test_step(self, batch, batch_idx):
-        ids, imgs, sgs, labels, truth_values = batch
+        ids = batch['ids']
+        imgs = batch['images']
+        sgs = batch['scene_graphs']
+        truth_values = batch['truth_values']
+        
+        # Use appropriate labels based on label_type
+        labels = self.get_labels_from_batch(batch)
+        
         out = self(imgs, sgs, truth_values)
         out = self.apply_activation(out)
 
         if self.constraint_mode is None:
             raise ValueError(f'Constraint mode is not set') # use mode 'neural' for unconstrained predictions
-        out = self.apply_constraints(out, truth_values, weight=self.constraint_weight)
+        constraints = self.compute_constraints(truth_values)
+        out = self.apply_constraints(out, constraints, weight=self.constraint_weight)
 
         # debug, metrics and logging
         self.ids.extend(ids)
         key = self.constraint_mode
-        if self.preds is not None:
-            self.preds[key].append(torch.stack([out, labels], dim=1).cpu())
+        if self.preds is not None and out is not None and labels is not None:
+            # Ensure both tensors have the same shape before stacking
+            if out.shape == labels.shape:
+                self.preds[key].append(torch.stack([out, labels], dim=1).cpu())
+            else:
+                # Handle shape mismatch by concatenating instead of stacking
+                self.preds[key].append(torch.cat([out.unsqueeze(1), labels.unsqueeze(1)], dim=1).cpu())
 
         #self.log_test_metrics(out, labels)
 
@@ -139,21 +181,29 @@ class BaseLeaPR(L.LightningModule):
             self.preds[key] = self.preds[key].cpu().numpy()
 
     def predict_step(self, batch, batch_idx):
-        ids, imgs, sgs, labels, truth_values = batch
+        ids = batch['ids']
+        imgs = batch['images']
+        sgs = batch['scene_graphs']
+        truth_values = batch['truth_values']
+        
+        # Use appropriate labels based on label_type
+        labels = self.get_labels_from_batch(batch)
+        
         out = self(imgs, sgs, truth_values)
         out = self.apply_activation(out)
         if truth_values is not None:
-            out = self.apply_constraints(out, truth_values, weight=self.constraint_weight)
+            constraints = self.compute_constraints(truth_values)
+            out = self.apply_constraints(out, constraints, weight=self.constraint_weight)
         return ids, imgs, sgs, labels, truth_values, out
     
     def apply_activation(self, out):
         pass
 
-    def apply_constraints(self, out, truth_values, weight=1):
+    def apply_constraints(self, out, constraints, weight=1):
         pass
 
     def configure_optimizers(self):
-        return torch.optim.Adam(self.parameters(), lr=self.lr)
+        return Adam(self.parameters(), lr=self.lr)
 
     def log_train_metrics(self, out, labels, metrics):
         pass
@@ -233,17 +283,15 @@ class SingleLeaPR(BaseLeaPR):
     def apply_activation(self, out):
         return torch.softmax(out, dim=1)
 
-    def apply_constraints(self, out, truth_values, weight=0.5, return_constraints=False):
-
-        constraints = self.compute_constraints(truth_values)
+    def apply_constraints(self, out, constraints, weight=0.5, return_constraints=False):
 
         if self.constraint_mode == 'neural':
             output = out
         elif self.constraint_mode == 'rules':
             output = constraints
         elif self.constraint_mode == 'joint':
-            #output = F.normalize(out * (constraints**weight), dim=1)
-            output = (out * (1/self.priors)**weight) + (out * self.priors**weight)
+            output = F.normalize(out * (constraints**weight), dim=1)
+            #output = (out * (1/self.priors)**weight) + (out * self.priors**weight)
             #output = F.normalize(out * (torch.pow(constraints, 1/self.priors)**weight), dim=1)
         #elif self.constraint_mode == 'feature':
         #    output = F.normalize(out * (constraints**weight), dim=1)

@@ -39,33 +39,36 @@ def get_datasets(cfg):
 
 def init_model_train(cfg, train_set):
     num_obj_classes = len(train_set.object_classes)
-    num_verb_classes = len(train_set.verb_classes)
     num_rel_classes = len(train_set.relationship_classes)
 
     node_feature_size = 32
     rgcn_hidden_dim, vit_hidden_dim = 32, 32
     rgcn_params = (num_obj_classes, node_feature_size, rgcn_hidden_dim, num_rel_classes)
+    
+    # Use helper methods to get appropriate classes and priors based on label_type
+    num_classes = train_set.get_num_target_classes()
+    priors = train_set.get_target_priors()
+    class_names = train_set.get_target_classes()
+    
     model_params = {'rgcn_params': rgcn_params,
                     'vit_hidden_dim': vit_hidden_dim,
-                    'num_verb_classes': num_verb_classes
+                    'num_verb_classes': num_classes  # Keep same key for compatibility
                     }
 
-    priors = train_set.verb_priors
-    
     if cfg.model.weight_scheme == 'inverse':
-        weight = 1 / (num_verb_classes * (priors + 1e-6))
+        weight = 1 / (num_classes * (priors + 1e-6))
     elif cfg.model.weight_scheme == 'invsqrt':
-        weight = 1 / (num_verb_classes * np.sqrt(priors + 1e-6))
+        weight = 1 / (num_classes * np.sqrt(priors + 1e-6))
     elif cfg.model.weight_scheme == 'uniform':
-        weight = torch.ones(num_verb_classes)
+        weight = torch.ones(num_classes)
     else:
         raise ValueError(f'Invalid weight scheme: {cfg.model.weight_scheme}')
     weight = torch.tensor(weight, dtype=torch.float)
 
     if cfg.data.position == 'both':
-        model = SingleLeaPR(cfg, model_params, weight, priors, train_set.verb_classes)
+        model = SingleLeaPR(cfg, model_params, weight, priors, class_names)
     else:
-        model = SingleLeaPR(cfg, model_params, weight, priors, train_set.verb_classes) # TODO: add both model
+        model = SingleLeaPR(cfg, model_params, weight, priors, class_names) # TODO: add both model
     return model
 
 '''
@@ -85,8 +88,8 @@ def train(cfg, run_name):
     print('train set length:', len(train_set))
     print('val set length:', len(val_set))
 
-    train_loader = DataLoader(train_set, batch_size=cfg.train.batch_size, collate_fn=train_set.verb_pred_collate, num_workers=16, shuffle=True)
-    val_loader = DataLoader(val_set, batch_size=128, collate_fn=val_set.verb_pred_collate, num_workers=16, shuffle=False)
+    train_loader = DataLoader(train_set, batch_size=cfg.train.batch_size, collate_fn=train_set.pred_collate, num_workers=16, shuffle=True)
+    val_loader = DataLoader(val_set, batch_size=128, collate_fn=val_set.pred_collate, num_workers=16, shuffle=False)
 
     model = init_model_train(cfg, train_set)
 
@@ -98,7 +101,7 @@ def train(cfg, run_name):
         save_top_k=1,  
         every_n_epochs=1,
         mode='max',
-        verbose=False,
+        verbose=True,
     )
     logger = TensorBoardLogger(save_dir=f'{cfg.runs_folder}/{run_name}/logs/')
     trainer = Trainer(

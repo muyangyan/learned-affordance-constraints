@@ -1,0 +1,89 @@
+%%no negative model used
+max_vars(6).
+max_body(8).
+head_pred(putting_a_book_somewhere_target, 1).
+body_pred(person, 1).
+body_pred(bag, 1).
+body_pred(bed, 1).
+body_pred(blanket, 1).
+body_pred(book, 1).
+body_pred(box, 1).
+body_pred(broom, 1).
+body_pred(chair, 1).
+body_pred(closet_cabinet, 1).
+body_pred(clothes, 1).
+body_pred(cup_glass_bottle, 1).
+body_pred(dish, 1).
+body_pred(door, 1).
+body_pred(doorknob, 1).
+body_pred(doorway, 1).
+body_pred(floor, 1).
+body_pred(food, 1).
+body_pred(groceries, 1).
+body_pred(laptop, 1).
+body_pred(light, 1).
+body_pred(medicine, 1).
+body_pred(mirror, 1).
+body_pred(paper_notebook, 1).
+body_pred(phone_camera, 1).
+body_pred(picture, 1).
+body_pred(pillow, 1).
+body_pred(refrigerator, 1).
+body_pred(sandwich, 1).
+body_pred(shelf, 1).
+body_pred(shoe, 1).
+body_pred(sofa_couch, 1).
+body_pred(table, 1).
+body_pred(television, 1).
+body_pred(towel, 1).
+body_pred(vacuum, 1).
+body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
+body_pred(above, 2).
+body_pred(beneath, 2).
+body_pred(in_front_of, 2).
+body_pred(behind, 2).
+body_pred(on_the_side_of, 2).
+body_pred(in, 2).
+body_pred(carrying, 2).
+body_pred(covered_by, 2).
+body_pred(drinking_from, 2).
+body_pred(eating, 2).
+body_pred(have_it_on_the_back, 2).
+body_pred(holding, 2).
+body_pred(leaning_on, 2).
+body_pred(lying_on, 2).
+body_pred(not_contacting, 2).
+body_pred(other_relationship, 2).
+body_pred(sitting_on, 2).
+body_pred(standing_on, 2).
+body_pred(touching, 2).
+body_pred(twisting, 2).
+body_pred(wearing, 2).
+body_pred(wiping, 2).
+body_pred(writing_on, 2).
+17:42:42 Generating programs of size: 2
+17:42:43 Generating programs of size: 3
+17:42:43 ********************
+17:42:43 New best hypothesis:
+17:42:43 tp:16 fn:68 tn:340 fp:7 size:3 mdl:78
+17:42:43 putting_a_book_somewhere_target(A):- holding(A,B),touching(A,B).
+17:42:43 ********************
+17:42:43 ********************
+17:42:43 New best hypothesis:
+17:42:43 tp:61 fn:23 tn:335 fp:12 size:3 mdl:38
+17:42:43 putting_a_book_somewhere_target(A):- holding(A,B),book(B).
+17:42:43 ********************
+17:42:48 ********************
+17:42:48 New best hypothesis:
+17:42:48 tp:80 fn:4 tn:323 fp:24 size:3 mdl:31
+17:42:48 putting_a_book_somewhere_target(A):- book(B),in_front_of(B,A).
+17:42:48 ********************
+17:42:52 Generating programs of size: 4
+17:59:54 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.77 Recall:0.95 TP:80 FN:4 TN:323 FP:24 Size:3 MDL:31
+putting_a_book_somewhere_target(A):- book(B),in_front_of(B,A).
+******************************

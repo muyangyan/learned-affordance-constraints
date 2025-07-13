@@ -7,6 +7,7 @@ import numpy as np
 import warnings
 
 from util.config_utils import load_yaml
+from util.rule_utils import normalize_predicate_name
 
 warnings.filterwarnings("ignore")
 
@@ -71,8 +72,11 @@ class PrologData:
             target_verb_idx = self.verb_vocab.index(target_verb)
             target_verb_name = target_verb
 
-        exs_filename = os.path.join(self.root, 'examples', f'{target_verb_name}.pl', )
-        bias_filename = os.path.join(self.root, 'biases', f'{target_verb_name}.pl')
+        # Ensure predicate name is Prolog-compatible
+        predicate_name = normalize_predicate_name(target_verb_name)
+        
+        exs_filename = os.path.join(self.root, 'examples', 'verbs', f'{target_verb_name}.pl')
+        bias_filename = os.path.join(self.root, 'biases', 'verbs', f'{target_verb_name}.pl')
         if not os.path.exists(exs_filename):
             os.makedirs(os.path.dirname(exs_filename), exist_ok=True)
         if not os.path.exists(bias_filename):
@@ -84,7 +88,10 @@ class PrologData:
         for idx, inputs in enumerate(self.dataset):
             
             if type(self.dataset) is MultiAG:
-                id, _, data, _, _, _ = inputs
+                item = inputs
+                id = item['id']
+                data = item['scene_graph']
+                action_labels = item['action_labels']
             else:
                 raise ValueError('Invalid dataset type')
 
@@ -93,7 +100,7 @@ class PrologData:
 
             with(open(exs_filename, 'a')) as f:
                 if target_verb_idx in verbs:
-                    f.write(f'pos({target_verb_name}_target({player_var})).\n')
+                    f.write(f'pos({predicate_name}_target({player_var})).\n')
                 else:
                     if random.random() > keep_prob:
                         continue
@@ -101,7 +108,7 @@ class PrologData:
                         pred = self.model.predict(data, threshold=threshold, multi_label=True)
                         if pred[target_verb_idx] == 1:
                             continue
-                    f.write(f'neg({target_verb_name}_target({player_var})).\n')
+                    f.write(f'neg({predicate_name}_target({player_var})).\n')
 
         #generate bias file
         with open(bias_filename, 'w+') as f, open(self.general_bias_filename, 'r') as g:
@@ -112,7 +119,72 @@ class PrologData:
                 
             f.write(f'max_vars({max_vars}).\n')
             f.write(f'max_body({max_body}).\n')
-            f.write(f'head_pred({target_verb_name}_target, 1).\n')
+            f.write(f'head_pred({predicate_name}_target, 1).\n')
+            general_bias = g.read()
+            f.write(general_bias)
+
+    '''
+    write the prolog data for a specific target action (verbnoun)
+    '''
+    def write_action(self, target_action, action_vocab, threshold=0.5, max_vars=6, max_body=8, keep_prob=1.0):
+        if type(target_action) is int:
+            target_action_idx = target_action
+            target_action_name = action_vocab[target_action]
+        elif type(target_action) is str:
+            target_action_idx = action_vocab.index(target_action)
+            target_action_name = target_action
+
+        # Clean action name for filename and make predicate name Prolog-compatible
+        predicate_name = normalize_predicate_name(target_action_name)
+        
+        exs_filename = os.path.join(self.root, 'examples', 'actions', f'{predicate_name}.pl')
+        bias_filename = os.path.join(self.root, 'biases', 'actions', f'{predicate_name}.pl')
+        if not os.path.exists(exs_filename):
+            os.makedirs(os.path.dirname(exs_filename), exist_ok=True)
+        if not os.path.exists(bias_filename):
+            os.makedirs(os.path.dirname(bias_filename), exist_ok=True)
+
+        with(open(exs_filename, 'w+')) as f:
+            f.write(f'%%keep negative probability: {keep_prob}\n')
+            f.write(':- style_check(-discontiguous).\n')
+        for idx, inputs in enumerate(self.dataset):
+            
+            if type(self.dataset) is MultiAG:
+                item = inputs
+                id = item['id']
+                data = item['scene_graph']
+                action_labels = item['action_labels']
+            else:
+                raise ValueError('Invalid dataset type')
+
+            player_var = f'x{idx}_0'
+            if data.w is not None and len(data.w) > 0:
+                actions = data.w.numpy()
+            else:
+                actions = []
+
+            with(open(exs_filename, 'a')) as f:
+                if target_action_idx in actions:
+                    f.write(f'pos({predicate_name}_target({player_var})).\n')
+                else:
+                    if random.random() > keep_prob:
+                        continue
+                    if self.model is not None:
+                        pred = self.model.predict(data, threshold=threshold, multi_label=True)
+                        if pred[target_action_idx] == 1:
+                            continue
+                    f.write(f'neg({predicate_name}_target({player_var})).\n')
+
+        #generate bias file
+        with open(bias_filename, 'w+') as f, open(self.general_bias_filename, 'r') as g:
+            if self.model is not None:
+                f.write('%%threshold: %f\n' % threshold)
+            else:
+                f.write('%%no negative model used\n')
+                
+            f.write(f'max_vars({max_vars}).\n')
+            f.write(f'max_body({max_body}).\n')
+            f.write(f'head_pred({predicate_name}_target, 1).\n')
             general_bias = g.read()
             f.write(general_bias)
         
@@ -126,7 +198,9 @@ class PrologData:
             f.write('\n')
         
         for idx, inputs in enumerate(self.dataset):
-            id, _, data, _, _, _ = inputs
+            item = inputs
+            id = item['id']
+            data = item['scene_graph']
 
             example = self.pyg_to_prolog(idx, data)
 
@@ -155,33 +229,51 @@ def exp_curve(b,x):
 def main(config, args):
 
     root = config.data_root
-    prolog_folder = os.path.join(config.prolog_folder, config.position)
+    prolog_folder = os.path.join(config.prolog_folder, config.data.position)
     data_folder = config.data_folder
-    position = config.position
+    position = config.data.position
 
     if args.train:
-        train_ag = MultiAG(root, data_folder, position=position, no_img=True, split='train', num_samples=config.num_samples)
+        train_ag = MultiAG(config, no_img=True, split='train', position=position)
 
         train_pd = PrologData(prolog_folder, train_ag, train_ag.object_classes, train_ag.relationship_classes, train_ag.verb_classes, model=None, split='train')
 
+        print("Generating background knowledge...")
         train_pd.init_general_bk()
         train_pd.write_bk()
-        train_pd.init_general_bias(config.forbidden_nodes, config.forbidden_edges)
+        train_pd.init_general_bias(config.data.forbidden_nodes, config.data.forbidden_edges)
 
-        for verb_idx, verb_name in enumerate(train_ag.verb_classes):
-            ratio = train_ag.verb_priors[verb_idx]
-            print(verb_name, ratio)
-            #keeps negatives according to the frequency of the verb
-            train_pd.write_verb(verb_name, keep_prob=exp_curve(4, ratio)) 
+        # Generate rules based on label_type setting
+        print(f"Generating examples for label_type: {config.data.label_type}")
+        if config.data.label_type == 'verb':
+            # Generate verb-only rules (original behavior)
+            if train_ag.verb_priors is None:
+                raise ValueError("Verb priors not computed for train dataset")
+            for verb_idx, verb_name in enumerate(train_ag.verb_classes):
+                ratio = train_ag.verb_priors[verb_idx]
+                print(verb_name, ratio)
+                #keeps negatives according to the frequency of the verb
+                train_pd.write_verb(verb_name, keep_prob=exp_curve(4, ratio))
+        elif config.data.label_type == 'verbnoun':
+            # Generate action (verbnoun) rules
+            if train_ag.action_priors is None:
+                raise ValueError("Action priors not computed for train dataset")
+            for action_idx, action_name in enumerate(train_ag.action_classes):
+                ratio = train_ag.action_priors[action_idx]
+                print(action_name, ratio)
+                #keeps negatives according to the frequency of the action
+                train_pd.write_action(action_idx, train_ag.action_classes, keep_prob=exp_curve(4, ratio))
+        else:
+            raise ValueError(f"Unsupported label_type: {config.data.label_type}. Must be 'verb' or 'verbnoun'.") 
     
     if args.val:
-        val_ag = SingleAG(root, data_folder, position=position, no_img=True, split='val')
+        val_ag = SingleAG(config, no_img=True, split='val', position=position)
 
         val_pd = PrologData(prolog_folder, val_ag, val_ag.object_classes, val_ag.relationship_classes, val_ag.verb_classes, model=None, split='val')
         val_pd.write_bk()
 
     if args.test:
-        test_ag = SingleAG(root, data_folder, position=position, no_img=True, split='test')
+        test_ag = SingleAG(config, no_img=True, split='test', position=position)
         
         test_pd = PrologData(prolog_folder, test_ag, test_ag.object_classes, test_ag.relationship_classes, test_ag.verb_classes, model=None, split='test')
         test_pd.write_bk()

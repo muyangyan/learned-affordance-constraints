@@ -24,7 +24,8 @@ def evaluate_rule(verb, rules_file, bk_file):
     TP, FP, TN, FN = 0, 0, 0, 0
 
     for i in tqdm(range(len(ag))):
-        _, _, _, action, _ = ag[i]
+        item = ag[i]
+        action = item['action_label']
 
         verb_idx, _ = ag.action_verb_obj_map[action]
         label_verb = ag.verb_classes[verb_idx]

@@ -31,24 +31,24 @@ def save_and_analyze_preds(cfg, run_name, test_run_name, pred_name, preds, class
 
     analyze_preds(cfg, run_name, test_run_name, preds=preds, class_names=class_names)
 
-def test_routine(cfg, run_name, test_run_name, trainer, model, dataset, loader):
+def test_routine(cfg, run_name, test_run_name, trainer, model, dataset, loader, class_names):
 
     model.preds = {'neural': [], 'rules': [], 'joint': []}
 
     print('Integrated---------------------')
     model.constraint_mode = 'joint'
     trainer.test(model, dataloaders=loader)
-    save_and_analyze_preds(cfg, run_name, test_run_name, 'joint', model.preds['joint'], dataset.verb_classes)
+    save_and_analyze_preds(cfg, run_name, test_run_name, 'joint', model.preds['joint'], class_names)
 
     print('Without rules---------------------')
     model.constraint_mode = 'neural'
     trainer.test(model, dataloaders=loader)
-    save_and_analyze_preds(cfg, run_name, test_run_name, 'neural', model.preds['neural'], dataset.verb_classes)
+    save_and_analyze_preds(cfg, run_name, test_run_name, 'neural', model.preds['neural'], class_names)
 
     print('Only rules---------------------')
     model.constraint_mode = 'rules'
     trainer.test(model, dataloaders=loader)
-    save_and_analyze_preds(cfg, run_name, test_run_name, 'rules', model.preds['rules'], dataset.verb_classes)
+    save_and_analyze_preds(cfg, run_name, test_run_name, 'rules', model.preds['rules'], class_names)
 
 
 
@@ -68,17 +68,21 @@ def test(cfg, run_name, test_run_name):
     checkpoint = os.path.join(checkpoints_folder, checkpoints[0])
 
     model = SingleLeaPR.load_from_checkpoint(checkpoint)
-    model.set_rule_params(cfg.rules)
+    rules_json_path = os.path.join(cfg.prolog_folder, cfg.data.position, 'learned_rules', f'{cfg.rules.name}.json')
+    model.set_rule_params(cfg.rules, rules_json_path=rules_json_path)
     trainer = Trainer(accelerator='gpu', devices=[0], logger=False)
 
     assert cfg.test.data_split in ['test', 'val'], 'Invalid test split'
 
     dataset = SingleAG(cfg, split=cfg.test.data_split)
-    loader = DataLoader(dataset, batch_size=128, collate_fn=dataset.verb_pred_collate, num_workers=16, shuffle=False)
+    loader = DataLoader(dataset, batch_size=128, collate_fn=dataset.pred_collate, num_workers=16, shuffle=False)
 
     print(f"Dataset length: {len(dataset)}")
 
-    test_routine(cfg, run_name, test_run_name, trainer, model, dataset, loader)
+    # Use helper method to get appropriate class names based on label_type
+    class_names = dataset.get_target_classes()
+
+    test_routine(cfg, run_name, test_run_name, trainer, model, dataset, loader, class_names)
 
 if __name__ == '__main__':
     '''

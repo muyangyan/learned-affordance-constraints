@@ -5,7 +5,7 @@ import csv
 import argparse
 import warnings
 from tqdm import tqdm
-
+import copy
 import pandas as pd
 
 warnings.filterwarnings("ignore")
@@ -23,9 +23,14 @@ def generate_subset(pre_ag, post_ag, output_csv_path):
     frame_validity_data = []
 
     for idx in tqdm(range(len(pre_ag))):
-        id, img, sg, action_labels, constraints, truth_values = pre_ag[idx]
+        item = pre_ag[idx]
+        id = item['id']
+        img = item['image']
+        sg = item['scene_graph']
+        action_labels = item['action_label']
+        truth_values = item['truth_values']
 
-        verb_labels, obj_labels = zip(*[pre_ag.action_verb_obj_map[action_label] for action_label in action_labels])
+        verb_labels, obj_labels = zip(*[pre_ag.action_verb_obj_map[action_labels]])
         verb_names = [pre_ag.verb_classes[verb] for verb in verb_labels]
 
         pre_status = True
@@ -57,9 +62,14 @@ def generate_subset(pre_ag, post_ag, output_csv_path):
         frame_validity_data.append({'id': id, 'pre': pre_status, 'post': True})
 
     for idx in tqdm(range(len(post_ag))):
-        id, img, sg, action_labels, constraints, truth_values = post_ag[idx]
+        item = post_ag[idx]
+        id = item['id']
+        img = item['image']
+        sg = item['scene_graph']
+        action_labels = item['action_label']
+        truth_values = item['truth_values']
 
-        verb_labels, obj_labels = zip(*[post_ag.action_verb_obj_map[action_label] for action_label in action_labels])
+        verb_labels, obj_labels = zip(*[post_ag.action_verb_obj_map[action_labels]])
         verb_names = [post_ag.verb_classes[verb] for verb in verb_labels]
 
         post_status = True
@@ -145,8 +155,9 @@ def main(config, args):
 
     frame_validity_file = os.path.join(data_folder, 'frame_validity.csv')
 
-    pre_ag = MultiAG(root, data_folder, position='pre', no_img=True, subset=False, split=None)
-    post_ag = MultiAG(root, data_folder, position='post', no_img=True, subset=False, split=None)
+    # Use position parameter to override config position
+    pre_ag = MultiAG(config, no_img=True, subset=False, split=None, position='pre')
+    post_ag = MultiAG(config, no_img=True, subset=False, split=None, position='post')
 
     print(f"Generating subset")
 
@@ -157,6 +168,12 @@ def main(config, args):
         create_train_val_split(root, data_folder, train_split_ratio)
 
 if __name__ == '__main__':
+    '''
+    Filters out invalid examples, and stores in a frame validity table. (for both pre and post frames)
+    Test set is always the standard Charades test set.
+    Train and val sets are split from the standard Charades train set.
+    Pass resplit to regenerate the train and val splits.
+    '''
     parser = argparse.ArgumentParser()
     parser.add_argument('--config', type=str, default='configs/ag.yaml', help='Path to config file')
     parser.add_argument('--resplit', action='store_true', help='Resplit the dataset')

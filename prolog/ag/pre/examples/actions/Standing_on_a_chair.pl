@@ -1,0 +1,31 @@
+%%keep negative probability: 0.003259538057329925
+:- style_check(-discontiguous).
+neg(standing_on_a_chair_target(x228_0)).
+pos(standing_on_a_chair_target(x1399_0)).
+neg(standing_on_a_chair_target(x1780_0)).
+neg(standing_on_a_chair_target(x2157_0)).
+neg(standing_on_a_chair_target(x2239_0)).
+neg(standing_on_a_chair_target(x2391_0)).
+neg(standing_on_a_chair_target(x2503_0)).
+pos(standing_on_a_chair_target(x2842_0)).
+neg(standing_on_a_chair_target(x3330_0)).
+neg(standing_on_a_chair_target(x3407_0)).
+neg(standing_on_a_chair_target(x3465_0)).
+neg(standing_on_a_chair_target(x3513_0)).
+neg(standing_on_a_chair_target(x3786_0)).
+neg(standing_on_a_chair_target(x3909_0)).
+neg(standing_on_a_chair_target(x3977_0)).
+pos(standing_on_a_chair_target(x3982_0)).
+neg(standing_on_a_chair_target(x5106_0)).
+neg(standing_on_a_chair_target(x5242_0)).
+neg(standing_on_a_chair_target(x5478_0)).
+pos(standing_on_a_chair_target(x5690_0)).
+neg(standing_on_a_chair_target(x5777_0)).
+pos(standing_on_a_chair_target(x6069_0)).
+neg(standing_on_a_chair_target(x6212_0)).
+neg(standing_on_a_chair_target(x6411_0)).
+pos(standing_on_a_chair_target(x6492_0)).
+neg(standing_on_a_chair_target(x6509_0)).
+neg(standing_on_a_chair_target(x6583_0)).
+neg(standing_on_a_chair_target(x6957_0)).
+neg(standing_on_a_chair_target(x7206_0)).
