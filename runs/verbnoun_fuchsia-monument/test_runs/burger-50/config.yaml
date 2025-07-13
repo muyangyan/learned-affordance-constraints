@@ -28,7 +28,7 @@ rules: # used in training time as well
   name: 'full_action_rules'
   mode: 'soft'
   recall_threshold: 0.8
-  constraint_weight: 100 # can be changed at test time
+  constraint_weight: 50 # can be changed at test time
 
 train:
   rule_loss_coeff: 0 # use 0 to disable rule loss

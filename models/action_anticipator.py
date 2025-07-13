@@ -25,11 +25,12 @@ class BaseLeaPR(L.LightningModule):
             self.constraint_mode = 'neural'
 
         num_classes = len(classes)
-        self.model = get_model(self.model_type, model_params)
         self.classes = classes
 
         rules_json = os.path.join(cfg.prolog_folder, cfg.data.position, 'learned_rules', f'{cfg.rules.name}.json')
         precisions, recalls = get_rule_precisions_recalls(rules_json, priors, classes)
+
+        self.model = get_model(self.model_type, model_params, precisions, recalls)
 
         # Cache rule tensors as buffers (automatically move with model)
         self.register_buffer('weight', weight)
@@ -289,8 +290,14 @@ class SingleLeaPR(BaseLeaPR):
             output = out
         elif self.constraint_mode == 'rules':
             output = constraints
+        elif self.constraint_mode == 'joint_v1':
+            output = out * (constraints**weight)
+        elif self.constraint_mode == 'joint_v2':
+            output = out * (constraints**(weight * 1/(len(self.classes) * self.priors) ) )
         elif self.constraint_mode == 'joint':
-            output = F.normalize(out * (constraints**weight), dim=1)
+            # Keep original joint for backward compatibility - defaults to joint_v1
+            output = out * (constraints**weight)
+            #output = (constraints * (1/self.priors)**weight) + (out * self.priors**weight)
             #output = (out * (1/self.priors)**weight) + (out * self.priors**weight)
             #output = F.normalize(out * (torch.pow(constraints, 1/self.priors)**weight), dim=1)
         #elif self.constraint_mode == 'feature':

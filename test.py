@@ -33,24 +33,12 @@ def save_and_analyze_preds(cfg, run_name, test_run_name, pred_name, preds, class
 
 def test_routine(cfg, run_name, test_run_name, trainer, model, dataset, loader, class_names):
 
-    model.preds = {'neural': [], 'rules': [], 'joint': []}
-
-    print('Integrated---------------------')
-    model.constraint_mode = 'joint'
-    trainer.test(model, dataloaders=loader)
-    save_and_analyze_preds(cfg, run_name, test_run_name, 'joint', model.preds['joint'], class_names)
-
-    print('Without rules---------------------')
-    model.constraint_mode = 'neural'
-    trainer.test(model, dataloaders=loader)
-    save_and_analyze_preds(cfg, run_name, test_run_name, 'neural', model.preds['neural'], class_names)
-
-    print('Only rules---------------------')
-    model.constraint_mode = 'rules'
-    trainer.test(model, dataloaders=loader)
-    save_and_analyze_preds(cfg, run_name, test_run_name, 'rules', model.preds['rules'], class_names)
-
-
+    model.preds = {'joint_v1': [], 'joint_v2': [], 'neural': [], 'rules': []}
+    for constraint_mode in model.preds.keys():
+        print(f'CONSTRAINT MODE: {constraint_mode}---------------------')
+        model.constraint_mode = constraint_mode
+        trainer.test(model, dataloaders=loader)
+        save_and_analyze_preds(cfg, run_name, test_run_name, constraint_mode, model.preds[constraint_mode], class_names)
 
 '''
 with run folders set up, we can test the model
