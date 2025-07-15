@@ -28,7 +28,7 @@ def load_preds(cfg, run_name, test_run_name, preds):
 
     return preds
 
-def analyze_preds(cfg, run_name, test_run_name, preds=None, class_names=None, do_print=True):
+def analyze_preds(cfg, run_name, test_run_name, preds=None, class_names=None, do_print=True, target_classes=None):
     if type(preds) == str:  
         preds = load_preds(cfg, run_name, test_run_name, preds)
 
@@ -41,6 +41,15 @@ def analyze_preds(cfg, run_name, test_run_name, preds=None, class_names=None, do
     true_labels = np.argmax(label_logits, axis=1)
     label_vec = np.arange(output_logits.shape[1])
     true_labels_one_hot = np.eye(output_logits.shape[1])[true_labels]
+
+    # Subset the data if target_classes is provided
+    if target_classes is not None:
+        mask = np.isin(true_labels, target_classes)
+        pred_labels = pred_labels[mask]
+        true_labels = true_labels[mask]
+        output_logits = output_logits[mask]
+        label_logits = label_logits[mask]
+        true_labels_one_hot = true_labels_one_hot[mask]
 
     # Calculate metrics using sklearn for multilabel classification
     acc = accuracy_score(true_labels, pred_labels)
@@ -152,7 +161,7 @@ def analyze_preds(cfg, run_name, test_run_name, preds=None, class_names=None, do
     return metrics_dict
 
 #multilabel
-def analyze_preds_ml(cfg, run_name, test_run_name, preds, class_names=None):
+def analyze_preds_ml(cfg, run_name, test_run_name, preds, class_names=None, target_classes=None):
     save_folder = f'{cfg.runs_folder}/{run_name}/test_runs/{test_run_name}'
 
     # each pred is: [output logits, label logits]
@@ -164,11 +173,18 @@ def analyze_preds_ml(cfg, run_name, test_run_name, preds, class_names=None):
         for i in range(len(preds)):
             f.write(f'Output Logits: {np.round(output_logits[i], 2)}, Label Logits: {label_logits[i]}\n')
 
-
     threshold = 0.5
     # Convert logits to binary predictions using a threshold (e.g., 0.5)
     pred_labels = (output_logits >= threshold).astype(int)
     true_labels = (label_logits >= threshold).astype(int)
+
+    # Subset the data if target_classes is provided
+    if target_classes is not None:
+        mask = np.isin(true_labels.argmax(axis=1), target_classes)
+        pred_labels = pred_labels[mask]
+        true_labels = true_labels[mask]
+        output_logits = output_logits[mask]
+        label_logits = label_logits[mask]
 
     # Calculate metrics using sklearn for multilabel classification
     acc = accuracy_score(true_labels, pred_labels)

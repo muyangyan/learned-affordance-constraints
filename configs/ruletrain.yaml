@@ -35,7 +35,7 @@ train:
   constraint_mode: 'joint_v1'
   epochs: 9999
   batch_size: 16
-  devices: [0,1,2,3]
+  devices: [0]
   lr: 1e-3
 
 test:

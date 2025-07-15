@@ -1,0 +1,6 @@
+# VLM Action Predictions
+# Format: predicted_ranking (5 indices) | true_action_idx
+# Each line: idx1,idx2,idx3,idx4,idx5 | true_idx
+
+1,12,15,91,119 | 76
+1,12,15,18,46 | 79

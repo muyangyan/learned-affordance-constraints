@@ -36,6 +36,7 @@ class BaseLeaPR(L.LightningModule):
         # Cross-attention module for neural output and rule truth values
         self.rule_attn = nn.MultiheadAttention(
             embed_dim=num_classes,
+            dropout=0.3,
             num_heads=1,
             batch_first=True
         )

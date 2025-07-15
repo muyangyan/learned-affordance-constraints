@@ -1,0 +1,3995 @@
+# Raw VLM Interactions
+# Each interaction corresponds to the same sample number in vlm_predictions.txt
+# Format: PROMPT followed by RESPONSE
+
+Sample 0:
+PROMPT:
+You are observing a person in an image. Based on what you see, predict the TOP 5 most likely actions the person is ABOUT TO perform. Do NOT identify the actions they are currently performing
+
+Here is additional context about the scene:
+Objects: person, blanket, pillow
+Relationships:
+person looking_at blanket
+blanket in_front_of person
+blanket on_the_side_of person
+person not_contacting blanket
+person not_looking_at pillow
+pillow on_the_side_of person
+person not_contacting pillow
+
+
+Rank the actions from MOST likely to LEAST likely. Respond with EXACTLY a numbered list of 5 actions in the format:
+
+[action number index]. [action name]
+
+For example:
+26. Closing a book
+103. Turning off a light
+42. Putting a box somewhere
+19. Taking a phone/camera from somewhere
+128. Putting groceries somewhere
+
+Choose from the following actions:
+
+1. Holding some clothes
+2. Putting clothes somewhere
+3. Taking some clothes from somewhere
+4. Throwing clothes somewhere
+5. Tidying some clothes
+6. Washing some clothes
+7. Closing a door
+8. Fixing a door
+9. Opening a door
+10. Putting something on a table
+11. Sitting on a table
+12. Sitting at a table
+13. Tidying up a table
+14. Washing a table
+15. Working at a table
+16. Holding a phone/camera
+17. Playing with a phone/camera
+18. Putting a phone/camera somewhere
+19. Taking a phone/camera from somewhere
+20. Talking on a phone/camera
+21. Holding a bag
+22. Opening a bag
+23. Putting a bag somewhere
+24. Taking a bag from somewhere
+25. Throwing a bag somewhere
+26. Closing a book
+27. Holding a book
+28. Opening a book
+29. Putting a book somewhere
+30. Taking a book from somewhere
+31. Throwing a book somewhere
+32. Watching/Reading/Looking at a book
+33. Holding a towel/s
+34. Putting a towel/s somewhere
+35. Taking a towel/s from somewhere
+36. Throwing a towel/s somewhere
+37. Tidying up a towel/s
+38. Washing something with a towel
+39. Closing a box
+40. Holding a box
+41. Opening a box
+42. Putting a box somewhere
+43. Taking a box from somewhere
+44. Taking something from a box
+45. Throwing a box somewhere
+46. Closing a laptop
+47. Holding a laptop
+48. Opening a laptop
+49. Putting a laptop somewhere
+50. Taking a laptop from somewhere
+51. Watching a laptop or something on a laptop
+52. Working/Playing on a laptop
+53. Holding a shoe/shoes
+54. Putting shoes somewhere
+55. Putting on shoe/shoes
+56. Taking shoes from somewhere
+57. Taking off some shoes
+58. Throwing shoes somewhere
+59. Sitting in a chair
+60. Standing on a chair
+61. Holding some food
+62. Putting some food somewhere
+63. Taking food from somewhere
+64. Throwing food somewhere
+65. Eating a sandwich
+66. Making a sandwich
+67. Holding a sandwich
+68. Putting a sandwich somewhere
+69. Taking a sandwich from somewhere
+70. Holding a blanket
+71. Putting a blanket somewhere
+72. Snuggling with a blanket
+73. Taking a blanket from somewhere
+74. Throwing a blanket somewhere
+75. Tidying up a blanket/s
+76. Holding a pillow
+77. Putting a pillow somewhere
+78. Snuggling with a pillow
+79. Taking a pillow from somewhere
+80. Throwing a pillow somewhere
+81. Putting something on a shelf
+82. Tidying a shelf or something on a shelf
+83. Reaching for and grabbing a picture
+84. Holding a picture
+85. Putting a picture somewhere
+86. Taking a picture of something
+87. Watching/looking at a picture
+88. Closing a window
+89. Opening a window
+90. Washing a window
+91. Watching/Looking outside of a window
+92. Holding a mirror
+93. Washing a mirror
+94. Watching something/someone/themselves in a mirror
+95. Walking through a doorway
+96. Holding a broom
+97. Putting a broom somewhere
+98. Taking a broom from somewhere
+99. Throwing a broom somewhere
+100. Tidying up with a broom
+101. Fixing a light
+102. Turning on a light
+103. Turning off a light
+104. Drinking from a cup/glass/bottle
+105. Holding a cup/glass/bottle of something
+106. Pouring something into a cup/glass/bottle
+107. Putting a cup/glass/bottle somewhere
+108. Taking a cup/glass/bottle from somewhere
+109. Washing a cup/glass/bottle
+110. Closing a closet/cabinet
+111. Opening a closet/cabinet
+112. Tidying up a closet/cabinet
+113. Someone is holding a paper/notebook
+114. Putting their paper/notebook somewhere
+115. Taking paper/notebook from somewhere
+116. Holding a dish
+117. Putting a dish/es somewhere
+118. Taking a dish/es from somewhere
+119. Wash a dish/dishes
+120. Lying on a sofa/couch
+121. Sitting on sofa/couch
+122. Lying on the floor
+123. Sitting on the floor
+124. Throwing something on the floor
+125. Tidying something on the floor
+126. Holding some medicine
+127. Taking/consuming some medicine
+128. Putting groceries somewhere
+129. Watching television
+130. Someone is awakening in bed
+131. Lying on a bed
+132. Sitting in a bed
+133. Fixing a vacuum
+134. Holding a vacuum
+135. Taking a vacuum from somewhere
+136. Washing their hands
+137. Fixing a doorknob
+138. Grasping onto a doorknob
+139. Closing a refrigerator
+140. Opening a refrigerator
+141. Fixing their hair
+142. Working on paper/notebook
+143. Someone is awakening somewhere
+144. Someone is cooking something
+145. Someone is dressing
+146. Someone is running somewhere
+147. Someone is going from standing to sitting
+148. Someone is standing up from somewhere
+149. Someone is undressing
+150. Someone is eating something
+
+Look at the image carefully and respond with exactly 5 actions in numbered list format (1-150). Include both the number and the full action text.
+
+RESPONSE:
+Here are the top 5 most likely actions the person is about to perform, based on the image:
+
+1. Putting clothes somewhere
+2. Taking some clothes from somewhere
+3. Tidying up a blanket/s
+4. Holding a blanket
+5. Putting a blanket somewhereThe person is standing in front of a bed with a black and white checkered blanket, looking at it. This suggests they are likely interacting with the blanket in one of these ways. The presence of other items
+============================================================
+
+Sample 1:
+PROMPT:
+You are observing a person in an image. Based on what you see, predict the TOP 5 most likely actions the person is ABOUT TO perform. Do NOT identify the actions they are currently performing
+
+Here is additional context about the scene:
+Objects: person, blanket, pillow
+Relationships:
+person not_looking_at blanket
+blanket on_the_side_of person
+person not_contacting blanket
+person looking_at pillow
+pillow in_front_of person
+person not_contacting pillow
+
+
+Rank the actions from MOST likely to LEAST likely. Respond with EXACTLY a numbered list of 5 actions in the format:
+
+[action number index]. [action name]
+
+For example:
+26. Closing a book
+103. Turning off a light
+42. Putting a box somewhere
+19. Taking a phone/camera from somewhere
+128. Putting groceries somewhere
+
+Choose from the following actions:
+
+1. Holding some clothes
+2. Putting clothes somewhere
+3. Taking some clothes from somewhere
+4. Throwing clothes somewhere
+5. Tidying some clothes
+6. Washing some clothes
+7. Closing a door
+8. Fixing a door
+9. Opening a door
+10. Putting something on a table
+11. Sitting on a table
+12. Sitting at a table
+13. Tidying up a table
+14. Washing a table
+15. Working at a table
+16. Holding a phone/camera
+17. Playing with a phone/camera
+18. Putting a phone/camera somewhere
+19. Taking a phone/camera from somewhere
+20. Talking on a phone/camera
+21. Holding a bag
+22. Opening a bag
+23. Putting a bag somewhere
+24. Taking a bag from somewhere
+25. Throwing a bag somewhere
+26. Closing a book
+27. Holding a book
+28. Opening a book
+29. Putting a book somewhere
+30. Taking a book from somewhere
+31. Throwing a book somewhere
+32. Watching/Reading/Looking at a book
+33. Holding a towel/s
+34. Putting a towel/s somewhere
+35. Taking a towel/s from somewhere
+36. Throwing a towel/s somewhere
+37. Tidying up a towel/s
+38. Washing something with a towel
+39. Closing a box
+40. Holding a box
+41. Opening a box
+42. Putting a box somewhere
+43. Taking a box from somewhere
+44. Taking something from a box
+45. Throwing a box somewhere
+46. Closing a laptop
+47. Holding a laptop
+48. Opening a laptop
+49. Putting a laptop somewhere
+50. Taking a laptop from somewhere
+51. Watching a laptop or something on a laptop
+52. Working/Playing on a laptop
+53. Holding a shoe/shoes
+54. Putting shoes somewhere
+55. Putting on shoe/shoes
+56. Taking shoes from somewhere
+57. Taking off some shoes
+58. Throwing shoes somewhere
+59. Sitting in a chair
+60. Standing on a chair
+61. Holding some food
+62. Putting some food somewhere
+63. Taking food from somewhere
+64. Throwing food somewhere
+65. Eating a sandwich
+66. Making a sandwich
+67. Holding a sandwich
+68. Putting a sandwich somewhere
+69. Taking a sandwich from somewhere
+70. Holding a blanket
+71. Putting a blanket somewhere
+72. Snuggling with a blanket
+73. Taking a blanket from somewhere
+74. Throwing a blanket somewhere
+75. Tidying up a blanket/s
+76. Holding a pillow
+77. Putting a pillow somewhere
+78. Snuggling with a pillow
+79. Taking a pillow from somewhere
+80. Throwing a pillow somewhere
+81. Putting something on a shelf
+82. Tidying a shelf or something on a shelf
+83. Reaching for and grabbing a picture
+84. Holding a picture
+85. Putting a picture somewhere
+86. Taking a picture of something
+87. Watching/looking at a picture
+88. Closing a window
+89. Opening a window
+90. Washing a window
+91. Watching/Looking outside of a window
+92. Holding a mirror
+93. Washing a mirror
+94. Watching something/someone/themselves in a mirror
+95. Walking through a doorway
+96. Holding a broom
+97. Putting a broom somewhere
+98. Taking a broom from somewhere
+99. Throwing a broom somewhere
+100. Tidying up with a broom
+101. Fixing a light
+102. Turning on a light
+103. Turning off a light
+104. Drinking from a cup/glass/bottle
+105. Holding a cup/glass/bottle of something
+106. Pouring something into a cup/glass/bottle
+107. Putting a cup/glass/bottle somewhere
+108. Taking a cup/glass/bottle from somewhere
+109. Washing a cup/glass/bottle
+110. Closing a closet/cabinet
+111. Opening a closet/cabinet
+112. Tidying up a closet/cabinet
+113. Someone is holding a paper/notebook
+114. Putting their paper/notebook somewhere
+115. Taking paper/notebook from somewhere
+116. Holding a dish
+117. Putting a dish/es somewhere
+118. Taking a dish/es from somewhere
+119. Wash a dish/dishes
+120. Lying on a sofa/couch
+121. Sitting on sofa/couch
+122. Lying on the floor
+123. Sitting on the floor
+124. Throwing something on the floor
+125. Tidying something on the floor
+126. Holding some medicine
+127. Taking/consuming some medicine
+128. Putting groceries somewhere
+129. Watching television
+130. Someone is awakening in bed
+131. Lying on a bed
+132. Sitting in a bed
+133. Fixing a vacuum
+134. Holding a vacuum
+135. Taking a vacuum from somewhere
+136. Washing their hands
+137. Fixing a doorknob
+138. Grasping onto a doorknob
+139. Closing a refrigerator
+140. Opening a refrigerator
+141. Fixing their hair
+142. Working on paper/notebook
+143. Someone is awakening somewhere
+144. Someone is cooking something
+145. Someone is dressing
+146. Someone is running somewhere
+147. Someone is going from standing to sitting
+148. Someone is standing up from somewhere
+149. Someone is undressing
+150. Someone is eating something
+
+Look at the image carefully and respond with exactly 5 actions in numbered list format (1-150). Include both the number and the full action text.
+
+RESPONSE:
+Here are the top 5 most likely actions the person is about to perform, based on the image:
+
+1. Putting clothes somewhere
+2. Taking clothes from somewhere
+3. Tidying up a table
+4. Watching/Reading/Looking at a book
+5. Holding a phone/cameraThe image shows a person in a bedroom setting, with a bed visible in the background. The person is not looking at the blanket on the bed, which is on the side of them
+============================================================
+
+Sample 2:
+PROMPT:
+You are observing a person in an image. Based on what you see, predict the TOP 5 most likely actions the person is ABOUT TO perform. Do NOT identify the actions they are currently performing
+
+Here is additional context about the scene:
+Objects: person, blanket
+Relationships:
+person looking_at blanket
+blanket in_front_of person
+person touching blanket
+
+
+Rank the actions from MOST likely to LEAST likely. Respond with EXACTLY a numbered list of 5 actions in the format:
+
+[action number index]. [action name]
+
+For example:
+26. Closing a book
+103. Turning off a light
+42. Putting a box somewhere
+19. Taking a phone/camera from somewhere
+128. Putting groceries somewhere
+
+Choose from the following actions:
+
+1. Holding some clothes
+2. Putting clothes somewhere
+3. Taking some clothes from somewhere
+4. Throwing clothes somewhere
+5. Tidying some clothes
+6. Washing some clothes
+7. Closing a door
+8. Fixing a door
+9. Opening a door
+10. Putting something on a table
+11. Sitting on a table
+12. Sitting at a table
+13. Tidying up a table
+14. Washing a table
+15. Working at a table
+16. Holding a phone/camera
+17. Playing with a phone/camera
+18. Putting a phone/camera somewhere
+19. Taking a phone/camera from somewhere
+20. Talking on a phone/camera
+21. Holding a bag
+22. Opening a bag
+23. Putting a bag somewhere
+24. Taking a bag from somewhere
+25. Throwing a bag somewhere
+26. Closing a book
+27. Holding a book
+28. Opening a book
+29. Putting a book somewhere
+30. Taking a book from somewhere
+31. Throwing a book somewhere
+32. Watching/Reading/Looking at a book
+33. Holding a towel/s
+34. Putting a towel/s somewhere
+35. Taking a towel/s from somewhere
+36. Throwing a towel/s somewhere
+37. Tidying up a towel/s
+38. Washing something with a towel
+39. Closing a box
+40. Holding a box
+41. Opening a box
+42. Putting a box somewhere
+43. Taking a box from somewhere
+44. Taking something from a box
+45. Throwing a box somewhere
+46. Closing a laptop
+47. Holding a laptop
+48. Opening a laptop
+49. Putting a laptop somewhere
+50. Taking a laptop from somewhere
+51. Watching a laptop or something on a laptop
+52. Working/Playing on a laptop
+53. Holding a shoe/shoes
+54. Putting shoes somewhere
+55. Putting on shoe/shoes
+56. Taking shoes from somewhere
+57. Taking off some shoes
+58. Throwing shoes somewhere
+59. Sitting in a chair
+60. Standing on a chair
+61. Holding some food
+62. Putting some food somewhere
+63. Taking food from somewhere
+64. Throwing food somewhere
+65. Eating a sandwich
+66. Making a sandwich
+67. Holding a sandwich
+68. Putting a sandwich somewhere
+69. Taking a sandwich from somewhere
+70. Holding a blanket
+71. Putting a blanket somewhere
+72. Snuggling with a blanket
+73. Taking a blanket from somewhere
+74. Throwing a blanket somewhere
+75. Tidying up a blanket/s
+76. Holding a pillow
+77. Putting a pillow somewhere
+78. Snuggling with a pillow
+79. Taking a pillow from somewhere
+80. Throwing a pillow somewhere
+81. Putting something on a shelf
+82. Tidying a shelf or something on a shelf
+83. Reaching for and grabbing a picture
+84. Holding a picture
+85. Putting a picture somewhere
+86. Taking a picture of something
+87. Watching/looking at a picture
+88. Closing a window
+89. Opening a window
+90. Washing a window
+91. Watching/Looking outside of a window
+92. Holding a mirror
+93. Washing a mirror
+94. Watching something/someone/themselves in a mirror
+95. Walking through a doorway
+96. Holding a broom
+97. Putting a broom somewhere
+98. Taking a broom from somewhere
+99. Throwing a broom somewhere
+100. Tidying up with a broom
+101. Fixing a light
+102. Turning on a light
+103. Turning off a light
+104. Drinking from a cup/glass/bottle
+105. Holding a cup/glass/bottle of something
+106. Pouring something into a cup/glass/bottle
+107. Putting a cup/glass/bottle somewhere
+108. Taking a cup/glass/bottle from somewhere
+109. Washing a cup/glass/bottle
+110. Closing a closet/cabinet
+111. Opening a closet/cabinet
+112. Tidying up a closet/cabinet
+113. Someone is holding a paper/notebook
+114. Putting their paper/notebook somewhere
+115. Taking paper/notebook from somewhere
+116. Holding a dish
+117. Putting a dish/es somewhere
+118. Taking a dish/es from somewhere
+119. Wash a dish/dishes
+120. Lying on a sofa/couch
+121. Sitting on sofa/couch
+122. Lying on the floor
+123. Sitting on the floor
+124. Throwing something on the floor
+125. Tidying something on the floor
+126. Holding some medicine
+127. Taking/consuming some medicine
+128. Putting groceries somewhere
+129. Watching television
+130. Someone is awakening in bed
+131. Lying on a bed
+132. Sitting in a bed
+133. Fixing a vacuum
+134. Holding a vacuum
+135. Taking a vacuum from somewhere
+136. Washing their hands
+137. Fixing a doorknob
+138. Grasping onto a doorknob
+139. Closing a refrigerator
+140. Opening a refrigerator
+141. Fixing their hair
+142. Working on paper/notebook
+143. Someone is awakening somewhere
+144. Someone is cooking something
+145. Someone is dressing
+146. Someone is running somewhere
+147. Someone is going from standing to sitting
+148. Someone is standing up from somewhere
+149. Someone is undressing
+150. Someone is eating something
+
+Look at the image carefully and respond with exactly 5 actions in numbered list format (1-150). Include both the number and the full action text.
+
+RESPONSE:
+Here are the top 5 most likely actions the person is about to perform, based on the scene described:
+
+1. Putting clothes somewhere
+2. Taking clothes from somewhere
+3. Tidying up clothes
+4. Folding clothes
+5. Putting away clothesNote: The image is necessary to determine the specific context and items present in the scene, which allowed me to rank these actions as the most likely based on the given information.Is there a person in the image? Yes.
+============================================================
+
+Sample 3:
+PROMPT:
+You are observing a person in an image. Based on what you see, predict the TOP 5 most likely actions the person is ABOUT TO perform. Do NOT identify the actions they are currently performing
+
+Here is additional context about the scene:
+Objects: person, vacuum, window, dish, cup_glass_bottle
+Relationships:
+person looking_at vacuum
+vacuum in_front_of person
+person holding vacuum
+person looking_at window
+window in_front_of person
+person not_contacting window
+person not_looking_at dish
+dish in_front_of person
+person holding dish
+person not_looking_at cup_glass_bottle
+cup_glass_bottle in_front_of person
+person holding cup_glass_bottle
+person drinking_from cup_glass_bottle
+
+
+Rank the actions from MOST likely to LEAST likely. Respond with EXACTLY a numbered list of 5 actions in the format:
+
+[action number index]. [action name]
+
+For example:
+26. Closing a book
+103. Turning off a light
+42. Putting a box somewhere
+19. Taking a phone/camera from somewhere
+128. Putting groceries somewhere
+
+Choose from the following actions:
+
+1. Holding some clothes
+2. Putting clothes somewhere
+3. Taking some clothes from somewhere
+4. Throwing clothes somewhere
+5. Tidying some clothes
+6. Washing some clothes
+7. Closing a door
+8. Fixing a door
+9. Opening a door
+10. Putting something on a table
+11. Sitting on a table
+12. Sitting at a table
+13. Tidying up a table
+14. Washing a table
+15. Working at a table
+16. Holding a phone/camera
+17. Playing with a phone/camera
+18. Putting a phone/camera somewhere
+19. Taking a phone/camera from somewhere
+20. Talking on a phone/camera
+21. Holding a bag
+22. Opening a bag
+23. Putting a bag somewhere
+24. Taking a bag from somewhere
+25. Throwing a bag somewhere
+26. Closing a book
+27. Holding a book
+28. Opening a book
+29. Putting a book somewhere
+30. Taking a book from somewhere
+31. Throwing a book somewhere
+32. Watching/Reading/Looking at a book
+33. Holding a towel/s
+34. Putting a towel/s somewhere
+35. Taking a towel/s from somewhere
+36. Throwing a towel/s somewhere
+37. Tidying up a towel/s
+38. Washing something with a towel
+39. Closing a box
+40. Holding a box
+41. Opening a box
+42. Putting a box somewhere
+43. Taking a box from somewhere
+44. Taking something from a box
+45. Throwing a box somewhere
+46. Closing a laptop
+47. Holding a laptop
+48. Opening a laptop
+49. Putting a laptop somewhere
+50. Taking a laptop from somewhere
+51. Watching a laptop or something on a laptop
+52. Working/Playing on a laptop
+53. Holding a shoe/shoes
+54. Putting shoes somewhere
+55. Putting on shoe/shoes
+56. Taking shoes from somewhere
+57. Taking off some shoes
+58. Throwing shoes somewhere
+59. Sitting in a chair
+60. Standing on a chair
+61. Holding some food
+62. Putting some food somewhere
+63. Taking food from somewhere
+64. Throwing food somewhere
+65. Eating a sandwich
+66. Making a sandwich
+67. Holding a sandwich
+68. Putting a sandwich somewhere
+69. Taking a sandwich from somewhere
+70. Holding a blanket
+71. Putting a blanket somewhere
+72. Snuggling with a blanket
+73. Taking a blanket from somewhere
+74. Throwing a blanket somewhere
+75. Tidying up a blanket/s
+76. Holding a pillow
+77. Putting a pillow somewhere
+78. Snuggling with a pillow
+79. Taking a pillow from somewhere
+80. Throwing a pillow somewhere
+81. Putting something on a shelf
+82. Tidying a shelf or something on a shelf
+83. Reaching for and grabbing a picture
+84. Holding a picture
+85. Putting a picture somewhere
+86. Taking a picture of something
+87. Watching/looking at a picture
+88. Closing a window
+89. Opening a window
+90. Washing a window
+91. Watching/Looking outside of a window
+92. Holding a mirror
+93. Washing a mirror
+94. Watching something/someone/themselves in a mirror
+95. Walking through a doorway
+96. Holding a broom
+97. Putting a broom somewhere
+98. Taking a broom from somewhere
+99. Throwing a broom somewhere
+100. Tidying up with a broom
+101. Fixing a light
+102. Turning on a light
+103. Turning off a light
+104. Drinking from a cup/glass/bottle
+105. Holding a cup/glass/bottle of something
+106. Pouring something into a cup/glass/bottle
+107. Putting a cup/glass/bottle somewhere
+108. Taking a cup/glass/bottle from somewhere
+109. Washing a cup/glass/bottle
+110. Closing a closet/cabinet
+111. Opening a closet/cabinet
+112. Tidying up a closet/cabinet
+113. Someone is holding a paper/notebook
+114. Putting their paper/notebook somewhere
+115. Taking paper/notebook from somewhere
+116. Holding a dish
+117. Putting a dish/es somewhere
+118. Taking a dish/es from somewhere
+119. Wash a dish/dishes
+120. Lying on a sofa/couch
+121. Sitting on sofa/couch
+122. Lying on the floor
+123. Sitting on the floor
+124. Throwing something on the floor
+125. Tidying something on the floor
+126. Holding some medicine
+127. Taking/consuming some medicine
+128. Putting groceries somewhere
+129. Watching television
+130. Someone is awakening in bed
+131. Lying on a bed
+132. Sitting in a bed
+133. Fixing a vacuum
+134. Holding a vacuum
+135. Taking a vacuum from somewhere
+136. Washing their hands
+137. Fixing a doorknob
+138. Grasping onto a doorknob
+139. Closing a refrigerator
+140. Opening a refrigerator
+141. Fixing their hair
+142. Working on paper/notebook
+143. Someone is awakening somewhere
+144. Someone is cooking something
+145. Someone is dressing
+146. Someone is running somewhere
+147. Someone is going from standing to sitting
+148. Someone is standing up from somewhere
+149. Someone is undressing
+150. Someone is eating something
+
+Look at the image carefully and respond with exactly 5 actions in numbered list format (1-150). Include both the number and the full action text.
+
+RESPONSE:
+Here are the top 5 most likely actions the person is about to perform, based on the image:
+
+1. Putting clothes somewhere
+2. Taking clothes from somewhere
+3. Tidying up a table
+4. Holding a phone/camera
+5. Putting something on a tableIn the image, we can see a person standing in front of a window, holding a vacuum cleaner. The vacuum is positioned in front of them, suggesting they are about to start cleaning. Given their position
+============================================================
+
+Sample 4:
+PROMPT:
+You are observing a person in an image. Based on what you see, predict the TOP 5 most likely actions the person is ABOUT TO perform. Do NOT identify the actions they are currently performing
+
+Here is additional context about the scene:
+Objects: person, window, cup_glass_bottle
+Relationships:
+person not_looking_at window
+window on_the_side_of person
+person not_contacting window
+person not_looking_at cup_glass_bottle
+cup_glass_bottle in_front_of person
+person holding cup_glass_bottle
+
+
+Rank the actions from MOST likely to LEAST likely. Respond with EXACTLY a numbered list of 5 actions in the format:
+
+[action number index]. [action name]
+
+For example:
+26. Closing a book
+103. Turning off a light
+42. Putting a box somewhere
+19. Taking a phone/camera from somewhere
+128. Putting groceries somewhere
+
+Choose from the following actions:
+
+1. Holding some clothes
+2. Putting clothes somewhere
+3. Taking some clothes from somewhere
+4. Throwing clothes somewhere
+5. Tidying some clothes
+6. Washing some clothes
+7. Closing a door
+8. Fixing a door
+9. Opening a door
+10. Putting something on a table
+11. Sitting on a table
+12. Sitting at a table
+13. Tidying up a table
+14. Washing a table
+15. Working at a table
+16. Holding a phone/camera
+17. Playing with a phone/camera
+18. Putting a phone/camera somewhere
+19. Taking a phone/camera from somewhere
+20. Talking on a phone/camera
+21. Holding a bag
+22. Opening a bag
+23. Putting a bag somewhere
+24. Taking a bag from somewhere
+25. Throwing a bag somewhere
+26. Closing a book
+27. Holding a book
+28. Opening a book
+29. Putting a book somewhere
+30. Taking a book from somewhere
+31. Throwing a book somewhere
+32. Watching/Reading/Looking at a book
+33. Holding a towel/s
+34. Putting a towel/s somewhere
+35. Taking a towel/s from somewhere
+36. Throwing a towel/s somewhere
+37. Tidying up a towel/s
+38. Washing something with a towel
+39. Closing a box
+40. Holding a box
+41. Opening a box
+42. Putting a box somewhere
+43. Taking a box from somewhere
+44. Taking something from a box
+45. Throwing a box somewhere
+46. Closing a laptop
+47. Holding a laptop
+48. Opening a laptop
+49. Putting a laptop somewhere
+50. Taking a laptop from somewhere
+51. Watching a laptop or something on a laptop
+52. Working/Playing on a laptop
+53. Holding a shoe/shoes
+54. Putting shoes somewhere
+55. Putting on shoe/shoes
+56. Taking shoes from somewhere
+57. Taking off some shoes
+58. Throwing shoes somewhere
+59. Sitting in a chair
+60. Standing on a chair
+61. Holding some food
+62. Putting some food somewhere
+63. Taking food from somewhere
+64. Throwing food somewhere
+65. Eating a sandwich
+66. Making a sandwich
+67. Holding a sandwich
+68. Putting a sandwich somewhere
+69. Taking a sandwich from somewhere
+70. Holding a blanket
+71. Putting a blanket somewhere
+72. Snuggling with a blanket
+73. Taking a blanket from somewhere
+74. Throwing a blanket somewhere
+75. Tidying up a blanket/s
+76. Holding a pillow
+77. Putting a pillow somewhere
+78. Snuggling with a pillow
+79. Taking a pillow from somewhere
+80. Throwing a pillow somewhere
+81. Putting something on a shelf
+82. Tidying a shelf or something on a shelf
+83. Reaching for and grabbing a picture
+84. Holding a picture
+85. Putting a picture somewhere
+86. Taking a picture of something
+87. Watching/looking at a picture
+88. Closing a window
+89. Opening a window
+90. Washing a window
+91. Watching/Looking outside of a window
+92. Holding a mirror
+93. Washing a mirror
+94. Watching something/someone/themselves in a mirror
+95. Walking through a doorway
+96. Holding a broom
+97. Putting a broom somewhere
+98. Taking a broom from somewhere
+99. Throwing a broom somewhere
+100. Tidying up with a broom
+101. Fixing a light
+102. Turning on a light
+103. Turning off a light
+104. Drinking from a cup/glass/bottle
+105. Holding a cup/glass/bottle of something
+106. Pouring something into a cup/glass/bottle
+107. Putting a cup/glass/bottle somewhere
+108. Taking a cup/glass/bottle from somewhere
+109. Washing a cup/glass/bottle
+110. Closing a closet/cabinet
+111. Opening a closet/cabinet
+112. Tidying up a closet/cabinet
+113. Someone is holding a paper/notebook
+114. Putting their paper/notebook somewhere
+115. Taking paper/notebook from somewhere
+116. Holding a dish
+117. Putting a dish/es somewhere
+118. Taking a dish/es from somewhere
+119. Wash a dish/dishes
+120. Lying on a sofa/couch
+121. Sitting on sofa/couch
+122. Lying on the floor
+123. Sitting on the floor
+124. Throwing something on the floor
+125. Tidying something on the floor
+126. Holding some medicine
+127. Taking/consuming some medicine
+128. Putting groceries somewhere
+129. Watching television
+130. Someone is awakening in bed
+131. Lying on a bed
+132. Sitting in a bed
+133. Fixing a vacuum
+134. Holding a vacuum
+135. Taking a vacuum from somewhere
+136. Washing their hands
+137. Fixing a doorknob
+138. Grasping onto a doorknob
+139. Closing a refrigerator
+140. Opening a refrigerator
+141. Fixing their hair
+142. Working on paper/notebook
+143. Someone is awakening somewhere
+144. Someone is cooking something
+145. Someone is dressing
+146. Someone is running somewhere
+147. Someone is going from standing to sitting
+148. Someone is standing up from somewhere
+149. Someone is undressing
+150. Someone is eating something
+
+Look at the image carefully and respond with exactly 5 actions in numbered list format (1-150). Include both the number and the full action text.
+
+RESPONSE:
+Here are the top 5 most likely actions the person is about to perform, based on the image:
+
+1. Putting clothes somewhere
+2. Taking clothes from somewhere
+3. Tidying up a table
+4. Watching/Reading/Looking at a book
+5. Holding a cup/glass/bottleIn the image, we can see a person standing in front of a window, holding a cup or bottle. The window is open, and the person is not looking at it
+============================================================
+
+Sample 5:
+PROMPT:
+You are observing a person in an image. Based on what you see, predict the TOP 5 most likely actions the person is ABOUT TO perform. Do NOT identify the actions they are currently performing
+
+Here is additional context about the scene:
+Objects: person, vacuum, window, cup_glass_bottle
+Relationships:
+person looking_at vacuum
+vacuum in_front_of person
+person holding vacuum
+person looking_at window
+window on_the_side_of person
+person not_contacting window
+person not_looking_at cup_glass_bottle
+cup_glass_bottle in_front_of person
+person holding cup_glass_bottle
+person drinking_from cup_glass_bottle
+
+
+Rank the actions from MOST likely to LEAST likely. Respond with EXACTLY a numbered list of 5 actions in the format:
+
+[action number index]. [action name]
+
+For example:
+26. Closing a book
+103. Turning off a light
+42. Putting a box somewhere
+19. Taking a phone/camera from somewhere
+128. Putting groceries somewhere
+
+Choose from the following actions:
+
+1. Holding some clothes
+2. Putting clothes somewhere
+3. Taking some clothes from somewhere
+4. Throwing clothes somewhere
+5. Tidying some clothes
+6. Washing some clothes
+7. Closing a door
+8. Fixing a door
+9. Opening a door
+10. Putting something on a table
+11. Sitting on a table
+12. Sitting at a table
+13. Tidying up a table
+14. Washing a table
+15. Working at a table
+16. Holding a phone/camera
+17. Playing with a phone/camera
+18. Putting a phone/camera somewhere
+19. Taking a phone/camera from somewhere
+20. Talking on a phone/camera
+21. Holding a bag
+22. Opening a bag
+23. Putting a bag somewhere
+24. Taking a bag from somewhere
+25. Throwing a bag somewhere
+26. Closing a book
+27. Holding a book
+28. Opening a book
+29. Putting a book somewhere
+30. Taking a book from somewhere
+31. Throwing a book somewhere
+32. Watching/Reading/Looking at a book
+33. Holding a towel/s
+34. Putting a towel/s somewhere
+35. Taking a towel/s from somewhere
+36. Throwing a towel/s somewhere
+37. Tidying up a towel/s
+38. Washing something with a towel
+39. Closing a box
+40. Holding a box
+41. Opening a box
+42. Putting a box somewhere
+43. Taking a box from somewhere
+44. Taking something from a box
+45. Throwing a box somewhere
+46. Closing a laptop
+47. Holding a laptop
+48. Opening a laptop
+49. Putting a laptop somewhere
+50. Taking a laptop from somewhere
+51. Watching a laptop or something on a laptop
+52. Working/Playing on a laptop
+53. Holding a shoe/shoes
+54. Putting shoes somewhere
+55. Putting on shoe/shoes
+56. Taking shoes from somewhere
+57. Taking off some shoes
+58. Throwing shoes somewhere
+59. Sitting in a chair
+60. Standing on a chair
+61. Holding some food
+62. Putting some food somewhere
+63. Taking food from somewhere
+64. Throwing food somewhere
+65. Eating a sandwich
+66. Making a sandwich
+67. Holding a sandwich
+68. Putting a sandwich somewhere
+69. Taking a sandwich from somewhere
+70. Holding a blanket
+71. Putting a blanket somewhere
+72. Snuggling with a blanket
+73. Taking a blanket from somewhere
+74. Throwing a blanket somewhere
+75. Tidying up a blanket/s
+76. Holding a pillow
+77. Putting a pillow somewhere
+78. Snuggling with a pillow
+79. Taking a pillow from somewhere
+80. Throwing a pillow somewhere
+81. Putting something on a shelf
+82. Tidying a shelf or something on a shelf
+83. Reaching for and grabbing a picture
+84. Holding a picture
+85. Putting a picture somewhere
+86. Taking a picture of something
+87. Watching/looking at a picture
+88. Closing a window
+89. Opening a window
+90. Washing a window
+91. Watching/Looking outside of a window
+92. Holding a mirror
+93. Washing a mirror
+94. Watching something/someone/themselves in a mirror
+95. Walking through a doorway
+96. Holding a broom
+97. Putting a broom somewhere
+98. Taking a broom from somewhere
+99. Throwing a broom somewhere
+100. Tidying up with a broom
+101. Fixing a light
+102. Turning on a light
+103. Turning off a light
+104. Drinking from a cup/glass/bottle
+105. Holding a cup/glass/bottle of something
+106. Pouring something into a cup/glass/bottle
+107. Putting a cup/glass/bottle somewhere
+108. Taking a cup/glass/bottle from somewhere
+109. Washing a cup/glass/bottle
+110. Closing a closet/cabinet
+111. Opening a closet/cabinet
+112. Tidying up a closet/cabinet
+113. Someone is holding a paper/notebook
+114. Putting their paper/notebook somewhere
+115. Taking paper/notebook from somewhere
+116. Holding a dish
+117. Putting a dish/es somewhere
+118. Taking a dish/es from somewhere
+119. Wash a dish/dishes
+120. Lying on a sofa/couch
+121. Sitting on sofa/couch
+122. Lying on the floor
+123. Sitting on the floor
+124. Throwing something on the floor
+125. Tidying something on the floor
+126. Holding some medicine
+127. Taking/consuming some medicine
+128. Putting groceries somewhere
+129. Watching television
+130. Someone is awakening in bed
+131. Lying on a bed
+132. Sitting in a bed
+133. Fixing a vacuum
+134. Holding a vacuum
+135. Taking a vacuum from somewhere
+136. Washing their hands
+137. Fixing a doorknob
+138. Grasping onto a doorknob
+139. Closing a refrigerator
+140. Opening a refrigerator
+141. Fixing their hair
+142. Working on paper/notebook
+143. Someone is awakening somewhere
+144. Someone is cooking something
+145. Someone is dressing
+146. Someone is running somewhere
+147. Someone is going from standing to sitting
+148. Someone is standing up from somewhere
+149. Someone is undressing
+150. Someone is eating something
+
+Look at the image carefully and respond with exactly 5 actions in numbered list format (1-150). Include both the number and the full action text.
+
+RESPONSE:
+Here are the top 5 most likely actions the person is about to perform, based on the image:
+
+1. Putting clothes somewhere
+2. Taking clothes from somewhere
+3. Tidying up a table
+4. Watching/Reading/Looking at a book
+5. Holding a cup/glass/bottleIn the image, we can see a person standing in front of a window, holding a cup or bottle in their right hand. Their posture and the presence of the cup/g
+============================================================
+
+Sample 6:
+PROMPT:
+You are observing a person in an image. Based on what you see, predict the TOP 5 most likely actions the person is ABOUT TO perform. Do NOT identify the actions they are currently performing
+
+Here is additional context about the scene:
+Objects: person, mirror, clothes
+Relationships:
+person looking_at mirror
+mirror in_front_of person
+person not_contacting mirror
+person looking_at clothes
+clothes in person
+person touching clothes
+person wearing clothes
+
+
+Rank the actions from MOST likely to LEAST likely. Respond with EXACTLY a numbered list of 5 actions in the format:
+
+[action number index]. [action name]
+
+For example:
+26. Closing a book
+103. Turning off a light
+42. Putting a box somewhere
+19. Taking a phone/camera from somewhere
+128. Putting groceries somewhere
+
+Choose from the following actions:
+
+1. Holding some clothes
+2. Putting clothes somewhere
+3. Taking some clothes from somewhere
+4. Throwing clothes somewhere
+5. Tidying some clothes
+6. Washing some clothes
+7. Closing a door
+8. Fixing a door
+9. Opening a door
+10. Putting something on a table
+11. Sitting on a table
+12. Sitting at a table
+13. Tidying up a table
+14. Washing a table
+15. Working at a table
+16. Holding a phone/camera
+17. Playing with a phone/camera
+18. Putting a phone/camera somewhere
+19. Taking a phone/camera from somewhere
+20. Talking on a phone/camera
+21. Holding a bag
+22. Opening a bag
+23. Putting a bag somewhere
+24. Taking a bag from somewhere
+25. Throwing a bag somewhere
+26. Closing a book
+27. Holding a book
+28. Opening a book
+29. Putting a book somewhere
+30. Taking a book from somewhere
+31. Throwing a book somewhere
+32. Watching/Reading/Looking at a book
+33. Holding a towel/s
+34. Putting a towel/s somewhere
+35. Taking a towel/s from somewhere
+36. Throwing a towel/s somewhere
+37. Tidying up a towel/s
+38. Washing something with a towel
+39. Closing a box
+40. Holding a box
+41. Opening a box
+42. Putting a box somewhere
+43. Taking a box from somewhere
+44. Taking something from a box
+45. Throwing a box somewhere
+46. Closing a laptop
+47. Holding a laptop
+48. Opening a laptop
+49. Putting a laptop somewhere
+50. Taking a laptop from somewhere
+51. Watching a laptop or something on a laptop
+52. Working/Playing on a laptop
+53. Holding a shoe/shoes
+54. Putting shoes somewhere
+55. Putting on shoe/shoes
+56. Taking shoes from somewhere
+57. Taking off some shoes
+58. Throwing shoes somewhere
+59. Sitting in a chair
+60. Standing on a chair
+61. Holding some food
+62. Putting some food somewhere
+63. Taking food from somewhere
+64. Throwing food somewhere
+65. Eating a sandwich
+66. Making a sandwich
+67. Holding a sandwich
+68. Putting a sandwich somewhere
+69. Taking a sandwich from somewhere
+70. Holding a blanket
+71. Putting a blanket somewhere
+72. Snuggling with a blanket
+73. Taking a blanket from somewhere
+74. Throwing a blanket somewhere
+75. Tidying up a blanket/s
+76. Holding a pillow
+77. Putting a pillow somewhere
+78. Snuggling with a pillow
+79. Taking a pillow from somewhere
+80. Throwing a pillow somewhere
+81. Putting something on a shelf
+82. Tidying a shelf or something on a shelf
+83. Reaching for and grabbing a picture
+84. Holding a picture
+85. Putting a picture somewhere
+86. Taking a picture of something
+87. Watching/looking at a picture
+88. Closing a window
+89. Opening a window
+90. Washing a window
+91. Watching/Looking outside of a window
+92. Holding a mirror
+93. Washing a mirror
+94. Watching something/someone/themselves in a mirror
+95. Walking through a doorway
+96. Holding a broom
+97. Putting a broom somewhere
+98. Taking a broom from somewhere
+99. Throwing a broom somewhere
+100. Tidying up with a broom
+101. Fixing a light
+102. Turning on a light
+103. Turning off a light
+104. Drinking from a cup/glass/bottle
+105. Holding a cup/glass/bottle of something
+106. Pouring something into a cup/glass/bottle
+107. Putting a cup/glass/bottle somewhere
+108. Taking a cup/glass/bottle from somewhere
+109. Washing a cup/glass/bottle
+110. Closing a closet/cabinet
+111. Opening a closet/cabinet
+112. Tidying up a closet/cabinet
+113. Someone is holding a paper/notebook
+114. Putting their paper/notebook somewhere
+115. Taking paper/notebook from somewhere
+116. Holding a dish
+117. Putting a dish/es somewhere
+118. Taking a dish/es from somewhere
+119. Wash a dish/dishes
+120. Lying on a sofa/couch
+121. Sitting on sofa/couch
+122. Lying on the floor
+123. Sitting on the floor
+124. Throwing something on the floor
+125. Tidying something on the floor
+126. Holding some medicine
+127. Taking/consuming some medicine
+128. Putting groceries somewhere
+129. Watching television
+130. Someone is awakening in bed
+131. Lying on a bed
+132. Sitting in a bed
+133. Fixing a vacuum
+134. Holding a vacuum
+135. Taking a vacuum from somewhere
+136. Washing their hands
+137. Fixing a doorknob
+138. Grasping onto a doorknob
+139. Closing a refrigerator
+140. Opening a refrigerator
+141. Fixing their hair
+142. Working on paper/notebook
+143. Someone is awakening somewhere
+144. Someone is cooking something
+145. Someone is dressing
+146. Someone is running somewhere
+147. Someone is going from standing to sitting
+148. Someone is standing up from somewhere
+149. Someone is undressing
+150. Someone is eating something
+
+Look at the image carefully and respond with exactly 5 actions in numbered list format (1-150). Include both the number and the full action text.
+
+RESPONSE:
+Here are the top 5 most likely actions the person is about to perform, based on the image:
+
+1. Putting on some shoes
+2. Putting on a shirt
+3. Putting on pants
+4. Putting on socks
+5. Putting on a jacketI've ranked these actions from most likely to least likely based on the context provided in the image description. The person is standing in front of a mirror, which suggests they are preparing to get dressed. The presence of clothes in the
+============================================================
+
+Sample 7:
+PROMPT:
+You are observing a person in an image. Based on what you see, predict the TOP 5 most likely actions the person is ABOUT TO perform. Do NOT identify the actions they are currently performing
+
+Here is additional context about the scene:
+Objects: person, table, book, food, shelf, chair, paper_notebook, sandwich
+Relationships:
+person not_looking_at table
+table in_front_of person
+person not_contacting table
+person looking_at book
+book in_front_of person
+person holding book
+person not_looking_at food
+food in_front_of person
+person not_contacting food
+person not_looking_at shelf
+shelf in_front_of person
+person not_contacting shelf
+person not_looking_at chair
+chair behind person
+person sitting_on chair
+person leaning_on chair
+person looking_at paper_notebook
+paper_notebook in_front_of person
+person holding paper_notebook
+person not_looking_at sandwich
+sandwich in_front_of person
+person not_contacting sandwich
+
+
+Rank the actions from MOST likely to LEAST likely. Respond with EXACTLY a numbered list of 5 actions in the format:
+
+[action number index]. [action name]
+
+For example:
+26. Closing a book
+103. Turning off a light
+42. Putting a box somewhere
+19. Taking a phone/camera from somewhere
+128. Putting groceries somewhere
+
+Choose from the following actions:
+
+1. Holding some clothes
+2. Putting clothes somewhere
+3. Taking some clothes from somewhere
+4. Throwing clothes somewhere
+5. Tidying some clothes
+6. Washing some clothes
+7. Closing a door
+8. Fixing a door
+9. Opening a door
+10. Putting something on a table
+11. Sitting on a table
+12. Sitting at a table
+13. Tidying up a table
+14. Washing a table
+15. Working at a table
+16. Holding a phone/camera
+17. Playing with a phone/camera
+18. Putting a phone/camera somewhere
+19. Taking a phone/camera from somewhere
+20. Talking on a phone/camera
+21. Holding a bag
+22. Opening a bag
+23. Putting a bag somewhere
+24. Taking a bag from somewhere
+25. Throwing a bag somewhere
+26. Closing a book
+27. Holding a book
+28. Opening a book
+29. Putting a book somewhere
+30. Taking a book from somewhere
+31. Throwing a book somewhere
+32. Watching/Reading/Looking at a book
+33. Holding a towel/s
+34. Putting a towel/s somewhere
+35. Taking a towel/s from somewhere
+36. Throwing a towel/s somewhere
+37. Tidying up a towel/s
+38. Washing something with a towel
+39. Closing a box
+40. Holding a box
+41. Opening a box
+42. Putting a box somewhere
+43. Taking a box from somewhere
+44. Taking something from a box
+45. Throwing a box somewhere
+46. Closing a laptop
+47. Holding a laptop
+48. Opening a laptop
+49. Putting a laptop somewhere
+50. Taking a laptop from somewhere
+51. Watching a laptop or something on a laptop
+52. Working/Playing on a laptop
+53. Holding a shoe/shoes
+54. Putting shoes somewhere
+55. Putting on shoe/shoes
+56. Taking shoes from somewhere
+57. Taking off some shoes
+58. Throwing shoes somewhere
+59. Sitting in a chair
+60. Standing on a chair
+61. Holding some food
+62. Putting some food somewhere
+63. Taking food from somewhere
+64. Throwing food somewhere
+65. Eating a sandwich
+66. Making a sandwich
+67. Holding a sandwich
+68. Putting a sandwich somewhere
+69. Taking a sandwich from somewhere
+70. Holding a blanket
+71. Putting a blanket somewhere
+72. Snuggling with a blanket
+73. Taking a blanket from somewhere
+74. Throwing a blanket somewhere
+75. Tidying up a blanket/s
+76. Holding a pillow
+77. Putting a pillow somewhere
+78. Snuggling with a pillow
+79. Taking a pillow from somewhere
+80. Throwing a pillow somewhere
+81. Putting something on a shelf
+82. Tidying a shelf or something on a shelf
+83. Reaching for and grabbing a picture
+84. Holding a picture
+85. Putting a picture somewhere
+86. Taking a picture of something
+87. Watching/looking at a picture
+88. Closing a window
+89. Opening a window
+90. Washing a window
+91. Watching/Looking outside of a window
+92. Holding a mirror
+93. Washing a mirror
+94. Watching something/someone/themselves in a mirror
+95. Walking through a doorway
+96. Holding a broom
+97. Putting a broom somewhere
+98. Taking a broom from somewhere
+99. Throwing a broom somewhere
+100. Tidying up with a broom
+101. Fixing a light
+102. Turning on a light
+103. Turning off a light
+104. Drinking from a cup/glass/bottle
+105. Holding a cup/glass/bottle of something
+106. Pouring something into a cup/glass/bottle
+107. Putting a cup/glass/bottle somewhere
+108. Taking a cup/glass/bottle from somewhere
+109. Washing a cup/glass/bottle
+110. Closing a closet/cabinet
+111. Opening a closet/cabinet
+112. Tidying up a closet/cabinet
+113. Someone is holding a paper/notebook
+114. Putting their paper/notebook somewhere
+115. Taking paper/notebook from somewhere
+116. Holding a dish
+117. Putting a dish/es somewhere
+118. Taking a dish/es from somewhere
+119. Wash a dish/dishes
+120. Lying on a sofa/couch
+121. Sitting on sofa/couch
+122. Lying on the floor
+123. Sitting on the floor
+124. Throwing something on the floor
+125. Tidying something on the floor
+126. Holding some medicine
+127. Taking/consuming some medicine
+128. Putting groceries somewhere
+129. Watching television
+130. Someone is awakening in bed
+131. Lying on a bed
+132. Sitting in a bed
+133. Fixing a vacuum
+134. Holding a vacuum
+135. Taking a vacuum from somewhere
+136. Washing their hands
+137. Fixing a doorknob
+138. Grasping onto a doorknob
+139. Closing a refrigerator
+140. Opening a refrigerator
+141. Fixing their hair
+142. Working on paper/notebook
+143. Someone is awakening somewhere
+144. Someone is cooking something
+145. Someone is dressing
+146. Someone is running somewhere
+147. Someone is going from standing to sitting
+148. Someone is standing up from somewhere
+149. Someone is undressing
+150. Someone is eating something
+
+Look at the image carefully and respond with exactly 5 actions in numbered list format (1-150). Include both the number and the full action text.
+
+RESPONSE:
+Here are the top 5 most likely actions the person is about to perform, based on the scene described:
+
+1. Putting clothes somewhere
+2. Taking clothes from somewhere
+3. Tidying up a table
+4. Watching/Reading/Looking at a book
+5. Holding a paper/notebookIn the image, we can see a person sitting in a chair, holding a paper/notebook. The table in front of them has various items, including a glass and
+============================================================
+
+Sample 8:
+PROMPT:
+You are observing a person in an image. Based on what you see, predict the TOP 5 most likely actions the person is ABOUT TO perform. Do NOT identify the actions they are currently performing
+
+Here is additional context about the scene:
+Objects: person, table, book, shelf, chair, paper_notebook
+Relationships:
+person not_looking_at table
+table in_front_of person
+person not_contacting table
+person looking_at book
+book in_front_of person
+person holding book
+person not_looking_at shelf
+shelf in_front_of person
+person not_contacting shelf
+person not_looking_at chair
+chair beneath person
+chair behind person
+person sitting_on chair
+person leaning_on chair
+person looking_at paper_notebook
+paper_notebook in_front_of person
+person holding paper_notebook
+
+
+Rank the actions from MOST likely to LEAST likely. Respond with EXACTLY a numbered list of 5 actions in the format:
+
+[action number index]. [action name]
+
+For example:
+26. Closing a book
+103. Turning off a light
+42. Putting a box somewhere
+19. Taking a phone/camera from somewhere
+128. Putting groceries somewhere
+
+Choose from the following actions:
+
+1. Holding some clothes
+2. Putting clothes somewhere
+3. Taking some clothes from somewhere
+4. Throwing clothes somewhere
+5. Tidying some clothes
+6. Washing some clothes
+7. Closing a door
+8. Fixing a door
+9. Opening a door
+10. Putting something on a table
+11. Sitting on a table
+12. Sitting at a table
+13. Tidying up a table
+14. Washing a table
+15. Working at a table
+16. Holding a phone/camera
+17. Playing with a phone/camera
+18. Putting a phone/camera somewhere
+19. Taking a phone/camera from somewhere
+20. Talking on a phone/camera
+21. Holding a bag
+22. Opening a bag
+23. Putting a bag somewhere
+24. Taking a bag from somewhere
+25. Throwing a bag somewhere
+26. Closing a book
+27. Holding a book
+28. Opening a book
+29. Putting a book somewhere
+30. Taking a book from somewhere
+31. Throwing a book somewhere
+32. Watching/Reading/Looking at a book
+33. Holding a towel/s
+34. Putting a towel/s somewhere
+35. Taking a towel/s from somewhere
+36. Throwing a towel/s somewhere
+37. Tidying up a towel/s
+38. Washing something with a towel
+39. Closing a box
+40. Holding a box
+41. Opening a box
+42. Putting a box somewhere
+43. Taking a box from somewhere
+44. Taking something from a box
+45. Throwing a box somewhere
+46. Closing a laptop
+47. Holding a laptop
+48. Opening a laptop
+49. Putting a laptop somewhere
+50. Taking a laptop from somewhere
+51. Watching a laptop or something on a laptop
+52. Working/Playing on a laptop
+53. Holding a shoe/shoes
+54. Putting shoes somewhere
+55. Putting on shoe/shoes
+56. Taking shoes from somewhere
+57. Taking off some shoes
+58. Throwing shoes somewhere
+59. Sitting in a chair
+60. Standing on a chair
+61. Holding some food
+62. Putting some food somewhere
+63. Taking food from somewhere
+64. Throwing food somewhere
+65. Eating a sandwich
+66. Making a sandwich
+67. Holding a sandwich
+68. Putting a sandwich somewhere
+69. Taking a sandwich from somewhere
+70. Holding a blanket
+71. Putting a blanket somewhere
+72. Snuggling with a blanket
+73. Taking a blanket from somewhere
+74. Throwing a blanket somewhere
+75. Tidying up a blanket/s
+76. Holding a pillow
+77. Putting a pillow somewhere
+78. Snuggling with a pillow
+79. Taking a pillow from somewhere
+80. Throwing a pillow somewhere
+81. Putting something on a shelf
+82. Tidying a shelf or something on a shelf
+83. Reaching for and grabbing a picture
+84. Holding a picture
+85. Putting a picture somewhere
+86. Taking a picture of something
+87. Watching/looking at a picture
+88. Closing a window
+89. Opening a window
+90. Washing a window
+91. Watching/Looking outside of a window
+92. Holding a mirror
+93. Washing a mirror
+94. Watching something/someone/themselves in a mirror
+95. Walking through a doorway
+96. Holding a broom
+97. Putting a broom somewhere
+98. Taking a broom from somewhere
+99. Throwing a broom somewhere
+100. Tidying up with a broom
+101. Fixing a light
+102. Turning on a light
+103. Turning off a light
+104. Drinking from a cup/glass/bottle
+105. Holding a cup/glass/bottle of something
+106. Pouring something into a cup/glass/bottle
+107. Putting a cup/glass/bottle somewhere
+108. Taking a cup/glass/bottle from somewhere
+109. Washing a cup/glass/bottle
+110. Closing a closet/cabinet
+111. Opening a closet/cabinet
+112. Tidying up a closet/cabinet
+113. Someone is holding a paper/notebook
+114. Putting their paper/notebook somewhere
+115. Taking paper/notebook from somewhere
+116. Holding a dish
+117. Putting a dish/es somewhere
+118. Taking a dish/es from somewhere
+119. Wash a dish/dishes
+120. Lying on a sofa/couch
+121. Sitting on sofa/couch
+122. Lying on the floor
+123. Sitting on the floor
+124. Throwing something on the floor
+125. Tidying something on the floor
+126. Holding some medicine
+127. Taking/consuming some medicine
+128. Putting groceries somewhere
+129. Watching television
+130. Someone is awakening in bed
+131. Lying on a bed
+132. Sitting in a bed
+133. Fixing a vacuum
+134. Holding a vacuum
+135. Taking a vacuum from somewhere
+136. Washing their hands
+137. Fixing a doorknob
+138. Grasping onto a doorknob
+139. Closing a refrigerator
+140. Opening a refrigerator
+141. Fixing their hair
+142. Working on paper/notebook
+143. Someone is awakening somewhere
+144. Someone is cooking something
+145. Someone is dressing
+146. Someone is running somewhere
+147. Someone is going from standing to sitting
+148. Someone is standing up from somewhere
+149. Someone is undressing
+150. Someone is eating something
+
+Look at the image carefully and respond with exactly 5 actions in numbered list format (1-150). Include both the number and the full action text.
+
+RESPONSE:
+Here are the top 5 most likely actions the person is about to perform, based on the image:
+
+1. Putting clothes somewhere
+2. Taking clothes from somewhere
+3. Tidying up a room
+4. Watching/Reading/Looking at a book
+5. Holding a paper/notebookIn the image, we can see a person sitting in a chair, holding a paper/notebook. They are not looking at the table in front of them, but rather seem
+============================================================
+
+Sample 9:
+PROMPT:
+You are observing a person in an image. Based on what you see, predict the TOP 5 most likely actions the person is ABOUT TO perform. Do NOT identify the actions they are currently performing
+
+Here is additional context about the scene:
+Objects: person, table, book, shelf, chair, paper_notebook, sandwich
+Relationships:
+person not_looking_at table
+table on_the_side_of person
+person not_contacting table
+person looking_at book
+book in_front_of person
+person holding book
+person not_looking_at shelf
+shelf in_front_of person
+person not_contacting shelf
+person not_looking_at chair
+chair beneath person
+chair behind person
+person sitting_on chair
+person leaning_on chair
+person looking_at paper_notebook
+paper_notebook in_front_of person
+person holding paper_notebook
+person not_looking_at sandwich
+sandwich in_front_of person
+person not_contacting sandwich
+
+
+Rank the actions from MOST likely to LEAST likely. Respond with EXACTLY a numbered list of 5 actions in the format:
+
+[action number index]. [action name]
+
+For example:
+26. Closing a book
+103. Turning off a light
+42. Putting a box somewhere
+19. Taking a phone/camera from somewhere
+128. Putting groceries somewhere
+
+Choose from the following actions:
+
+1. Holding some clothes
+2. Putting clothes somewhere
+3. Taking some clothes from somewhere
+4. Throwing clothes somewhere
+5. Tidying some clothes
+6. Washing some clothes
+7. Closing a door
+8. Fixing a door
+9. Opening a door
+10. Putting something on a table
+11. Sitting on a table
+12. Sitting at a table
+13. Tidying up a table
+14. Washing a table
+15. Working at a table
+16. Holding a phone/camera
+17. Playing with a phone/camera
+18. Putting a phone/camera somewhere
+19. Taking a phone/camera from somewhere
+20. Talking on a phone/camera
+21. Holding a bag
+22. Opening a bag
+23. Putting a bag somewhere
+24. Taking a bag from somewhere
+25. Throwing a bag somewhere
+26. Closing a book
+27. Holding a book
+28. Opening a book
+29. Putting a book somewhere
+30. Taking a book from somewhere
+31. Throwing a book somewhere
+32. Watching/Reading/Looking at a book
+33. Holding a towel/s
+34. Putting a towel/s somewhere
+35. Taking a towel/s from somewhere
+36. Throwing a towel/s somewhere
+37. Tidying up a towel/s
+38. Washing something with a towel
+39. Closing a box
+40. Holding a box
+41. Opening a box
+42. Putting a box somewhere
+43. Taking a box from somewhere
+44. Taking something from a box
+45. Throwing a box somewhere
+46. Closing a laptop
+47. Holding a laptop
+48. Opening a laptop
+49. Putting a laptop somewhere
+50. Taking a laptop from somewhere
+51. Watching a laptop or something on a laptop
+52. Working/Playing on a laptop
+53. Holding a shoe/shoes
+54. Putting shoes somewhere
+55. Putting on shoe/shoes
+56. Taking shoes from somewhere
+57. Taking off some shoes
+58. Throwing shoes somewhere
+59. Sitting in a chair
+60. Standing on a chair
+61. Holding some food
+62. Putting some food somewhere
+63. Taking food from somewhere
+64. Throwing food somewhere
+65. Eating a sandwich
+66. Making a sandwich
+67. Holding a sandwich
+68. Putting a sandwich somewhere
+69. Taking a sandwich from somewhere
+70. Holding a blanket
+71. Putting a blanket somewhere
+72. Snuggling with a blanket
+73. Taking a blanket from somewhere
+74. Throwing a blanket somewhere
+75. Tidying up a blanket/s
+76. Holding a pillow
+77. Putting a pillow somewhere
+78. Snuggling with a pillow
+79. Taking a pillow from somewhere
+80. Throwing a pillow somewhere
+81. Putting something on a shelf
+82. Tidying a shelf or something on a shelf
+83. Reaching for and grabbing a picture
+84. Holding a picture
+85. Putting a picture somewhere
+86. Taking a picture of something
+87. Watching/looking at a picture
+88. Closing a window
+89. Opening a window
+90. Washing a window
+91. Watching/Looking outside of a window
+92. Holding a mirror
+93. Washing a mirror
+94. Watching something/someone/themselves in a mirror
+95. Walking through a doorway
+96. Holding a broom
+97. Putting a broom somewhere
+98. Taking a broom from somewhere
+99. Throwing a broom somewhere
+100. Tidying up with a broom
+101. Fixing a light
+102. Turning on a light
+103. Turning off a light
+104. Drinking from a cup/glass/bottle
+105. Holding a cup/glass/bottle of something
+106. Pouring something into a cup/glass/bottle
+107. Putting a cup/glass/bottle somewhere
+108. Taking a cup/glass/bottle from somewhere
+109. Washing a cup/glass/bottle
+110. Closing a closet/cabinet
+111. Opening a closet/cabinet
+112. Tidying up a closet/cabinet
+113. Someone is holding a paper/notebook
+114. Putting their paper/notebook somewhere
+115. Taking paper/notebook from somewhere
+116. Holding a dish
+117. Putting a dish/es somewhere
+118. Taking a dish/es from somewhere
+119. Wash a dish/dishes
+120. Lying on a sofa/couch
+121. Sitting on sofa/couch
+122. Lying on the floor
+123. Sitting on the floor
+124. Throwing something on the floor
+125. Tidying something on the floor
+126. Holding some medicine
+127. Taking/consuming some medicine
+128. Putting groceries somewhere
+129. Watching television
+130. Someone is awakening in bed
+131. Lying on a bed
+132. Sitting in a bed
+133. Fixing a vacuum
+134. Holding a vacuum
+135. Taking a vacuum from somewhere
+136. Washing their hands
+137. Fixing a doorknob
+138. Grasping onto a doorknob
+139. Closing a refrigerator
+140. Opening a refrigerator
+141. Fixing their hair
+142. Working on paper/notebook
+143. Someone is awakening somewhere
+144. Someone is cooking something
+145. Someone is dressing
+146. Someone is running somewhere
+147. Someone is going from standing to sitting
+148. Someone is standing up from somewhere
+149. Someone is undressing
+150. Someone is eating something
+
+Look at the image carefully and respond with exactly 5 actions in numbered list format (1-150). Include both the number and the full action text.
+
+RESPONSE:
+Here are the top 5 most likely actions the person is about to perform, based on the scene:
+
+1. Putting clothes somewhere
+2. Taking clothes from somewhere
+3. Tidying up a room
+4. Watching/Reading/Looking at a book
+5. Holding a paper/notebookIn the image, we can see a person sitting in a chair, holding a paper/notebook. The room appears to be tidy, and there are no visible clothes or signs
+============================================================
+
+Sample 10:
+PROMPT:
+You are observing a person in an image. Based on what you see, predict the TOP 5 most likely actions the person is ABOUT TO perform. Do NOT identify the actions they are currently performing
+
+Here is additional context about the scene:
+Objects: person, table, book, food, chair, sandwich
+Relationships:
+person unsure table
+table on_the_side_of person
+person not_contacting table
+person not_looking_at book
+book in_front_of person
+person not_contacting book
+person looking_at food
+food in_front_of person
+person holding food
+person not_looking_at chair
+chair beneath person
+chair behind person
+person sitting_on chair
+person leaning_on chair
+person unsure sandwich
+sandwich in_front_of person
+person holding sandwich
+
+
+Rank the actions from MOST likely to LEAST likely. Respond with EXACTLY a numbered list of 5 actions in the format:
+
+[action number index]. [action name]
+
+For example:
+26. Closing a book
+103. Turning off a light
+42. Putting a box somewhere
+19. Taking a phone/camera from somewhere
+128. Putting groceries somewhere
+
+Choose from the following actions:
+
+1. Holding some clothes
+2. Putting clothes somewhere
+3. Taking some clothes from somewhere
+4. Throwing clothes somewhere
+5. Tidying some clothes
+6. Washing some clothes
+7. Closing a door
+8. Fixing a door
+9. Opening a door
+10. Putting something on a table
+11. Sitting on a table
+12. Sitting at a table
+13. Tidying up a table
+14. Washing a table
+15. Working at a table
+16. Holding a phone/camera
+17. Playing with a phone/camera
+18. Putting a phone/camera somewhere
+19. Taking a phone/camera from somewhere
+20. Talking on a phone/camera
+21. Holding a bag
+22. Opening a bag
+23. Putting a bag somewhere
+24. Taking a bag from somewhere
+25. Throwing a bag somewhere
+26. Closing a book
+27. Holding a book
+28. Opening a book
+29. Putting a book somewhere
+30. Taking a book from somewhere
+31. Throwing a book somewhere
+32. Watching/Reading/Looking at a book
+33. Holding a towel/s
+34. Putting a towel/s somewhere
+35. Taking a towel/s from somewhere
+36. Throwing a towel/s somewhere
+37. Tidying up a towel/s
+38. Washing something with a towel
+39. Closing a box
+40. Holding a box
+41. Opening a box
+42. Putting a box somewhere
+43. Taking a box from somewhere
+44. Taking something from a box
+45. Throwing a box somewhere
+46. Closing a laptop
+47. Holding a laptop
+48. Opening a laptop
+49. Putting a laptop somewhere
+50. Taking a laptop from somewhere
+51. Watching a laptop or something on a laptop
+52. Working/Playing on a laptop
+53. Holding a shoe/shoes
+54. Putting shoes somewhere
+55. Putting on shoe/shoes
+56. Taking shoes from somewhere
+57. Taking off some shoes
+58. Throwing shoes somewhere
+59. Sitting in a chair
+60. Standing on a chair
+61. Holding some food
+62. Putting some food somewhere
+63. Taking food from somewhere
+64. Throwing food somewhere
+65. Eating a sandwich
+66. Making a sandwich
+67. Holding a sandwich
+68. Putting a sandwich somewhere
+69. Taking a sandwich from somewhere
+70. Holding a blanket
+71. Putting a blanket somewhere
+72. Snuggling with a blanket
+73. Taking a blanket from somewhere
+74. Throwing a blanket somewhere
+75. Tidying up a blanket/s
+76. Holding a pillow
+77. Putting a pillow somewhere
+78. Snuggling with a pillow
+79. Taking a pillow from somewhere
+80. Throwing a pillow somewhere
+81. Putting something on a shelf
+82. Tidying a shelf or something on a shelf
+83. Reaching for and grabbing a picture
+84. Holding a picture
+85. Putting a picture somewhere
+86. Taking a picture of something
+87. Watching/looking at a picture
+88. Closing a window
+89. Opening a window
+90. Washing a window
+91. Watching/Looking outside of a window
+92. Holding a mirror
+93. Washing a mirror
+94. Watching something/someone/themselves in a mirror
+95. Walking through a doorway
+96. Holding a broom
+97. Putting a broom somewhere
+98. Taking a broom from somewhere
+99. Throwing a broom somewhere
+100. Tidying up with a broom
+101. Fixing a light
+102. Turning on a light
+103. Turning off a light
+104. Drinking from a cup/glass/bottle
+105. Holding a cup/glass/bottle of something
+106. Pouring something into a cup/glass/bottle
+107. Putting a cup/glass/bottle somewhere
+108. Taking a cup/glass/bottle from somewhere
+109. Washing a cup/glass/bottle
+110. Closing a closet/cabinet
+111. Opening a closet/cabinet
+112. Tidying up a closet/cabinet
+113. Someone is holding a paper/notebook
+114. Putting their paper/notebook somewhere
+115. Taking paper/notebook from somewhere
+116. Holding a dish
+117. Putting a dish/es somewhere
+118. Taking a dish/es from somewhere
+119. Wash a dish/dishes
+120. Lying on a sofa/couch
+121. Sitting on sofa/couch
+122. Lying on the floor
+123. Sitting on the floor
+124. Throwing something on the floor
+125. Tidying something on the floor
+126. Holding some medicine
+127. Taking/consuming some medicine
+128. Putting groceries somewhere
+129. Watching television
+130. Someone is awakening in bed
+131. Lying on a bed
+132. Sitting in a bed
+133. Fixing a vacuum
+134. Holding a vacuum
+135. Taking a vacuum from somewhere
+136. Washing their hands
+137. Fixing a doorknob
+138. Grasping onto a doorknob
+139. Closing a refrigerator
+140. Opening a refrigerator
+141. Fixing their hair
+142. Working on paper/notebook
+143. Someone is awakening somewhere
+144. Someone is cooking something
+145. Someone is dressing
+146. Someone is running somewhere
+147. Someone is going from standing to sitting
+148. Someone is standing up from somewhere
+149. Someone is undressing
+150. Someone is eating something
+
+Look at the image carefully and respond with exactly 5 actions in numbered list format (1-150). Include both the number and the full action text.
+
+RESPONSE:
+Here are the top 5 most likely actions the person is about to perform, based on the scene:
+
+1. Putting clothes somewhere
+2. Taking clothes from somewhere
+3. Throwing clothes somewhere
+4. Tidying up clothes
+5. Washing clothesNote: The image is necessary to determine these actions, as it shows a person sitting at a table with various clothing items and a book in front of them.I hope this helps!Is there anything else you'd like
+============================================================
+
+Sample 11:
+PROMPT:
+You are observing a person in an image. Based on what you see, predict the TOP 5 most likely actions the person is ABOUT TO perform. Do NOT identify the actions they are currently performing
+
+Here is additional context about the scene:
+Objects: person, table, book, food, shelf, chair, sandwich
+Relationships:
+person unsure table
+table in_front_of person
+person not_contacting table
+person not_looking_at book
+book on_the_side_of person
+person not_contacting book
+person unsure food
+food in_front_of person
+person not_contacting food
+person looking_at shelf
+shelf in_front_of person
+person not_contacting shelf
+person not_looking_at chair
+chair beneath person
+chair behind person
+person sitting_on chair
+person leaning_on chair
+person looking_at sandwich
+sandwich in_front_of person
+person not_contacting sandwich
+
+
+Rank the actions from MOST likely to LEAST likely. Respond with EXACTLY a numbered list of 5 actions in the format:
+
+[action number index]. [action name]
+
+For example:
+26. Closing a book
+103. Turning off a light
+42. Putting a box somewhere
+19. Taking a phone/camera from somewhere
+128. Putting groceries somewhere
+
+Choose from the following actions:
+
+1. Holding some clothes
+2. Putting clothes somewhere
+3. Taking some clothes from somewhere
+4. Throwing clothes somewhere
+5. Tidying some clothes
+6. Washing some clothes
+7. Closing a door
+8. Fixing a door
+9. Opening a door
+10. Putting something on a table
+11. Sitting on a table
+12. Sitting at a table
+13. Tidying up a table
+14. Washing a table
+15. Working at a table
+16. Holding a phone/camera
+17. Playing with a phone/camera
+18. Putting a phone/camera somewhere
+19. Taking a phone/camera from somewhere
+20. Talking on a phone/camera
+21. Holding a bag
+22. Opening a bag
+23. Putting a bag somewhere
+24. Taking a bag from somewhere
+25. Throwing a bag somewhere
+26. Closing a book
+27. Holding a book
+28. Opening a book
+29. Putting a book somewhere
+30. Taking a book from somewhere
+31. Throwing a book somewhere
+32. Watching/Reading/Looking at a book
+33. Holding a towel/s
+34. Putting a towel/s somewhere
+35. Taking a towel/s from somewhere
+36. Throwing a towel/s somewhere
+37. Tidying up a towel/s
+38. Washing something with a towel
+39. Closing a box
+40. Holding a box
+41. Opening a box
+42. Putting a box somewhere
+43. Taking a box from somewhere
+44. Taking something from a box
+45. Throwing a box somewhere
+46. Closing a laptop
+47. Holding a laptop
+48. Opening a laptop
+49. Putting a laptop somewhere
+50. Taking a laptop from somewhere
+51. Watching a laptop or something on a laptop
+52. Working/Playing on a laptop
+53. Holding a shoe/shoes
+54. Putting shoes somewhere
+55. Putting on shoe/shoes
+56. Taking shoes from somewhere
+57. Taking off some shoes
+58. Throwing shoes somewhere
+59. Sitting in a chair
+60. Standing on a chair
+61. Holding some food
+62. Putting some food somewhere
+63. Taking food from somewhere
+64. Throwing food somewhere
+65. Eating a sandwich
+66. Making a sandwich
+67. Holding a sandwich
+68. Putting a sandwich somewhere
+69. Taking a sandwich from somewhere
+70. Holding a blanket
+71. Putting a blanket somewhere
+72. Snuggling with a blanket
+73. Taking a blanket from somewhere
+74. Throwing a blanket somewhere
+75. Tidying up a blanket/s
+76. Holding a pillow
+77. Putting a pillow somewhere
+78. Snuggling with a pillow
+79. Taking a pillow from somewhere
+80. Throwing a pillow somewhere
+81. Putting something on a shelf
+82. Tidying a shelf or something on a shelf
+83. Reaching for and grabbing a picture
+84. Holding a picture
+85. Putting a picture somewhere
+86. Taking a picture of something
+87. Watching/looking at a picture
+88. Closing a window
+89. Opening a window
+90. Washing a window
+91. Watching/Looking outside of a window
+92. Holding a mirror
+93. Washing a mirror
+94. Watching something/someone/themselves in a mirror
+95. Walking through a doorway
+96. Holding a broom
+97. Putting a broom somewhere
+98. Taking a broom from somewhere
+99. Throwing a broom somewhere
+100. Tidying up with a broom
+101. Fixing a light
+102. Turning on a light
+103. Turning off a light
+104. Drinking from a cup/glass/bottle
+105. Holding a cup/glass/bottle of something
+106. Pouring something into a cup/glass/bottle
+107. Putting a cup/glass/bottle somewhere
+108. Taking a cup/glass/bottle from somewhere
+109. Washing a cup/glass/bottle
+110. Closing a closet/cabinet
+111. Opening a closet/cabinet
+112. Tidying up a closet/cabinet
+113. Someone is holding a paper/notebook
+114. Putting their paper/notebook somewhere
+115. Taking paper/notebook from somewhere
+116. Holding a dish
+117. Putting a dish/es somewhere
+118. Taking a dish/es from somewhere
+119. Wash a dish/dishes
+120. Lying on a sofa/couch
+121. Sitting on sofa/couch
+122. Lying on the floor
+123. Sitting on the floor
+124. Throwing something on the floor
+125. Tidying something on the floor
+126. Holding some medicine
+127. Taking/consuming some medicine
+128. Putting groceries somewhere
+129. Watching television
+130. Someone is awakening in bed
+131. Lying on a bed
+132. Sitting in a bed
+133. Fixing a vacuum
+134. Holding a vacuum
+135. Taking a vacuum from somewhere
+136. Washing their hands
+137. Fixing a doorknob
+138. Grasping onto a doorknob
+139. Closing a refrigerator
+140. Opening a refrigerator
+141. Fixing their hair
+142. Working on paper/notebook
+143. Someone is awakening somewhere
+144. Someone is cooking something
+145. Someone is dressing
+146. Someone is running somewhere
+147. Someone is going from standing to sitting
+148. Someone is standing up from somewhere
+149. Someone is undressing
+150. Someone is eating something
+
+Look at the image carefully and respond with exactly 5 actions in numbered list format (1-150). Include both the number and the full action text.
+
+RESPONSE:
+Here are the top 5 most likely actions the person is about to perform, based on the scene:
+
+1. Putting clothes somewhere
+2. Taking clothes from somewhere
+3. Tidying up a table
+4. Watching/Reading/Looking at a book
+5. Holding a phone/cameraThe image shows a person sitting at a table with various items around them, including clothes, a book, and a phone/camera. These elements suggest that the person might be preparing to
+============================================================
+
+Sample 12:
+PROMPT:
+You are observing a person in an image. Based on what you see, predict the TOP 5 most likely actions the person is ABOUT TO perform. Do NOT identify the actions they are currently performing
+
+Here is additional context about the scene:
+Objects: person, table, book, food, shelf, chair, paper_notebook, sandwich
+Relationships:
+person not_looking_at table
+table in_front_of person
+person not_contacting table
+person looking_at book
+book in_front_of person
+person holding book
+person not_looking_at food
+food in_front_of person
+person not_contacting food
+person not_looking_at shelf
+shelf in_front_of person
+person not_contacting shelf
+person not_looking_at chair
+chair behind person
+person sitting_on chair
+person leaning_on chair
+person looking_at paper_notebook
+paper_notebook in_front_of person
+person holding paper_notebook
+person not_looking_at sandwich
+sandwich in_front_of person
+person not_contacting sandwich
+
+
+Rank the actions from MOST likely to LEAST likely. Respond with EXACTLY a numbered list of 5 actions in the format:
+
+[action number index]. [action name]
+
+For example:
+26. Closing a book
+103. Turning off a light
+42. Putting a box somewhere
+19. Taking a phone/camera from somewhere
+128. Putting groceries somewhere
+
+Choose from the following actions:
+
+1. Holding some clothes
+2. Putting clothes somewhere
+3. Taking some clothes from somewhere
+4. Throwing clothes somewhere
+5. Tidying some clothes
+6. Washing some clothes
+7. Closing a door
+8. Fixing a door
+9. Opening a door
+10. Putting something on a table
+11. Sitting on a table
+12. Sitting at a table
+13. Tidying up a table
+14. Washing a table
+15. Working at a table
+16. Holding a phone/camera
+17. Playing with a phone/camera
+18. Putting a phone/camera somewhere
+19. Taking a phone/camera from somewhere
+20. Talking on a phone/camera
+21. Holding a bag
+22. Opening a bag
+23. Putting a bag somewhere
+24. Taking a bag from somewhere
+25. Throwing a bag somewhere
+26. Closing a book
+27. Holding a book
+28. Opening a book
+29. Putting a book somewhere
+30. Taking a book from somewhere
+31. Throwing a book somewhere
+32. Watching/Reading/Looking at a book
+33. Holding a towel/s
+34. Putting a towel/s somewhere
+35. Taking a towel/s from somewhere
+36. Throwing a towel/s somewhere
+37. Tidying up a towel/s
+38. Washing something with a towel
+39. Closing a box
+40. Holding a box
+41. Opening a box
+42. Putting a box somewhere
+43. Taking a box from somewhere
+44. Taking something from a box
+45. Throwing a box somewhere
+46. Closing a laptop
+47. Holding a laptop
+48. Opening a laptop
+49. Putting a laptop somewhere
+50. Taking a laptop from somewhere
+51. Watching a laptop or something on a laptop
+52. Working/Playing on a laptop
+53. Holding a shoe/shoes
+54. Putting shoes somewhere
+55. Putting on shoe/shoes
+56. Taking shoes from somewhere
+57. Taking off some shoes
+58. Throwing shoes somewhere
+59. Sitting in a chair
+60. Standing on a chair
+61. Holding some food
+62. Putting some food somewhere
+63. Taking food from somewhere
+64. Throwing food somewhere
+65. Eating a sandwich
+66. Making a sandwich
+67. Holding a sandwich
+68. Putting a sandwich somewhere
+69. Taking a sandwich from somewhere
+70. Holding a blanket
+71. Putting a blanket somewhere
+72. Snuggling with a blanket
+73. Taking a blanket from somewhere
+74. Throwing a blanket somewhere
+75. Tidying up a blanket/s
+76. Holding a pillow
+77. Putting a pillow somewhere
+78. Snuggling with a pillow
+79. Taking a pillow from somewhere
+80. Throwing a pillow somewhere
+81. Putting something on a shelf
+82. Tidying a shelf or something on a shelf
+83. Reaching for and grabbing a picture
+84. Holding a picture
+85. Putting a picture somewhere
+86. Taking a picture of something
+87. Watching/looking at a picture
+88. Closing a window
+89. Opening a window
+90. Washing a window
+91. Watching/Looking outside of a window
+92. Holding a mirror
+93. Washing a mirror
+94. Watching something/someone/themselves in a mirror
+95. Walking through a doorway
+96. Holding a broom
+97. Putting a broom somewhere
+98. Taking a broom from somewhere
+99. Throwing a broom somewhere
+100. Tidying up with a broom
+101. Fixing a light
+102. Turning on a light
+103. Turning off a light
+104. Drinking from a cup/glass/bottle
+105. Holding a cup/glass/bottle of something
+106. Pouring something into a cup/glass/bottle
+107. Putting a cup/glass/bottle somewhere
+108. Taking a cup/glass/bottle from somewhere
+109. Washing a cup/glass/bottle
+110. Closing a closet/cabinet
+111. Opening a closet/cabinet
+112. Tidying up a closet/cabinet
+113. Someone is holding a paper/notebook
+114. Putting their paper/notebook somewhere
+115. Taking paper/notebook from somewhere
+116. Holding a dish
+117. Putting a dish/es somewhere
+118. Taking a dish/es from somewhere
+119. Wash a dish/dishes
+120. Lying on a sofa/couch
+121. Sitting on sofa/couch
+122. Lying on the floor
+123. Sitting on the floor
+124. Throwing something on the floor
+125. Tidying something on the floor
+126. Holding some medicine
+127. Taking/consuming some medicine
+128. Putting groceries somewhere
+129. Watching television
+130. Someone is awakening in bed
+131. Lying on a bed
+132. Sitting in a bed
+133. Fixing a vacuum
+134. Holding a vacuum
+135. Taking a vacuum from somewhere
+136. Washing their hands
+137. Fixing a doorknob
+138. Grasping onto a doorknob
+139. Closing a refrigerator
+140. Opening a refrigerator
+141. Fixing their hair
+142. Working on paper/notebook
+143. Someone is awakening somewhere
+144. Someone is cooking something
+145. Someone is dressing
+146. Someone is running somewhere
+147. Someone is going from standing to sitting
+148. Someone is standing up from somewhere
+149. Someone is undressing
+150. Someone is eating something
+
+Look at the image carefully and respond with exactly 5 actions in numbered list format (1-150). Include both the number and the full action text.
+
+RESPONSE:
+Here are the top 5 most likely actions the person is about to perform, based on the scene described:
+
+1. Putting clothes somewhere
+2. Taking clothes from somewhere
+3. Tidying up a table
+4. Watching/Reading/Looking at a book
+5. Holding a paper/notebookIn the image, we can see a person sitting in a chair, holding a paper/notebook. The table in front of them has various items, including a glass and
+============================================================
+
+Sample 13:
+PROMPT:
+You are observing a person in an image. Based on what you see, predict the TOP 5 most likely actions the person is ABOUT TO perform. Do NOT identify the actions they are currently performing
+
+Here is additional context about the scene:
+Objects: person, table, book, shelf, chair, paper_notebook, sandwich
+Relationships:
+person not_looking_at table
+table in_front_of person
+person not_contacting table
+person looking_at book
+book in_front_of person
+person holding book
+person not_looking_at shelf
+shelf in_front_of person
+person not_contacting shelf
+person not_looking_at chair
+chair beneath person
+chair behind person
+person sitting_on chair
+person leaning_on chair
+person looking_at paper_notebook
+paper_notebook in_front_of person
+person holding paper_notebook
+person unsure sandwich
+sandwich in_front_of person
+person not_contacting sandwich
+
+
+Rank the actions from MOST likely to LEAST likely. Respond with EXACTLY a numbered list of 5 actions in the format:
+
+[action number index]. [action name]
+
+For example:
+26. Closing a book
+103. Turning off a light
+42. Putting a box somewhere
+19. Taking a phone/camera from somewhere
+128. Putting groceries somewhere
+
+Choose from the following actions:
+
+1. Holding some clothes
+2. Putting clothes somewhere
+3. Taking some clothes from somewhere
+4. Throwing clothes somewhere
+5. Tidying some clothes
+6. Washing some clothes
+7. Closing a door
+8. Fixing a door
+9. Opening a door
+10. Putting something on a table
+11. Sitting on a table
+12. Sitting at a table
+13. Tidying up a table
+14. Washing a table
+15. Working at a table
+16. Holding a phone/camera
+17. Playing with a phone/camera
+18. Putting a phone/camera somewhere
+19. Taking a phone/camera from somewhere
+20. Talking on a phone/camera
+21. Holding a bag
+22. Opening a bag
+23. Putting a bag somewhere
+24. Taking a bag from somewhere
+25. Throwing a bag somewhere
+26. Closing a book
+27. Holding a book
+28. Opening a book
+29. Putting a book somewhere
+30. Taking a book from somewhere
+31. Throwing a book somewhere
+32. Watching/Reading/Looking at a book
+33. Holding a towel/s
+34. Putting a towel/s somewhere
+35. Taking a towel/s from somewhere
+36. Throwing a towel/s somewhere
+37. Tidying up a towel/s
+38. Washing something with a towel
+39. Closing a box
+40. Holding a box
+41. Opening a box
+42. Putting a box somewhere
+43. Taking a box from somewhere
+44. Taking something from a box
+45. Throwing a box somewhere
+46. Closing a laptop
+47. Holding a laptop
+48. Opening a laptop
+49. Putting a laptop somewhere
+50. Taking a laptop from somewhere
+51. Watching a laptop or something on a laptop
+52. Working/Playing on a laptop
+53. Holding a shoe/shoes
+54. Putting shoes somewhere
+55. Putting on shoe/shoes
+56. Taking shoes from somewhere
+57. Taking off some shoes
+58. Throwing shoes somewhere
+59. Sitting in a chair
+60. Standing on a chair
+61. Holding some food
+62. Putting some food somewhere
+63. Taking food from somewhere
+64. Throwing food somewhere
+65. Eating a sandwich
+66. Making a sandwich
+67. Holding a sandwich
+68. Putting a sandwich somewhere
+69. Taking a sandwich from somewhere
+70. Holding a blanket
+71. Putting a blanket somewhere
+72. Snuggling with a blanket
+73. Taking a blanket from somewhere
+74. Throwing a blanket somewhere
+75. Tidying up a blanket/s
+76. Holding a pillow
+77. Putting a pillow somewhere
+78. Snuggling with a pillow
+79. Taking a pillow from somewhere
+80. Throwing a pillow somewhere
+81. Putting something on a shelf
+82. Tidying a shelf or something on a shelf
+83. Reaching for and grabbing a picture
+84. Holding a picture
+85. Putting a picture somewhere
+86. Taking a picture of something
+87. Watching/looking at a picture
+88. Closing a window
+89. Opening a window
+90. Washing a window
+91. Watching/Looking outside of a window
+92. Holding a mirror
+93. Washing a mirror
+94. Watching something/someone/themselves in a mirror
+95. Walking through a doorway
+96. Holding a broom
+97. Putting a broom somewhere
+98. Taking a broom from somewhere
+99. Throwing a broom somewhere
+100. Tidying up with a broom
+101. Fixing a light
+102. Turning on a light
+103. Turning off a light
+104. Drinking from a cup/glass/bottle
+105. Holding a cup/glass/bottle of something
+106. Pouring something into a cup/glass/bottle
+107. Putting a cup/glass/bottle somewhere
+108. Taking a cup/glass/bottle from somewhere
+109. Washing a cup/glass/bottle
+110. Closing a closet/cabinet
+111. Opening a closet/cabinet
+112. Tidying up a closet/cabinet
+113. Someone is holding a paper/notebook
+114. Putting their paper/notebook somewhere
+115. Taking paper/notebook from somewhere
+116. Holding a dish
+117. Putting a dish/es somewhere
+118. Taking a dish/es from somewhere
+119. Wash a dish/dishes
+120. Lying on a sofa/couch
+121. Sitting on sofa/couch
+122. Lying on the floor
+123. Sitting on the floor
+124. Throwing something on the floor
+125. Tidying something on the floor
+126. Holding some medicine
+127. Taking/consuming some medicine
+128. Putting groceries somewhere
+129. Watching television
+130. Someone is awakening in bed
+131. Lying on a bed
+132. Sitting in a bed
+133. Fixing a vacuum
+134. Holding a vacuum
+135. Taking a vacuum from somewhere
+136. Washing their hands
+137. Fixing a doorknob
+138. Grasping onto a doorknob
+139. Closing a refrigerator
+140. Opening a refrigerator
+141. Fixing their hair
+142. Working on paper/notebook
+143. Someone is awakening somewhere
+144. Someone is cooking something
+145. Someone is dressing
+146. Someone is running somewhere
+147. Someone is going from standing to sitting
+148. Someone is standing up from somewhere
+149. Someone is undressing
+150. Someone is eating something
+
+Look at the image carefully and respond with exactly 5 actions in numbered list format (1-150). Include both the number and the full action text.
+
+RESPONSE:
+Here are the top 5 most likely actions the person is about to perform, based on the scene:
+
+1. Putting clothes somewhere
+2. Taking clothes from somewhere
+3. Tidying up a table
+4. Watching/Reading/Looking at a book
+5. Holding a paper/notebookThe image shows a person sitting in a chair, holding a paper/notebook, and looking at it. Given this context, the most probable next actions would be related to organizing
+============================================================
+
+Sample 14:
+PROMPT:
+You are observing a person in an image. Based on what you see, predict the TOP 5 most likely actions the person is ABOUT TO perform. Do NOT identify the actions they are currently performing
+
+Here is additional context about the scene:
+Objects: person, table, book, shelf, chair, paper_notebook
+Relationships:
+person not_looking_at table
+table in_front_of person
+person not_contacting table
+person looking_at book
+book in_front_of person
+person holding book
+person not_looking_at shelf
+shelf in_front_of person
+person not_contacting shelf
+person not_looking_at chair
+chair beneath person
+chair behind person
+person sitting_on chair
+person leaning_on chair
+person looking_at paper_notebook
+paper_notebook in_front_of person
+person holding paper_notebook
+
+
+Rank the actions from MOST likely to LEAST likely. Respond with EXACTLY a numbered list of 5 actions in the format:
+
+[action number index]. [action name]
+
+For example:
+26. Closing a book
+103. Turning off a light
+42. Putting a box somewhere
+19. Taking a phone/camera from somewhere
+128. Putting groceries somewhere
+
+Choose from the following actions:
+
+1. Holding some clothes
+2. Putting clothes somewhere
+3. Taking some clothes from somewhere
+4. Throwing clothes somewhere
+5. Tidying some clothes
+6. Washing some clothes
+7. Closing a door
+8. Fixing a door
+9. Opening a door
+10. Putting something on a table
+11. Sitting on a table
+12. Sitting at a table
+13. Tidying up a table
+14. Washing a table
+15. Working at a table
+16. Holding a phone/camera
+17. Playing with a phone/camera
+18. Putting a phone/camera somewhere
+19. Taking a phone/camera from somewhere
+20. Talking on a phone/camera
+21. Holding a bag
+22. Opening a bag
+23. Putting a bag somewhere
+24. Taking a bag from somewhere
+25. Throwing a bag somewhere
+26. Closing a book
+27. Holding a book
+28. Opening a book
+29. Putting a book somewhere
+30. Taking a book from somewhere
+31. Throwing a book somewhere
+32. Watching/Reading/Looking at a book
+33. Holding a towel/s
+34. Putting a towel/s somewhere
+35. Taking a towel/s from somewhere
+36. Throwing a towel/s somewhere
+37. Tidying up a towel/s
+38. Washing something with a towel
+39. Closing a box
+40. Holding a box
+41. Opening a box
+42. Putting a box somewhere
+43. Taking a box from somewhere
+44. Taking something from a box
+45. Throwing a box somewhere
+46. Closing a laptop
+47. Holding a laptop
+48. Opening a laptop
+49. Putting a laptop somewhere
+50. Taking a laptop from somewhere
+51. Watching a laptop or something on a laptop
+52. Working/Playing on a laptop
+53. Holding a shoe/shoes
+54. Putting shoes somewhere
+55. Putting on shoe/shoes
+56. Taking shoes from somewhere
+57. Taking off some shoes
+58. Throwing shoes somewhere
+59. Sitting in a chair
+60. Standing on a chair
+61. Holding some food
+62. Putting some food somewhere
+63. Taking food from somewhere
+64. Throwing food somewhere
+65. Eating a sandwich
+66. Making a sandwich
+67. Holding a sandwich
+68. Putting a sandwich somewhere
+69. Taking a sandwich from somewhere
+70. Holding a blanket
+71. Putting a blanket somewhere
+72. Snuggling with a blanket
+73. Taking a blanket from somewhere
+74. Throwing a blanket somewhere
+75. Tidying up a blanket/s
+76. Holding a pillow
+77. Putting a pillow somewhere
+78. Snuggling with a pillow
+79. Taking a pillow from somewhere
+80. Throwing a pillow somewhere
+81. Putting something on a shelf
+82. Tidying a shelf or something on a shelf
+83. Reaching for and grabbing a picture
+84. Holding a picture
+85. Putting a picture somewhere
+86. Taking a picture of something
+87. Watching/looking at a picture
+88. Closing a window
+89. Opening a window
+90. Washing a window
+91. Watching/Looking outside of a window
+92. Holding a mirror
+93. Washing a mirror
+94. Watching something/someone/themselves in a mirror
+95. Walking through a doorway
+96. Holding a broom
+97. Putting a broom somewhere
+98. Taking a broom from somewhere
+99. Throwing a broom somewhere
+100. Tidying up with a broom
+101. Fixing a light
+102. Turning on a light
+103. Turning off a light
+104. Drinking from a cup/glass/bottle
+105. Holding a cup/glass/bottle of something
+106. Pouring something into a cup/glass/bottle
+107. Putting a cup/glass/bottle somewhere
+108. Taking a cup/glass/bottle from somewhere
+109. Washing a cup/glass/bottle
+110. Closing a closet/cabinet
+111. Opening a closet/cabinet
+112. Tidying up a closet/cabinet
+113. Someone is holding a paper/notebook
+114. Putting their paper/notebook somewhere
+115. Taking paper/notebook from somewhere
+116. Holding a dish
+117. Putting a dish/es somewhere
+118. Taking a dish/es from somewhere
+119. Wash a dish/dishes
+120. Lying on a sofa/couch
+121. Sitting on sofa/couch
+122. Lying on the floor
+123. Sitting on the floor
+124. Throwing something on the floor
+125. Tidying something on the floor
+126. Holding some medicine
+127. Taking/consuming some medicine
+128. Putting groceries somewhere
+129. Watching television
+130. Someone is awakening in bed
+131. Lying on a bed
+132. Sitting in a bed
+133. Fixing a vacuum
+134. Holding a vacuum
+135. Taking a vacuum from somewhere
+136. Washing their hands
+137. Fixing a doorknob
+138. Grasping onto a doorknob
+139. Closing a refrigerator
+140. Opening a refrigerator
+141. Fixing their hair
+142. Working on paper/notebook
+143. Someone is awakening somewhere
+144. Someone is cooking something
+145. Someone is dressing
+146. Someone is running somewhere
+147. Someone is going from standing to sitting
+148. Someone is standing up from somewhere
+149. Someone is undressing
+150. Someone is eating something
+
+Look at the image carefully and respond with exactly 5 actions in numbered list format (1-150). Include both the number and the full action text.
+
+RESPONSE:
+Here are the top 5 most likely actions the person is about to perform, based on the image:
+
+1. Putting clothes somewhere
+2. Taking clothes from somewhere
+3. Tidying up a room
+4. Watching/Reading/Looking at a book
+5. Holding a paper/notebookIn the image, we can see a person sitting in a chair, holding a paper/notebook. They are not looking at the table in front of them, but rather seem
+============================================================
+
+Sample 15:
+PROMPT:
+You are observing a person in an image. Based on what you see, predict the TOP 5 most likely actions the person is ABOUT TO perform. Do NOT identify the actions they are currently performing
+
+Here is additional context about the scene:
+Objects: person, table, book, chair, paper_notebook
+Relationships:
+person not_looking_at table
+table in_front_of person
+person not_contacting table
+person looking_at book
+book in_front_of person
+person touching book
+person not_looking_at chair
+chair beneath person
+chair behind person
+person sitting_on chair
+person leaning_on chair
+person looking_at paper_notebook
+paper_notebook in_front_of person
+person touching paper_notebook
+
+
+Rank the actions from MOST likely to LEAST likely. Respond with EXACTLY a numbered list of 5 actions in the format:
+
+[action number index]. [action name]
+
+For example:
+26. Closing a book
+103. Turning off a light
+42. Putting a box somewhere
+19. Taking a phone/camera from somewhere
+128. Putting groceries somewhere
+
+Choose from the following actions:
+
+1. Holding some clothes
+2. Putting clothes somewhere
+3. Taking some clothes from somewhere
+4. Throwing clothes somewhere
+5. Tidying some clothes
+6. Washing some clothes
+7. Closing a door
+8. Fixing a door
+9. Opening a door
+10. Putting something on a table
+11. Sitting on a table
+12. Sitting at a table
+13. Tidying up a table
+14. Washing a table
+15. Working at a table
+16. Holding a phone/camera
+17. Playing with a phone/camera
+18. Putting a phone/camera somewhere
+19. Taking a phone/camera from somewhere
+20. Talking on a phone/camera
+21. Holding a bag
+22. Opening a bag
+23. Putting a bag somewhere
+24. Taking a bag from somewhere
+25. Throwing a bag somewhere
+26. Closing a book
+27. Holding a book
+28. Opening a book
+29. Putting a book somewhere
+30. Taking a book from somewhere
+31. Throwing a book somewhere
+32. Watching/Reading/Looking at a book
+33. Holding a towel/s
+34. Putting a towel/s somewhere
+35. Taking a towel/s from somewhere
+36. Throwing a towel/s somewhere
+37. Tidying up a towel/s
+38. Washing something with a towel
+39. Closing a box
+40. Holding a box
+41. Opening a box
+42. Putting a box somewhere
+43. Taking a box from somewhere
+44. Taking something from a box
+45. Throwing a box somewhere
+46. Closing a laptop
+47. Holding a laptop
+48. Opening a laptop
+49. Putting a laptop somewhere
+50. Taking a laptop from somewhere
+51. Watching a laptop or something on a laptop
+52. Working/Playing on a laptop
+53. Holding a shoe/shoes
+54. Putting shoes somewhere
+55. Putting on shoe/shoes
+56. Taking shoes from somewhere
+57. Taking off some shoes
+58. Throwing shoes somewhere
+59. Sitting in a chair
+60. Standing on a chair
+61. Holding some food
+62. Putting some food somewhere
+63. Taking food from somewhere
+64. Throwing food somewhere
+65. Eating a sandwich
+66. Making a sandwich
+67. Holding a sandwich
+68. Putting a sandwich somewhere
+69. Taking a sandwich from somewhere
+70. Holding a blanket
+71. Putting a blanket somewhere
+72. Snuggling with a blanket
+73. Taking a blanket from somewhere
+74. Throwing a blanket somewhere
+75. Tidying up a blanket/s
+76. Holding a pillow
+77. Putting a pillow somewhere
+78. Snuggling with a pillow
+79. Taking a pillow from somewhere
+80. Throwing a pillow somewhere
+81. Putting something on a shelf
+82. Tidying a shelf or something on a shelf
+83. Reaching for and grabbing a picture
+84. Holding a picture
+85. Putting a picture somewhere
+86. Taking a picture of something
+87. Watching/looking at a picture
+88. Closing a window
+89. Opening a window
+90. Washing a window
+91. Watching/Looking outside of a window
+92. Holding a mirror
+93. Washing a mirror
+94. Watching something/someone/themselves in a mirror
+95. Walking through a doorway
+96. Holding a broom
+97. Putting a broom somewhere
+98. Taking a broom from somewhere
+99. Throwing a broom somewhere
+100. Tidying up with a broom
+101. Fixing a light
+102. Turning on a light
+103. Turning off a light
+104. Drinking from a cup/glass/bottle
+105. Holding a cup/glass/bottle of something
+106. Pouring something into a cup/glass/bottle
+107. Putting a cup/glass/bottle somewhere
+108. Taking a cup/glass/bottle from somewhere
+109. Washing a cup/glass/bottle
+110. Closing a closet/cabinet
+111. Opening a closet/cabinet
+112. Tidying up a closet/cabinet
+113. Someone is holding a paper/notebook
+114. Putting their paper/notebook somewhere
+115. Taking paper/notebook from somewhere
+116. Holding a dish
+117. Putting a dish/es somewhere
+118. Taking a dish/es from somewhere
+119. Wash a dish/dishes
+120. Lying on a sofa/couch
+121. Sitting on sofa/couch
+122. Lying on the floor
+123. Sitting on the floor
+124. Throwing something on the floor
+125. Tidying something on the floor
+126. Holding some medicine
+127. Taking/consuming some medicine
+128. Putting groceries somewhere
+129. Watching television
+130. Someone is awakening in bed
+131. Lying on a bed
+132. Sitting in a bed
+133. Fixing a vacuum
+134. Holding a vacuum
+135. Taking a vacuum from somewhere
+136. Washing their hands
+137. Fixing a doorknob
+138. Grasping onto a doorknob
+139. Closing a refrigerator
+140. Opening a refrigerator
+141. Fixing their hair
+142. Working on paper/notebook
+143. Someone is awakening somewhere
+144. Someone is cooking something
+145. Someone is dressing
+146. Someone is running somewhere
+147. Someone is going from standing to sitting
+148. Someone is standing up from somewhere
+149. Someone is undressing
+150. Someone is eating something
+
+Look at the image carefully and respond with exactly 5 actions in numbered list format (1-150). Include both the number and the full action text.
+
+RESPONSE:
+Here are the top 5 most likely actions the person is about to perform, based on the image:
+
+1. Putting clothes somewhere
+2. Taking clothes from somewhere
+3. Tidying up a table
+4. Watching/Reading/Looking at a book
+5. Holding a paper/notebookIn the image, we can see a person sitting at a table with a paper/notebook in front of them. They are not looking at the paper/notebook, suggesting
+============================================================
+
+Sample 16:
+PROMPT:
+You are observing a person in an image. Based on what you see, predict the TOP 5 most likely actions the person is ABOUT TO perform. Do NOT identify the actions they are currently performing
+
+Here is additional context about the scene:
+Objects: person, table, food, chair, sandwich
+Relationships:
+person not_looking_at table
+table on_the_side_of person
+person not_contacting table
+person not_looking_at food
+food in_front_of person
+person holding food
+person eating food
+person not_looking_at chair
+chair beneath person
+chair behind person
+person sitting_on chair
+person leaning_on chair
+person not_looking_at sandwich
+sandwich in_front_of person
+person holding sandwich
+person eating sandwich
+
+
+Rank the actions from MOST likely to LEAST likely. Respond with EXACTLY a numbered list of 5 actions in the format:
+
+[action number index]. [action name]
+
+For example:
+26. Closing a book
+103. Turning off a light
+42. Putting a box somewhere
+19. Taking a phone/camera from somewhere
+128. Putting groceries somewhere
+
+Choose from the following actions:
+
+1. Holding some clothes
+2. Putting clothes somewhere
+3. Taking some clothes from somewhere
+4. Throwing clothes somewhere
+5. Tidying some clothes
+6. Washing some clothes
+7. Closing a door
+8. Fixing a door
+9. Opening a door
+10. Putting something on a table
+11. Sitting on a table
+12. Sitting at a table
+13. Tidying up a table
+14. Washing a table
+15. Working at a table
+16. Holding a phone/camera
+17. Playing with a phone/camera
+18. Putting a phone/camera somewhere
+19. Taking a phone/camera from somewhere
+20. Talking on a phone/camera
+21. Holding a bag
+22. Opening a bag
+23. Putting a bag somewhere
+24. Taking a bag from somewhere
+25. Throwing a bag somewhere
+26. Closing a book
+27. Holding a book
+28. Opening a book
+29. Putting a book somewhere
+30. Taking a book from somewhere
+31. Throwing a book somewhere
+32. Watching/Reading/Looking at a book
+33. Holding a towel/s
+34. Putting a towel/s somewhere
+35. Taking a towel/s from somewhere
+36. Throwing a towel/s somewhere
+37. Tidying up a towel/s
+38. Washing something with a towel
+39. Closing a box
+40. Holding a box
+41. Opening a box
+42. Putting a box somewhere
+43. Taking a box from somewhere
+44. Taking something from a box
+45. Throwing a box somewhere
+46. Closing a laptop
+47. Holding a laptop
+48. Opening a laptop
+49. Putting a laptop somewhere
+50. Taking a laptop from somewhere
+51. Watching a laptop or something on a laptop
+52. Working/Playing on a laptop
+53. Holding a shoe/shoes
+54. Putting shoes somewhere
+55. Putting on shoe/shoes
+56. Taking shoes from somewhere
+57. Taking off some shoes
+58. Throwing shoes somewhere
+59. Sitting in a chair
+60. Standing on a chair
+61. Holding some food
+62. Putting some food somewhere
+63. Taking food from somewhere
+64. Throwing food somewhere
+65. Eating a sandwich
+66. Making a sandwich
+67. Holding a sandwich
+68. Putting a sandwich somewhere
+69. Taking a sandwich from somewhere
+70. Holding a blanket
+71. Putting a blanket somewhere
+72. Snuggling with a blanket
+73. Taking a blanket from somewhere
+74. Throwing a blanket somewhere
+75. Tidying up a blanket/s
+76. Holding a pillow
+77. Putting a pillow somewhere
+78. Snuggling with a pillow
+79. Taking a pillow from somewhere
+80. Throwing a pillow somewhere
+81. Putting something on a shelf
+82. Tidying a shelf or something on a shelf
+83. Reaching for and grabbing a picture
+84. Holding a picture
+85. Putting a picture somewhere
+86. Taking a picture of something
+87. Watching/looking at a picture
+88. Closing a window
+89. Opening a window
+90. Washing a window
+91. Watching/Looking outside of a window
+92. Holding a mirror
+93. Washing a mirror
+94. Watching something/someone/themselves in a mirror
+95. Walking through a doorway
+96. Holding a broom
+97. Putting a broom somewhere
+98. Taking a broom from somewhere
+99. Throwing a broom somewhere
+100. Tidying up with a broom
+101. Fixing a light
+102. Turning on a light
+103. Turning off a light
+104. Drinking from a cup/glass/bottle
+105. Holding a cup/glass/bottle of something
+106. Pouring something into a cup/glass/bottle
+107. Putting a cup/glass/bottle somewhere
+108. Taking a cup/glass/bottle from somewhere
+109. Washing a cup/glass/bottle
+110. Closing a closet/cabinet
+111. Opening a closet/cabinet
+112. Tidying up a closet/cabinet
+113. Someone is holding a paper/notebook
+114. Putting their paper/notebook somewhere
+115. Taking paper/notebook from somewhere
+116. Holding a dish
+117. Putting a dish/es somewhere
+118. Taking a dish/es from somewhere
+119. Wash a dish/dishes
+120. Lying on a sofa/couch
+121. Sitting on sofa/couch
+122. Lying on the floor
+123. Sitting on the floor
+124. Throwing something on the floor
+125. Tidying something on the floor
+126. Holding some medicine
+127. Taking/consuming some medicine
+128. Putting groceries somewhere
+129. Watching television
+130. Someone is awakening in bed
+131. Lying on a bed
+132. Sitting in a bed
+133. Fixing a vacuum
+134. Holding a vacuum
+135. Taking a vacuum from somewhere
+136. Washing their hands
+137. Fixing a doorknob
+138. Grasping onto a doorknob
+139. Closing a refrigerator
+140. Opening a refrigerator
+141. Fixing their hair
+142. Working on paper/notebook
+143. Someone is awakening somewhere
+144. Someone is cooking something
+145. Someone is dressing
+146. Someone is running somewhere
+147. Someone is going from standing to sitting
+148. Someone is standing up from somewhere
+149. Someone is undressing
+150. Someone is eating something
+
+Look at the image carefully and respond with exactly 5 actions in numbered list format (1-150). Include both the number and the full action text.
+
+RESPONSE:
+Here are the top 5 most likely actions the person is about to perform, based on the image:
+
+1. Putting clothes somewhere
+2. Taking clothes from somewhere
+3. Tidying up a room
+4. Watching/Reading/Looking at a book
+5. Holding a phone/cameraIn the image, we can see a person sitting in a chair, holding a phone or camera in their right hand. They are not looking at the phone/camera. The person is
+============================================================
+
+Sample 17:
+PROMPT:
+You are observing a person in an image. Based on what you see, predict the TOP 5 most likely actions the person is ABOUT TO perform. Do NOT identify the actions they are currently performing
+
+Here is additional context about the scene:
+Objects: person, table, book, shelf, chair, paper_notebook, sandwich
+Relationships:
+person not_looking_at table
+table on_the_side_of person
+person not_contacting table
+person looking_at book
+book in_front_of person
+person holding book
+person not_looking_at shelf
+shelf in_front_of person
+person not_contacting shelf
+person not_looking_at chair
+chair beneath person
+chair behind person
+person sitting_on chair
+person leaning_on chair
+person looking_at paper_notebook
+paper_notebook in_front_of person
+person holding paper_notebook
+person not_looking_at sandwich
+sandwich in_front_of person
+person not_contacting sandwich
+
+
+Rank the actions from MOST likely to LEAST likely. Respond with EXACTLY a numbered list of 5 actions in the format:
+
+[action number index]. [action name]
+
+For example:
+26. Closing a book
+103. Turning off a light
+42. Putting a box somewhere
+19. Taking a phone/camera from somewhere
+128. Putting groceries somewhere
+
+Choose from the following actions:
+
+1. Holding some clothes
+2. Putting clothes somewhere
+3. Taking some clothes from somewhere
+4. Throwing clothes somewhere
+5. Tidying some clothes
+6. Washing some clothes
+7. Closing a door
+8. Fixing a door
+9. Opening a door
+10. Putting something on a table
+11. Sitting on a table
+12. Sitting at a table
+13. Tidying up a table
+14. Washing a table
+15. Working at a table
+16. Holding a phone/camera
+17. Playing with a phone/camera
+18. Putting a phone/camera somewhere
+19. Taking a phone/camera from somewhere
+20. Talking on a phone/camera
+21. Holding a bag
+22. Opening a bag
+23. Putting a bag somewhere
+24. Taking a bag from somewhere
+25. Throwing a bag somewhere
+26. Closing a book
+27. Holding a book
+28. Opening a book
+29. Putting a book somewhere
+30. Taking a book from somewhere
+31. Throwing a book somewhere
+32. Watching/Reading/Looking at a book
+33. Holding a towel/s
+34. Putting a towel/s somewhere
+35. Taking a towel/s from somewhere
+36. Throwing a towel/s somewhere
+37. Tidying up a towel/s
+38. Washing something with a towel
+39. Closing a box
+40. Holding a box
+41. Opening a box
+42. Putting a box somewhere
+43. Taking a box from somewhere
+44. Taking something from a box
+45. Throwing a box somewhere
+46. Closing a laptop
+47. Holding a laptop
+48. Opening a laptop
+49. Putting a laptop somewhere
+50. Taking a laptop from somewhere
+51. Watching a laptop or something on a laptop
+52. Working/Playing on a laptop
+53. Holding a shoe/shoes
+54. Putting shoes somewhere
+55. Putting on shoe/shoes
+56. Taking shoes from somewhere
+57. Taking off some shoes
+58. Throwing shoes somewhere
+59. Sitting in a chair
+60. Standing on a chair
+61. Holding some food
+62. Putting some food somewhere
+63. Taking food from somewhere
+64. Throwing food somewhere
+65. Eating a sandwich
+66. Making a sandwich
+67. Holding a sandwich
+68. Putting a sandwich somewhere
+69. Taking a sandwich from somewhere
+70. Holding a blanket
+71. Putting a blanket somewhere
+72. Snuggling with a blanket
+73. Taking a blanket from somewhere
+74. Throwing a blanket somewhere
+75. Tidying up a blanket/s
+76. Holding a pillow
+77. Putting a pillow somewhere
+78. Snuggling with a pillow
+79. Taking a pillow from somewhere
+80. Throwing a pillow somewhere
+81. Putting something on a shelf
+82. Tidying a shelf or something on a shelf
+83. Reaching for and grabbing a picture
+84. Holding a picture
+85. Putting a picture somewhere
+86. Taking a picture of something
+87. Watching/looking at a picture
+88. Closing a window
+89. Opening a window
+90. Washing a window
+91. Watching/Looking outside of a window
+92. Holding a mirror
+93. Washing a mirror
+94. Watching something/someone/themselves in a mirror
+95. Walking through a doorway
+96. Holding a broom
+97. Putting a broom somewhere
+98. Taking a broom from somewhere
+99. Throwing a broom somewhere
+100. Tidying up with a broom
+101. Fixing a light
+102. Turning on a light
+103. Turning off a light
+104. Drinking from a cup/glass/bottle
+105. Holding a cup/glass/bottle of something
+106. Pouring something into a cup/glass/bottle
+107. Putting a cup/glass/bottle somewhere
+108. Taking a cup/glass/bottle from somewhere
+109. Washing a cup/glass/bottle
+110. Closing a closet/cabinet
+111. Opening a closet/cabinet
+112. Tidying up a closet/cabinet
+113. Someone is holding a paper/notebook
+114. Putting their paper/notebook somewhere
+115. Taking paper/notebook from somewhere
+116. Holding a dish
+117. Putting a dish/es somewhere
+118. Taking a dish/es from somewhere
+119. Wash a dish/dishes
+120. Lying on a sofa/couch
+121. Sitting on sofa/couch
+122. Lying on the floor
+123. Sitting on the floor
+124. Throwing something on the floor
+125. Tidying something on the floor
+126. Holding some medicine
+127. Taking/consuming some medicine
+128. Putting groceries somewhere
+129. Watching television
+130. Someone is awakening in bed
+131. Lying on a bed
+132. Sitting in a bed
+133. Fixing a vacuum
+134. Holding a vacuum
+135. Taking a vacuum from somewhere
+136. Washing their hands
+137. Fixing a doorknob
+138. Grasping onto a doorknob
+139. Closing a refrigerator
+140. Opening a refrigerator
+141. Fixing their hair
+142. Working on paper/notebook
+143. Someone is awakening somewhere
+144. Someone is cooking something
+145. Someone is dressing
+146. Someone is running somewhere
+147. Someone is going from standing to sitting
+148. Someone is standing up from somewhere
+149. Someone is undressing
+150. Someone is eating something
+
+Look at the image carefully and respond with exactly 5 actions in numbered list format (1-150). Include both the number and the full action text.
+
+RESPONSE:
+Here are the top 5 most likely actions the person is about to perform, based on the scene:
+
+1. Putting clothes somewhere
+2. Taking clothes from somewhere
+3. Tidying up a room
+4. Watching/Reading/Looking at a book
+5. Holding a paper/notebookIn the image, we can see a person sitting in a chair, holding a paper/notebook. The room appears to be tidy, and there are no visible clothes or signs
+============================================================
+
+Sample 18:
+PROMPT:
+You are observing a person in an image. Based on what you see, predict the TOP 5 most likely actions the person is ABOUT TO perform. Do NOT identify the actions they are currently performing
+
+Here is additional context about the scene:
+Objects: person, table, book, shelf, chair, paper_notebook
+Relationships:
+person not_looking_at table
+table in_front_of person
+person not_contacting table
+person looking_at book
+book in_front_of person
+person holding book
+person looking_at shelf
+shelf in_front_of person
+person not_contacting shelf
+person not_looking_at chair
+chair beneath person
+chair behind person
+person sitting_on chair
+person leaning_on chair
+person looking_at paper_notebook
+paper_notebook in_front_of person
+person holding paper_notebook
+
+
+Rank the actions from MOST likely to LEAST likely. Respond with EXACTLY a numbered list of 5 actions in the format:
+
+[action number index]. [action name]
+
+For example:
+26. Closing a book
+103. Turning off a light
+42. Putting a box somewhere
+19. Taking a phone/camera from somewhere
+128. Putting groceries somewhere
+
+Choose from the following actions:
+
+1. Holding some clothes
+2. Putting clothes somewhere
+3. Taking some clothes from somewhere
+4. Throwing clothes somewhere
+5. Tidying some clothes
+6. Washing some clothes
+7. Closing a door
+8. Fixing a door
+9. Opening a door
+10. Putting something on a table
+11. Sitting on a table
+12. Sitting at a table
+13. Tidying up a table
+14. Washing a table
+15. Working at a table
+16. Holding a phone/camera
+17. Playing with a phone/camera
+18. Putting a phone/camera somewhere
+19. Taking a phone/camera from somewhere
+20. Talking on a phone/camera
+21. Holding a bag
+22. Opening a bag
+23. Putting a bag somewhere
+24. Taking a bag from somewhere
+25. Throwing a bag somewhere
+26. Closing a book
+27. Holding a book
+28. Opening a book
+29. Putting a book somewhere
+30. Taking a book from somewhere
+31. Throwing a book somewhere
+32. Watching/Reading/Looking at a book
+33. Holding a towel/s
+34. Putting a towel/s somewhere
+35. Taking a towel/s from somewhere
+36. Throwing a towel/s somewhere
+37. Tidying up a towel/s
+38. Washing something with a towel
+39. Closing a box
+40. Holding a box
+41. Opening a box
+42. Putting a box somewhere
+43. Taking a box from somewhere
+44. Taking something from a box
+45. Throwing a box somewhere
+46. Closing a laptop
+47. Holding a laptop
+48. Opening a laptop
+49. Putting a laptop somewhere
+50. Taking a laptop from somewhere
+51. Watching a laptop or something on a laptop
+52. Working/Playing on a laptop
+53. Holding a shoe/shoes
+54. Putting shoes somewhere
+55. Putting on shoe/shoes
+56. Taking shoes from somewhere
+57. Taking off some shoes
+58. Throwing shoes somewhere
+59. Sitting in a chair
+60. Standing on a chair
+61. Holding some food
+62. Putting some food somewhere
+63. Taking food from somewhere
+64. Throwing food somewhere
+65. Eating a sandwich
+66. Making a sandwich
+67. Holding a sandwich
+68. Putting a sandwich somewhere
+69. Taking a sandwich from somewhere
+70. Holding a blanket
+71. Putting a blanket somewhere
+72. Snuggling with a blanket
+73. Taking a blanket from somewhere
+74. Throwing a blanket somewhere
+75. Tidying up a blanket/s
+76. Holding a pillow
+77. Putting a pillow somewhere
+78. Snuggling with a pillow
+79. Taking a pillow from somewhere
+80. Throwing a pillow somewhere
+81. Putting something on a shelf
+82. Tidying a shelf or something on a shelf
+83. Reaching for and grabbing a picture
+84. Holding a picture
+85. Putting a picture somewhere
+86. Taking a picture of something
+87. Watching/looking at a picture
+88. Closing a window
+89. Opening a window
+90. Washing a window
+91. Watching/Looking outside of a window
+92. Holding a mirror
+93. Washing a mirror
+94. Watching something/someone/themselves in a mirror
+95. Walking through a doorway
+96. Holding a broom
+97. Putting a broom somewhere
+98. Taking a broom from somewhere
+99. Throwing a broom somewhere
+100. Tidying up with a broom
+101. Fixing a light
+102. Turning on a light
+103. Turning off a light
+104. Drinking from a cup/glass/bottle
+105. Holding a cup/glass/bottle of something
+106. Pouring something into a cup/glass/bottle
+107. Putting a cup/glass/bottle somewhere
+108. Taking a cup/glass/bottle from somewhere
+109. Washing a cup/glass/bottle
+110. Closing a closet/cabinet
+111. Opening a closet/cabinet
+112. Tidying up a closet/cabinet
+113. Someone is holding a paper/notebook
+114. Putting their paper/notebook somewhere
+115. Taking paper/notebook from somewhere
+116. Holding a dish
+117. Putting a dish/es somewhere
+118. Taking a dish/es from somewhere
+119. Wash a dish/dishes
+120. Lying on a sofa/couch
+121. Sitting on sofa/couch
+122. Lying on the floor
+123. Sitting on the floor
+124. Throwing something on the floor
+125. Tidying something on the floor
+126. Holding some medicine
+127. Taking/consuming some medicine
+128. Putting groceries somewhere
+129. Watching television
+130. Someone is awakening in bed
+131. Lying on a bed
+132. Sitting in a bed
+133. Fixing a vacuum
+134. Holding a vacuum
+135. Taking a vacuum from somewhere
+136. Washing their hands
+137. Fixing a doorknob
+138. Grasping onto a doorknob
+139. Closing a refrigerator
+140. Opening a refrigerator
+141. Fixing their hair
+142. Working on paper/notebook
+143. Someone is awakening somewhere
+144. Someone is cooking something
+145. Someone is dressing
+146. Someone is running somewhere
+147. Someone is going from standing to sitting
+148. Someone is standing up from somewhere
+149. Someone is undressing
+150. Someone is eating something
+
+Look at the image carefully and respond with exactly 5 actions in numbered list format (1-150). Include both the number and the full action text.
+
+RESPONSE:
+Here are the top 5 most likely actions the person is about to perform, based on the image:
+
+1. Reading a book
+2. Writing in a paper/notebook
+3. Putting on some clothes
+4. Picking up a phone/camera
+5. Opening a windowIn the image, we can see a person sitting in a chair, holding a paper/notebook in their left hand, and looking at it. This strongly suggests they are about to read or write
+============================================================
+
+Sample 19:
+PROMPT:
+You are observing a person in an image. Based on what you see, predict the TOP 5 most likely actions the person is ABOUT TO perform. Do NOT identify the actions they are currently performing
+
+Here is additional context about the scene:
+Objects: person, table, book, shelf, chair, paper_notebook
+Relationships:
+person not_looking_at table
+table in_front_of person
+person not_contacting table
+person looking_at book
+book in_front_of person
+person holding book
+person not_looking_at shelf
+shelf in_front_of person
+person not_contacting shelf
+person not_looking_at chair
+chair beneath person
+chair behind person
+person sitting_on chair
+person leaning_on chair
+person looking_at paper_notebook
+paper_notebook in_front_of person
+person holding paper_notebook
+
+
+Rank the actions from MOST likely to LEAST likely. Respond with EXACTLY a numbered list of 5 actions in the format:
+
+[action number index]. [action name]
+
+For example:
+26. Closing a book
+103. Turning off a light
+42. Putting a box somewhere
+19. Taking a phone/camera from somewhere
+128. Putting groceries somewhere
+
+Choose from the following actions:
+
+1. Holding some clothes
+2. Putting clothes somewhere
+3. Taking some clothes from somewhere
+4. Throwing clothes somewhere
+5. Tidying some clothes
+6. Washing some clothes
+7. Closing a door
+8. Fixing a door
+9. Opening a door
+10. Putting something on a table
+11. Sitting on a table
+12. Sitting at a table
+13. Tidying up a table
+14. Washing a table
+15. Working at a table
+16. Holding a phone/camera
+17. Playing with a phone/camera
+18. Putting a phone/camera somewhere
+19. Taking a phone/camera from somewhere
+20. Talking on a phone/camera
+21. Holding a bag
+22. Opening a bag
+23. Putting a bag somewhere
+24. Taking a bag from somewhere
+25. Throwing a bag somewhere
+26. Closing a book
+27. Holding a book
+28. Opening a book
+29. Putting a book somewhere
+30. Taking a book from somewhere
+31. Throwing a book somewhere
+32. Watching/Reading/Looking at a book
+33. Holding a towel/s
+34. Putting a towel/s somewhere
+35. Taking a towel/s from somewhere
+36. Throwing a towel/s somewhere
+37. Tidying up a towel/s
+38. Washing something with a towel
+39. Closing a box
+40. Holding a box
+41. Opening a box
+42. Putting a box somewhere
+43. Taking a box from somewhere
+44. Taking something from a box
+45. Throwing a box somewhere
+46. Closing a laptop
+47. Holding a laptop
+48. Opening a laptop
+49. Putting a laptop somewhere
+50. Taking a laptop from somewhere
+51. Watching a laptop or something on a laptop
+52. Working/Playing on a laptop
+53. Holding a shoe/shoes
+54. Putting shoes somewhere
+55. Putting on shoe/shoes
+56. Taking shoes from somewhere
+57. Taking off some shoes
+58. Throwing shoes somewhere
+59. Sitting in a chair
+60. Standing on a chair
+61. Holding some food
+62. Putting some food somewhere
+63. Taking food from somewhere
+64. Throwing food somewhere
+65. Eating a sandwich
+66. Making a sandwich
+67. Holding a sandwich
+68. Putting a sandwich somewhere
+69. Taking a sandwich from somewhere
+70. Holding a blanket
+71. Putting a blanket somewhere
+72. Snuggling with a blanket
+73. Taking a blanket from somewhere
+74. Throwing a blanket somewhere
+75. Tidying up a blanket/s
+76. Holding a pillow
+77. Putting a pillow somewhere
+78. Snuggling with a pillow
+79. Taking a pillow from somewhere
+80. Throwing a pillow somewhere
+81. Putting something on a shelf
+82. Tidying a shelf or something on a shelf
+83. Reaching for and grabbing a picture
+84. Holding a picture
+85. Putting a picture somewhere
+86. Taking a picture of something
+87. Watching/looking at a picture
+88. Closing a window
+89. Opening a window
+90. Washing a window
+91. Watching/Looking outside of a window
+92. Holding a mirror
+93. Washing a mirror
+94. Watching something/someone/themselves in a mirror
+95. Walking through a doorway
+96. Holding a broom
+97. Putting a broom somewhere
+98. Taking a broom from somewhere
+99. Throwing a broom somewhere
+100. Tidying up with a broom
+101. Fixing a light
+102. Turning on a light
+103. Turning off a light
+104. Drinking from a cup/glass/bottle
+105. Holding a cup/glass/bottle of something
+106. Pouring something into a cup/glass/bottle
+107. Putting a cup/glass/bottle somewhere
+108. Taking a cup/glass/bottle from somewhere
+109. Washing a cup/glass/bottle
+110. Closing a closet/cabinet
+111. Opening a closet/cabinet
+112. Tidying up a closet/cabinet
+113. Someone is holding a paper/notebook
+114. Putting their paper/notebook somewhere
+115. Taking paper/notebook from somewhere
+116. Holding a dish
+117. Putting a dish/es somewhere
+118. Taking a dish/es from somewhere
+119. Wash a dish/dishes
+120. Lying on a sofa/couch
+121. Sitting on sofa/couch
+122. Lying on the floor
+123. Sitting on the floor
+124. Throwing something on the floor
+125. Tidying something on the floor
+126. Holding some medicine
+127. Taking/consuming some medicine
+128. Putting groceries somewhere
+129. Watching television
+130. Someone is awakening in bed
+131. Lying on a bed
+132. Sitting in a bed
+133. Fixing a vacuum
+134. Holding a vacuum
+135. Taking a vacuum from somewhere
+136. Washing their hands
+137. Fixing a doorknob
+138. Grasping onto a doorknob
+139. Closing a refrigerator
+140. Opening a refrigerator
+141. Fixing their hair
+142. Working on paper/notebook
+143. Someone is awakening somewhere
+144. Someone is cooking something
+145. Someone is dressing
+146. Someone is running somewhere
+147. Someone is going from standing to sitting
+148. Someone is standing up from somewhere
+149. Someone is undressing
+150. Someone is eating something
+
+Look at the image carefully and respond with exactly 5 actions in numbered list format (1-150). Include both the number and the full action text.
+
+RESPONSE:
+Here are the top 5 most likely actions the person is about to perform, based on the image:
+
+1. Putting clothes somewhere
+2. Taking clothes from somewhere
+3. Tidying up a room
+4. Watching/Reading/Looking at a book
+5. Holding a paper/notebookIn the image, we can see a person sitting in a chair, holding a paper/notebook. They are not looking at the table in front of them, but rather seem
+============================================================
+
