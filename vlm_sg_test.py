@@ -102,7 +102,7 @@ Choose objects from this list (use exact names):
     for rel in relationship_classes:
         prompt += f"- {rel}\n"
     
-    prompt += f"\nAnalyze the image carefully and list ALL visible objects and their relationships. Use only the object and relationship names provided above. Err on the side of including MORE relationships (10 or more)."
+    prompt += f"\nAnalyze the image carefully and list ALL visible objects and their relationships. Use only the object and relationship names provided above. Err on the side of including MORE relationships (30 or more). Make sure you predict a VARIETY of DIVERSE relationships. NOTE: The subject (first argument) of every relationship is ALWAYS the person. Relationships should ALWAYS have three arguments total. The second argument is ALWAYS a relationship SELECTED FROM THE LIST ABOVE, and the third argument is ALWAYS an object SELECTED FROM THE LIST ABOVE."
     
     return prompt
 
@@ -383,7 +383,7 @@ def test_vlm_scene_graph_on_ag(cfg, max_samples=None, verbose=False):
     mp.set_start_method('spawn', force=True)
     
     # Set up available GPUs
-    idle_gpus = [0, 1, 2, 3]  # Use GPUs 0-3 which are more available
+    idle_gpus = [0, 1]  # Use GPUs 0-3 which are more available
     available_gpus = [i for i in idle_gpus if i < torch.cuda.device_count()]
     
     if not available_gpus:
@@ -529,8 +529,8 @@ def analyze_scene_graph_predictions(results, object_classes, relationship_classe
     n_samples = len(results)
     
     # Initialize metrics
-    object_recalls = {k: 0.0 for k in [1, 3, 5, 10]}
-    relationship_recalls = {k: 0.0 for k in [1, 3, 5, 10]}
+    object_recalls = {k: 0.0 for k in [1, 3, 5, 10, 20]}
+    relationship_recalls = {k: 0.0 for k in [1, 3, 5, 10, 20, 50, 100]}
     
     total_gt_objects = 0
     total_gt_relationships = 0
@@ -634,6 +634,116 @@ def analyze_scene_graph_predictions(results, object_classes, relationship_classe
         'relationship_recalls': {k: v/n_samples for k, v in relationship_recalls.items()}
     }
 
+def load_predictions_from_file(predictions_file):
+    """Load scene graph predictions from a saved predictions file."""
+    if not os.path.exists(predictions_file):
+        raise FileNotFoundError(f"Predictions file not found: {predictions_file}")
+    
+    results = []
+    
+    with open(predictions_file, 'r') as f:
+        lines = f.readlines()
+    
+    current_sample = None
+    pred_objects = None
+    pred_relationships = None
+    gt_objects = None
+    gt_relationships = None
+    
+    for line in lines:
+        line = line.strip()
+        
+        # Skip comments and empty lines
+        if line.startswith('#') or not line:
+            continue
+            
+        # Parse sample number
+        if line.startswith('Sample '):
+            # If we have a complete previous sample, add it to results
+            if current_sample is not None and all(x is not None for x in [pred_objects, pred_relationships, gt_objects, gt_relationships]):
+                results.append((current_sample, pred_objects, pred_relationships, gt_objects, gt_relationships))
+            
+            # Start new sample
+            sample_match = re.match(r'Sample (\d+):', line)
+            if sample_match:
+                current_sample = int(sample_match.group(1))
+                pred_objects = None
+                pred_relationships = None
+                gt_objects = None
+                gt_relationships = None
+        
+        # Parse predicted objects
+        elif line.startswith('Predicted Objects:'):
+            objects_str = line[len('Predicted Objects:'):].strip()
+            try:
+                pred_objects = eval(objects_str) if objects_str != '[]' else []
+            except:
+                pred_objects = []
+        
+        # Parse predicted relationships
+        elif line.startswith('Predicted Relationships:'):
+            relationships_str = line[len('Predicted Relationships:'):].strip()
+            try:
+                pred_relationships = eval(relationships_str) if relationships_str != '[]' else []
+            except:
+                pred_relationships = []
+        
+        # Parse GT objects
+        elif line.startswith('GT Objects:'):
+            objects_str = line[len('GT Objects:'):].strip()
+            try:
+                gt_objects = eval(objects_str) if objects_str != '[]' else []
+            except:
+                gt_objects = []
+        
+        # Parse GT relationships
+        elif line.startswith('GT Relationships:'):
+            relationships_str = line[len('GT Relationships:'):].strip()
+            try:
+                gt_relationships = eval(relationships_str) if relationships_str != '[]' else []
+            except:
+                gt_relationships = []
+    
+    # Add the last sample if complete
+    if current_sample is not None and all(x is not None for x in [pred_objects, pred_relationships, gt_objects, gt_relationships]):
+        results.append((current_sample, pred_objects, pred_relationships, gt_objects, gt_relationships))
+    
+    print(f"Loaded {len(results)} samples from predictions file")
+    return results
+
+def analyze_existing_predictions(cfg, predictions_file):
+    """Analyze existing predictions from a saved file."""
+    print("="*60)
+    print("Analyzing Existing VLM Scene Graph Predictions")
+    print("="*60)
+    
+    # Load the predictions
+    results = load_predictions_from_file(predictions_file)
+    
+    if not results:
+        print("No valid predictions found in file!")
+        return
+    
+    # Load dataset to get object and relationship classes
+    print("Loading dataset for class information...")
+    dataset = SingleAG(cfg, split=cfg.test.data_split, no_img=True)  # no_img=True for faster loading
+    
+    print(f"Dataset has {len(dataset.object_classes)} object classes and {len(dataset.relationship_classes)} relationship classes")
+    
+    # Analyze the predictions
+    print(f"\nAnalyzing {len(results)} predictions...")
+    print("="*40)
+    metrics = analyze_scene_graph_predictions(results, dataset.object_classes, dataset.relationship_classes)
+    
+    # Print summary
+    print(f"\nSummary Metrics:")
+    print(f"Object F1: {metrics['object_f1']:.3f}")
+    print(f"Relationship F1: {metrics['relationship_f1']:.3f}")
+    print(f"Object Recall@5: {metrics['object_recalls'][5]:.3f}")
+    print(f"Relationship Recall@5: {metrics['relationship_recalls'][5]:.3f}")
+    
+    return metrics
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Test Molmo VLM on Action Genome scene graph generation')
     parser.add_argument('--config', type=str, required=True, 
@@ -642,6 +752,10 @@ if __name__ == '__main__':
                        help='Limit number of samples for testing (default: all)')
     parser.add_argument('--verbose', action='store_true',
                        help='Save raw VLM responses to file for debugging')
+    parser.add_argument('--analyze', action='store_true',
+                       help='Analyze existing predictions instead of running inference')
+    parser.add_argument('--predictions_file', type=str, default=None,
+                       help='Path to predictions file to analyze (required when using --analyze)')
     args = parser.parse_args()
     
     # Load config
@@ -651,5 +765,25 @@ if __name__ == '__main__':
     cfg = load_yaml(args.config)
     print(f"Loaded config from: {args.config}")
     
-    # Run VLM scene graph testing
-    results = test_vlm_scene_graph_on_ag(cfg, max_samples=args.max_samples, verbose=args.verbose) 
+    if args.analyze:
+        # Analyze existing predictions
+        if not args.predictions_file:
+            # Try to find the default predictions file
+            run_name = "vlm_molmo_sg_test"
+            test_run_name = "ag_scene_graph_generation_parallel"
+            default_file = f'{cfg.runs_folder}/{run_name}/test_runs/{test_run_name}/vlm_scene_graph_predictions.txt'
+            
+            if os.path.exists(default_file):
+                print(f"Using default predictions file: {default_file}")
+                args.predictions_file = default_file
+            else:
+                raise ValueError("--predictions_file is required when using --analyze mode, or place predictions in default location")
+        
+        if not os.path.exists(args.predictions_file):
+            raise FileNotFoundError(f"Predictions file not found: {args.predictions_file}")
+        
+        # Analyze existing predictions
+        metrics = analyze_existing_predictions(cfg, args.predictions_file)
+    else:
+        # Run VLM scene graph testing
+        results = test_vlm_scene_graph_on_ag(cfg, max_samples=args.max_samples, verbose=args.verbose) 
