@@ -93,7 +93,7 @@ class ActionGenome(Dataset):
         
         self.label_mode = label_mode if label_mode is not None else cfg.data.label_mode
         assert self.label_mode in ['single', 'multi']
-        assert not (self.position == 'both' and self.label_mode == 'multi')
+        assert not (self.label_mode == 'multi' and self.position == 'both')
 
         self.label_type = cfg.data.label_type
         num_samples = cfg.data.num_samples
@@ -219,10 +219,13 @@ class ActionGenome(Dataset):
             self.truth_values = None
         else:
             # TODO: maybe add an option to not have rules even when split valid?
+            if self.position == 'both':
+                raise NotImplementedError('Truth values not implemented for both position')
+            frame_ids = [get_id(row['vid'], row[f'{self.position}_frame']) for idx, row in self.df.iterrows()] # type: ignore
             self.truth_values = apply_rules(self.rules_name, 
                 os.path.join(self.prolog_folder, self.position, 'learned_rules'),
-                os.path.join(self.prolog_folder, self.position, f'{self.split}_bk.pl'),
-                len(self.df), self.get_target_classes())
+                os.path.join(self.prolog_folder, f'bk.pl'),
+                frame_ids, self.get_target_classes())
 
         cache_data = { # all the actual data we need to save
             'df': self.df,
@@ -463,8 +466,7 @@ class SingleBothAG(ActionGenome):
 
     def __init__(self, cfg,
                 no_img=False, subset=True, split=None, position=None): # debug params
-        super().__init__(cfg, no_img, subset, split, position, label_mode='single')
-        assert self.position == 'both'
+        super().__init__(cfg, no_img, subset, split, position='both', label_mode='single')
 
     def create_labels(self, action_classes):
         #in this case action_classes is a single action
@@ -739,6 +741,131 @@ class MultiAG(ActionGenome):
         object_labels_list = [item['object_labels'] for item in batch]
         action_labels_list = [item['action_labels'] for item in batch]
         truth_values = [item['truth_values'] for item in batch]
+        
+        sg_batch = Batch.from_data_list(scene_graphs, exclude_keys=['o'])
+        
+        # Create a 2D tensor for multi-label verbs with shape Batch x Classes
+        verb_labels = torch.zeros((len(verb_labels_list), len(self.verb_classes)), dtype=torch.float)
+        for i, verb_list in enumerate(verb_labels_list):
+            for verb_idx in verb_list:
+                verb_labels[i, verb_idx] = 1.0
+        
+        # Create multi-label object and action tensors
+        object_labels = torch.zeros((len(object_labels_list), len(self.object_classes)), dtype=torch.float)
+        for i, obj_list in enumerate(object_labels_list):
+            for obj_idx in obj_list:
+                if obj_idx is not None:
+                    object_labels[i, obj_idx] = 1.0
+        
+        action_labels = torch.zeros((len(action_labels_list), len(self.action_classes)), dtype=torch.float)
+        for i, action_list in enumerate(action_labels_list):
+            for action_idx in action_list:
+                action_labels[i, action_idx] = 1.0
+        
+        if self.no_img:
+            resized_images = None
+        else:
+            resized_images = [self.im_transform(img) for img in images]
+            resized_images = torch.stack(resized_images)
+        
+        if self.truth_values is not None:
+            truth_values = torch.stack(truth_values)
+        else:
+            truth_values = None
+
+        return {
+            'ids': ids,
+            'images': resized_images,
+            'scene_graphs': sg_batch,
+            'verb_labels': verb_labels,
+            'object_labels': object_labels,
+            'action_labels': action_labels,
+            'truth_values': truth_values
+        }
+
+class MultiBothAG(ActionGenome):
+    
+    def __init__(self, cfg,
+                no_img=False, subset=True, split=None, position=None): # debug params
+        super().__init__(cfg, no_img, subset, split, position='both', label_mode='multi')
+
+    def create_labels(self, action_classes):
+        # action_classes is a list of actions (multi-label)
+        verb_classes, obj_classes = zip(*[self.action_verb_obj_map[action_class] for action_class in action_classes])
+
+        w = torch.tensor(action_classes, dtype=torch.long) # multiple actions
+        y = torch.tensor(verb_classes, dtype=torch.long)
+        o = torch.tensor([o if o is not None else -1 for o in obj_classes], dtype=torch.long)
+        return w, y, o
+
+    def __getitem__(self, index):
+        row = self.df[['vid', 'pre_frame', 'post_frame', 'action']].iloc[index].values #type: ignore
+        video_id, pre_frame, post_frame, action_classes = row
+
+        #full id is necessary since some actions start on the same frame
+        pre_id = get_id(video_id, pre_frame)
+        post_id = get_id(video_id, post_frame)
+
+        pre_scene_graph = self.scene_graphs[pre_id]
+        post_scene_graph = self.scene_graphs[post_id]
+
+        if self.no_img:
+            pre_image = None
+            post_image = None
+        else:
+            pre_image_path = os.path.join(self.root, 'frames', pre_id)
+            post_image_path = os.path.join(self.root, 'frames', post_id)
+            pre_image = Image.open(pre_image_path).convert('RGB')
+            post_image = Image.open(post_image_path).convert('RGB')
+
+        if self.truth_values is not None:
+            pre_truth_values = torch.tensor(self.truth_values[index]).float()
+            post_truth_values = torch.tensor(self.truth_values[index]).float()
+        else: 
+            pre_truth_values = None
+            post_truth_values = None
+
+        # Compute all labels (action_classes is a list in MultiBothAG)
+        verb_classes, obj_classes = zip(*[self.action_verb_obj_map[action_class] for action_class in action_classes])
+
+        pre_data = {
+            'id': pre_id,
+            'image': pre_image,
+            'scene_graph': pre_scene_graph,
+            'verb_labels': list(verb_classes),
+            'object_labels': list(obj_classes),
+            'action_labels': action_classes,
+            'truth_values': pre_truth_values
+        }
+        post_data = {
+            'id': post_id,
+            'image': post_image,
+            'scene_graph': post_scene_graph,
+            'verb_labels': list(verb_classes),
+            'object_labels': list(obj_classes),
+            'action_labels': action_classes,
+            'truth_values': post_truth_values
+        }
+        
+        return pre_data, post_data
+
+    def pred_collate(self, batch):
+        """
+        Collate function for multi-label both positions prediction.
+        Returns multi-hot tensors for verb_labels, object_labels, and action_labels.
+        The model will select appropriate labels based on cfg.data.label_type.
+        """
+        # batch is a list of (pre_data, post_data) tuples
+        pre_batch, post_batch = zip(*batch)
+        
+        # Extract from pre_batch
+        ids = [item['id'] for item in pre_batch]
+        images = [item['image'] for item in pre_batch]
+        scene_graphs = [item['scene_graph'] for item in pre_batch]
+        verb_labels_list = [item['verb_labels'] for item in pre_batch]
+        object_labels_list = [item['object_labels'] for item in pre_batch]
+        action_labels_list = [item['action_labels'] for item in pre_batch]
+        truth_values = [item['truth_values'] for item in pre_batch]
         
         sg_batch = Batch.from_data_list(scene_graphs, exclude_keys=['o'])
         

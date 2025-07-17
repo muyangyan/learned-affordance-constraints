@@ -1,0 +1,31 @@
+%%keep negative probability: 0.003259538057329925
+:- style_check(-discontiguous).
+neg(taking_a_vacuum_from_somewhere_target(0TXYV_mp4_000288_png_0)).
+neg(taking_a_vacuum_from_somewhere_target(2MURI_mp4_000258_png_0)).
+pos(taking_a_vacuum_from_somewhere_target(3U1SS_mp4_000522_png_0)).
+neg(taking_a_vacuum_from_somewhere_target(4QSRS_mp4_000374_png_0)).
+neg(taking_a_vacuum_from_somewhere_target(511AM_mp4_000460_png_0)).
+neg(taking_a_vacuum_from_somewhere_target(55UAT_mp4_000032_png_0)).
+neg(taking_a_vacuum_from_somewhere_target(6FUDS_mp4_000310_png_0)).
+neg(taking_a_vacuum_from_somewhere_target(77SCM_mp4_000038_png_0)).
+neg(taking_a_vacuum_from_somewhere_target(82ZNR_mp4_001695_png_0)).
+neg(taking_a_vacuum_from_somewhere_target(8CQ9Y_mp4_000815_png_0)).
+neg(taking_a_vacuum_from_somewhere_target(8L9AJ_mp4_000316_png_0)).
+neg(taking_a_vacuum_from_somewhere_target(8NGDR_mp4_000374_png_0)).
+pos(taking_a_vacuum_from_somewhere_target(B8WPE_mp4_000814_png_0)).
+neg(taking_a_vacuum_from_somewhere_target(BZWSJ_mp4_000331_png_0)).
+pos(taking_a_vacuum_from_somewhere_target(EO6OI_mp4_000761_png_0)).
+neg(taking_a_vacuum_from_somewhere_target(GQCUO_mp4_000857_png_0)).
+neg(taking_a_vacuum_from_somewhere_target(HC5JH_mp4_000494_png_0)).
+neg(taking_a_vacuum_from_somewhere_target(HVXXQ_mp4_000008_png_0)).
+neg(taking_a_vacuum_from_somewhere_target(JRSPH_mp4_000266_png_0)).
+neg(taking_a_vacuum_from_somewhere_target(KKX90_mp4_000311_png_0)).
+pos(taking_a_vacuum_from_somewhere_target(KQKNE_mp4_000513_png_0)).
+pos(taking_a_vacuum_from_somewhere_target(LQEB5_mp4_000271_png_0)).
+pos(taking_a_vacuum_from_somewhere_target(PZD7Z_mp4_000371_png_0)).
+neg(taking_a_vacuum_from_somewhere_target(RHVM2_mp4_000215_png_0)).
+neg(taking_a_vacuum_from_somewhere_target(WFVD3_mp4_000037_png_0)).
+neg(taking_a_vacuum_from_somewhere_target(WYZCW_mp4_000577_png_0)).
+neg(taking_a_vacuum_from_somewhere_target(XWQ3Z_mp4_000026_png_0)).
+neg(taking_a_vacuum_from_somewhere_target(XYGU1_mp4_000361_png_0)).
+neg(taking_a_vacuum_from_somewhere_target(ZLWXE_mp4_000640_png_0)).

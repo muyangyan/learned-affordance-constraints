@@ -16,6 +16,10 @@ def normalize_predicate_name(name):
     """
     return name.lower().replace(' ', '_').replace('/', '_').replace('(', '_').replace(')', '_')
 
+def sanitize_frame_id(frame_id):
+    """Convert frame ID to Prolog-safe format"""
+    return frame_id.replace('/', '_').replace('.', '_')
+
 def get_rule_precisions_recalls(rules_json, priors, classes):
     '''
     Get the precisions and recalls for all rules for converting rule binary truth values to predictions
@@ -45,7 +49,7 @@ def get_rule_precisions_recalls(rules_json, priors, classes):
     return precisions, recalls
 
 # evaluate each rule - just get the binary truth values
-def apply_rules(rules_name, rules_folder, bk_file, test_size, targets):
+def apply_rules(rules_name, rules_folder, bk_file, frame_ids, targets):
     print('Applying learned rules-----------------')
     print('rules_name:', rules_name)
     print('bk_file:', bk_file)
@@ -57,12 +61,12 @@ def apply_rules(rules_name, rules_folder, bk_file, test_size, targets):
     Prolog.consult(rules_file)
     Prolog.consult(bk_file)
 
-    for i in range(test_size):
+    for id in frame_ids:
         truth = np.zeros(len(targets))
         for j,v in enumerate(targets):
             # Convert target name to Prolog-compatible predicate name
             predicate_name = normalize_predicate_name(v)
-            q = Prolog.query(f'{predicate_name}_target(x{i}_0)')
+            q = Prolog.query(f'{predicate_name}_target(\'{id}_0\')')
             satisfied = False
             for q in q:
                 satisfied = True

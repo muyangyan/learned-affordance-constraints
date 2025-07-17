@@ -102,7 +102,7 @@ Choose objects from this list (use exact names):
     for rel in relationship_classes:
         prompt += f"- {rel}\n"
     
-    prompt += f"\nAnalyze the image carefully and list ALL visible objects and their relationships. Use only the object and relationship names provided above. Err on the side of including MORE relationships (30 or more). Make sure you predict a VARIETY of DIVERSE relationships. NOTE: The subject (first argument) of every relationship is ALWAYS the person. Relationships should ALWAYS have three arguments total. The second argument is ALWAYS a relationship SELECTED FROM THE LIST ABOVE, and the third argument is ALWAYS an object SELECTED FROM THE LIST ABOVE."
+    prompt += f"\nAnalyze the image carefully and list ALL visible objects and their relationships. Use only the object and relationship names provided above. Err on the side of including MORE relationships (30 or more). NEVER predict the same relationship twice. Make sure you predict a VARIETY of DIVERSE relationships. NOTE: The subject (first argument) of every relationship is ALWAYS the person. Relationships should ALWAYS have three arguments total. The second argument is ALWAYS a relationship SELECTED FROM THE LIST ABOVE, and the third argument is ALWAYS an object SELECTED FROM THE LIST ABOVE."
     
     return prompt
 
@@ -126,7 +126,7 @@ def predict_vlm_scene_graph(model, processor, image, object_classes, relationshi
             with torch.no_grad():
                 output = model.generate_from_batch(
                     inputs,
-                    GenerationConfig(max_new_tokens=300, do_sample=False),
+                    GenerationConfig(max_new_tokens=600, do_sample=False),
                     tokenizer=processor.tokenizer
                 )
             

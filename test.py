@@ -15,8 +15,7 @@ from pytorch_lightning import Trainer
 
 from models.action_anticipator import BaseLeaPR, SingleLeaPR, MultiLeaPR
 
-from util.rule_utils import apply_rules
-from util.metrics import analyze_preds_ml, analyze_preds_mc, analyze_preds
+from util.metrics import analyze_preds
 
 from util.config_utils import load_yaml
 

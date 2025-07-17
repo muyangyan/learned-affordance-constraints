@@ -1,16 +1,13 @@
-%%keep negative probability: 0.0017495257233531847
+%%keep negative probability: 0.0016310992710810712
 :- style_check(-discontiguous).
-pos(make_target(x36_0)).
-neg(make_target(x193_0)).
-neg(make_target(x415_0)).
-neg(make_target(x593_0)).
-neg(make_target(x1261_0)).
-neg(make_target(x1679_0)).
-neg(make_target(x2014_0)).
-neg(make_target(x2233_0)).
-neg(make_target(x2282_0)).
-neg(make_target(x2435_0)).
-pos(make_target(x2604_0)).
-neg(make_target(x2860_0)).
-neg(make_target(x4187_0)).
-pos(make_target(x4478_0)).
+pos(make_target(06EDS_mp4_000705_png_0)).
+neg(make_target(250SN_mp4_000160_png_0)).
+neg(make_target(8QCBP_mp4_000267_png_0)).
+neg(make_target(AWGMW_mp4_000260_png_0)).
+neg(make_target(D2T7Z_mp4_000271_png_0)).
+pos(make_target(DSXEN_mp4_000576_png_0)).
+neg(make_target(EQ4GN_mp4_000700_png_0)).
+neg(make_target(FQAAB_mp4_000018_png_0)).
+pos(make_target(NU0UK_mp4_000245_png_0)).
+neg(make_target(Q8TB3_mp4_000102_png_0)).
+neg(make_target(Y0CA0_mp4_000199_png_0)).

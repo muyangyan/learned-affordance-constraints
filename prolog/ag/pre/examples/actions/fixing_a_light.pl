@@ -1,0 +1,29 @@
+%%keep negative probability: 0.0027170204699890066
+:- style_check(-discontiguous).
+neg(fixing_a_light_target(3H1EA_mp4_000514_png_0)).
+neg(fixing_a_light_target(41II2_mp4_000805_png_0)).
+pos(fixing_a_light_target(47ZXN_mp4_000595_png_0)).
+neg(fixing_a_light_target(511AM_mp4_000178_png_0)).
+pos(fixing_a_light_target(61XR6_mp4_000506_png_0)).
+pos(fixing_a_light_target(6R7QY_mp4_000065_png_0)).
+pos(fixing_a_light_target(9FH1E_mp4_000099_png_0)).
+neg(fixing_a_light_target(BJXRT_mp4_000019_png_0)).
+neg(fixing_a_light_target(BMLFA_mp4_000453_png_0)).
+neg(fixing_a_light_target(E1U37_mp4_000010_png_0)).
+pos(fixing_a_light_target(NXUA9_mp4_000065_png_0)).
+neg(fixing_a_light_target(PDK24_mp4_000196_png_0)).
+neg(fixing_a_light_target(PSCWP_mp4_000723_png_0)).
+neg(fixing_a_light_target(Q01UB_mp4_000742_png_0)).
+neg(fixing_a_light_target(S2IG2_mp4_001037_png_0)).
+neg(fixing_a_light_target(S4EEQ_mp4_000795_png_0)).
+neg(fixing_a_light_target(TD3HC_mp4_000009_png_0)).
+neg(fixing_a_light_target(U3VOM_mp4_000388_png_0)).
+neg(fixing_a_light_target(UPXBJ_mp4_000173_png_0)).
+neg(fixing_a_light_target(UU5XI_mp4_000797_png_0)).
+neg(fixing_a_light_target(VSLQT_mp4_000138_png_0)).
+neg(fixing_a_light_target(VTEWM_mp4_000314_png_0)).
+neg(fixing_a_light_target(VTEWM_mp4_000546_png_0)).
+neg(fixing_a_light_target(W0A0Z_mp4_000376_png_0)).
+neg(fixing_a_light_target(W6TFQ_mp4_000435_png_0)).
+neg(fixing_a_light_target(YIV35_mp4_000727_png_0)).
+neg(fixing_a_light_target(ZAJAJ_mp4_000349_png_0)).
