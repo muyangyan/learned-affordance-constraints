@@ -1,0 +1,120 @@
+%%no negative model used
+max_vars(6).
+max_body(8).
+head_pred(open_target, 1).
+body_pred(person, 1).
+body_pred(bag, 1).
+body_pred(bed, 1).
+body_pred(blanket, 1).
+body_pred(book, 1).
+body_pred(box, 1).
+body_pred(broom, 1).
+body_pred(chair, 1).
+body_pred(closet_cabinet, 1).
+body_pred(clothes, 1).
+body_pred(cup_glass_bottle, 1).
+body_pred(dish, 1).
+body_pred(door, 1).
+body_pred(doorknob, 1).
+body_pred(doorway, 1).
+body_pred(floor, 1).
+body_pred(food, 1).
+body_pred(groceries, 1).
+body_pred(laptop, 1).
+body_pred(light, 1).
+body_pred(medicine, 1).
+body_pred(mirror, 1).
+body_pred(paper_notebook, 1).
+body_pred(phone_camera, 1).
+body_pred(picture, 1).
+body_pred(pillow, 1).
+body_pred(refrigerator, 1).
+body_pred(sandwich, 1).
+body_pred(shelf, 1).
+body_pred(shoe, 1).
+body_pred(sofa_couch, 1).
+body_pred(table, 1).
+body_pred(television, 1).
+body_pred(towel, 1).
+body_pred(vacuum, 1).
+body_pred(window, 1).
+body_pred(looking_at, 2).
+body_pred(not_looking_at, 2).
+body_pred(unsure, 2).
+body_pred(above, 2).
+body_pred(beneath, 2).
+body_pred(in_front_of, 2).
+body_pred(behind, 2).
+body_pred(on_the_side_of, 2).
+body_pred(in, 2).
+body_pred(carrying, 2).
+body_pred(covered_by, 2).
+body_pred(drinking_from, 2).
+body_pred(eating, 2).
+body_pred(have_it_on_the_back, 2).
+body_pred(holding, 2).
+body_pred(leaning_on, 2).
+body_pred(lying_on, 2).
+body_pred(not_contacting, 2).
+body_pred(other_relationship, 2).
+body_pred(sitting_on, 2).
+body_pred(standing_on, 2).
+body_pred(touching, 2).
+body_pred(twisting, 2).
+body_pred(wearing, 2).
+body_pred(wiping, 2).
+body_pred(writing_on, 2).
+01:34:47 Generating programs of size: 2
+01:34:48 Generating programs of size: 3
+01:34:48 ********************
+01:34:48 New best hypothesis:
+01:34:48 tp:7 fn:602 tn:1965 fp:1 size:3 mdl:606
+01:34:48 open_target(A):- holding(A,B),refrigerator(B).
+01:34:48 ********************
+01:34:48 ********************
+01:34:48 New best hypothesis:
+01:34:48 tp:11 fn:598 tn:1962 fp:4 size:3 mdl:605
+01:34:48 open_target(A):- doorknob(B),holding(A,B).
+01:34:48 ********************
+01:34:48 ********************
+01:34:48 New best hypothesis:
+01:34:48 tp:23 fn:586 tn:1951 fp:15 size:3 mdl:604
+01:34:48 open_target(A):- doorknob(B),not_looking_at(A,B).
+01:34:48 ********************
+01:34:48 ********************
+01:34:48 New best hypothesis:
+01:34:48 tp:21 fn:588 tn:1964 fp:2 size:3 mdl:593
+01:34:48 open_target(A):- not_looking_at(A,B),refrigerator(B).
+01:34:48 ********************
+01:34:48 ********************
+01:34:48 New best hypothesis:
+01:34:48 tp:65 fn:544 tn:1941 fp:25 size:3 mdl:572
+01:34:48 open_target(A):- not_looking_at(A,B),closet_cabinet(B).
+01:34:48 ********************
+01:34:48 ********************
+01:34:48 New best hypothesis:
+01:34:48 tp:77 fn:532 tn:1935 fp:31 size:3 mdl:566
+01:34:48 open_target(A):- door(B),looking_at(A,B).
+01:34:48 ********************
+01:34:50 ********************
+01:34:50 New best hypothesis:
+01:34:50 tp:121 fn:488 tn:1892 fp:74 size:3 mdl:565
+01:34:50 open_target(A):- closet_cabinet(B),not_contacting(A,B).
+01:34:50 ********************
+01:34:50 ********************
+01:34:50 New best hypothesis:
+01:34:50 tp:140 fn:469 tn:1894 fp:72 size:3 mdl:544
+01:34:50 open_target(A):- door(B),not_contacting(A,B).
+01:34:50 ********************
+01:34:55 Generating programs of size: 4
+01:35:05 ********************
+01:35:05 New best hypothesis:
+01:35:05 tp:370 fn:239 tn:1754 fp:212 size:21 mdl:472
+01:35:05 open_target(A):- holding(A,B),refrigerator(B).
+01:35:05 open_target(A):- doorknob(B),holding(A,B).
+01:35:05 open_target(A):- door(B),looking_at(A,B).
+01:35:05 open_target(A):- bag(B),looking_at(A,B).
+01:35:05 open_target(A):- refrigerator(B),not_contacting(A,B).
+01:35:05 open_target(A):- closet_cabinet(B),not_contacting(A,B).
+01:35:05 open_target(A):- door(B),not_contacting(A,B).
+01:35:05 ********************

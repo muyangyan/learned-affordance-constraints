@@ -1,0 +1,29 @@
+%%keep negative probability: 0.00177049859651901
+:- style_check(-discontiguous).
+neg(washing_a_window_target(x_1larl_mp4_000320_png_0)).
+neg(washing_a_window_target(x_696ge_mp4_000756_png_0)).
+neg(washing_a_window_target(x_7vp2u_mp4_000185_png_0)).
+pos(washing_a_window_target(x_b8pql_mp4_000461_png_0)).
+neg(washing_a_window_target(x_bsf19_mp4_000317_png_0)).
+neg(washing_a_window_target(x_ch0pm_mp4_000296_png_0)).
+neg(washing_a_window_target(x_djvzq_mp4_000775_png_0)).
+neg(washing_a_window_target(x_dswwv_mp4_000231_png_0)).
+neg(washing_a_window_target(x_eg1my_mp4_000233_png_0)).
+neg(washing_a_window_target(x_fiajp_mp4_000178_png_0)).
+neg(washing_a_window_target(x_hfw6h_mp4_001403_png_0)).
+neg(washing_a_window_target(x_icalv_mp4_000571_png_0)).
+neg(washing_a_window_target(x_ikqlj_mp4_001526_png_0)).
+neg(washing_a_window_target(x_k48cq_mp4_001707_png_0)).
+neg(washing_a_window_target(x_mdg2t_mp4_000363_png_0)).
+neg(washing_a_window_target(x_mnndb_mp4_000547_png_0)).
+neg(washing_a_window_target(x_nbagz_mp4_000101_png_0)).
+neg(washing_a_window_target(x_nvq84_mp4_000390_png_0)).
+pos(washing_a_window_target(x_omfoj_mp4_000557_png_0)).
+neg(washing_a_window_target(x_r5o64_mp4_000338_png_0)).
+neg(washing_a_window_target(x_r8oti_mp4_000624_png_0)).
+neg(washing_a_window_target(x_tdd74_mp4_000225_png_0)).
+neg(washing_a_window_target(x_vota7_mp4_000267_png_0)).
+pos(washing_a_window_target(x_w6quc_mp4_000197_png_0)).
+neg(washing_a_window_target(x_wo0om_mp4_000714_png_0)).
+pos(washing_a_window_target(x_x4dg4_mp4_000312_png_0)).
+neg(washing_a_window_target(x_ybvvz_mp4_000366_png_0)).

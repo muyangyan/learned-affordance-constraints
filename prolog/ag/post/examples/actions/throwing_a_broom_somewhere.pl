@@ -1,0 +1,21 @@
+%%keep negative probability: 0.00177049859651901
+:- style_check(-discontiguous).
+neg(throwing_a_broom_somewhere_target(x_0xv4t_mp4_000194_png_0)).
+neg(throwing_a_broom_somewhere_target(x_1n1ut_mp4_000122_png_0)).
+neg(throwing_a_broom_somewhere_target(x_2j4ma_mp4_000085_png_0)).
+neg(throwing_a_broom_somewhere_target(x_3ijgq_mp4_000667_png_0)).
+neg(throwing_a_broom_somewhere_target(x_8jt6s_mp4_000335_png_0)).
+neg(throwing_a_broom_somewhere_target(x_bwg9b_mp4_000559_png_0)).
+pos(throwing_a_broom_somewhere_target(x_cg7fl_mp4_000531_png_0)).
+pos(throwing_a_broom_somewhere_target(x_d8osc_mp4_000305_png_0)).
+neg(throwing_a_broom_somewhere_target(x_j0jd1_mp4_000518_png_0)).
+neg(throwing_a_broom_somewhere_target(x_oc6yu_mp4_000518_png_0)).
+pos(throwing_a_broom_somewhere_target(x_ps29p_mp4_000404_png_0)).
+pos(throwing_a_broom_somewhere_target(x_rkgg5_mp4_000317_png_0)).
+neg(throwing_a_broom_somewhere_target(x_rzy2i_mp4_000282_png_0)).
+neg(throwing_a_broom_somewhere_target(x_t82ie_mp4_000192_png_0)).
+neg(throwing_a_broom_somewhere_target(x_tphrr_mp4_000447_png_0)).
+neg(throwing_a_broom_somewhere_target(x_vb1ht_mp4_000895_png_0)).
+neg(throwing_a_broom_somewhere_target(x_zfzen_mp4_000126_png_0)).
+neg(throwing_a_broom_somewhere_target(x_zkc7m_mp4_000731_png_0)).
+neg(throwing_a_broom_somewhere_target(x_zvv1y_mp4_000583_png_0)).

@@ -18,7 +18,7 @@ def normalize_predicate_name(name):
 
 def sanitize_frame_id(frame_id):
     """Convert frame ID to Prolog-safe format"""
-    return frame_id.replace('/', '_').replace('.', '_')
+    return frame_id.replace('/', '_').replace('.', '_').lower()
 
 def get_rule_precisions_recalls(rules_json, priors, classes):
     '''

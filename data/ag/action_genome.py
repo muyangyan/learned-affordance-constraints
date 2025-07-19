@@ -182,10 +182,7 @@ class ActionGenome(Dataset):
         #differentiate between single and multi-label
         if self.label_mode == 'single':
             length = len(single_df)
-            if self.position != 'both':
-                self.df = single_df[['vid', f'{self.position}_frame', 'action']]
-            else:
-                self.df = single_df[['vid', 'pre_frame', 'post_frame', 'action']]
+            self.df = single_df[['vid', 'pre_frame', 'post_frame', 'action']]
         else:
             multi_df = single_df.copy()
             multi_df[f'video_{self.position}'] = multi_df['vid'] + '_' + multi_df[f'{self.position}_frame'].astype(str)

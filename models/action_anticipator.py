@@ -336,3 +336,7 @@ class SingleLeaPR(BaseLeaPR):
         labels = torch.argmax(labels, dim=1)
         metrics_dict = self.test_metrics(out, labels)
         self.log_dict(metrics_dict, on_step=False, on_epoch=True, prog_bar=True)
+
+class SeqLeaPR(BaseLeaPR):
+    def __init__(self, cfg, model_params, weight, priors, classes):
+        super().__init__(cfg, model_params, weight, priors, classes)

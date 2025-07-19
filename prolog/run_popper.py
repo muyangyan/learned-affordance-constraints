@@ -10,10 +10,10 @@ def run_popper_for_item(item, item_type, prolog_path, log_folder, popper_path, f
     """Run Popper ILP system for a single item (verb or action)"""
     # Handle safe naming for actions (replace spaces and special chars)
     if item_type == 'verbnoun':
-        safe_item_name = item.replace(' ', '_').replace('/', '_').replace('(', '_').replace(')', '_')
+        safe_item_name = item.replace(' ', '_').replace('/', '_').replace('(', '_').replace(')', '_').lower()
         examples_subfolder = 'actions'
     else:
-        safe_item_name = item
+        safe_item_name = item.lower()
         examples_subfolder = 'verbs'
     
     log_path = os.path.join(log_folder, f"{safe_item_name}")
@@ -34,7 +34,7 @@ def run_popper_for_item(item, item_type, prolog_path, log_folder, popper_path, f
         "--timeout", str(ilp_timeout),
         "--anytime-solver", "nuwls",
         "--ex_file", os.path.join(prolog_path, "examples", examples_subfolder, f"{safe_item_name}.pl"),
-        "--bk_file", os.path.join(prolog_path, "train_bk.pl"),
+        "--bk_file", os.path.join(prolog_path, "..", "bk.pl"),
         "--bias_file", bias_file
     ]
     

@@ -1,0 +1,36 @@
+%%keep negative probability: 0.0035378625277576736
+:- style_check(-discontiguous).
+neg(throwing_a_box_somewhere_target(x_16cwy_mp4_000246_png_0)).
+neg(throwing_a_box_somewhere_target(x_1thhl_mp4_000462_png_0)).
+neg(throwing_a_box_somewhere_target(x_35c4e_mp4_000081_png_0)).
+neg(throwing_a_box_somewhere_target(x_5bqmx_mp4_000045_png_0)).
+neg(throwing_a_box_somewhere_target(x_64ho1_mp4_000366_png_0)).
+pos(throwing_a_box_somewhere_target(x_a6cf6_mp4_000075_png_0)).
+pos(throwing_a_box_somewhere_target(x_azfkk_mp4_000077_png_0)).
+neg(throwing_a_box_somewhere_target(x_bzmlv_mp4_000198_png_0)).
+neg(throwing_a_box_somewhere_target(x_duhwu_mp4_000763_png_0)).
+neg(throwing_a_box_somewhere_target(x_e6psm_mp4_000759_png_0)).
+pos(throwing_a_box_somewhere_target(x_g82vi_mp4_000533_png_0)).
+neg(throwing_a_box_somewhere_target(x_glh5s_mp4_000581_png_0)).
+neg(throwing_a_box_somewhere_target(x_grjg1_mp4_000625_png_0)).
+neg(throwing_a_box_somewhere_target(x_hlmq8_mp4_000441_png_0)).
+neg(throwing_a_box_somewhere_target(x_j3zqs_mp4_000623_png_0)).
+neg(throwing_a_box_somewhere_target(x_jf36q_mp4_000211_png_0)).
+neg(throwing_a_box_somewhere_target(x_kd3sk_mp4_000774_png_0)).
+neg(throwing_a_box_somewhere_target(x_ktojx_mp4_000314_png_0)).
+neg(throwing_a_box_somewhere_target(x_ktqel_mp4_000886_png_0)).
+neg(throwing_a_box_somewhere_target(x_lksbl_mp4_000134_png_0)).
+neg(throwing_a_box_somewhere_target(x_mdg2t_mp4_000261_png_0)).
+pos(throwing_a_box_somewhere_target(x_mls4t_mp4_000210_png_0)).
+pos(throwing_a_box_somewhere_target(x_mmkks_mp4_000691_png_0)).
+pos(throwing_a_box_somewhere_target(x_oinmn_mp4_001055_png_0)).
+neg(throwing_a_box_somewhere_target(x_pqx96_mp4_000557_png_0)).
+neg(throwing_a_box_somewhere_target(x_r390z_mp4_000558_png_0)).
+neg(throwing_a_box_somewhere_target(x_uddtr_mp4_000317_png_0)).
+neg(throwing_a_box_somewhere_target(x_uetkq_mp4_000093_png_0)).
+neg(throwing_a_box_somewhere_target(x_uetkq_mp4_000095_png_0)).
+neg(throwing_a_box_somewhere_target(x_w75cv_mp4_000490_png_0)).
+pos(throwing_a_box_somewhere_target(x_w8wrk_mp4_000716_png_0)).
+neg(throwing_a_box_somewhere_target(x_wdy1g_mp4_000405_png_0)).
+neg(throwing_a_box_somewhere_target(x_zcg3j_mp4_000590_png_0)).
+pos(throwing_a_box_somewhere_target(x_zs7x6_mp4_000447_png_0)).

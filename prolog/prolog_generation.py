@@ -48,7 +48,7 @@ class PrologData:
         node_types = data.node_type #NOT vocabs
         edge_types = data.edge_type 
 
-        node_ids = [f'{sanitize_frame_id(frame_id)}_{i}' for i in range(len(node_types))]
+        node_ids = [f'x_{sanitize_frame_id(frame_id)}_{i}' for i in range(len(node_types))]
 
         edge_list = enumerate(data.edge_index.T)
         edge_triples = [(edge_types[i], src, tgt) for i, (src, tgt) in edge_list]
@@ -105,7 +105,7 @@ class PrologData:
             else:
                 raise ValueError('Invalid dataset type')
 
-            player_var = f'{sanitize_frame_id(id)}_0'
+            player_var = f'x_{sanitize_frame_id(id)}_0'
             verbs = data.y.numpy()
 
             with(open(exs_filename, 'a')) as f:
@@ -177,7 +177,7 @@ class PrologData:
             else:
                 raise ValueError('Invalid dataset type')
 
-            player_var = f'{sanitize_frame_id(id)}_0'
+            player_var = f'x_{sanitize_frame_id(id)}_0'
             if data.w is not None and len(data.w) > 0:
                 actions = data.w.numpy()
             else:

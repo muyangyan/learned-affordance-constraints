@@ -1,0 +1,30 @@
+%%keep negative probability: 0.0022126332372368607
+:- style_check(-discontiguous).
+neg(fixing_a_vacuum_target(x_16cwy_mp4_000227_png_0)).
+neg(fixing_a_vacuum_target(x_21a0w_mp4_000891_png_0)).
+pos(fixing_a_vacuum_target(x_334w9_mp4_000191_png_0)).
+pos(fixing_a_vacuum_target(x_4mppq_mp4_001152_png_0)).
+neg(fixing_a_vacuum_target(x_6e7q4_mp4_000296_png_0)).
+neg(fixing_a_vacuum_target(x_91yzh_mp4_000916_png_0)).
+neg(fixing_a_vacuum_target(x_bi31d_mp4_000386_png_0)).
+neg(fixing_a_vacuum_target(x_c4dfa_mp4_000562_png_0)).
+neg(fixing_a_vacuum_target(x_d19ir_mp4_000768_png_0)).
+neg(fixing_a_vacuum_target(x_dml20_mp4_000343_png_0)).
+neg(fixing_a_vacuum_target(x_fpodn_mp4_000281_png_0)).
+neg(fixing_a_vacuum_target(x_fpxl7_mp4_000309_png_0)).
+pos(fixing_a_vacuum_target(x_gkvbs_mp4_001038_png_0)).
+neg(fixing_a_vacuum_target(x_j3zzh_mp4_000077_png_0)).
+neg(fixing_a_vacuum_target(x_k48cq_mp4_001228_png_0)).
+neg(fixing_a_vacuum_target(x_n8n6u_mp4_000400_png_0)).
+neg(fixing_a_vacuum_target(x_nbmz0_mp4_000258_png_0)).
+neg(fixing_a_vacuum_target(x_ps29p_mp4_000404_png_0)).
+neg(fixing_a_vacuum_target(x_r00l7_mp4_000272_png_0)).
+neg(fixing_a_vacuum_target(x_r0olr_mp4_000274_png_0)).
+neg(fixing_a_vacuum_target(x_s673o_mp4_000043_png_0)).
+neg(fixing_a_vacuum_target(x_ujxbc_mp4_000189_png_0)).
+neg(fixing_a_vacuum_target(x_wvnbe_mp4_000687_png_0)).
+neg(fixing_a_vacuum_target(x_wx7ag_mp4_000324_png_0)).
+pos(fixing_a_vacuum_target(x_y063a_mp4_000850_png_0)).
+pos(fixing_a_vacuum_target(x_yx3w8_mp4_000356_png_0)).
+neg(fixing_a_vacuum_target(x_zotr8_mp4_000587_png_0)).
+neg(fixing_a_vacuum_target(x_zxn6a_mp4_000214_png_0)).
