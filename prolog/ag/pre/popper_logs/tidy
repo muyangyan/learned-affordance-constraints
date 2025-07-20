@@ -96,3 +96,12 @@ body_pred(writing_on, 2).
 01:35:02 tidy_target(A):- in(B,A),closet_cabinet(B).
 01:35:02 tidy_target(A):- in_front_of(B,A),shelf(B).
 01:35:02 ********************
+01:51:01 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.68 Recall:0.46 TP:126 FN:146 TN:972 FP:58 Size:15 MDL:219
+tidy_target(A):- broom(B),not_looking_at(A,B).
+tidy_target(A):- looking_at(A,B),standing_on(A,B).
+tidy_target(A):- floor(B),unsure(A,B).
+tidy_target(A):- in(B,A),closet_cabinet(B).
+tidy_target(A):- in_front_of(B,A),shelf(B).
+******************************

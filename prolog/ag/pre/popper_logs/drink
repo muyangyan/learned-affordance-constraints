@@ -83,3 +83,9 @@ body_pred(writing_on, 2).
 01:35:02 drink_target(A):- on_the_side_of(B,A),cup_glass_bottle(B).
 01:35:02 drink_target(A):- cup_glass_bottle(B),in_front_of(B,A).
 01:35:02 ********************
+01:45:50 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.71 Recall:1.00 TP:291 FN:0 TN:899 FP:117 Size:6 MDL:123
+drink_target(A):- on_the_side_of(B,A),cup_glass_bottle(B).
+drink_target(A):- cup_glass_bottle(B),in_front_of(B,A).
+******************************

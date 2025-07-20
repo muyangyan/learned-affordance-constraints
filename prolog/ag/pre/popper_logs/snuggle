@@ -90,3 +90,11 @@ body_pred(writing_on, 2).
 01:34:58 snuggle_target(A):- pillow(B),not_looking_at(A,B).
 01:34:58 snuggle_target(A):- blanket(B),covered_by(A,B).
 01:34:58 ********************
+01:49:08 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.76 Recall:0.83 TP:74 FN:15 TN:321 FP:24 Size:12 MDL:51
+snuggle_target(A):- holding(A,B),blanket(B).
+snuggle_target(A):- looking_at(A,B),pillow(B).
+snuggle_target(A):- pillow(B),not_looking_at(A,B).
+snuggle_target(A):- blanket(B),covered_by(A,B).
+******************************

@@ -78,3 +78,8 @@ body_pred(writing_on, 2).
 01:34:49 ********************
 01:34:51 Generating programs of size: 4
 01:37:45 Generating programs of size: 5
+01:44:36 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.96 Recall:0.96 TP:44 FN:2 TN:217 FP:2 Size:3 MDL:7
+grasp_target(A):- doorknob(B),not_contacting(A,B).
+******************************

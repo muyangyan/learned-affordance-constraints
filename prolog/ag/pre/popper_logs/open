@@ -118,3 +118,14 @@ body_pred(writing_on, 2).
 01:35:05 open_target(A):- closet_cabinet(B),not_contacting(A,B).
 01:35:05 open_target(A):- door(B),not_contacting(A,B).
 01:35:05 ********************
+02:15:48 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.64 Recall:0.61 TP:370 FN:239 TN:1754 FP:212 Size:21 MDL:472
+open_target(A):- holding(A,B),refrigerator(B).
+open_target(A):- doorknob(B),holding(A,B).
+open_target(A):- door(B),looking_at(A,B).
+open_target(A):- bag(B),looking_at(A,B).
+open_target(A):- refrigerator(B),not_contacting(A,B).
+open_target(A):- closet_cabinet(B),not_contacting(A,B).
+open_target(A):- door(B),not_contacting(A,B).
+******************************

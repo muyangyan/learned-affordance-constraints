@@ -91,3 +91,11 @@ body_pred(writing_on, 2).
 01:34:54 dress_target(A):- looking_at(A,B),shoe(B).
 01:34:54 ********************
 01:41:14 Generating programs of size: 5
+01:44:57 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.73 Recall:0.96 TP:74 FN:3 TN:293 FP:28 Size:12 MDL:43
+dress_target(A):- holding(A,B),clothes(B).
+dress_target(A):- shoe(B),not_contacting(A,B).
+dress_target(A):- clothes(B),not_contacting(A,B).
+dress_target(A):- looking_at(A,B),shoe(B).
+******************************

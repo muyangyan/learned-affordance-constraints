@@ -101,3 +101,17 @@ body_pred(writing_on, 2).
 01:35:06 hold_target(A):- not_contacting(A,B),vacuum(B).
 01:35:06 hold_target(A):- towel(B),not_contacting(A,B).
 01:35:06 ********************
+02:15:45 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.63 Recall:0.58 TP:399 FN:294 TN:2024 FP:239 Size:30 MDL:563
+hold_target(A):- not_contacting(A,B),phone_camera(B).
+hold_target(A):- not_contacting(A,B),medicine(B).
+hold_target(A):- not_contacting(A,B),book(B).
+hold_target(A):- cup_glass_bottle(B),not_contacting(A,B).
+hold_target(A):- broom(B),not_contacting(A,B).
+hold_target(A):- box(B),not_contacting(A,B).
+hold_target(A):- bag(B),not_contacting(A,B).
+hold_target(A):- dish(B),not_contacting(A,B).
+hold_target(A):- not_contacting(A,B),vacuum(B).
+hold_target(A):- towel(B),not_contacting(A,B).
+******************************

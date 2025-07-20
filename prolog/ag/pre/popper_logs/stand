@@ -85,3 +85,11 @@ body_pred(writing_on, 2).
 01:35:04 stand_target(A):- floor(B),lying_on(A,B).
 01:35:04 stand_target(A):- bed(B),leaning_on(A,B).
 01:35:04 ********************
+01:58:03 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.61 Recall:0.14 TP:85 FN:524 TN:1865 FP:54 Size:12 MDL:590
+stand_target(A):- on_the_side_of(B,A),sitting_on(A,B).
+stand_target(A):- wearing(A,B),in_front_of(B,A).
+stand_target(A):- floor(B),lying_on(A,B).
+stand_target(A):- bed(B),leaning_on(A,B).
+******************************

@@ -89,3 +89,10 @@ body_pred(writing_on, 2).
 01:34:55 fix_target(A):- mirror(B),not_looking_at(A,B).
 01:34:55 fix_target(A):- above(B,A),not_contacting(A,B).
 01:34:55 ********************
+01:44:58 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.85 Recall:0.44 TP:34 FN:43 TN:260 FP:6 Size:9 MDL:58
+fix_target(A):- looking_at(A,B),mirror(B).
+fix_target(A):- mirror(B),not_looking_at(A,B).
+fix_target(A):- above(B,A),not_contacting(A,B).
+******************************

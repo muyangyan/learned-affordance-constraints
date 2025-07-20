@@ -94,3 +94,20 @@ body_pred(writing_on, 2).
 01:35:06 take_target(A):- pillow(B),not_contacting(A,B).
 01:35:06 take_target(A):- clothes(B),not_contacting(A,B).
 01:35:06 ********************
+01:54:46 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.65 Recall:0.78 TP:411 FN:114 TN:1473 FP:226 Size:39 MDL:379
+take_target(A):- not_contacting(A,B),phone_camera(B).
+take_target(A):- towel(B),not_contacting(A,B).
+take_target(A):- not_contacting(A,B),vacuum(B).
+take_target(A):- not_contacting(A,B),picture(B).
+take_target(A):- bag(B),not_contacting(A,B).
+take_target(A):- blanket(B),not_contacting(A,B).
+take_target(A):- not_contacting(A,B),book(B).
+take_target(A):- box(B),not_contacting(A,B).
+take_target(A):- broom(B),not_contacting(A,B).
+take_target(A):- cup_glass_bottle(B),not_contacting(A,B).
+take_target(A):- dish(B),not_contacting(A,B).
+take_target(A):- pillow(B),not_contacting(A,B).
+take_target(A):- clothes(B),not_contacting(A,B).
+******************************

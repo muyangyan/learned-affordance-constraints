@@ -89,3 +89,10 @@ body_pred(writing_on, 2).
 01:34:56 awaken_target(A):- blanket(B),covered_by(A,B).
 01:34:56 awaken_target(A):- not_looking_at(A,B),lying_on(A,B).
 01:34:56 ********************
+01:47:58 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.88 Recall:0.80 TP:71 FN:18 TN:370 FP:10 Size:9 MDL:37
+awaken_target(A):- on_the_side_of(B,A),floor(B).
+awaken_target(A):- blanket(B),covered_by(A,B).
+awaken_target(A):- not_looking_at(A,B),lying_on(A,B).
+******************************

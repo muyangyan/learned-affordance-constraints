@@ -96,3 +96,13 @@ body_pred(writing_on, 2).
 01:34:55 lie_target(A):- looking_at(A,B),floor(B).
 01:34:55 lie_target(A):- on_the_side_of(B,A),leaning_on(A,B).
 01:34:55 ********************
+01:43:45 Generating programs of size: 5
+01:44:36 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.80 Recall:0.68 TP:32 FN:15 TN:194 FP:8 Size:15 MDL:38
+lie_target(A):- bed(B),in_front_of(B,A).
+lie_target(A):- bed(B),behind(B,A).
+lie_target(A):- standing_on(A,B),unsure(A,B).
+lie_target(A):- looking_at(A,B),floor(B).
+lie_target(A):- on_the_side_of(B,A),leaning_on(A,B).
+******************************

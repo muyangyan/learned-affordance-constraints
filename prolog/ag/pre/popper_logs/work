@@ -85,3 +85,10 @@ body_pred(writing_on, 2).
 01:34:54 work_target(A):- on_the_side_of(B,A),paper_notebook(B).
 01:34:54 ********************
 01:38:46 Generating programs of size: 5
+01:44:46 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.78 Recall:0.70 TP:47 FN:20 TN:280 FP:13 Size:9 MDL:42
+work_target(A):- in_front_of(B,A),paper_notebook(B).
+work_target(A):- table(B),unsure(A,B).
+work_target(A):- on_the_side_of(B,A),paper_notebook(B).
+******************************

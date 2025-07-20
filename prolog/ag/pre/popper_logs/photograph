@@ -73,3 +73,8 @@ body_pred(writing_on, 2).
 01:34:47 ********************
 01:34:51 Generating programs of size: 4
 01:38:31 Generating programs of size: 5
+01:45:06 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.85 Recall:0.95 TP:41 FN:2 TN:157 FP:7 Size:3 MDL:12
+photograph_target(A):- phone_camera(B),holding(A,B).
+******************************

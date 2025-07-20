@@ -85,3 +85,10 @@ body_pred(writing_on, 2).
 01:34:52 cook_target(A):- food(B),unsure(A,B).
 01:34:52 ********************
 01:37:16 Generating programs of size: 5
+01:44:35 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.74 Recall:0.70 TP:43 FN:18 TN:257 FP:15 Size:9 MDL:42
+cook_target(A):- food(B),not_contacting(A,B).
+cook_target(A):- touching(A,B),food(B).
+cook_target(A):- food(B),unsure(A,B).
+******************************

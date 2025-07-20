@@ -181,3 +181,24 @@ def string_to_action_triple(action_string):
 
 def get_id(video_id, frame_idx):
     return "%s.mp4/%06d.png" % (video_id, frame_idx)
+
+#TODO: borrowed from prolog_generation.py, ugly as hell
+def pyg_to_predicates(frame_id, data, node_vocab, edge_vocab):
+    node_types = data.node_type #NOT vocabs
+    edge_types = data.edge_type 
+
+    node_ids = [f'{i}' for i in range(len(node_types))]
+
+    edge_list = enumerate(data.edge_index.T)
+    edge_triples = [(edge_types[i], src, tgt) for i, (src, tgt) in edge_list]
+    
+    example = ""
+    #assert types of each node
+    for id, type in zip(node_ids, node_types):
+        example += f'{node_vocab[type]}({id}).\n'
+
+    #assert relations between nodes
+    for type, src, tgt in edge_triples:
+        example += f'{edge_vocab[type]}({node_ids[src]}, {node_ids[tgt]}).\n'
+
+    return example

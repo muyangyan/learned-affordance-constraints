@@ -66,7 +66,7 @@ class ActionGenome(Dataset):
 
 
     def __init__(self, cfg,
-                no_img=False, subset=True, split=None, position=None, label_mode='single'): # debug params
+                no_img=False, subset=True, split=None, position=None, label_mode='single', no_rules=False): # debug params
         """
         Initialize ActionGenome dataset.
         
@@ -86,6 +86,7 @@ class ActionGenome(Dataset):
         self.meta_root = cfg.data_folder
         self.prolog_folder = cfg.prolog_folder
         self.rules_name = cfg.rules.name
+        self.no_rules = no_rules
 
         # Use position parameter if provided, otherwise use config position
         self.position = position if position is not None else cfg.data.position
@@ -194,12 +195,16 @@ class ActionGenome(Dataset):
             self.df = multi_df
             length = len(multi_df)
 
+        
+        # initialize priors
         if self.split == 'train' or self.split == None:
             self.verb_priors, self.noun_priors, self.action_priors = self.compute_priors(single_df, length)
         else:
             self.verb_priors = None
             self.noun_priors = None
             self.action_priors = None
+
+            
 
         #create pyg scene graphs
         self.scene_graphs = {}
@@ -212,7 +217,7 @@ class ActionGenome(Dataset):
                 self.scene_graphs[id] = data
         
         # TODO: this is just because we didn't generate the bk for non-split dataset
-        if self.split is None:
+        if self.split is None or self.no_rules:
             self.truth_values = None
         else:
             # TODO: maybe add an option to not have rules even when split valid?
@@ -345,6 +350,54 @@ class ActionGenome(Dataset):
         
         return verb_priors, noun_priors, action_priors
 
+    def compare_scene_graphs(self, pre_sg, post_sg):
+        """
+        Compare pre and post scene graphs to extract add and delete effects.
+        
+        Args:
+            pre_sg: Pre-action scene graph (PyG Data object)
+            post_sg: Post-action scene graph (PyG Data object)
+            
+        Returns:
+            added_relations: List of (src_obj, rel, dst_obj) tuples that were added
+            deleted_relations: List of (src_obj, rel, dst_obj) tuples that were deleted
+        """
+        # Extract relationships from both scene graphs
+        def extract_relationships(sg):
+            relationships = set()
+            if sg.edge_index.size(1) > 0:  # Check if there are edges
+                for i, (src_idx, dst_idx) in enumerate(sg.edge_index.T):
+                    src_obj = self.object_classes[sg.node_type[src_idx].item()]
+                    dst_obj = self.object_classes[sg.node_type[dst_idx].item()]
+                    rel_name = self.relationship_classes[sg.edge_type[i].item()]
+                    relationships.add((src_obj, rel_name, dst_obj))
+            return relationships
+        
+        pre_relations = extract_relationships(pre_sg)
+        post_relations = extract_relationships(post_sg)
+        
+        # Compute add and delete effects
+        added_relations = list(post_relations - pre_relations)
+        deleted_relations = list(pre_relations - post_relations)
+        
+        return added_relations, deleted_relations
+    
+    def normalize_relation_for_prolog(self, relation_tuple):
+        """
+        Convert a relation tuple to Prolog-compatible format.
+        
+        Args:
+            relation_tuple: (src_obj, rel_name, dst_obj)
+            
+        Returns:
+            prolog_relation: String in format "rel_name(src_obj, dst_obj)"
+        """
+        src_obj, rel_name, dst_obj = relation_tuple
+        # Replace problematic characters for Prolog
+        src_obj = src_obj.replace('/', '_').replace('-', '_')
+        dst_obj = dst_obj.replace('/', '_').replace('-', '_')
+        rel_name = rel_name.replace('/', '_').replace('-', '_')
+        return f"{rel_name}({src_obj}, {dst_obj})"
 
 
     def init_vocab(self, verb_whitelist_file):
@@ -447,23 +500,23 @@ class ActionGenome(Dataset):
         a dict mapping verbs to the corresponding relationship that they form
         used to check if the verb has already been taken in the frame, so that we may prune invalid preconditions
         '''
-        self.verb_result_rel_map = {
-            'drink' : ['drinking_from'],
-            'eat' : ['eating'],
-            'grasp' : ['holding'],
-            'hold' : ['holding', 'carrying', 'touching'],
-            'sit' : ['sitting_on'],
-            'stand' : ['standing_on'],
-            'dress' : ['wearing'],
-            'lie' : ['lying_on'],
-            'take' : ['holding', 'carrying', 'touching'],
-        }
+        # self.verb_result_rel_map = {
+        #     'drink' : ['drinking_from'],
+        #     'eat' : ['eating'],
+        #     'grasp' : ['holding'],
+        #     'hold' : ['holding', 'carrying', 'touching'],
+        #     'sit' : ['sitting_on'],
+        #     'stand' : ['standing_on'],
+        #     'dress' : ['wearing'],
+        #     'lie' : ['lying_on'],
+        #     'take' : ['holding', 'carrying', 'touching'],
+        # }
 
 class SingleBothAG(ActionGenome):
 
     def __init__(self, cfg,
-                no_img=False, subset=True, split=None, position=None): # debug params
-        super().__init__(cfg, no_img, subset, split, position='both', label_mode='single')
+                no_img=False, subset=True, split=None, position=None, no_rules=False): # debug params
+        super().__init__(cfg, no_img, subset, split, position='both', label_mode='single', no_rules=no_rules)
 
     def create_labels(self, action_classes):
         #in this case action_classes is a single action
@@ -475,7 +528,7 @@ class SingleBothAG(ActionGenome):
 
     def __getitem__(self, index):
         row = self.df[['vid', 'pre_frame', 'post_frame', 'action']].iloc[index].values #type: ignore
-        video_id, pre_frame, post_frame, action_classes = row
+        video_id, pre_frame, post_frame, action_class = row
 
         #full id is necessary since some actions start on the same frame
         pre_id = get_id(video_id, pre_frame)
@@ -501,7 +554,7 @@ class SingleBothAG(ActionGenome):
             post_truth_values = None
 
         # Always compute all labels
-        verb_class, obj_class = self.action_verb_obj_map[action_classes]
+        verb_class, obj_class = self.action_verb_obj_map[action_class]
 
         pre_data = {
             'id': pre_id,
@@ -509,7 +562,7 @@ class SingleBothAG(ActionGenome):
             'scene_graph': pre_scene_graph,
             'verb_label': verb_class,
             'object_label': obj_class,
-            'action_label': action_classes,
+            'action_label': action_class,
             'truth_values': pre_truth_values
         }
         post_data = {
@@ -518,7 +571,7 @@ class SingleBothAG(ActionGenome):
             'scene_graph': post_scene_graph,
             'verb_label': verb_class,
             'object_label': obj_class,
-            'action_label': action_classes,
+            'action_label': action_class,
             'truth_values': post_truth_values
         }
         
@@ -683,8 +736,8 @@ class SingleAG(ActionGenome):
 class MultiAG(ActionGenome):
     
     def __init__(self, cfg,
-                no_img=False, subset=True, split=None, position=None): # debug params
-        super().__init__(cfg, no_img, subset, split, position, label_mode='multi')
+                no_img=False, subset=True, split=None, position=None, no_rules=False): # debug params
+        super().__init__(cfg, no_img, subset, split, position, label_mode='multi', no_rules=no_rules)
 
     def create_labels(self, action_classes):
         verb_classes, obj_classes = zip(*[self.action_verb_obj_map[action_class] for action_class in action_classes])
@@ -721,7 +774,7 @@ class MultiAG(ActionGenome):
             'scene_graph': scene_graph,
             'verb_labels': list(verb_classes),
             'object_labels': list(obj_classes),
-            'action_labels': action_classes,
+            'action_labels': action_classes, # list of action indices
             'truth_values': truth_values
         }
 
@@ -783,8 +836,8 @@ class MultiAG(ActionGenome):
 class MultiBothAG(ActionGenome):
     
     def __init__(self, cfg,
-                no_img=False, subset=True, split=None, position=None): # debug params
-        super().__init__(cfg, no_img, subset, split, position='both', label_mode='multi')
+                no_img=False, subset=True, split=None, position=None, no_rules=False): # debug params
+        super().__init__(cfg, no_img, subset, split, position='both', label_mode='multi', no_rules=no_rules)
 
     def create_labels(self, action_classes):
         # action_classes is a list of actions (multi-label)
@@ -905,6 +958,125 @@ class MultiBothAG(ActionGenome):
             'truth_values': truth_values
         }
     
+class EffectLearningAG(ActionGenome):
+    """
+    Dataset class specifically designed for learning add and delete effects.
+    Compares pre and post scene graphs to extract what changes occur.
+    """
+    
+    def __init__(self, cfg, no_img=False, subset=True, split=None, no_rules=False):
+        # Force position='both' and label_mode='single' for effect learning
+        super().__init__(cfg, no_img, subset, split, position='both', label_mode='single', no_rules=no_rules)
+        
+        # Extract effect data for all samples
+        self.effect_data = []
+        self._extract_all_effects()
+    
+    def _extract_all_effects(self):
+        """Extract add/delete effects for all samples in the dataset."""
+        print("Extracting add/delete effects from scene graphs...")
+        
+        for idx, row in self.df.iterrows():
+            video_id, pre_frame, post_frame, action_class = row[['vid', 'pre_frame', 'post_frame', 'action']].values
+            
+            pre_id = get_id(video_id, pre_frame)
+            post_id = get_id(video_id, post_frame)
+            
+            pre_sg = self.scene_graphs[pre_id]
+            post_sg = self.scene_graphs[post_id]
+            
+            # Extract effects
+            added_relations, deleted_relations = self.compare_scene_graphs(pre_sg, post_sg)
+            
+            # Get action information
+            verb_class, obj_class = self.action_verb_obj_map[action_class]
+            action_name = self.action_classes[action_class]
+            verb_name = self.verb_classes[verb_class]
+            
+            effect_sample = {
+                'idx': idx,
+                'pre_id': pre_id,
+                'post_id': post_id,
+                'action_class': action_class,
+                'action_name': action_name,
+                'verb_class': verb_class,
+                'verb_name': verb_name,
+                'obj_class': obj_class,
+                'added_relations': added_relations,
+                'deleted_relations': deleted_relations,
+                'pre_scene_graph': pre_sg,
+                'post_scene_graph': post_sg
+            }
+            
+            self.effect_data.append(effect_sample)
+        
+        print(f"Extracted effects for {len(self.effect_data)} samples")
+    
+    def __len__(self):
+        return len(self.effect_data)
+    
+    def __getitem__(self, index):
+        effect_sample = self.effect_data[index]
+        
+        # Load images if needed
+        if self.no_img:
+            pre_image = None
+            post_image = None
+        else:
+            pre_image_path = os.path.join(self.root, 'frames', effect_sample['pre_id'])
+            post_image_path = os.path.join(self.root, 'frames', effect_sample['post_id'])
+            pre_image = Image.open(pre_image_path).convert('RGB')
+            post_image = Image.open(post_image_path).convert('RGB')
+        
+        return {
+            'index': index,
+            'pre_id': effect_sample['pre_id'],
+            'post_id': effect_sample['post_id'],
+            'pre_image': pre_image,
+            'post_image': post_image,
+            'pre_scene_graph': effect_sample['pre_scene_graph'],
+            'post_scene_graph': effect_sample['post_scene_graph'],
+            'action_class': effect_sample['action_class'],
+            'action_name': effect_sample['action_name'],
+            'verb_class': effect_sample['verb_class'],
+            'verb_name': effect_sample['verb_name'],
+            'obj_class': effect_sample['obj_class'],
+            'added_relations': effect_sample['added_relations'],
+            'deleted_relations': effect_sample['deleted_relations']
+        }
+    
+    def get_all_unique_relations(self):
+        """Get all unique relations that appear in add/delete effects."""
+        all_relations = set()
+        for sample in self.effect_data:
+            for rel in sample['added_relations'] + sample['deleted_relations']:
+                all_relations.add(rel)
+        return list(all_relations)
+    
+    def get_effect_statistics(self):
+        """Get statistics about the effects in the dataset."""
+        total_adds = sum(len(sample['added_relations']) for sample in self.effect_data)
+        total_deletes = sum(len(sample['deleted_relations']) for sample in self.effect_data)
+        samples_with_adds = sum(1 for sample in self.effect_data if sample['added_relations'])
+        samples_with_deletes = sum(1 for sample in self.effect_data if sample['deleted_relations'])
+        
+        print(f"Effect Statistics:")
+        print(f"  Total add effects: {total_adds}")
+        print(f"  Total delete effects: {total_deletes}")
+        print(f"  Samples with adds: {samples_with_adds}/{len(self.effect_data)}")
+        print(f"  Samples with deletes: {samples_with_deletes}/{len(self.effect_data)}")
+        print(f"  Avg adds per sample: {total_adds/len(self.effect_data):.2f}")
+        print(f"  Avg deletes per sample: {total_deletes/len(self.effect_data):.2f}")
+        
+        return {
+            'total_adds': total_adds,
+            'total_deletes': total_deletes,
+            'samples_with_adds': samples_with_adds,
+            'samples_with_deletes': samples_with_deletes,
+            'avg_adds_per_sample': total_adds/len(self.effect_data),
+            'avg_deletes_per_sample': total_deletes/len(self.effect_data)
+        }
+
 # ✅ COMPLETED UPDATES FOR DUAL LABEL TYPE SUPPORT:
 #
 # 1. ✅ models/action_anticipator.py:

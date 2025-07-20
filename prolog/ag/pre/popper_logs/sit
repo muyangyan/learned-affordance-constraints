@@ -93,3 +93,14 @@ body_pred(writing_on, 2).
 01:35:05 sit_target(A):- other_relationship(A,B),sofa_couch(B).
 01:35:05 sit_target(A):- bed(B),other_relationship(A,B).
 01:35:05 ********************
+02:03:30 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.80 Recall:0.29 TP:168 FN:404 TN:1918 FP:43 Size:21 MDL:468
+sit_target(A):- on_the_side_of(B,A),chair(B).
+sit_target(A):- bed(B),not_contacting(A,B).
+sit_target(A):- not_contacting(A,B),sofa_couch(B).
+sit_target(A):- standing_on(A,B),in_front_of(B,A).
+sit_target(A):- chair(B),in_front_of(B,A).
+sit_target(A):- other_relationship(A,B),sofa_couch(B).
+sit_target(A):- bed(B),other_relationship(A,B).
+******************************

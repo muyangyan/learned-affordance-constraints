@@ -20,6 +20,9 @@ def sanitize_frame_id(frame_id):
     """Convert frame ID to Prolog-safe format"""
     return frame_id.replace('/', '_').replace('.', '_').lower()
 
+def get_arity_of_ground_atom(ground_atom):
+    return len(ground_atom.split('(')[1].split(')')[0].split(','))
+
 def get_rule_precisions_recalls(rules_json, priors, classes):
     '''
     Get the precisions and recalls for all rules for converting rule binary truth values to predictions

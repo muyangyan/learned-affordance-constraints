@@ -99,3 +99,10 @@ body_pred(writing_on, 2).
 01:34:59 walk_target(A):- doorway(B),unsure(A,B).
 01:34:59 walk_target(A):- doorway(B),not_looking_at(A,B).
 01:34:59 ********************
+01:51:28 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.87 Recall:1.00 TP:305 FN:0 TN:1037 FP:45 Size:9 MDL:54
+walk_target(A):- looking_at(A,B),doorway(B).
+walk_target(A):- doorway(B),unsure(A,B).
+walk_target(A):- doorway(B),not_looking_at(A,B).
+******************************

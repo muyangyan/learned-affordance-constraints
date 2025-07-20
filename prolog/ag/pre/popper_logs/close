@@ -93,3 +93,14 @@ body_pred(writing_on, 2).
 01:35:04 close_target(A):- in_front_of(B,A),door(B).
 01:35:04 close_target(A):- refrigerator(B),in_front_of(B,A).
 01:35:04 ********************
+02:11:21 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.72 Recall:0.57 TP:326 FN:246 TN:1754 FP:128 Size:21 MDL:395
+close_target(A):- on_the_side_of(B,A),door(B).
+close_target(A):- looking_at(A,B),closet_cabinet(B).
+close_target(A):- above(B,A),laptop(B).
+close_target(A):- unsure(A,B),closet_cabinet(B).
+close_target(A):- in(B,A),door(B).
+close_target(A):- in_front_of(B,A),door(B).
+close_target(A):- refrigerator(B),in_front_of(B,A).
+******************************

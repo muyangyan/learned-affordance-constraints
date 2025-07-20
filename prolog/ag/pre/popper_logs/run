@@ -67,3 +67,6 @@ body_pred(writing_on, 2).
 01:34:47 Generating programs of size: 2
 01:34:47 Generating programs of size: 3
 01:34:53 Generating programs of size: 4
+01:43:29 Generating programs of size: 5
+01:44:37 TIMEOUT OF 600 SECONDS EXCEEDED
+NO SOLUTION
