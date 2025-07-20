@@ -500,17 +500,17 @@ class ActionGenome(Dataset):
         a dict mapping verbs to the corresponding relationship that they form
         used to check if the verb has already been taken in the frame, so that we may prune invalid preconditions
         '''
-        # self.verb_result_rel_map = {
-        #     'drink' : ['drinking_from'],
-        #     'eat' : ['eating'],
-        #     'grasp' : ['holding'],
-        #     'hold' : ['holding', 'carrying', 'touching'],
-        #     'sit' : ['sitting_on'],
-        #     'stand' : ['standing_on'],
-        #     'dress' : ['wearing'],
-        #     'lie' : ['lying_on'],
-        #     'take' : ['holding', 'carrying', 'touching'],
-        # }
+        self.verb_result_rel_map = {
+            'drink' : ['drinking_from'],
+            'eat' : ['eating'],
+            'grasp' : ['holding'],
+            'hold' : ['holding', 'carrying', 'touching'],
+            'sit' : ['sitting_on'],
+            'stand' : ['standing_on'],
+            'dress' : ['wearing'],
+            'lie' : ['lying_on'],
+            'take' : ['holding', 'carrying', 'touching'],
+        }
 
 class SingleBothAG(ActionGenome):
 

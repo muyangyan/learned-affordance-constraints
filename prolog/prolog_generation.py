@@ -25,8 +25,6 @@ class PrologData:
     def __init__(self, prolog_root, position, dataset, model=None, split=None):
         self.root = prolog_root
         self.pos_root = os.path.join(self.root, position)
-        self.bk_filename = os.path.join(self.pos_root, f'bk.pl')
-        self.general_bias_filename = os.path.join(self.pos_root, 'general_bias.pl')
 
         # Get vocabularies from the dataset
         self.node_vocab = dataset.object_classes
@@ -39,9 +37,12 @@ class PrologData:
 
         assert split in ['train', 'val', 'test', None]
 
-        self.bk_filename = os.path.join(self.root, f'bk.pl')
-        self.transition_bk_filename = os.path.join(self.root, f'transition_bk.pl') # for effect learning
-        self.general_bias_filename = os.path.join(self.root, 'general_bias.pl')
+        self.bk_filename = os.path.join(self.root, 'bk.pl')
+        self.transition_bk_filename = os.path.join(self.root, 'transition_bk.pl') # for effect learning
+        if not os.path.exists(self.bk_filename):
+            os.makedirs(os.path.dirname(self.bk_filename), exist_ok=True)
+        if not os.path.exists(self.transition_bk_filename):
+            os.makedirs(os.path.dirname(self.transition_bk_filename), exist_ok=True)
 
         self.max_vars = 6
         self.max_body = 8
@@ -66,15 +67,18 @@ class PrologData:
         
         example = []
         #assert types of each node
-        for id, type in zip(node_ids, node_types):
-            example.append(f'{self.node_vocab[type]}({id}).')
+        for id, node_type in zip(node_ids, node_types):
+            example.append(f'{self.node_vocab[node_type]}({id}).')
 
         #assert relations between nodes
-        for type, src, tgt in edge_triples:
-            example.append(f'{self.edge_vocab[type]}({node_ids[src]}, {node_ids[tgt]}).')
+        for edge_type, src, tgt in edge_triples:
+            example.append(f'{self.edge_vocab[edge_type]}({node_ids[src]}, {node_ids[tgt]}).')
         
         if action_idxs is not None:
+            if type(action_idxs) is not list:
+                action_idxs = [action_idxs]
             for action_idx in action_idxs:
+                action_idx = int(action_idx)
                 verb_idx, obj_idx = self.dataset.action_verb_obj_map[action_idx]
                 if obj_idx == None:
                     obj_idx = 0 # no object, unary action. Just act as if the object is the person
@@ -249,14 +253,13 @@ class PrologData:
                 f.write(f'{example}\n')
 
     def write_effects_bk_and_examples(self):
+        print('writing effects bk and examples')
         with open(self.transition_bk_filename, 'w+') as f:
             f.write(':- style_check(-discontiguous).\n')
 
         # collect the positive and negative examples
-        pos_examples = {}
-        neg_examples = {}
+        examples = {}
 
-        ## collect the positive examples
         for pre_data, post_data in self.dataset:
             pre_id = pre_data['id']
             post_id = post_data['id']
@@ -273,6 +276,9 @@ class PrologData:
             post_state_set = set(post_state)
             add_effects = post_state_set - pre_state_set
             del_effects = pre_state_set - post_state_set
+            not_add_effects = post_state_set - add_effects
+            not_del_effects = pre_state_set - del_effects
+
 
             # write the pre-state into the effects_bk file
             pre_state = '\n'.join(pre_state)
@@ -280,44 +286,54 @@ class PrologData:
                 f.write(f'%%pre-post-state pair id: {clean_pair_id}\n')
                 f.write(f'{pre_state}\n')
             
-            # write the positive examples for the add and del effects
+            # collect the positive and negative examples
             for effect in add_effects:
                 pred_name = effect.split('(')[0]
-                pos_examples[f'add_{pred_name}'].append(effect)
+                if f'pos_add_{pred_name}' not in examples.keys():
+                    examples[f'pos_add_{pred_name}'] = []
+                examples[f'pos_add_{pred_name}'].append(effect)
             for effect in del_effects:
                 pred_name = effect.split('(')[0]
-                pos_examples[f'del_{pred_name}'].append(effect)
-        
-        ## collect the negative examples #TODO: implement
+                if f'pos_del_{pred_name}' not in examples.keys():
+                    examples[f'pos_del_{pred_name}'] = []
+                examples[f'pos_del_{pred_name}'].append(effect)
+            for effect in not_add_effects:
+                pred_name = effect.split('(')[0]
+                if f'neg_add_{pred_name}' not in examples.keys():
+                    examples[f'neg_add_{pred_name}'] = []
+                examples[f'neg_add_{pred_name}'].append(effect)
+            for effect in not_del_effects:
+                pred_name = effect.split('(')[0]
+                if f'neg_del_{pred_name}' not in examples.keys():
+                    examples[f'neg_del_{pred_name}'] = []
+                examples[f'neg_del_{pred_name}'].append(effect)
 
         # now that we've collected all the examples, write them to the files
         ## positive examples
-        for effect_pred_name, examples in pos_examples.items():
-            exs_filename = os.path.join(self.pos_root, 'examples', 'verbs', f'{effect_pred_name}.pl') #TODO: actions
-            bias_filename = os.path.join(self.pos_root, 'biases', 'verbs', f'{effect_pred_name}.pl')
+        for item, exs in examples.items():
+            pos_or_neg, effect_type, *pred_name_parts = item.split('_')
+            pred_name = '_'.join(pred_name_parts)
+            exs_filename = os.path.join(self.pos_root, 'examples', 'verbs', f'{effect_type}_{pred_name}.pl') #TODO: actions
+            bias_filename = os.path.join(self.pos_root, 'biases', 'verbs', f'{effect_type}_{pred_name}.pl')
             if not os.path.exists(exs_filename):
                 os.makedirs(os.path.dirname(exs_filename), exist_ok=True)
             if not os.path.exists(bias_filename):
                 os.makedirs(os.path.dirname(bias_filename), exist_ok=True)
-            effect_type = effect_pred_name.split('_')[0]
-            if len(examples) > 0:
-                effect_arity = get_arity_of_ground_atom(examples[0])
+            if len(exs) > 0:
+                effect_arity = get_arity_of_ground_atom(exs[0])
                 with(open(exs_filename, 'w+')) as f:
                     f.write(':- style_check(-discontiguous).\n')
-                    for example in examples:
-                        f.write(f'pos({effect_type}_{example}).\n')
+                    for ex in exs:
+                        f.write(f'{pos_or_neg}({effect_type}_{ex}).\n')
             else:
-                print(f'No examples found for {effect_pred_name}')
+                print(f'No examples found for {effect_type}_{pred_name}')
                 effect_arity = 0
             with(open(bias_filename, 'w+')) as f:
                 f.write(':- style_check(-discontiguous).\n')
                 f.write(f'max_vars({self.max_vars}).\n')
                 f.write(f'max_body({self.max_body}).\n')
-                f.write(f'head_pred({effect_pred_name}, {effect_arity}).\n')
+                f.write(f'head_pred({effect_type}_{pred_name}, {effect_arity}).\n')
                 f.write(self.general_bias)
-
-        # negative examples
-        #for effect_pred_name, examples in neg_examples.items():
 
         
 
@@ -343,7 +359,7 @@ class PrologData:
                 bias_lines.append(f'body_pred({edge}, 2).')
         if write_verbs:
             for verb in self.verb_vocab:
-                bias_lines.append(f'body_pred({verb}, 1).')
+                bias_lines.append(f'body_pred({verb}, 2).')
         if write_actions:
             for action in self.dataset.action_classes:
                 bias_lines.append(f'body_pred({action}, 1).')
@@ -366,27 +382,30 @@ def main(config):
         full_pd = PrologData(prolog_folder, 'pre', full_ag, model=None, split=None)
         full_pd.write_bk()
 
-    # generate posneg examples for valid pre train frames
-    print("Generating examples for pre-frames...")
-    pre_ag = MultiAG(config, no_img=True, split='train', position='pre', subset=True, no_rules=True)
-    pre_pd = PrologData(prolog_folder, 'pre', pre_ag, model=None, split=None)
-    pre_pd.init_general_bias(config.data.forbidden_nodes, config.data.forbidden_edges)
+    if args.generate_effects:
+        # generate posneg examples for valid post train frames
+        print("Generating examples for effect learning...")
+        post_ag = SingleBothAG(config, no_img=True, split='train', subset=True, no_rules=True)
+        post_pd = PrologData(prolog_folder, 'post', post_ag, model=None, split=None)
+        post_pd.init_general_bias(config.data.forbidden_nodes, config.data.forbidden_edges, write_verbs=True)
+        post_pd.write_effects_bk_and_examples()
 
-    pre_pd.write_verbs()
-    pre_pd.write_actions()
+    if args.generate_pre:
+        # generate posneg examples for valid pre train frames
+        print("Generating examples for pre-frames...")
+        pre_ag = MultiAG(config, no_img=True, split='train', position='pre', subset=True, no_rules=True)
+        pre_pd = PrologData(prolog_folder, 'pre', pre_ag, model=None, split=None)
+        pre_pd.init_general_bias(config.data.forbidden_nodes, config.data.forbidden_edges)
 
-    # generate posneg examples for valid post train frames
-    print("Generating examples for effect learning...")
-    post_ag = SingleBothAG(config, no_img=True, split='train', subset=True, no_rules=True)
-    post_pd = PrologData(prolog_folder, 'post', post_ag, model=None, split=None)
-    post_pd.init_general_bias(config.data.forbidden_nodes, config.data.forbidden_edges, write_verbs=True)
-    post_pd.write_effects_bk_and_examples()
-
+        pre_pd.write_verbs()
+        pre_pd.write_actions()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--config', type=str, default='configs/ag.yaml', help='Path to config file')
     parser.add_argument('--generate_bk', action='store_true', help='Generate background knowledge for all frames')
+    parser.add_argument('--generate_effects', action='store_true', help='Generate background knowledge for all frames')
+    parser.add_argument('--generate_pre', action='store_true', help='Generate background knowledge for all frames')
 
     args = parser.parse_args()
 

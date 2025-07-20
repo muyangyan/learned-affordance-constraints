@@ -1,0 +1,11 @@
+:- style_check(-discontiguous).
+neg(del_grasp(x_17az5_mp4_000405_png_17az5_mp4_000648_png_0, x_17az5_mp4_000405_png_17az5_mp4_000648_png_13).).
+neg(del_grasp(x_zl55n_mp4_000232_png_zl55n_mp4_000404_png_0, x_zl55n_mp4_000232_png_zl55n_mp4_000404_png_13).).
+neg(del_grasp(x_8vvhr_mp4_000023_png_8vvhr_mp4_000111_png_0, x_8vvhr_mp4_000023_png_8vvhr_mp4_000111_png_13).).
+neg(del_grasp(x_0poyo_mp4_000484_png_0poyo_mp4_000680_png_0, x_0poyo_mp4_000484_png_0poyo_mp4_000680_png_13).).
+neg(del_grasp(x_d8osc_mp4_000013_png_d8osc_mp4_000126_png_0, x_d8osc_mp4_000013_png_d8osc_mp4_000126_png_13).).
+neg(del_grasp(x_25qpb_mp4_000488_png_25qpb_mp4_000630_png_0, x_25qpb_mp4_000488_png_25qpb_mp4_000630_png_13).).
+neg(del_grasp(x_rvwk8_mp4_000257_png_rvwk8_mp4_000414_png_0, x_rvwk8_mp4_000257_png_rvwk8_mp4_000414_png_13).).
+neg(del_grasp(x_qsbxk_mp4_000706_png_qsbxk_mp4_000950_png_0, x_qsbxk_mp4_000706_png_qsbxk_mp4_000950_png_13).).
+neg(del_grasp(x_qsbxk_mp4_001031_png_qsbxk_mp4_001426_png_0, x_qsbxk_mp4_001031_png_qsbxk_mp4_001426_png_13).).
+neg(del_grasp(x_kn0tk_mp4_000029_png_kn0tk_mp4_000137_png_0, x_kn0tk_mp4_000029_png_kn0tk_mp4_000137_png_13).).

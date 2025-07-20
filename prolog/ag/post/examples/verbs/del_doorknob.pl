@@ -1,0 +1,27 @@
+:- style_check(-discontiguous).
+pos(del_doorknob(x_0wu7s_mp4_000109_png_0wu7s_mp4_000234_png_13).).
+pos(del_doorknob(x_2cr09_mp4_000064_png_2cr09_mp4_000196_png_13).).
+pos(del_doorknob(x_vb1ht_mp4_000174_png_vb1ht_mp4_000895_png_13).).
+pos(del_doorknob(x_afy5e_mp4_000041_png_afy5e_mp4_000113_png_13).).
+pos(del_doorknob(x_b3hce_mp4_000520_png_b3hce_mp4_000701_png_13).).
+pos(del_doorknob(x_fpu57_mp4_000187_png_fpu57_mp4_000345_png_13).).
+pos(del_doorknob(x_t2j3m_mp4_000246_png_t2j3m_mp4_000290_png_13).).
+pos(del_doorknob(x_mygja_mp4_000179_png_mygja_mp4_000342_png_13).).
+pos(del_doorknob(x_0f0we_mp4_000208_png_0f0we_mp4_000408_png_13).).
+pos(del_doorknob(x_2tu40_mp4_000010_png_2tu40_mp4_000195_png_13).).
+pos(del_doorknob(x_42sep_mp4_000443_png_42sep_mp4_000622_png_13).).
+pos(del_doorknob(x_d8osc_mp4_000037_png_d8osc_mp4_000216_png_13).).
+pos(del_doorknob(x_ona0s_mp4_000300_png_ona0s_mp4_000561_png_13).).
+pos(del_doorknob(x_hcspe_mp4_000011_png_hcspe_mp4_000110_png_13).).
+pos(del_doorknob(x_uetkq_mp4_000181_png_uetkq_mp4_000226_png_13).).
+pos(del_doorknob(x_uetkq_mp4_000169_png_uetkq_mp4_000226_png_13).).
+pos(del_doorknob(x_9rkte_mp4_000139_png_9rkte_mp4_000469_png_13).).
+pos(del_doorknob(x_25qpb_mp4_000521_png_25qpb_mp4_000742_png_13).).
+pos(del_doorknob(x_25qpb_mp4_000521_png_25qpb_mp4_000742_png_13).).
+pos(del_doorknob(x_29jk6_mp4_000728_png_29jk6_mp4_000879_png_13).).
+pos(del_doorknob(x_vs7da_mp4_000136_png_vs7da_mp4_000322_png_13).).
+pos(del_doorknob(x_uwrqv_mp4_000259_png_uwrqv_mp4_000452_png_13).).
+pos(del_doorknob(x_u9lka_mp4_000453_png_u9lka_mp4_000638_png_13).).
+pos(del_doorknob(x_mgdo2_mp4_000646_png_mgdo2_mp4_000790_png_13).).
+pos(del_doorknob(x_kn0tk_mp4_000029_png_kn0tk_mp4_000166_png_13).).
+pos(del_doorknob(x_cqpzu_mp4_000542_png_cqpzu_mp4_000717_png_13).).

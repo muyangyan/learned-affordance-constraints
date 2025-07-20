@@ -1,7 +1,7 @@
 %%no negative model used
 max_vars(6).
 max_body(8).
-head_pred(pour_target, 1).
+head_pred(pour_target, 2).
 body_pred(person, 1).
 body_pred(bag, 1).
 body_pred(bed, 1).

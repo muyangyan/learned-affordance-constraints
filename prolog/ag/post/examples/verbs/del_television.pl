@@ -1,0 +1,25 @@
+:- style_check(-discontiguous).
+pos(del_television(x_b3sf6_mp4_000390_png_b3sf6_mp4_000611_png_32).).
+pos(del_television(x_8esht_mp4_000488_png_8esht_mp4_000751_png_32).).
+pos(del_television(x_8esht_mp4_000431_png_8esht_mp4_000705_png_32).).
+pos(del_television(x_nc1oc_mp4_000499_png_nc1oc_mp4_000797_png_32).).
+pos(del_television(x_qnkdi_mp4_000585_png_qnkdi_mp4_000813_png_32).).
+pos(del_television(x_mkdcu_mp4_000859_png_mkdcu_mp4_001111_png_32).).
+pos(del_television(x_mkdcu_mp4_001026_png_mkdcu_mp4_001111_png_32).).
+pos(del_television(x_qtojx_mp4_000678_png_qtojx_mp4_000834_png_32).).
+pos(del_television(x_sqyto_mp4_000655_png_sqyto_mp4_000841_png_32).).
+pos(del_television(x_aiyfu_mp4_000470_png_aiyfu_mp4_000720_png_32).).
+pos(del_television(x_ybo6n_mp4_000607_png_ybo6n_mp4_000754_png_32).).
+pos(del_television(x_f8e8c_mp4_000026_png_f8e8c_mp4_000916_png_32).).
+pos(del_television(x_f8e8c_mp4_000026_png_f8e8c_mp4_000357_png_32).).
+pos(del_television(x_gqgae_mp4_000750_png_gqgae_mp4_000866_png_32).).
+pos(del_television(x_nhd1j_mp4_000348_png_nhd1j_mp4_000593_png_32).).
+pos(del_television(x_nhd1j_mp4_000156_png_nhd1j_mp4_000302_png_32).).
+pos(del_television(x_a4n6z_mp4_000356_png_a4n6z_mp4_000521_png_32).).
+pos(del_television(x_291lh_mp4_000040_png_291lh_mp4_000183_png_32).).
+pos(del_television(x_e7fgk_mp4_000445_png_e7fgk_mp4_000700_png_32).).
+pos(del_television(x_hc62a_mp4_000016_png_hc62a_mp4_000132_png_32).).
+pos(del_television(x_hc62a_mp4_000016_png_hc62a_mp4_000132_png_32).).
+pos(del_television(x_1wj6o_mp4_000514_png_1wj6o_mp4_000868_png_32).).
+pos(del_television(x_1wj6o_mp4_000397_png_1wj6o_mp4_000683_png_32).).
+pos(del_television(x_1wj6o_mp4_000393_png_1wj6o_mp4_000646_png_32).).

@@ -1,0 +1,7 @@
+:- style_check(-discontiguous).
+neg(del_drinking_from(x_eascd_mp4_000585_png_eascd_mp4_000946_png_0, x_eascd_mp4_000585_png_eascd_mp4_000946_png_10).).
+neg(del_drinking_from(x_1kflx_mp4_000567_png_1kflx_mp4_000721_png_0, x_1kflx_mp4_000567_png_1kflx_mp4_000721_png_10).).
+neg(del_drinking_from(x_qnhm7_mp4_000306_png_qnhm7_mp4_000588_png_0, x_qnhm7_mp4_000306_png_qnhm7_mp4_000588_png_10).).
+neg(del_drinking_from(x_qnhm7_mp4_000306_png_qnhm7_mp4_000588_png_0, x_qnhm7_mp4_000306_png_qnhm7_mp4_000588_png_10).).
+neg(del_drinking_from(x_8f17s_mp4_000012_png_8f17s_mp4_000246_png_0, x_8f17s_mp4_000012_png_8f17s_mp4_000246_png_10).).
+neg(del_drinking_from(x_bzd0q_mp4_000109_png_bzd0q_mp4_000239_png_0, x_bzd0q_mp4_000109_png_bzd0q_mp4_000239_png_10).).
