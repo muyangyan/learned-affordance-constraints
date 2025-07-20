@@ -1,60 +1,29 @@
-:- style_check(-discontiguous).
-max_vars(6).
-max_body(8).
-head_pred(del_covered_by, 2).
-body_pred(awaken, 2).
-body_pred(myclose, 2).
-body_pred(cook, 2).
-body_pred(dress, 2).
-body_pred(drink, 2).
-body_pred(eat, 2).
-body_pred(fix, 2).
-body_pred(grasp, 2).
-body_pred(hold, 2).
-body_pred(lie, 2).
-body_pred(myopen, 2).
-body_pred(photograph, 2).
-body_pred(play, 2).
-body_pred(pour, 2).
-body_pred(put, 2).
-body_pred(run, 2).
-body_pred(sit, 2).
-body_pred(snuggle, 2).
-body_pred(stand, 2).
-body_pred(take, 2).
-body_pred(talk, 2).
-body_pred(throw, 2).
-body_pred(tidy, 2).
-body_pred(turn, 2).
-body_pred(undress, 2).
-body_pred(walk, 2).
-body_pred(wash, 2).
-body_pred(watch, 2).
-body_pred(work, 2).
-03:40:16 Generating programs of size: 2
-03:40:16 ********************
-03:40:16 New best hypothesis:
-03:40:16 tp:12 fn:51 tn:71 fp:4 size:2 mdl:57
-03:40:16 del_covered_by(A,B):- hold(A,B).
-03:40:16 ********************
-03:40:16 ********************
-03:40:16 New best hypothesis:
-03:40:16 tp:11 fn:52 tn:75 fp:0 size:2 mdl:54
-03:40:16 del_covered_by(A,B):- put(A,B).
-03:40:16 ********************
-03:40:16 Generating programs of size: 3
-03:40:18 ********************
-03:40:18 New best hypothesis:
-03:40:18 tp:21 fn:42 tn:71 fp:4 size:4 mdl:50
-03:40:18 del_covered_by(A,B):- hold(A,B).
-03:40:18 del_covered_by(A,B):- put(A,B).
-03:40:18 ********************
-03:40:23 Generating programs of size: 4
-03:40:32 Generating programs of size: 5
-03:40:35 Generating programs of size: 6
-03:40:36 Generating programs of size: 7
+18:52:01 Generating programs of size: 2
+18:52:01 ********************
+18:52:01 New best hypothesis:
+18:52:01 tp:12 fn:51 tn:71 fp:4 size:2 mdl:57
+18:52:01 del_covered_by(A,B):- hold(A,B).
+18:52:01 ********************
+18:52:01 ********************
+18:52:01 New best hypothesis:
+18:52:01 tp:11 fn:52 tn:75 fp:0 size:2 mdl:54
+18:52:01 del_covered_by(A,B):- put(A,B).
+18:52:01 ********************
+18:52:01 Generating programs of size: 3
+18:52:02 ********************
+18:52:02 New best hypothesis:
+18:52:02 tp:21 fn:42 tn:71 fp:4 size:4 mdl:50
+18:52:02 del_covered_by(A,B):- hold(A,B).
+18:52:02 del_covered_by(A,B):- put(A,B).
+18:52:02 ********************
+18:52:07 Generating programs of size: 4
+18:52:15 Generating programs of size: 5
+18:52:19 Generating programs of size: 6
+18:52:20 Generating programs of size: 7
 ********** SOLUTION **********
 Precision:0.84 Recall:0.33 TP:21 FN:42 TN:71 FP:4 Size:4 MDL:50
 del_covered_by(A,B):- hold(A,B).
 del_covered_by(A,B):- put(A,B).
 ******************************
+(<popper.core.Literal object at 0x72ee2c4c68e0>, frozenset({<popper.core.Literal object at 0x72ee1ec7d220>})) positives covered: 12 negatives covered: 4
+(<popper.core.Literal object at 0x72ee2c4c68e0>, frozenset({<popper.core.Literal object at 0x72ee1ec83e80>})) positives covered: 11 negatives covered: 0

@@ -1,57 +1,27 @@
-:- style_check(-discontiguous).
-max_vars(6).
-max_body(8).
-head_pred(add_leaning_on, 2).
-body_pred(awaken, 2).
-body_pred(myclose, 2).
-body_pred(cook, 2).
-body_pred(dress, 2).
-body_pred(drink, 2).
-body_pred(eat, 2).
-body_pred(fix, 2).
-body_pred(grasp, 2).
-body_pred(hold, 2).
-body_pred(lie, 2).
-body_pred(myopen, 2).
-body_pred(photograph, 2).
-body_pred(play, 2).
-body_pred(pour, 2).
-body_pred(put, 2).
-body_pred(run, 2).
-body_pred(sit, 2).
-body_pred(snuggle, 2).
-body_pred(stand, 2).
-body_pred(take, 2).
-body_pred(talk, 2).
-body_pred(throw, 2).
-body_pred(tidy, 2).
-body_pred(turn, 2).
-body_pred(undress, 2).
-body_pred(walk, 2).
-body_pred(wash, 2).
-body_pred(watch, 2).
-body_pred(work, 2).
-03:40:16 Generating programs of size: 2
-03:40:16 ********************
-03:40:16 New best hypothesis:
-03:40:16 tp:8 fn:131 tn:78 fp:0 size:2 mdl:133
-03:40:16 add_leaning_on(A,B):- sit(A,B).
-03:40:16 ********************
-03:40:16 Generating programs of size: 3
-03:40:21 ********************
-03:40:21 New best hypothesis:
-03:40:21 tp:15 fn:124 tn:77 fp:1 size:6 mdl:131
-03:40:21 add_leaning_on(A,B):- sit(A,B).
-03:40:21 add_leaning_on(A,B):- put(A,B).
-03:40:21 add_leaning_on(A,B):- lie(A,B).
-03:40:21 ********************
-03:40:22 Generating programs of size: 4
-03:40:28 Generating programs of size: 5
-03:40:33 Generating programs of size: 6
-03:40:33 Generating programs of size: 7
+18:52:01 Generating programs of size: 2
+18:52:01 ********************
+18:52:01 New best hypothesis:
+18:52:01 tp:8 fn:131 tn:78 fp:0 size:2 mdl:133
+18:52:01 add_leaning_on(A,B):- sit(A,B).
+18:52:01 ********************
+18:52:01 Generating programs of size: 3
+18:52:05 ********************
+18:52:05 New best hypothesis:
+18:52:05 tp:15 fn:124 tn:77 fp:1 size:6 mdl:131
+18:52:05 add_leaning_on(A,B):- sit(A,B).
+18:52:05 add_leaning_on(A,B):- put(A,B).
+18:52:05 add_leaning_on(A,B):- lie(A,B).
+18:52:05 ********************
+18:52:07 Generating programs of size: 4
+18:52:13 Generating programs of size: 5
+18:52:17 Generating programs of size: 6
+18:52:18 Generating programs of size: 7
 ********** SOLUTION **********
 Precision:0.94 Recall:0.11 TP:15 FN:124 TN:77 FP:1 Size:6 MDL:131
 add_leaning_on(A,B):- sit(A,B).
 add_leaning_on(A,B):- put(A,B).
 add_leaning_on(A,B):- lie(A,B).
 ******************************
+(<popper.core.Literal object at 0x75c2a46b18e0>, frozenset({<popper.core.Literal object at 0x75c296e88fa0>})) positives covered: 8 negatives covered: 0
+(<popper.core.Literal object at 0x75c2a46b18e0>, frozenset({<popper.core.Literal object at 0x75c296e83e80>})) positives covered: 4 negatives covered: 1
+(<popper.core.Literal object at 0x75c2a46b18e0>, frozenset({<popper.core.Literal object at 0x75c296e98220>})) positives covered: 3 negatives covered: 0

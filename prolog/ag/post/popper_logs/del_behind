@@ -1,72 +1,39 @@
-:- style_check(-discontiguous).
-max_vars(6).
-max_body(8).
-head_pred(del_behind, 2).
-body_pred(awaken, 2).
-body_pred(myclose, 2).
-body_pred(cook, 2).
-body_pred(dress, 2).
-body_pred(drink, 2).
-body_pred(eat, 2).
-body_pred(fix, 2).
-body_pred(grasp, 2).
-body_pred(hold, 2).
-body_pred(lie, 2).
-body_pred(myopen, 2).
-body_pred(photograph, 2).
-body_pred(play, 2).
-body_pred(pour, 2).
-body_pred(put, 2).
-body_pred(run, 2).
-body_pred(sit, 2).
-body_pred(snuggle, 2).
-body_pred(stand, 2).
-body_pred(take, 2).
-body_pred(talk, 2).
-body_pred(throw, 2).
-body_pred(tidy, 2).
-body_pred(turn, 2).
-body_pred(undress, 2).
-body_pred(walk, 2).
-body_pred(wash, 2).
-body_pred(watch, 2).
-body_pred(work, 2).
-03:40:16 Generating programs of size: 2
-03:40:16 ********************
-03:40:16 New best hypothesis:
-03:40:16 tp:9 fn:531 tn:573 fp:3 size:2 mdl:536
-03:40:16 del_behind(A,B):- awaken(B,A).
-03:40:16 ********************
-03:40:16 ********************
-03:40:16 New best hypothesis:
-03:40:16 tp:13 fn:527 tn:575 fp:1 size:2 mdl:530
-03:40:16 del_behind(A,B):- hold(B,A).
-03:40:16 ********************
-03:40:16 ********************
-03:40:16 New best hypothesis:
-03:40:16 tp:26 fn:514 tn:574 fp:2 size:2 mdl:518
-03:40:16 del_behind(A,B):- take(B,A).
-03:40:16 ********************
-03:40:16 Generating programs of size: 3
-03:40:23 ********************
-03:40:23 New best hypothesis:
-03:40:23 tp:90 fn:450 tn:549 fp:27 size:18 mdl:495
-03:40:23 del_behind(A,B):- awaken(B,A).
-03:40:23 del_behind(A,B):- hold(B,A).
-03:40:23 del_behind(A,B):- walk(B,A).
-03:40:23 del_behind(A,B):- undress(B,A).
-03:40:23 del_behind(A,B):- tidy(B,A).
-03:40:23 del_behind(A,B):- throw(B,A).
-03:40:23 del_behind(A,B):- myopen(B,A).
-03:40:23 del_behind(A,B):- take(B,A).
-03:40:23 del_behind(A,B):- lie(B,A).
-03:40:23 ********************
-03:40:29 Generating programs of size: 4
-03:41:02 Generating programs of size: 5
-03:41:17 Generating programs of size: 6
-03:41:26 Generating programs of size: 7
-03:41:34 Generating programs of size: 8
-03:41:40 Generating programs of size: 9
+18:52:00 Generating programs of size: 2
+18:52:00 ********************
+18:52:00 New best hypothesis:
+18:52:00 tp:9 fn:531 tn:573 fp:3 size:2 mdl:536
+18:52:00 del_behind(A,B):- awaken(B,A).
+18:52:00 ********************
+18:52:00 ********************
+18:52:00 New best hypothesis:
+18:52:00 tp:13 fn:527 tn:575 fp:1 size:2 mdl:530
+18:52:00 del_behind(A,B):- hold(B,A).
+18:52:00 ********************
+18:52:00 ********************
+18:52:00 New best hypothesis:
+18:52:00 tp:26 fn:514 tn:574 fp:2 size:2 mdl:518
+18:52:00 del_behind(A,B):- take(B,A).
+18:52:00 ********************
+18:52:00 Generating programs of size: 3
+18:52:07 ********************
+18:52:07 New best hypothesis:
+18:52:07 tp:90 fn:450 tn:549 fp:27 size:18 mdl:495
+18:52:07 del_behind(A,B):- awaken(B,A).
+18:52:07 del_behind(A,B):- hold(B,A).
+18:52:07 del_behind(A,B):- walk(B,A).
+18:52:07 del_behind(A,B):- undress(B,A).
+18:52:07 del_behind(A,B):- tidy(B,A).
+18:52:07 del_behind(A,B):- throw(B,A).
+18:52:07 del_behind(A,B):- myopen(B,A).
+18:52:07 del_behind(A,B):- take(B,A).
+18:52:07 del_behind(A,B):- lie(B,A).
+18:52:07 ********************
+18:52:13 Generating programs of size: 4
+18:52:43 Generating programs of size: 5
+18:52:56 Generating programs of size: 6
+18:53:06 Generating programs of size: 7
+18:53:13 Generating programs of size: 8
+18:53:19 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.77 Recall:0.17 TP:90 FN:450 TN:549 FP:27 Size:18 MDL:495
 del_behind(A,B):- awaken(B,A).
@@ -79,3 +46,12 @@ del_behind(A,B):- myopen(B,A).
 del_behind(A,B):- take(B,A).
 del_behind(A,B):- lie(B,A).
 ******************************
+(<popper.core.Literal object at 0x7c98158908b0>, frozenset({<popper.core.Literal object at 0x7c98158a8520>})) positives covered: 9 negatives covered: 3
+(<popper.core.Literal object at 0x7c98158908b0>, frozenset({<popper.core.Literal object at 0x7c980807d2e0>})) positives covered: 13 negatives covered: 1
+(<popper.core.Literal object at 0x7c98158908b0>, frozenset({<popper.core.Literal object at 0x7c980807de20>})) positives covered: 9 negatives covered: 5
+(<popper.core.Literal object at 0x7c98158908b0>, frozenset({<popper.core.Literal object at 0x7c98080781c0>})) positives covered: 5 negatives covered: 1
+(<popper.core.Literal object at 0x7c98158908b0>, frozenset({<popper.core.Literal object at 0x7c9808073be0>})) positives covered: 9 negatives covered: 1
+(<popper.core.Literal object at 0x7c98158908b0>, frozenset({<popper.core.Literal object at 0x7c980808dbe0>})) positives covered: 6 negatives covered: 4
+(<popper.core.Literal object at 0x7c98158908b0>, frozenset({<popper.core.Literal object at 0x7c9815899e20>})) positives covered: 14 negatives covered: 6
+(<popper.core.Literal object at 0x7c98158908b0>, frozenset({<popper.core.Literal object at 0x7c9808088520>})) positives covered: 26 negatives covered: 2
+(<popper.core.Literal object at 0x7c98158908b0>, frozenset({<popper.core.Literal object at 0x7c98080982e0>})) positives covered: 6 negatives covered: 4

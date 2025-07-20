@@ -1,66 +1,36 @@
-:- style_check(-discontiguous).
-max_vars(6).
-max_body(8).
-head_pred(add_carrying, 2).
-body_pred(awaken, 2).
-body_pred(myclose, 2).
-body_pred(cook, 2).
-body_pred(dress, 2).
-body_pred(drink, 2).
-body_pred(eat, 2).
-body_pred(fix, 2).
-body_pred(grasp, 2).
-body_pred(hold, 2).
-body_pred(lie, 2).
-body_pred(myopen, 2).
-body_pred(photograph, 2).
-body_pred(play, 2).
-body_pred(pour, 2).
-body_pred(put, 2).
-body_pred(run, 2).
-body_pred(sit, 2).
-body_pred(snuggle, 2).
-body_pred(stand, 2).
-body_pred(take, 2).
-body_pred(talk, 2).
-body_pred(throw, 2).
-body_pred(tidy, 2).
-body_pred(turn, 2).
-body_pred(undress, 2).
-body_pred(walk, 2).
-body_pred(wash, 2).
-body_pred(watch, 2).
-body_pred(work, 2).
-03:40:16 Generating programs of size: 2
-03:40:16 ********************
-03:40:16 New best hypothesis:
-03:40:16 tp:3 fn:50 tn:18 fp:0 size:2 mdl:52
-03:40:16 add_carrying(A,B):- snuggle(A,B).
-03:40:16 ********************
-03:40:16 ********************
-03:40:16 New best hypothesis:
-03:40:16 tp:5 fn:48 tn:18 fp:0 size:2 mdl:50
-03:40:16 add_carrying(A,B):- hold(A,B).
-03:40:16 ********************
-03:40:16 ********************
-03:40:16 New best hypothesis:
-03:40:16 tp:12 fn:41 tn:18 fp:0 size:2 mdl:43
-03:40:16 add_carrying(A,B):- take(A,B).
-03:40:16 ********************
-03:40:17 Generating programs of size: 3
-03:40:18 ********************
-03:40:18 New best hypothesis:
-03:40:18 tp:18 fn:35 tn:18 fp:0 size:6 mdl:41
-03:40:18 add_carrying(A,B):- snuggle(A,B).
-03:40:18 add_carrying(A,B):- hold(A,B).
-03:40:18 add_carrying(A,B):- take(A,B).
-03:40:18 ********************
-03:40:20 Generating programs of size: 4
-03:40:25 Generating programs of size: 5
-03:40:26 Generating programs of size: 6
+18:52:00 Generating programs of size: 2
+18:52:00 ********************
+18:52:00 New best hypothesis:
+18:52:00 tp:3 fn:50 tn:18 fp:0 size:2 mdl:52
+18:52:00 add_carrying(A,B):- snuggle(A,B).
+18:52:00 ********************
+18:52:00 ********************
+18:52:00 New best hypothesis:
+18:52:00 tp:5 fn:48 tn:18 fp:0 size:2 mdl:50
+18:52:00 add_carrying(A,B):- hold(A,B).
+18:52:00 ********************
+18:52:01 ********************
+18:52:01 New best hypothesis:
+18:52:01 tp:12 fn:41 tn:18 fp:0 size:2 mdl:43
+18:52:01 add_carrying(A,B):- take(A,B).
+18:52:01 ********************
+18:52:01 Generating programs of size: 3
+18:52:02 ********************
+18:52:02 New best hypothesis:
+18:52:02 tp:18 fn:35 tn:18 fp:0 size:6 mdl:41
+18:52:02 add_carrying(A,B):- snuggle(A,B).
+18:52:02 add_carrying(A,B):- hold(A,B).
+18:52:02 add_carrying(A,B):- take(A,B).
+18:52:02 ********************
+18:52:06 Generating programs of size: 4
+18:52:11 Generating programs of size: 5
+18:52:12 Generating programs of size: 6
 ********** SOLUTION **********
 Precision:1.00 Recall:0.34 TP:18 FN:35 TN:18 FP:0 Size:6 MDL:41
 add_carrying(A,B):- snuggle(A,B).
 add_carrying(A,B):- hold(A,B).
 add_carrying(A,B):- take(A,B).
 ******************************
+(<popper.core.Literal object at 0x7fc8209108e0>, frozenset({<popper.core.Literal object at 0x7fc81310bc40>})) positives covered: 3 negatives covered: 0
+(<popper.core.Literal object at 0x7fc8209108e0>, frozenset({<popper.core.Literal object at 0x7fc813110220>})) positives covered: 5 negatives covered: 0
+(<popper.core.Literal object at 0x7fc8209108e0>, frozenset({<popper.core.Literal object at 0x7fc81311b460>})) positives covered: 12 negatives covered: 0

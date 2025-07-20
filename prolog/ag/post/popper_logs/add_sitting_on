@@ -1,60 +1,27 @@
-:- style_check(-discontiguous).
-max_vars(6).
-max_body(8).
-head_pred(add_sitting_on, 2).
-body_pred(awaken, 2).
-body_pred(myclose, 2).
-body_pred(cook, 2).
-body_pred(dress, 2).
-body_pred(drink, 2).
-body_pred(eat, 2).
-body_pred(fix, 2).
-body_pred(grasp, 2).
-body_pred(hold, 2).
-body_pred(lie, 2).
-body_pred(myopen, 2).
-body_pred(photograph, 2).
-body_pred(play, 2).
-body_pred(pour, 2).
-body_pred(put, 2).
-body_pred(run, 2).
-body_pred(sit, 2).
-body_pred(snuggle, 2).
-body_pred(stand, 2).
-body_pred(take, 2).
-body_pred(talk, 2).
-body_pred(throw, 2).
-body_pred(tidy, 2).
-body_pred(turn, 2).
-body_pred(undress, 2).
-body_pred(walk, 2).
-body_pred(wash, 2).
-body_pred(watch, 2).
-body_pred(work, 2).
-03:40:17 Generating programs of size: 2
-03:40:17 ********************
-03:40:17 New best hypothesis:
-03:40:17 tp:7 fn:352 tn:516 fp:0 size:2 mdl:354
-03:40:17 add_sitting_on(A,B):- awaken(A,B).
-03:40:17 ********************
-03:40:23 ********************
-03:40:23 New best hypothesis:
-03:40:23 tp:38 fn:321 tn:512 fp:4 size:2 mdl:327
-03:40:23 add_sitting_on(A,B):- sit(A,B).
-03:40:23 ********************
-03:40:23 Generating programs of size: 3
-03:40:28 ********************
-03:40:28 New best hypothesis:
-03:40:28 tp:56 fn:303 tn:510 fp:6 size:8 mdl:317
-03:40:28 add_sitting_on(A,B):- awaken(A,B).
-03:40:28 add_sitting_on(A,B):- sit(A,B).
-03:40:28 add_sitting_on(A,B):- throw(A,B).
-03:40:28 add_sitting_on(A,B):- lie(A,B).
-03:40:28 ********************
-03:40:30 Generating programs of size: 4
-03:40:45 Generating programs of size: 5
-03:41:05 Generating programs of size: 6
-03:41:10 Generating programs of size: 7
+18:52:01 Generating programs of size: 2
+18:52:01 ********************
+18:52:01 New best hypothesis:
+18:52:01 tp:7 fn:352 tn:516 fp:0 size:2 mdl:354
+18:52:01 add_sitting_on(A,B):- awaken(A,B).
+18:52:01 ********************
+18:52:07 ********************
+18:52:07 New best hypothesis:
+18:52:07 tp:38 fn:321 tn:512 fp:4 size:2 mdl:327
+18:52:07 add_sitting_on(A,B):- sit(A,B).
+18:52:07 ********************
+18:52:07 Generating programs of size: 3
+18:52:13 ********************
+18:52:13 New best hypothesis:
+18:52:13 tp:56 fn:303 tn:510 fp:6 size:8 mdl:317
+18:52:13 add_sitting_on(A,B):- awaken(A,B).
+18:52:13 add_sitting_on(A,B):- sit(A,B).
+18:52:13 add_sitting_on(A,B):- throw(A,B).
+18:52:13 add_sitting_on(A,B):- lie(A,B).
+18:52:13 ********************
+18:52:15 Generating programs of size: 4
+18:52:31 Generating programs of size: 5
+18:52:48 Generating programs of size: 6
+18:52:53 Generating programs of size: 7
 ********** SOLUTION **********
 Precision:0.90 Recall:0.16 TP:56 FN:303 TN:510 FP:6 Size:8 MDL:317
 add_sitting_on(A,B):- awaken(A,B).
@@ -62,3 +29,7 @@ add_sitting_on(A,B):- sit(A,B).
 add_sitting_on(A,B):- throw(A,B).
 add_sitting_on(A,B):- lie(A,B).
 ******************************
+(<popper.core.Literal object at 0x7f184cc318e0>, frozenset({<popper.core.Literal object at 0x7f184cc49460>})) positives covered: 7 negatives covered: 0
+(<popper.core.Literal object at 0x7f184cc318e0>, frozenset({<popper.core.Literal object at 0x7f183f448fa0>})) positives covered: 38 negatives covered: 4
+(<popper.core.Literal object at 0x7f184cc318e0>, frozenset({<popper.core.Literal object at 0x7f183f44db20>})) positives covered: 5 negatives covered: 0
+(<popper.core.Literal object at 0x7f184cc318e0>, frozenset({<popper.core.Literal object at 0x7f183f458220>})) positives covered: 6 negatives covered: 2

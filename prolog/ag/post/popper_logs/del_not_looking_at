@@ -1,73 +1,40 @@
-:- style_check(-discontiguous).
-max_vars(6).
-max_body(8).
-head_pred(del_not_looking_at, 2).
-body_pred(awaken, 2).
-body_pred(myclose, 2).
-body_pred(cook, 2).
-body_pred(dress, 2).
-body_pred(drink, 2).
-body_pred(eat, 2).
-body_pred(fix, 2).
-body_pred(grasp, 2).
-body_pred(hold, 2).
-body_pred(lie, 2).
-body_pred(myopen, 2).
-body_pred(photograph, 2).
-body_pred(play, 2).
-body_pred(pour, 2).
-body_pred(put, 2).
-body_pred(run, 2).
-body_pred(sit, 2).
-body_pred(snuggle, 2).
-body_pred(stand, 2).
-body_pred(take, 2).
-body_pred(talk, 2).
-body_pred(throw, 2).
-body_pred(tidy, 2).
-body_pred(turn, 2).
-body_pred(undress, 2).
-body_pred(walk, 2).
-body_pred(wash, 2).
-body_pred(watch, 2).
-body_pred(work, 2).
-03:40:17 Generating programs of size: 2
-03:40:17 ********************
-03:40:17 New best hypothesis:
-03:40:17 tp:13 fn:2144 tn:2455 fp:8 size:2 mdl:2154
-03:40:17 del_not_looking_at(A,B):- pour(A,B).
-03:40:17 ********************
-03:40:17 ********************
-03:40:17 New best hypothesis:
-03:40:17 tp:105 fn:2052 tn:2403 fp:60 size:2 mdl:2114
-03:40:17 del_not_looking_at(A,B):- myopen(A,B).
-03:40:17 ********************
-03:40:17 Generating programs of size: 3
-03:40:27 ********************
-03:40:27 New best hypothesis:
-03:40:27 tp:249 fn:1908 tn:2315 fp:148 size:10 mdl:2066
-03:40:27 del_not_looking_at(A,B):- pour(A,B).
-03:40:27 del_not_looking_at(A,B):- photograph(A,B).
-03:40:27 del_not_looking_at(A,B):- myopen(A,B).
-03:40:27 del_not_looking_at(A,B):- talk(A,B).
-03:40:27 del_not_looking_at(A,B):- take(A,B).
-03:40:27 ********************
-03:40:37 Generating programs of size: 4
-03:40:47 ********************
-03:40:47 New best hypothesis:
-03:40:47 tp:253 fn:1904 tn:2315 fp:148 size:13 mdl:2065
-03:40:47 del_not_looking_at(A,B):- pour(A,B).
-03:40:47 del_not_looking_at(A,B):- photograph(A,B).
-03:40:47 del_not_looking_at(A,B):- myopen(A,B).
-03:40:47 del_not_looking_at(A,B):- talk(A,B).
-03:40:47 del_not_looking_at(A,B):- take(A,B).
-03:40:47 del_not_looking_at(A,B):- sit(A,B),work(A,B).
-03:40:47 ********************
-03:41:31 Generating programs of size: 5
-03:42:04 Generating programs of size: 6
-03:42:32 Generating programs of size: 7
-03:42:55 Generating programs of size: 8
-03:43:11 Generating programs of size: 9
+18:52:00 Generating programs of size: 2
+18:52:00 ********************
+18:52:00 New best hypothesis:
+18:52:00 tp:13 fn:2144 tn:2455 fp:8 size:2 mdl:2154
+18:52:00 del_not_looking_at(A,B):- pour(A,B).
+18:52:00 ********************
+18:52:00 ********************
+18:52:00 New best hypothesis:
+18:52:00 tp:105 fn:2052 tn:2403 fp:60 size:2 mdl:2114
+18:52:00 del_not_looking_at(A,B):- myopen(A,B).
+18:52:00 ********************
+18:52:00 Generating programs of size: 3
+18:52:10 ********************
+18:52:10 New best hypothesis:
+18:52:10 tp:249 fn:1908 tn:2315 fp:148 size:10 mdl:2066
+18:52:10 del_not_looking_at(A,B):- pour(A,B).
+18:52:10 del_not_looking_at(A,B):- photograph(A,B).
+18:52:10 del_not_looking_at(A,B):- myopen(A,B).
+18:52:10 del_not_looking_at(A,B):- talk(A,B).
+18:52:10 del_not_looking_at(A,B):- take(A,B).
+18:52:10 ********************
+18:52:20 Generating programs of size: 4
+18:52:30 ********************
+18:52:30 New best hypothesis:
+18:52:30 tp:253 fn:1904 tn:2315 fp:148 size:13 mdl:2065
+18:52:30 del_not_looking_at(A,B):- pour(A,B).
+18:52:30 del_not_looking_at(A,B):- photograph(A,B).
+18:52:30 del_not_looking_at(A,B):- myopen(A,B).
+18:52:30 del_not_looking_at(A,B):- talk(A,B).
+18:52:30 del_not_looking_at(A,B):- take(A,B).
+18:52:30 del_not_looking_at(A,B):- work(A,B),sit(A,B).
+18:52:30 ********************
+18:53:04 Generating programs of size: 5
+18:53:39 Generating programs of size: 6
+18:54:05 Generating programs of size: 7
+18:54:26 Generating programs of size: 8
+18:54:41 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.63 Recall:0.12 TP:253 FN:1904 TN:2315 FP:148 Size:13 MDL:2065
 del_not_looking_at(A,B):- pour(A,B).
@@ -75,5 +42,11 @@ del_not_looking_at(A,B):- photograph(A,B).
 del_not_looking_at(A,B):- myopen(A,B).
 del_not_looking_at(A,B):- talk(A,B).
 del_not_looking_at(A,B):- take(A,B).
-del_not_looking_at(A,B):- sit(A,B),work(A,B).
+del_not_looking_at(A,B):- work(A,B),sit(A,B).
 ******************************
+(<popper.core.Literal object at 0x7614c8f7b8b0>, frozenset({<popper.core.Literal object at 0x7614c8f8e310>})) positives covered: 13 negatives covered: 8
+(<popper.core.Literal object at 0x7614c8f7b8b0>, frozenset({<popper.core.Literal object at 0x7614c8f8e8b0>})) positives covered: 3 negatives covered: 0
+(<popper.core.Literal object at 0x7614c8f7b8b0>, frozenset({<popper.core.Literal object at 0x7614c8f84d30>})) positives covered: 105 negatives covered: 60
+(<popper.core.Literal object at 0x7614c8f7b8b0>, frozenset({<popper.core.Literal object at 0x7614bb770550>})) positives covered: 3 negatives covered: 1
+(<popper.core.Literal object at 0x7614c8f7b8b0>, frozenset({<popper.core.Literal object at 0x7614bb785430>})) positives covered: 125 negatives covered: 81
+(<popper.core.Literal object at 0x7614c8f7b8b0>, frozenset({<popper.core.Literal object at 0x7614bb7859d0>, <popper.core.Literal object at 0x7614bb785f70>})) positives covered: 4 negatives covered: 0

@@ -1,36 +1,3 @@
-:- style_check(-discontiguous).
-max_vars(6).
-max_body(8).
-head_pred(del_person, 1).
-body_pred(awaken, 2).
-body_pred(myclose, 2).
-body_pred(cook, 2).
-body_pred(dress, 2).
-body_pred(drink, 2).
-body_pred(eat, 2).
-body_pred(fix, 2).
-body_pred(grasp, 2).
-body_pred(hold, 2).
-body_pred(lie, 2).
-body_pred(myopen, 2).
-body_pred(photograph, 2).
-body_pred(play, 2).
-body_pred(pour, 2).
-body_pred(put, 2).
-body_pred(run, 2).
-body_pred(sit, 2).
-body_pred(snuggle, 2).
-body_pred(stand, 2).
-body_pred(take, 2).
-body_pred(talk, 2).
-body_pred(throw, 2).
-body_pred(tidy, 2).
-body_pred(turn, 2).
-body_pred(undress, 2).
-body_pred(walk, 2).
-body_pred(wash, 2).
-body_pred(watch, 2).
-body_pred(work, 2).
 ERROR: /home/muyang/learned-affordance-constraints/prolog/ag/post/examples/verbs/del_person.pl:2:62: Syntax error: Unbalanced operator
 ERROR: /home/muyang/learned-affordance-constraints/prolog/ag/post/examples/verbs/del_person.pl:3:62: Syntax error: Unbalanced operator
 ERROR: /home/muyang/learned-affordance-constraints/prolog/ag/post/examples/verbs/del_person.pl:4:62: Syntax error: Unbalanced operator
@@ -8260,7 +8227,9 @@ ERROR: /home/muyang/learned-affordance-constraints/prolog/ag/post/examples/verbs
 ERROR: /home/muyang/learned-affordance-constraints/prolog/ag/post/examples/verbs/del_person.pl:8228:62: Syntax error: Unbalanced operator
 ERROR: /home/muyang/learned-affordance-constraints/prolog/ag/post/examples/verbs/del_person.pl:8229:62: Syntax error: Unbalanced operator
 Traceback (most recent call last):
-  File "/home/muyang/Popper/popper.py", line 8, in <module>
+  File "/home/muyang/learned-affordance-constraints/prolog/run_popper_single.py", line 74, in <module>
+    run_popper_for_item(
+  File "/home/muyang/learned-affordance-constraints/prolog/run_popper_single.py", line 48, in run_popper_for_item
     prog, score, stats = learn_solution(settings)
   File "/home/muyang/Popper/popper/loop.py", line 1090, in learn_solution
     timeout(settings, popper, (settings,), timeout_duration=int(settings.timeout),)

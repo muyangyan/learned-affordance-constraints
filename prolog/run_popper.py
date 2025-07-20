@@ -1,10 +1,10 @@
 import os
+import sys
 import argparse
 import subprocess
 from pathlib import Path
 from util.config_utils import load_yaml
 from util.rule_utils import normalize_predicate_name
-import multiprocessing as mp
 import shutil
 from data.ag.action_genome import SingleBothAG
 
@@ -18,60 +18,13 @@ def create_effects_whitelist(whitelist):
         effects_whitelist.append(f'del_{item}')
     return effects_whitelist
 
-def run_popper_for_item(item, label_type, prolog_path, log_folder, popper_path, fn_weight, ilp_timeout, bk_filename):
-    """Run Popper ILP system for a single item (verb or action)"""
-    # Handle safe naming for actions (replace spaces and special chars)
-    safe_item_name = normalize_predicate_name(item)
-
-    assert label_type in ['verb', 'verbnoun']
-    if label_type == 'verbnoun':
-        examples_subfolder = 'actions'
-    else:
-        examples_subfolder = 'verbs'
-    
-    
-    
-
-
-    log_path = os.path.join(log_folder, f"{safe_item_name}")
-    
-    # Create output directory if it doesn't exist
-    os.makedirs(os.path.dirname(log_path), exist_ok=True)
-    
-    ex_file = os.path.join(prolog_path, "examples", examples_subfolder, f"{safe_item_name}.pl")
-    bk_file = os.path.join(prolog_path, "..", bk_filename)
-    bias_file = os.path.join(prolog_path, "biases", examples_subfolder, f"{safe_item_name}.pl")
-
-    #copy bias file to log file
-    with open(bias_file, 'r') as f_in, open(log_path, 'w') as f_out:
-        f_out.write(f_in.read())
-    
-    # Build popper command
-    popper_cmd = [
-        "python", f"{popper_path}",
-        "--noisy",
-        "--mdl_weight", str(fn_weight),
-        "--timeout", str(ilp_timeout),
-        "--anytime-solver", "nuwls",
-        "--ex_file", ex_file,
-        "--bk_file", bk_file,
-        "--bias_file", bias_file
-    ]
-    
-    # Run popper and append output to log file
-    with open(log_path, 'a') as f:
-        subprocess.run(popper_cmd, stdout=f, stderr=subprocess.STDOUT)
-    
-    print(f"Completed processing {label_type}: {item}")
-
 def main(config):
-    """Run Popper ILP system for all items in parallel"""
+    """Run Popper ILP system for all items using subprocesses"""
     
     # Define paths
     data_folder = config.data_folder
     prolog_path = os.path.join(config.prolog_folder, config.data.position)
     bk_filename = 'bk.pl' if config.data.position == 'pre' else 'transition_bk.pl'
-    popper_path = config.popper_path
     fn_weight = config.ilp.fn_weight
     ilp_timeout = config.ilp.timeout
     label_type = config.data.label_type
@@ -81,11 +34,11 @@ def main(config):
     # Delete the prolog_logs folder if it exists
     if os.path.exists(log_folder):
         print(f"Deleting folder: {log_folder}")
-        #input("Press Enter to continue")
         shutil.rmtree(log_folder)
         print(f"Deleted folder: {log_folder}")
-    
 
+    # Create log folder
+    os.makedirs(log_folder, exist_ok=True)
 
     # WHITELIST CREATION
     if config.data.position == 'post':
@@ -106,30 +59,41 @@ def main(config):
         else:
             raise ValueError(f'Whitelist file not found: {whitelist_file}')
 
-
-
-    # RUNNING POPPER PROCESSES
-    pool = mp.Pool(processes=min(mp.cpu_count(), len(whitelist)))
+    # RUNNING POPPER SUBPROCESSES
     processes = []
+    script_path = os.path.join(os.path.dirname(__file__), "run_popper_single.py")
+    
     for item in whitelist:
         print(f"Starting process for {label_type}: {item}")
-        p = pool.apply_async(run_popper_for_item, 
-                           args=(item,
-                                label_type,
-                                prolog_path,
-                                log_folder,
-                                popper_path,
-                                fn_weight,
-                                ilp_timeout,
-                                bk_filename))
-        processes.append(p)
+        
+        # Build command for subprocess
+        cmd = [
+            "python", script_path,
+            "--item", item,
+            "--label_type", label_type,
+            "--prolog_path", prolog_path,
+            "--log_folder", log_folder,
+            "--fn_weight", str(fn_weight),
+            "--ilp_timeout", str(ilp_timeout),
+            "--bk_filename", bk_filename
+        ]
+        if config.data.position == 'post':
+            cmd.append("--separate_clauses")
+        
+        # Create log file path for stdout/stderr redirection
+        safe_item_name = normalize_predicate_name(item)
+        log_path = os.path.join(log_folder, f"{safe_item_name}")
+        
+        # Start subprocess with stdout and stderr redirected to log file
+        with open(log_path, 'w') as log_file:
+            p = subprocess.Popen(cmd, stdout=log_file, stderr=log_file)
+        
+        processes.append((p, item, label_type))
     
-    # Wait for all processes to complete
-    for p in processes:
-        p.get()  # This blocks until the process completes
-    
-    pool.close()
-    pool.join()
+    # Wait for all processes to complete and print completion messages
+    for p, item, label_type in processes:
+        p.wait()  # Wait for process to complete
+        print(f"Completed processing {label_type}: {item}")
     
     print(f"All Popper processes completed for {label_type}s")
 

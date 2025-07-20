@@ -1,62 +1,29 @@
-:- style_check(-discontiguous).
-max_vars(6).
-max_body(8).
-head_pred(del_in_front_of, 2).
-body_pred(awaken, 2).
-body_pred(myclose, 2).
-body_pred(cook, 2).
-body_pred(dress, 2).
-body_pred(drink, 2).
-body_pred(eat, 2).
-body_pred(fix, 2).
-body_pred(grasp, 2).
-body_pred(hold, 2).
-body_pred(lie, 2).
-body_pred(myopen, 2).
-body_pred(photograph, 2).
-body_pred(play, 2).
-body_pred(pour, 2).
-body_pred(put, 2).
-body_pred(run, 2).
-body_pred(sit, 2).
-body_pred(snuggle, 2).
-body_pred(stand, 2).
-body_pred(take, 2).
-body_pred(talk, 2).
-body_pred(throw, 2).
-body_pred(tidy, 2).
-body_pred(turn, 2).
-body_pred(undress, 2).
-body_pred(walk, 2).
-body_pred(wash, 2).
-body_pred(watch, 2).
-body_pred(work, 2).
-03:40:16 Generating programs of size: 2
-03:40:16 ********************
-03:40:16 New best hypothesis:
-03:40:16 tp:39 fn:2197 tn:3390 fp:21 size:2 mdl:2220
-03:40:16 del_in_front_of(A,B):- sit(B,A).
-03:40:16 ********************
-03:40:16 ********************
-03:40:16 New best hypothesis:
-03:40:16 tp:48 fn:2188 tn:3402 fp:9 size:2 mdl:2199
-03:40:16 del_in_front_of(A,B):- walk(B,A).
-03:40:16 ********************
-03:40:16 Generating programs of size: 3
-03:40:26 ********************
-03:40:26 New best hypothesis:
-03:40:26 tp:118 fn:2118 tn:3371 fp:40 size:8 mdl:2166
-03:40:26 del_in_front_of(A,B):- sit(B,A).
-03:40:26 del_in_front_of(A,B):- dress(B,A).
-03:40:26 del_in_front_of(A,B):- walk(B,A).
-03:40:26 del_in_front_of(A,B):- turn(B,A).
-03:40:26 ********************
-03:40:36 Generating programs of size: 4
-03:41:38 Generating programs of size: 5
-03:42:00 Generating programs of size: 6
-03:42:17 Generating programs of size: 7
-03:42:34 Generating programs of size: 8
-03:42:47 Generating programs of size: 9
+18:52:00 Generating programs of size: 2
+18:52:00 ********************
+18:52:00 New best hypothesis:
+18:52:00 tp:39 fn:2197 tn:3390 fp:21 size:2 mdl:2220
+18:52:00 del_in_front_of(A,B):- sit(B,A).
+18:52:00 ********************
+18:52:00 ********************
+18:52:00 New best hypothesis:
+18:52:00 tp:48 fn:2188 tn:3402 fp:9 size:2 mdl:2199
+18:52:00 del_in_front_of(A,B):- walk(B,A).
+18:52:00 ********************
+18:52:00 Generating programs of size: 3
+18:52:11 ********************
+18:52:11 New best hypothesis:
+18:52:11 tp:118 fn:2118 tn:3371 fp:40 size:8 mdl:2166
+18:52:11 del_in_front_of(A,B):- sit(B,A).
+18:52:11 del_in_front_of(A,B):- dress(B,A).
+18:52:11 del_in_front_of(A,B):- walk(B,A).
+18:52:11 del_in_front_of(A,B):- turn(B,A).
+18:52:11 ********************
+18:52:19 Generating programs of size: 4
+18:53:07 Generating programs of size: 5
+18:53:28 Generating programs of size: 6
+18:53:45 Generating programs of size: 7
+18:54:01 Generating programs of size: 8
+18:54:14 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.75 Recall:0.05 TP:118 FN:2118 TN:3371 FP:40 Size:8 MDL:2166
 del_in_front_of(A,B):- sit(B,A).
@@ -64,3 +31,7 @@ del_in_front_of(A,B):- dress(B,A).
 del_in_front_of(A,B):- walk(B,A).
 del_in_front_of(A,B):- turn(B,A).
 ******************************
+(<popper.core.Literal object at 0x71af6f7108e0>, frozenset({<popper.core.Literal object at 0x71af61f200d0>})) positives covered: 39 negatives covered: 21
+(<popper.core.Literal object at 0x71af6f7108e0>, frozenset({<popper.core.Literal object at 0x71af61f26d30>})) positives covered: 20 negatives covered: 5
+(<popper.core.Literal object at 0x71af6f7108e0>, frozenset({<popper.core.Literal object at 0x71af61f10e50>})) positives covered: 48 negatives covered: 9
+(<popper.core.Literal object at 0x71af6f7108e0>, frozenset({<popper.core.Literal object at 0x71af61f20670>})) positives covered: 11 negatives covered: 5

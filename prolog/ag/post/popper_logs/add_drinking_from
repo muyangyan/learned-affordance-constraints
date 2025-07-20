@@ -1,59 +1,26 @@
-:- style_check(-discontiguous).
-max_vars(6).
-max_body(8).
-head_pred(add_drinking_from, 2).
-body_pred(awaken, 2).
-body_pred(myclose, 2).
-body_pred(cook, 2).
-body_pred(dress, 2).
-body_pred(drink, 2).
-body_pred(eat, 2).
-body_pred(fix, 2).
-body_pred(grasp, 2).
-body_pred(hold, 2).
-body_pred(lie, 2).
-body_pred(myopen, 2).
-body_pred(photograph, 2).
-body_pred(play, 2).
-body_pred(pour, 2).
-body_pred(put, 2).
-body_pred(run, 2).
-body_pred(sit, 2).
-body_pred(snuggle, 2).
-body_pred(stand, 2).
-body_pred(take, 2).
-body_pred(talk, 2).
-body_pred(throw, 2).
-body_pred(tidy, 2).
-body_pred(turn, 2).
-body_pred(undress, 2).
-body_pred(walk, 2).
-body_pred(wash, 2).
-body_pred(watch, 2).
-body_pred(work, 2).
-03:40:16 Generating programs of size: 2
-03:40:16 ********************
-03:40:16 New best hypothesis:
-03:40:16 tp:8 fn:69 tn:6 fp:0 size:2 mdl:71
-03:40:16 add_drinking_from(A,B):- drink(A,B).
-03:40:16 ********************
-03:40:16 ********************
-03:40:16 New best hypothesis:
-03:40:16 tp:16 fn:61 tn:6 fp:0 size:2 mdl:63
-03:40:16 add_drinking_from(A,B):- take(A,B).
-03:40:16 ********************
-03:40:16 Generating programs of size: 3
-03:40:18 ********************
-03:40:18 New best hypothesis:
-03:40:18 tp:35 fn:42 tn:6 fp:0 size:8 mdl:50
-03:40:18 add_drinking_from(A,B):- drink(A,B).
-03:40:18 add_drinking_from(A,B):- hold(A,B).
-03:40:18 add_drinking_from(A,B):- pour(A,B).
-03:40:18 add_drinking_from(A,B):- take(A,B).
-03:40:18 ********************
-03:40:21 Generating programs of size: 4
-03:40:24 Generating programs of size: 5
-03:40:26 Generating programs of size: 6
+18:52:01 Generating programs of size: 2
+18:52:01 ********************
+18:52:01 New best hypothesis:
+18:52:01 tp:8 fn:69 tn:6 fp:0 size:2 mdl:71
+18:52:01 add_drinking_from(A,B):- drink(A,B).
+18:52:01 ********************
+18:52:01 ********************
+18:52:01 New best hypothesis:
+18:52:01 tp:16 fn:61 tn:6 fp:0 size:2 mdl:63
+18:52:01 add_drinking_from(A,B):- take(A,B).
+18:52:01 ********************
+18:52:01 Generating programs of size: 3
+18:52:02 ********************
+18:52:02 New best hypothesis:
+18:52:02 tp:35 fn:42 tn:6 fp:0 size:8 mdl:50
+18:52:02 add_drinking_from(A,B):- drink(A,B).
+18:52:02 add_drinking_from(A,B):- hold(A,B).
+18:52:02 add_drinking_from(A,B):- pour(A,B).
+18:52:02 add_drinking_from(A,B):- take(A,B).
+18:52:02 ********************
+18:52:05 Generating programs of size: 4
+18:52:08 Generating programs of size: 5
+18:52:10 Generating programs of size: 6
 ********** SOLUTION **********
 Precision:1.00 Recall:0.45 TP:35 FN:42 TN:6 FP:0 Size:8 MDL:50
 add_drinking_from(A,B):- drink(A,B).
@@ -61,3 +28,7 @@ add_drinking_from(A,B):- hold(A,B).
 add_drinking_from(A,B):- pour(A,B).
 add_drinking_from(A,B):- take(A,B).
 ******************************
+(<popper.core.Literal object at 0x7d9d951e7880>, frozenset({<popper.core.Literal object at 0x7d9d951e2dc0>})) positives covered: 8 negatives covered: 0
+(<popper.core.Literal object at 0x7d9d951e7880>, frozenset({<popper.core.Literal object at 0x7d9d879c31c0>})) positives covered: 5 negatives covered: 0
+(<popper.core.Literal object at 0x7d9d951e7880>, frozenset({<popper.core.Literal object at 0x7d9d951fa2e0>})) positives covered: 6 negatives covered: 0
+(<popper.core.Literal object at 0x7d9d951e7880>, frozenset({<popper.core.Literal object at 0x7d9d879ce400>})) positives covered: 16 negatives covered: 0

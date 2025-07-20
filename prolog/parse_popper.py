@@ -32,8 +32,6 @@ def parse_metrics(line):
 def parse_logs(folder):
     rules = {}
     for file in os.listdir(folder):
-        rule = []
-        metrics = None
         add_rule = True
         with open(folder + '/' + file, 'r') as f:
             lines = f.readlines()
@@ -42,7 +40,17 @@ def parse_logs(folder):
                 print(file, 'no solution')
                 rules[file] = None
                 continue
-            if lines[-1].strip('\n') != "******************************":
+            if lines[-1].strip('\n') != "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~": # clauses were separated
+                for line in reversed(lines[:-1]):
+                    line = line.strip('\n')
+                    if line == "******************************":
+                        break
+                    if line[-1] != '.' and line.startswith('Precision:'):
+                            metrics = parse_metrics(line)
+                    rule.append(line)
+            elif lines[-1].strip('\n') != "******************************":
+                rule = []
+                metrics = None
                 print(file, 'stuck, fixing')
                 for line in reversed(lines[:-1]):
                     line = line.strip('\n')

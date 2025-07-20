@@ -1,59 +1,28 @@
-:- style_check(-discontiguous).
-max_vars(6).
-max_body(8).
-head_pred(del_drinking_from, 2).
-body_pred(awaken, 2).
-body_pred(myclose, 2).
-body_pred(cook, 2).
-body_pred(dress, 2).
-body_pred(drink, 2).
-body_pred(eat, 2).
-body_pred(fix, 2).
-body_pred(grasp, 2).
-body_pred(hold, 2).
-body_pred(lie, 2).
-body_pred(myopen, 2).
-body_pred(photograph, 2).
-body_pred(play, 2).
-body_pred(pour, 2).
-body_pred(put, 2).
-body_pred(run, 2).
-body_pred(sit, 2).
-body_pred(snuggle, 2).
-body_pred(stand, 2).
-body_pred(take, 2).
-body_pred(talk, 2).
-body_pred(throw, 2).
-body_pred(tidy, 2).
-body_pred(turn, 2).
-body_pred(undress, 2).
-body_pred(walk, 2).
-body_pred(wash, 2).
-body_pred(watch, 2).
-body_pred(work, 2).
-03:40:16 Generating programs of size: 2
-03:40:16 ********************
-03:40:16 New best hypothesis:
-03:40:16 tp:3 fn:57 tn:6 fp:0 size:2 mdl:59
-03:40:16 del_drinking_from(A,B):- drink(A,B).
-03:40:16 ********************
-03:40:16 ********************
-03:40:16 New best hypothesis:
-03:40:16 tp:21 fn:39 tn:4 fp:2 size:2 mdl:43
-03:40:16 del_drinking_from(A,B):- put(A,B).
-03:40:16 ********************
-03:40:16 Generating programs of size: 3
-03:40:18 ********************
-03:40:18 New best hypothesis:
-03:40:18 tp:24 fn:36 tn:4 fp:2 size:4 mdl:42
-03:40:18 del_drinking_from(A,B):- drink(A,B).
-03:40:18 del_drinking_from(A,B):- put(A,B).
-03:40:18 ********************
-03:40:19 Generating programs of size: 4
-03:40:20 Generating programs of size: 5
-03:40:21 Generating programs of size: 6
+18:52:01 Generating programs of size: 2
+18:52:01 ********************
+18:52:01 New best hypothesis:
+18:52:01 tp:3 fn:57 tn:6 fp:0 size:2 mdl:59
+18:52:01 del_drinking_from(A,B):- drink(A,B).
+18:52:01 ********************
+18:52:01 ********************
+18:52:01 New best hypothesis:
+18:52:01 tp:21 fn:39 tn:4 fp:2 size:2 mdl:43
+18:52:01 del_drinking_from(A,B):- put(A,B).
+18:52:01 ********************
+18:52:01 Generating programs of size: 3
+18:52:02 ********************
+18:52:02 New best hypothesis:
+18:52:02 tp:24 fn:36 tn:4 fp:2 size:4 mdl:42
+18:52:02 del_drinking_from(A,B):- drink(A,B).
+18:52:02 del_drinking_from(A,B):- put(A,B).
+18:52:02 ********************
+18:52:03 Generating programs of size: 4
+18:52:04 Generating programs of size: 5
+18:52:06 Generating programs of size: 6
 ********** SOLUTION **********
 Precision:0.92 Recall:0.40 TP:24 FN:36 TN:4 FP:2 Size:4 MDL:42
 del_drinking_from(A,B):- drink(A,B).
 del_drinking_from(A,B):- put(A,B).
 ******************************
+(<popper.core.Literal object at 0x7d93f739f8b0>, frozenset({<popper.core.Literal object at 0x7d93f739adf0>})) positives covered: 3 negatives covered: 0
+(<popper.core.Literal object at 0x7d93f739f8b0>, frozenset({<popper.core.Literal object at 0x7d93e9b89e50>})) positives covered: 21 negatives covered: 2

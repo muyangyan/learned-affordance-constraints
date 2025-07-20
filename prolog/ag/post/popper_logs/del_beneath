@@ -1,62 +1,31 @@
-:- style_check(-discontiguous).
-max_vars(6).
-max_body(8).
-head_pred(del_beneath, 2).
-body_pred(awaken, 2).
-body_pred(myclose, 2).
-body_pred(cook, 2).
-body_pred(dress, 2).
-body_pred(drink, 2).
-body_pred(eat, 2).
-body_pred(fix, 2).
-body_pred(grasp, 2).
-body_pred(hold, 2).
-body_pred(lie, 2).
-body_pred(myopen, 2).
-body_pred(photograph, 2).
-body_pred(play, 2).
-body_pred(pour, 2).
-body_pred(put, 2).
-body_pred(run, 2).
-body_pred(sit, 2).
-body_pred(snuggle, 2).
-body_pred(stand, 2).
-body_pred(take, 2).
-body_pred(talk, 2).
-body_pred(throw, 2).
-body_pred(tidy, 2).
-body_pred(turn, 2).
-body_pred(undress, 2).
-body_pred(walk, 2).
-body_pred(wash, 2).
-body_pred(watch, 2).
-body_pred(work, 2).
-03:40:16 Generating programs of size: 2
-03:40:16 ********************
-03:40:16 New best hypothesis:
-03:40:16 tp:14 fn:500 tn:749 fp:4 size:2 mdl:506
-03:40:16 del_beneath(A,B):- put(B,A).
-03:40:16 ********************
-03:40:16 ********************
-03:40:16 New best hypothesis:
-03:40:16 tp:19 fn:495 tn:751 fp:2 size:2 mdl:499
-03:40:16 del_beneath(A,B):- take(B,A).
-03:40:16 ********************
-03:40:16 Generating programs of size: 3
-03:40:23 ********************
-03:40:23 New best hypothesis:
-03:40:23 tp:33 fn:481 tn:747 fp:6 size:4 mdl:491
-03:40:23 del_beneath(A,B):- put(B,A).
-03:40:23 del_beneath(A,B):- take(B,A).
-03:40:23 ********************
-03:40:27 Generating programs of size: 4
-03:40:55 Generating programs of size: 5
-03:41:06 Generating programs of size: 6
-03:41:12 Generating programs of size: 7
-03:41:17 Generating programs of size: 8
-03:41:22 Generating programs of size: 9
+18:52:00 Generating programs of size: 2
+18:52:00 ********************
+18:52:00 New best hypothesis:
+18:52:00 tp:14 fn:500 tn:749 fp:4 size:2 mdl:506
+18:52:00 del_beneath(A,B):- put(B,A).
+18:52:00 ********************
+18:52:00 ********************
+18:52:00 New best hypothesis:
+18:52:00 tp:19 fn:495 tn:751 fp:2 size:2 mdl:499
+18:52:00 del_beneath(A,B):- take(B,A).
+18:52:00 ********************
+18:52:00 Generating programs of size: 3
+18:52:06 ********************
+18:52:06 New best hypothesis:
+18:52:06 tp:33 fn:481 tn:747 fp:6 size:4 mdl:491
+18:52:06 del_beneath(A,B):- put(B,A).
+18:52:06 del_beneath(A,B):- take(B,A).
+18:52:06 ********************
+18:52:10 Generating programs of size: 4
+18:52:40 Generating programs of size: 5
+18:52:55 Generating programs of size: 6
+18:53:01 Generating programs of size: 7
+18:53:06 Generating programs of size: 8
+18:53:11 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.85 Recall:0.06 TP:33 FN:481 TN:747 FP:6 Size:4 MDL:491
 del_beneath(A,B):- put(B,A).
 del_beneath(A,B):- take(B,A).
 ******************************
+(<popper.core.Literal object at 0x77b9c8dd08e0>, frozenset({<popper.core.Literal object at 0x77b9bb5c9f70>})) positives covered: 14 negatives covered: 4
+(<popper.core.Literal object at 0x77b9c8dd08e0>, frozenset({<popper.core.Literal object at 0x77b9bb5ce550>})) positives covered: 19 negatives covered: 2
