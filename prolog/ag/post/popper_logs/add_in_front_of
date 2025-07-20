@@ -1,0 +1,72 @@
+:- style_check(-discontiguous).
+max_vars(6).
+max_body(8).
+head_pred(add_in_front_of, 2).
+body_pred(awaken, 2).
+body_pred(myclose, 2).
+body_pred(cook, 2).
+body_pred(dress, 2).
+body_pred(drink, 2).
+body_pred(eat, 2).
+body_pred(fix, 2).
+body_pred(grasp, 2).
+body_pred(hold, 2).
+body_pred(lie, 2).
+body_pred(myopen, 2).
+body_pred(photograph, 2).
+body_pred(play, 2).
+body_pred(pour, 2).
+body_pred(put, 2).
+body_pred(run, 2).
+body_pred(sit, 2).
+body_pred(snuggle, 2).
+body_pred(stand, 2).
+body_pred(take, 2).
+body_pred(talk, 2).
+body_pred(throw, 2).
+body_pred(tidy, 2).
+body_pred(turn, 2).
+body_pred(undress, 2).
+body_pred(walk, 2).
+body_pred(wash, 2).
+body_pred(watch, 2).
+body_pred(work, 2).
+03:40:16 Generating programs of size: 2
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:13 fn:2109 tn:3402 fp:9 size:2 mdl:2120
+03:40:16 add_in_front_of(A,B):- walk(B,A).
+03:40:16 ********************
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:34 fn:2088 tn:3405 fp:6 size:2 mdl:2096
+03:40:16 add_in_front_of(A,B):- undress(B,A).
+03:40:16 ********************
+03:40:16 Generating programs of size: 3
+03:40:26 ********************
+03:40:26 New best hypothesis:
+03:40:26 tp:47 fn:2075 tn:3396 fp:15 size:4 mdl:2094
+03:40:26 add_in_front_of(A,B):- walk(B,A).
+03:40:26 add_in_front_of(A,B):- undress(B,A).
+03:40:26 ********************
+03:40:34 Generating programs of size: 4
+03:40:44 ********************
+03:40:44 New best hypothesis:
+03:40:44 tp:58 fn:2064 tn:3396 fp:15 size:10 mdl:2089
+03:40:44 add_in_front_of(A,B):- walk(B,A).
+03:40:44 add_in_front_of(A,B):- undress(B,A).
+03:40:44 add_in_front_of(A,B):- take(C,A),stand(C,B).
+03:40:44 add_in_front_of(A,B):- hold(B,A),tidy(B,A).
+03:40:44 ********************
+03:41:54 Generating programs of size: 5
+03:42:21 Generating programs of size: 6
+03:42:44 Generating programs of size: 7
+03:43:04 Generating programs of size: 8
+03:43:17 Generating programs of size: 9
+********** SOLUTION **********
+Precision:0.79 Recall:0.03 TP:58 FN:2064 TN:3396 FP:15 Size:10 MDL:2089
+add_in_front_of(A,B):- walk(B,A).
+add_in_front_of(A,B):- undress(B,A).
+add_in_front_of(A,B):- take(C,A),stand(C,B).
+add_in_front_of(A,B):- hold(B,A),tidy(B,A).
+******************************

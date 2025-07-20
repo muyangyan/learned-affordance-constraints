@@ -1,0 +1,91 @@
+:- style_check(-discontiguous).
+max_vars(6).
+max_body(8).
+head_pred(del_on_the_side_of, 2).
+body_pred(awaken, 2).
+body_pred(myclose, 2).
+body_pred(cook, 2).
+body_pred(dress, 2).
+body_pred(drink, 2).
+body_pred(eat, 2).
+body_pred(fix, 2).
+body_pred(grasp, 2).
+body_pred(hold, 2).
+body_pred(lie, 2).
+body_pred(myopen, 2).
+body_pred(photograph, 2).
+body_pred(play, 2).
+body_pred(pour, 2).
+body_pred(put, 2).
+body_pred(run, 2).
+body_pred(sit, 2).
+body_pred(snuggle, 2).
+body_pred(stand, 2).
+body_pred(take, 2).
+body_pred(talk, 2).
+body_pred(throw, 2).
+body_pred(tidy, 2).
+body_pred(turn, 2).
+body_pred(undress, 2).
+body_pred(walk, 2).
+body_pred(wash, 2).
+body_pred(watch, 2).
+body_pred(work, 2).
+03:40:16 Generating programs of size: 2
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:58 fn:1213 tn:576 fp:32 size:2 mdl:1247
+03:40:16 del_on_the_side_of(A,B):- hold(B,A).
+03:40:16 ********************
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:106 fn:1165 tn:536 fp:72 size:2 mdl:1239
+03:40:16 del_on_the_side_of(A,B):- put(B,A).
+03:40:16 ********************
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:130 fn:1141 tn:580 fp:28 size:2 mdl:1171
+03:40:16 del_on_the_side_of(A,B):- take(B,A).
+03:40:16 ********************
+03:40:16 Generating programs of size: 3
+03:40:26 ********************
+03:40:26 New best hypothesis:
+03:40:26 tp:464 fn:807 tn:385 fp:223 size:28 mdl:1058
+03:40:26 del_on_the_side_of(A,B):- hold(B,A).
+03:40:26 del_on_the_side_of(A,B):- sit(B,A).
+03:40:26 del_on_the_side_of(A,B):- put(B,A).
+03:40:26 del_on_the_side_of(A,B):- pour(B,A).
+03:40:26 del_on_the_side_of(A,B):- wash(B,A).
+03:40:26 del_on_the_side_of(A,B):- dress(B,A).
+03:40:26 del_on_the_side_of(A,B):- walk(B,A).
+03:40:26 del_on_the_side_of(A,B):- play(B,A).
+03:40:26 del_on_the_side_of(A,B):- undress(B,A).
+03:40:26 del_on_the_side_of(A,B):- throw(B,A).
+03:40:26 del_on_the_side_of(A,B):- eat(B,A).
+03:40:26 del_on_the_side_of(A,B):- myopen(B,A).
+03:40:26 del_on_the_side_of(A,B):- take(B,A).
+03:40:26 del_on_the_side_of(A,B):- snuggle(B,A).
+03:40:26 ********************
+03:40:34 Generating programs of size: 4
+03:41:23 Generating programs of size: 5
+03:41:56 Generating programs of size: 6
+03:42:24 Generating programs of size: 7
+03:42:50 Generating programs of size: 8
+03:43:08 Generating programs of size: 9
+********** SOLUTION **********
+Precision:0.68 Recall:0.37 TP:464 FN:807 TN:385 FP:223 Size:28 MDL:1058
+del_on_the_side_of(A,B):- hold(B,A).
+del_on_the_side_of(A,B):- sit(B,A).
+del_on_the_side_of(A,B):- put(B,A).
+del_on_the_side_of(A,B):- pour(B,A).
+del_on_the_side_of(A,B):- wash(B,A).
+del_on_the_side_of(A,B):- dress(B,A).
+del_on_the_side_of(A,B):- walk(B,A).
+del_on_the_side_of(A,B):- play(B,A).
+del_on_the_side_of(A,B):- undress(B,A).
+del_on_the_side_of(A,B):- throw(B,A).
+del_on_the_side_of(A,B):- eat(B,A).
+del_on_the_side_of(A,B):- myopen(B,A).
+del_on_the_side_of(A,B):- take(B,A).
+del_on_the_side_of(A,B):- snuggle(B,A).
+******************************

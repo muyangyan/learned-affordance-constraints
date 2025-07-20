@@ -1,7 +1,0 @@
-:- style_check(-discontiguous).
-neg(add_talk(x_tlclg_mp4_000288_png_tlclg_mp4_000443_png_0, x_tlclg_mp4_000288_png_tlclg_mp4_000443_png_23).).
-neg(add_talk(x_sm0hi_mp4_000091_png_sm0hi_mp4_000537_png_0, x_sm0hi_mp4_000091_png_sm0hi_mp4_000537_png_23).).
-neg(add_talk(x_4edgw_mp4_000354_png_4edgw_mp4_000616_png_0, x_4edgw_mp4_000354_png_4edgw_mp4_000616_png_23).).
-neg(add_talk(x_dp7kp_mp4_000583_png_dp7kp_mp4_000939_png_0, x_dp7kp_mp4_000583_png_dp7kp_mp4_000939_png_23).).
-neg(add_talk(x_p03fp_mp4_000095_png_p03fp_mp4_000656_png_0, x_p03fp_mp4_000095_png_p03fp_mp4_000656_png_23).).
-neg(add_talk(x_j8joq_mp4_000364_png_j8joq_mp4_000809_png_0, x_j8joq_mp4_000364_png_j8joq_mp4_000809_png_23).).

@@ -23,6 +23,13 @@ def sanitize_frame_id(frame_id):
 def get_arity_of_ground_atom(ground_atom):
     return len(ground_atom.split('(')[1].split(')')[0].split(','))
 
+def handle_prolog_keywords(name):
+    if name == 'close':
+        return 'myclose'
+    if name == 'open':
+        return 'myopen'
+    return name
+
 def get_rule_precisions_recalls(rules_json, priors, classes):
     '''
     Get the precisions and recalls for all rules for converting rule binary truth values to predictions

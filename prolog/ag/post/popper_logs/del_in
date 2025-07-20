@@ -1,0 +1,84 @@
+:- style_check(-discontiguous).
+max_vars(6).
+max_body(8).
+head_pred(del_in, 2).
+body_pred(awaken, 2).
+body_pred(myclose, 2).
+body_pred(cook, 2).
+body_pred(dress, 2).
+body_pred(drink, 2).
+body_pred(eat, 2).
+body_pred(fix, 2).
+body_pred(grasp, 2).
+body_pred(hold, 2).
+body_pred(lie, 2).
+body_pred(myopen, 2).
+body_pred(photograph, 2).
+body_pred(play, 2).
+body_pred(pour, 2).
+body_pred(put, 2).
+body_pred(run, 2).
+body_pred(sit, 2).
+body_pred(snuggle, 2).
+body_pred(stand, 2).
+body_pred(take, 2).
+body_pred(talk, 2).
+body_pred(throw, 2).
+body_pred(tidy, 2).
+body_pred(turn, 2).
+body_pred(undress, 2).
+body_pred(walk, 2).
+body_pred(wash, 2).
+body_pred(watch, 2).
+body_pred(work, 2).
+03:40:17 Generating programs of size: 2
+03:40:17 ********************
+03:40:17 New best hypothesis:
+03:40:17 tp:16 fn:283 tn:99 fp:11 size:2 mdl:296
+03:40:17 del_in(A,B):- hold(B,A).
+03:40:17 ********************
+03:40:17 ********************
+03:40:17 New best hypothesis:
+03:40:17 tp:19 fn:280 tn:105 fp:5 size:2 mdl:287
+03:40:17 del_in(A,B):- put(B,A).
+03:40:17 ********************
+03:40:17 ********************
+03:40:17 New best hypothesis:
+03:40:17 tp:36 fn:263 tn:101 fp:9 size:2 mdl:274
+03:40:17 del_in(A,B):- walk(B,A).
+03:40:17 ********************
+03:40:17 ********************
+03:40:17 New best hypothesis:
+03:40:17 tp:46 fn:253 tn:108 fp:2 size:2 mdl:257
+03:40:17 del_in(A,B):- undress(B,A).
+03:40:17 ********************
+03:40:17 Generating programs of size: 3
+03:40:23 ********************
+03:40:23 New best hypothesis:
+03:40:23 tp:137 fn:162 tn:83 fp:27 size:16 mdl:205
+03:40:23 del_in(A,B):- hold(B,A).
+03:40:23 del_in(A,B):- put(B,A).
+03:40:23 del_in(A,B):- walk(B,A).
+03:40:23 del_in(A,B):- undress(B,A).
+03:40:23 del_in(A,B):- tidy(B,A).
+03:40:23 del_in(A,B):- throw(B,A).
+03:40:23 del_in(A,B):- myclose(B,A).
+03:40:23 del_in(A,B):- take(B,A).
+03:40:23 ********************
+03:40:26 Generating programs of size: 4
+03:40:52 Generating programs of size: 5
+03:41:12 Generating programs of size: 6
+03:41:19 Generating programs of size: 7
+03:41:25 Generating programs of size: 8
+03:41:31 Generating programs of size: 9
+********** SOLUTION **********
+Precision:0.84 Recall:0.46 TP:137 FN:162 TN:83 FP:27 Size:16 MDL:205
+del_in(A,B):- hold(B,A).
+del_in(A,B):- put(B,A).
+del_in(A,B):- walk(B,A).
+del_in(A,B):- undress(B,A).
+del_in(A,B):- tidy(B,A).
+del_in(A,B):- throw(B,A).
+del_in(A,B):- myclose(B,A).
+del_in(A,B):- take(B,A).
+******************************

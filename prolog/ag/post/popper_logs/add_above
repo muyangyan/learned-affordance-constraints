@@ -1,0 +1,56 @@
+:- style_check(-discontiguous).
+max_vars(6).
+max_body(8).
+head_pred(add_above, 2).
+body_pred(awaken, 2).
+body_pred(myclose, 2).
+body_pred(cook, 2).
+body_pred(dress, 2).
+body_pred(drink, 2).
+body_pred(eat, 2).
+body_pred(fix, 2).
+body_pred(grasp, 2).
+body_pred(hold, 2).
+body_pred(lie, 2).
+body_pred(myopen, 2).
+body_pred(photograph, 2).
+body_pred(play, 2).
+body_pred(pour, 2).
+body_pred(put, 2).
+body_pred(run, 2).
+body_pred(sit, 2).
+body_pred(snuggle, 2).
+body_pred(stand, 2).
+body_pred(take, 2).
+body_pred(talk, 2).
+body_pred(throw, 2).
+body_pred(tidy, 2).
+body_pred(turn, 2).
+body_pred(undress, 2).
+body_pred(walk, 2).
+body_pred(wash, 2).
+body_pred(watch, 2).
+body_pred(work, 2).
+03:40:17 Generating programs of size: 2
+03:40:17 ********************
+03:40:17 New best hypothesis:
+03:40:17 tp:10 fn:71 tn:32 fp:0 size:2 mdl:73
+03:40:17 add_above(A,B):- put(B,A).
+03:40:17 ********************
+03:40:17 Generating programs of size: 3
+03:40:20 ********************
+03:40:20 New best hypothesis:
+03:40:20 tp:19 fn:62 tn:29 fp:3 size:6 mdl:71
+03:40:20 add_above(A,B):- put(B,A).
+03:40:20 add_above(A,B):- watch(B,A).
+03:40:20 add_above(A,B):- take(B,A).
+03:40:20 ********************
+03:40:24 Generating programs of size: 4
+03:40:25 Generating programs of size: 5
+03:40:28 Generating programs of size: 6
+********** SOLUTION **********
+Precision:0.86 Recall:0.23 TP:19 FN:62 TN:29 FP:3 Size:6 MDL:71
+add_above(A,B):- put(B,A).
+add_above(A,B):- watch(B,A).
+add_above(A,B):- take(B,A).
+******************************

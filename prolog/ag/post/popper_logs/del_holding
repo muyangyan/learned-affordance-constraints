@@ -1,0 +1,79 @@
+:- style_check(-discontiguous).
+max_vars(6).
+max_body(8).
+head_pred(del_holding, 2).
+body_pred(awaken, 2).
+body_pred(myclose, 2).
+body_pred(cook, 2).
+body_pred(dress, 2).
+body_pred(drink, 2).
+body_pred(eat, 2).
+body_pred(fix, 2).
+body_pred(grasp, 2).
+body_pred(hold, 2).
+body_pred(lie, 2).
+body_pred(myopen, 2).
+body_pred(photograph, 2).
+body_pred(play, 2).
+body_pred(pour, 2).
+body_pred(put, 2).
+body_pred(run, 2).
+body_pred(sit, 2).
+body_pred(snuggle, 2).
+body_pred(stand, 2).
+body_pred(take, 2).
+body_pred(talk, 2).
+body_pred(throw, 2).
+body_pred(tidy, 2).
+body_pred(turn, 2).
+body_pred(undress, 2).
+body_pred(walk, 2).
+body_pred(wash, 2).
+body_pred(watch, 2).
+body_pred(work, 2).
+03:40:16 Generating programs of size: 2
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:9 fn:1541 tn:1233 fp:3 size:2 mdl:1546
+03:40:16 del_holding(A,B):- snuggle(A,B).
+03:40:16 ********************
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:48 fn:1502 tn:1199 fp:37 size:2 mdl:1541
+03:40:16 del_holding(A,B):- myclose(A,B).
+03:40:16 ********************
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:325 fn:1225 tn:1095 fp:141 size:2 mdl:1368
+03:40:16 del_holding(A,B):- put(A,B).
+03:40:16 ********************
+03:40:16 Generating programs of size: 3
+03:40:26 ********************
+03:40:26 New best hypothesis:
+03:40:26 tp:479 fn:1071 tn:1028 fp:208 size:16 mdl:1295
+03:40:26 del_holding(A,B):- snuggle(A,B).
+03:40:26 del_holding(A,B):- myclose(A,B).
+03:40:26 del_holding(A,B):- hold(A,B).
+03:40:26 del_holding(A,B):- put(A,B).
+03:40:26 del_holding(A,B):- walk(A,B).
+03:40:26 del_holding(A,B):- dress(A,B).
+03:40:26 del_holding(A,B):- tidy(A,B).
+03:40:26 del_holding(A,B):- throw(A,B).
+03:40:26 ********************
+03:40:33 Generating programs of size: 4
+03:41:37 Generating programs of size: 5
+03:41:56 Generating programs of size: 6
+03:42:16 Generating programs of size: 7
+03:42:35 Generating programs of size: 8
+03:43:03 Generating programs of size: 9
+********** SOLUTION **********
+Precision:0.70 Recall:0.31 TP:479 FN:1071 TN:1028 FP:208 Size:16 MDL:1295
+del_holding(A,B):- snuggle(A,B).
+del_holding(A,B):- myclose(A,B).
+del_holding(A,B):- hold(A,B).
+del_holding(A,B):- put(A,B).
+del_holding(A,B):- walk(A,B).
+del_holding(A,B):- dress(A,B).
+del_holding(A,B):- tidy(A,B).
+del_holding(A,B):- throw(A,B).
+******************************

@@ -1,0 +1,71 @@
+:- style_check(-discontiguous).
+max_vars(6).
+max_body(8).
+head_pred(add_not_looking_at, 2).
+body_pred(awaken, 2).
+body_pred(myclose, 2).
+body_pred(cook, 2).
+body_pred(dress, 2).
+body_pred(drink, 2).
+body_pred(eat, 2).
+body_pred(fix, 2).
+body_pred(grasp, 2).
+body_pred(hold, 2).
+body_pred(lie, 2).
+body_pred(myopen, 2).
+body_pred(photograph, 2).
+body_pred(play, 2).
+body_pred(pour, 2).
+body_pred(put, 2).
+body_pred(run, 2).
+body_pred(sit, 2).
+body_pred(snuggle, 2).
+body_pred(stand, 2).
+body_pred(take, 2).
+body_pred(talk, 2).
+body_pred(throw, 2).
+body_pred(tidy, 2).
+body_pred(turn, 2).
+body_pred(undress, 2).
+body_pred(walk, 2).
+body_pred(wash, 2).
+body_pred(watch, 2).
+body_pred(work, 2).
+03:40:16 Generating programs of size: 2
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:147 fn:2271 tn:2398 fp:65 size:2 mdl:2338
+03:40:16 add_not_looking_at(A,B):- myclose(A,B).
+03:40:16 ********************
+03:40:16 Generating programs of size: 3
+03:40:27 ********************
+03:40:27 New best hypothesis:
+03:40:27 tp:381 fn:2037 tn:2278 fp:185 size:16 mdl:2238
+03:40:27 add_not_looking_at(A,B):- myclose(A,B).
+03:40:27 add_not_looking_at(A,B):- cook(A,B).
+03:40:27 add_not_looking_at(A,B):- watch(A,B).
+03:40:27 add_not_looking_at(A,B):- pour(A,B).
+03:40:27 add_not_looking_at(A,B):- dress(A,B).
+03:40:27 add_not_looking_at(A,B):- play(A,B).
+03:40:27 add_not_looking_at(A,B):- eat(A,B).
+03:40:27 add_not_looking_at(A,B):- myopen(A,B).
+03:40:27 ********************
+03:40:37 Generating programs of size: 4
+03:40:47 ********************
+03:40:47 New best hypothesis:
+03:40:47 tp:395 fn:2023 tn:2270 fp:193 size:19 mdl:2235
+03:40:47 add_not_looking_at(A,B):- myclose(A,B).
+03:40:47 add_not_looking_at(A,B):- cook(A,B).
+03:40:47 add_not_looking_at(A,B):- watch(A,B).
+03:40:47 add_not_looking_at(A,B):- pour(A,B).
+03:40:47 add_not_looking_at(A,B):- dress(A,B).
+03:40:47 add_not_looking_at(A,B):- play(A,B).
+03:40:47 add_not_looking_at(A,B):- eat(A,B).
+03:40:47 add_not_looking_at(A,B):- myopen(A,B).
+03:40:47 add_not_looking_at(A,B):- sit(C,B),sit(A,C).
+03:40:47 ********************
+03:41:19 Generating programs of size: 5
+03:41:46 Generating programs of size: 6
+03:42:23 Generating programs of size: 7
+03:42:57 Generating programs of size: 8
+03:43:54 Generating programs of size: 9

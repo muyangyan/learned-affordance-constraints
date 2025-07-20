@@ -1,0 +1,97 @@
+:- style_check(-discontiguous).
+max_vars(6).
+max_body(8).
+head_pred(del_unsure, 2).
+body_pred(awaken, 2).
+body_pred(myclose, 2).
+body_pred(cook, 2).
+body_pred(dress, 2).
+body_pred(drink, 2).
+body_pred(eat, 2).
+body_pred(fix, 2).
+body_pred(grasp, 2).
+body_pred(hold, 2).
+body_pred(lie, 2).
+body_pred(myopen, 2).
+body_pred(photograph, 2).
+body_pred(play, 2).
+body_pred(pour, 2).
+body_pred(put, 2).
+body_pred(run, 2).
+body_pred(sit, 2).
+body_pred(snuggle, 2).
+body_pred(stand, 2).
+body_pred(take, 2).
+body_pred(talk, 2).
+body_pred(throw, 2).
+body_pred(tidy, 2).
+body_pred(turn, 2).
+body_pred(undress, 2).
+body_pred(walk, 2).
+body_pred(wash, 2).
+body_pred(watch, 2).
+body_pred(work, 2).
+03:40:16 Generating programs of size: 2
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:26 fn:783 tn:222 fp:8 size:2 mdl:793
+03:40:16 del_unsure(A,B):- myclose(A,B).
+03:40:16 ********************
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:29 fn:780 tn:225 fp:5 size:2 mdl:787
+03:40:16 del_unsure(A,B):- hold(A,B).
+03:40:16 ********************
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:85 fn:724 tn:190 fp:40 size:2 mdl:766
+03:40:16 del_unsure(A,B):- put(A,B).
+03:40:16 ********************
+03:40:16 Generating programs of size: 3
+03:40:26 ********************
+03:40:26 New best hypothesis:
+03:40:26 tp:347 fn:462 tn:113 fp:117 size:34 mdl:613
+03:40:26 del_unsure(A,B):- myclose(A,B).
+03:40:26 del_unsure(A,B):- cook(A,B).
+03:40:26 del_unsure(A,B):- drink(A,B).
+03:40:26 del_unsure(A,B):- hold(A,B).
+03:40:26 del_unsure(A,B):- sit(A,B).
+03:40:26 del_unsure(A,B):- put(A,B).
+03:40:26 del_unsure(A,B):- watch(A,B).
+03:40:26 del_unsure(A,B):- walk(A,B).
+03:40:26 del_unsure(A,B):- play(A,B).
+03:40:26 del_unsure(A,B):- undress(A,B).
+03:40:26 del_unsure(A,B):- turn(A,B).
+03:40:26 del_unsure(A,B):- tidy(A,B).
+03:40:26 del_unsure(A,B):- throw(A,B).
+03:40:26 del_unsure(A,B):- eat(A,B).
+03:40:26 del_unsure(A,B):- myopen(A,B).
+03:40:26 del_unsure(A,B):- take(A,B).
+03:40:26 del_unsure(A,B):- lie(A,B).
+03:40:26 ********************
+03:40:34 Generating programs of size: 4
+03:41:18 Generating programs of size: 5
+03:41:37 Generating programs of size: 6
+03:41:53 Generating programs of size: 7
+03:42:06 Generating programs of size: 8
+03:42:18 Generating programs of size: 9
+********** SOLUTION **********
+Precision:0.75 Recall:0.43 TP:347 FN:462 TN:113 FP:117 Size:34 MDL:613
+del_unsure(A,B):- myclose(A,B).
+del_unsure(A,B):- cook(A,B).
+del_unsure(A,B):- drink(A,B).
+del_unsure(A,B):- hold(A,B).
+del_unsure(A,B):- sit(A,B).
+del_unsure(A,B):- put(A,B).
+del_unsure(A,B):- watch(A,B).
+del_unsure(A,B):- walk(A,B).
+del_unsure(A,B):- play(A,B).
+del_unsure(A,B):- undress(A,B).
+del_unsure(A,B):- turn(A,B).
+del_unsure(A,B):- tidy(A,B).
+del_unsure(A,B):- throw(A,B).
+del_unsure(A,B):- eat(A,B).
+del_unsure(A,B):- myopen(A,B).
+del_unsure(A,B):- take(A,B).
+del_unsure(A,B):- lie(A,B).
+******************************

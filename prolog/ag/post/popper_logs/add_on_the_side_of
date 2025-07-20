@@ -1,0 +1,89 @@
+:- style_check(-discontiguous).
+max_vars(6).
+max_body(8).
+head_pred(add_on_the_side_of, 2).
+body_pred(awaken, 2).
+body_pred(myclose, 2).
+body_pred(cook, 2).
+body_pred(dress, 2).
+body_pred(drink, 2).
+body_pred(eat, 2).
+body_pred(fix, 2).
+body_pred(grasp, 2).
+body_pred(hold, 2).
+body_pred(lie, 2).
+body_pred(myopen, 2).
+body_pred(photograph, 2).
+body_pred(play, 2).
+body_pred(pour, 2).
+body_pred(put, 2).
+body_pred(run, 2).
+body_pred(sit, 2).
+body_pred(snuggle, 2).
+body_pred(stand, 2).
+body_pred(take, 2).
+body_pred(talk, 2).
+body_pred(throw, 2).
+body_pred(tidy, 2).
+body_pred(turn, 2).
+body_pred(undress, 2).
+body_pred(walk, 2).
+body_pred(wash, 2).
+body_pred(watch, 2).
+body_pred(work, 2).
+03:40:16 Generating programs of size: 2
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:186 fn:1241 tn:536 fp:72 size:2 mdl:1315
+03:40:16 add_on_the_side_of(A,B):- put(B,A).
+03:40:16 ********************
+03:40:16 Generating programs of size: 3
+03:40:26 ********************
+03:40:26 New best hypothesis:
+03:40:26 tp:552 fn:875 tn:358 fp:250 size:36 mdl:1161
+03:40:26 add_on_the_side_of(A,B):- awaken(B,A).
+03:40:26 add_on_the_side_of(A,B):- put(B,A).
+03:40:26 add_on_the_side_of(A,B):- work(B,A).
+03:40:26 add_on_the_side_of(A,B):- watch(B,A).
+03:40:26 add_on_the_side_of(A,B):- pour(B,A).
+03:40:26 add_on_the_side_of(A,B):- wash(B,A).
+03:40:26 add_on_the_side_of(A,B):- dress(B,A).
+03:40:26 add_on_the_side_of(A,B):- walk(B,A).
+03:40:26 add_on_the_side_of(A,B):- undress(B,A).
+03:40:26 add_on_the_side_of(A,B):- turn(B,A).
+03:40:26 add_on_the_side_of(A,B):- throw(B,A).
+03:40:26 add_on_the_side_of(A,B):- eat(B,A).
+03:40:26 add_on_the_side_of(A,B):- myopen(B,A).
+03:40:26 add_on_the_side_of(A,B):- myclose(B,A).
+03:40:26 add_on_the_side_of(A,B):- take(B,A).
+03:40:26 add_on_the_side_of(A,B):- lie(B,A).
+03:40:26 add_on_the_side_of(A,B):- cook(B,A).
+03:40:26 add_on_the_side_of(A,B):- snuggle(B,A).
+03:40:26 ********************
+03:40:36 Generating programs of size: 4
+03:41:23 Generating programs of size: 5
+03:41:50 Generating programs of size: 6
+03:42:07 Generating programs of size: 7
+03:42:23 Generating programs of size: 8
+03:42:36 Generating programs of size: 9
+********** SOLUTION **********
+Precision:0.69 Recall:0.39 TP:552 FN:875 TN:358 FP:250 Size:36 MDL:1161
+add_on_the_side_of(A,B):- awaken(B,A).
+add_on_the_side_of(A,B):- put(B,A).
+add_on_the_side_of(A,B):- work(B,A).
+add_on_the_side_of(A,B):- watch(B,A).
+add_on_the_side_of(A,B):- pour(B,A).
+add_on_the_side_of(A,B):- wash(B,A).
+add_on_the_side_of(A,B):- dress(B,A).
+add_on_the_side_of(A,B):- walk(B,A).
+add_on_the_side_of(A,B):- undress(B,A).
+add_on_the_side_of(A,B):- turn(B,A).
+add_on_the_side_of(A,B):- throw(B,A).
+add_on_the_side_of(A,B):- eat(B,A).
+add_on_the_side_of(A,B):- myopen(B,A).
+add_on_the_side_of(A,B):- myclose(B,A).
+add_on_the_side_of(A,B):- take(B,A).
+add_on_the_side_of(A,B):- lie(B,A).
+add_on_the_side_of(A,B):- cook(B,A).
+add_on_the_side_of(A,B):- snuggle(B,A).
+******************************

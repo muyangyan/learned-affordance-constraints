@@ -1,0 +1,76 @@
+:- style_check(-discontiguous).
+max_vars(6).
+max_body(8).
+head_pred(add_holding, 2).
+body_pred(awaken, 2).
+body_pred(myclose, 2).
+body_pred(cook, 2).
+body_pred(dress, 2).
+body_pred(drink, 2).
+body_pred(eat, 2).
+body_pred(fix, 2).
+body_pred(grasp, 2).
+body_pred(hold, 2).
+body_pred(lie, 2).
+body_pred(myopen, 2).
+body_pred(photograph, 2).
+body_pred(play, 2).
+body_pred(pour, 2).
+body_pred(put, 2).
+body_pred(run, 2).
+body_pred(sit, 2).
+body_pred(snuggle, 2).
+body_pred(stand, 2).
+body_pred(take, 2).
+body_pred(talk, 2).
+body_pred(throw, 2).
+body_pred(tidy, 2).
+body_pred(turn, 2).
+body_pred(undress, 2).
+body_pred(walk, 2).
+body_pred(wash, 2).
+body_pred(watch, 2).
+body_pred(work, 2).
+03:40:16 Generating programs of size: 2
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:86 fn:1635 tn:1230 fp:6 size:2 mdl:1643
+03:40:16 add_holding(A,B):- hold(A,B).
+03:40:16 ********************
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:273 fn:1448 tn:1231 fp:5 size:2 mdl:1455
+03:40:16 add_holding(A,B):- take(A,B).
+03:40:16 ********************
+03:40:16 Generating programs of size: 3
+03:40:26 ********************
+03:40:26 New best hypothesis:
+03:40:26 tp:395 fn:1326 tn:1214 fp:22 size:8 mdl:1356
+03:40:26 add_holding(A,B):- hold(A,B).
+03:40:26 add_holding(A,B):- undress(A,B).
+03:40:26 add_holding(A,B):- tidy(A,B).
+03:40:26 add_holding(A,B):- take(A,B).
+03:40:26 ********************
+03:40:34 Generating programs of size: 4
+03:40:44 ********************
+03:40:44 New best hypothesis:
+03:40:44 tp:399 fn:1322 tn:1214 fp:22 size:11 mdl:1355
+03:40:44 add_holding(A,B):- hold(A,B).
+03:40:44 add_holding(A,B):- undress(A,B).
+03:40:44 add_holding(A,B):- tidy(A,B).
+03:40:44 add_holding(A,B):- take(A,B).
+03:40:44 add_holding(A,B):- watch(A,B),put(A,B).
+03:40:44 ********************
+03:41:37 Generating programs of size: 5
+03:42:03 Generating programs of size: 6
+03:42:23 Generating programs of size: 7
+03:42:41 Generating programs of size: 8
+03:42:54 Generating programs of size: 9
+********** SOLUTION **********
+Precision:0.95 Recall:0.23 TP:399 FN:1322 TN:1214 FP:22 Size:11 MDL:1355
+add_holding(A,B):- hold(A,B).
+add_holding(A,B):- undress(A,B).
+add_holding(A,B):- tidy(A,B).
+add_holding(A,B):- take(A,B).
+add_holding(A,B):- watch(A,B),put(A,B).
+******************************

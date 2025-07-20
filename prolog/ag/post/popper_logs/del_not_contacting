@@ -1,0 +1,69 @@
+:- style_check(-discontiguous).
+max_vars(6).
+max_body(8).
+head_pred(del_not_contacting, 2).
+body_pred(awaken, 2).
+body_pred(myclose, 2).
+body_pred(cook, 2).
+body_pred(dress, 2).
+body_pred(drink, 2).
+body_pred(eat, 2).
+body_pred(fix, 2).
+body_pred(grasp, 2).
+body_pred(hold, 2).
+body_pred(lie, 2).
+body_pred(myopen, 2).
+body_pred(photograph, 2).
+body_pred(play, 2).
+body_pred(pour, 2).
+body_pred(put, 2).
+body_pred(run, 2).
+body_pred(sit, 2).
+body_pred(snuggle, 2).
+body_pred(stand, 2).
+body_pred(take, 2).
+body_pred(talk, 2).
+body_pred(throw, 2).
+body_pred(tidy, 2).
+body_pred(turn, 2).
+body_pred(undress, 2).
+body_pred(walk, 2).
+body_pred(wash, 2).
+body_pred(watch, 2).
+body_pred(work, 2).
+03:40:16 Generating programs of size: 2
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:115 fn:1711 tn:1401 fp:97 size:2 mdl:1810
+03:40:16 del_not_contacting(A,B):- hold(A,B).
+03:40:16 ********************
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:306 fn:1520 tn:1444 fp:54 size:2 mdl:1576
+03:40:16 del_not_contacting(A,B):- take(A,B).
+03:40:16 ********************
+03:40:16 Generating programs of size: 3
+03:40:26 ********************
+03:40:26 New best hypothesis:
+03:40:26 tp:465 fn:1361 tn:1316 fp:182 size:10 mdl:1553
+03:40:26 del_not_contacting(A,B):- hold(A,B).
+03:40:26 del_not_contacting(A,B):- sit(A,B).
+03:40:26 del_not_contacting(A,B):- pour(A,B).
+03:40:26 del_not_contacting(A,B):- dress(A,B).
+03:40:26 del_not_contacting(A,B):- take(A,B).
+03:40:26 ********************
+03:40:34 Generating programs of size: 4
+03:40:44 ********************
+03:40:44 New best hypothesis:
+03:40:44 tp:448 fn:1378 tn:1344 fp:154 size:11 mdl:1543
+03:40:44 del_not_contacting(A,B):- hold(A,B).
+03:40:44 del_not_contacting(A,B):- pour(A,B).
+03:40:44 del_not_contacting(A,B):- dress(A,B).
+03:40:44 del_not_contacting(A,B):- take(A,B).
+03:40:44 del_not_contacting(A,B):- sit(A,C),sit(C,B).
+03:40:44 ********************
+03:41:32 Generating programs of size: 5
+03:42:00 Generating programs of size: 6
+03:42:27 Generating programs of size: 7
+03:43:02 Generating programs of size: 8
+03:43:53 Generating programs of size: 9

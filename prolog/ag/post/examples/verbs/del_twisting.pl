@@ -1,3 +1,3 @@
 :- style_check(-discontiguous).
-pos(del_twisting(x_0rj18_mp4_000310_png_0rj18_mp4_000456_png_0, x_0rj18_mp4_000310_png_0rj18_mp4_000456_png_20).).
-pos(del_twisting(x_0rj18_mp4_000310_png_0rj18_mp4_000456_png_0, x_0rj18_mp4_000310_png_0rj18_mp4_000456_png_20).).
+pos(del_twisting(x_0rj18_mp4_000310_png_0rj18_mp4_000456_png_0, x_0rj18_mp4_000310_png_0rj18_mp4_000456_png_20)).
+pos(del_twisting(x_0rj18_mp4_000310_png_0rj18_mp4_000456_png_0, x_0rj18_mp4_000310_png_0rj18_mp4_000456_png_20)).

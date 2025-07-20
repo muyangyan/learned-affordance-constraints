@@ -7,7 +7,7 @@ import numpy as np
 import warnings
 
 from util.config_utils import load_yaml
-from util.rule_utils import normalize_predicate_name, sanitize_frame_id, get_arity_of_ground_atom
+from util.rule_utils import normalize_predicate_name, sanitize_frame_id, get_arity_of_ground_atom, handle_prolog_keywords
 
 warnings.filterwarnings("ignore")
 
@@ -66,7 +66,6 @@ class PrologData:
         edge_triples = [(edge_types[i], src, tgt) for i, (src, tgt) in edge_list]
         
         example = []
-        #assert types of each node
         for id, node_type in zip(node_ids, node_types):
             example.append(f'{self.node_vocab[node_type]}({id}).')
 
@@ -86,7 +85,7 @@ class PrologData:
                     #print(f'Object index {obj_idx} not found in node types for {frame_id}')
                     continue
 
-                verb_name = self.verb_vocab[verb_idx]
+                verb_name = handle_prolog_keywords(self.verb_vocab[verb_idx])
                 # RESTS ON THE ASSUMPTION THAT NO DUPLICATE OBJECT TYPES ARE FOUND
                 example.append(f'{verb_name}(x_{clean_id}_0, x_{clean_id}_{obj_idx}).')
         return example
@@ -259,6 +258,11 @@ class PrologData:
 
         # collect the positive and negative examples
         examples = {}
+        for pred_name in self.edge_vocab + self.node_vocab:
+            examples[f'pos_add_{pred_name}'] = []
+            examples[f'pos_del_{pred_name}'] = []
+            examples[f'neg_add_{pred_name}'] = []
+            examples[f'neg_del_{pred_name}'] = []
 
         for pre_data, post_data in self.dataset:
             pre_id = pre_data['id']
@@ -268,8 +272,15 @@ class PrologData:
             action = pre_data['action_label']
             clean_pair_id = f'{sanitize_frame_id(pre_id)}_{sanitize_frame_id(post_id)}'
 
-            pre_state = self.pyg_to_prolog(clean_pair_id, pre_scene_graph, action)
-            post_state = self.pyg_to_prolog(clean_pair_id, post_scene_graph, action)
+            pre_state_with_action = self.pyg_to_prolog(clean_pair_id, pre_scene_graph, action)
+            pre_state = self.pyg_to_prolog(clean_pair_id, pre_scene_graph)
+            post_state = self.pyg_to_prolog(clean_pair_id, post_scene_graph)
+
+            # write the pre-state into the effects_bk file
+            pre_state_with_action = '\n'.join(pre_state_with_action)
+            with(open(self.transition_bk_filename, 'a')) as f:
+                f.write(f'%%pre-post-state pair id: {clean_pair_id}\n')
+                f.write(f'{pre_state_with_action}\n')
 
             # compute the set differences between pre and post state 
             pre_state_set = set(pre_state)
@@ -280,32 +291,20 @@ class PrologData:
             not_del_effects = pre_state_set - del_effects
 
 
-            # write the pre-state into the effects_bk file
-            pre_state = '\n'.join(pre_state)
-            with(open(self.transition_bk_filename, 'a')) as f:
-                f.write(f'%%pre-post-state pair id: {clean_pair_id}\n')
-                f.write(f'{pre_state}\n')
+
             
             # collect the positive and negative examples
             for effect in add_effects:
                 pred_name = effect.split('(')[0]
-                if f'pos_add_{pred_name}' not in examples.keys():
-                    examples[f'pos_add_{pred_name}'] = []
                 examples[f'pos_add_{pred_name}'].append(effect)
             for effect in del_effects:
                 pred_name = effect.split('(')[0]
-                if f'pos_del_{pred_name}' not in examples.keys():
-                    examples[f'pos_del_{pred_name}'] = []
                 examples[f'pos_del_{pred_name}'].append(effect)
             for effect in not_add_effects:
                 pred_name = effect.split('(')[0]
-                if f'neg_add_{pred_name}' not in examples.keys():
-                    examples[f'neg_add_{pred_name}'] = []
                 examples[f'neg_add_{pred_name}'].append(effect)
             for effect in not_del_effects:
                 pred_name = effect.split('(')[0]
-                if f'neg_del_{pred_name}' not in examples.keys():
-                    examples[f'neg_del_{pred_name}'] = []
                 examples[f'neg_del_{pred_name}'].append(effect)
 
         # now that we've collected all the examples, write them to the files
@@ -321,9 +320,15 @@ class PrologData:
                 os.makedirs(os.path.dirname(bias_filename), exist_ok=True)
             if len(exs) > 0:
                 effect_arity = get_arity_of_ground_atom(exs[0])
-                with(open(exs_filename, 'w+')) as f:
-                    f.write(':- style_check(-discontiguous).\n')
+                if pos_or_neg == 'pos':
+                    write_mode = 'w+'
+                else:
+                    write_mode = 'a'
+                with(open(exs_filename, write_mode)) as f:
+                    if write_mode == 'w+':
+                        f.write(':- style_check(-discontiguous).\n')
                     for ex in exs:
+                        ex = ex.rstrip('.')
                         f.write(f'{pos_or_neg}({effect_type}_{ex}).\n')
             else:
                 print(f'No examples found for {effect_type}_{pred_name}')
@@ -346,20 +351,23 @@ class PrologData:
             
 
 
-    def init_general_bias(self, forbidden_nodes, forbidden_edges, write_verbs=False, write_actions=False):
+    def init_general_bias(self, forbidden_nodes, forbidden_edges, write_verbs=False, write_actions=False, skip_preds=False):
         # Build general bias as a string instead of writing to file
         bias_lines = []
-        
-        for node in self.node_vocab:
-            if node not in forbidden_nodes:
-                bias_lines.append(f'body_pred({node}, 1).')
-        for edge in self.edge_vocab:
-            #disallow use of attentional relationships
-            if edge not in forbidden_edges:
-                bias_lines.append(f'body_pred({edge}, 2).')
+        manual_blacklist = ['make'] # currently just never appears in the SingleBothAG train dataset
+        if not skip_preds:
+            for node in self.node_vocab:
+                if node not in forbidden_nodes:
+                    bias_lines.append(f'body_pred({node}, 1).')
+            for edge in self.edge_vocab:
+                #disallow use of attentional relationships
+                if edge not in forbidden_edges:
+                    bias_lines.append(f'body_pred({edge}, 2).')
         if write_verbs:
             for verb in self.verb_vocab:
-                bias_lines.append(f'body_pred({verb}, 2).')
+                if verb in manual_blacklist:
+                    continue
+                bias_lines.append(f'body_pred({handle_prolog_keywords(verb)}, 2).')
         if write_actions:
             for action in self.dataset.action_classes:
                 bias_lines.append(f'body_pred({action}, 1).')
@@ -387,7 +395,7 @@ def main(config):
         print("Generating examples for effect learning...")
         post_ag = SingleBothAG(config, no_img=True, split='train', subset=True, no_rules=True)
         post_pd = PrologData(prolog_folder, 'post', post_ag, model=None, split=None)
-        post_pd.init_general_bias(config.data.forbidden_nodes, config.data.forbidden_edges, write_verbs=True)
+        post_pd.init_general_bias(config.data.forbidden_nodes, config.data.forbidden_edges, write_verbs=True, skip_preds=True)
         post_pd.write_effects_bk_and_examples()
 
     if args.generate_pre:

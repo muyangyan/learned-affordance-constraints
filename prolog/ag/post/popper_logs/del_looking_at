@@ -1,0 +1,95 @@
+:- style_check(-discontiguous).
+max_vars(6).
+max_body(8).
+head_pred(del_looking_at, 2).
+body_pred(awaken, 2).
+body_pred(myclose, 2).
+body_pred(cook, 2).
+body_pred(dress, 2).
+body_pred(drink, 2).
+body_pred(eat, 2).
+body_pred(fix, 2).
+body_pred(grasp, 2).
+body_pred(hold, 2).
+body_pred(lie, 2).
+body_pred(myopen, 2).
+body_pred(photograph, 2).
+body_pred(play, 2).
+body_pred(pour, 2).
+body_pred(put, 2).
+body_pred(run, 2).
+body_pred(sit, 2).
+body_pred(snuggle, 2).
+body_pred(stand, 2).
+body_pred(take, 2).
+body_pred(talk, 2).
+body_pred(throw, 2).
+body_pred(tidy, 2).
+body_pred(turn, 2).
+body_pred(undress, 2).
+body_pred(walk, 2).
+body_pred(wash, 2).
+body_pred(watch, 2).
+body_pred(work, 2).
+03:40:16 Generating programs of size: 2
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:11 fn:1944 tn:1131 fp:1 size:2 mdl:1947
+03:40:16 del_looking_at(A,B):- snuggle(A,B).
+03:40:16 ********************
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:134 fn:1821 tn:1071 fp:61 size:2 mdl:1884
+03:40:16 del_looking_at(A,B):- myclose(A,B).
+03:40:16 ********************
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:200 fn:1755 tn:1008 fp:124 size:2 mdl:1881
+03:40:16 del_looking_at(A,B):- put(A,B).
+03:40:16 ********************
+03:40:16 Generating programs of size: 3
+03:40:26 ********************
+03:40:26 New best hypothesis:
+03:40:26 tp:619 fn:1336 tn:770 fp:362 size:32 mdl:1730
+03:40:26 del_looking_at(A,B):- snuggle(A,B).
+03:40:26 del_looking_at(A,B):- myclose(A,B).
+03:40:26 del_looking_at(A,B):- cook(A,B).
+03:40:26 del_looking_at(A,B):- drink(A,B).
+03:40:26 del_looking_at(A,B):- hold(A,B).
+03:40:26 del_looking_at(A,B):- sit(A,B).
+03:40:26 del_looking_at(A,B):- grasp(A,B).
+03:40:26 del_looking_at(A,B):- put(A,B).
+03:40:26 del_looking_at(A,B):- work(A,B).
+03:40:26 del_looking_at(A,B):- watch(A,B).
+03:40:26 del_looking_at(A,B):- wash(A,B).
+03:40:26 del_looking_at(A,B):- walk(A,B).
+03:40:26 del_looking_at(A,B):- dress(A,B).
+03:40:26 del_looking_at(A,B):- turn(A,B).
+03:40:26 del_looking_at(A,B):- tidy(A,B).
+03:40:26 del_looking_at(A,B):- eat(A,B).
+03:40:26 ********************
+03:40:36 Generating programs of size: 4
+03:41:28 Generating programs of size: 5
+03:41:57 Generating programs of size: 6
+03:42:21 Generating programs of size: 7
+03:42:43 Generating programs of size: 8
+03:42:59 Generating programs of size: 9
+********** SOLUTION **********
+Precision:0.63 Recall:0.32 TP:619 FN:1336 TN:770 FP:362 Size:32 MDL:1730
+del_looking_at(A,B):- snuggle(A,B).
+del_looking_at(A,B):- myclose(A,B).
+del_looking_at(A,B):- cook(A,B).
+del_looking_at(A,B):- drink(A,B).
+del_looking_at(A,B):- hold(A,B).
+del_looking_at(A,B):- sit(A,B).
+del_looking_at(A,B):- grasp(A,B).
+del_looking_at(A,B):- put(A,B).
+del_looking_at(A,B):- work(A,B).
+del_looking_at(A,B):- watch(A,B).
+del_looking_at(A,B):- wash(A,B).
+del_looking_at(A,B):- walk(A,B).
+del_looking_at(A,B):- dress(A,B).
+del_looking_at(A,B):- turn(A,B).
+del_looking_at(A,B):- tidy(A,B).
+del_looking_at(A,B):- eat(A,B).
+******************************

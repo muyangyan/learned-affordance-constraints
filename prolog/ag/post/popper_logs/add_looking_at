@@ -1,0 +1,98 @@
+:- style_check(-discontiguous).
+max_vars(6).
+max_body(8).
+head_pred(add_looking_at, 2).
+body_pred(awaken, 2).
+body_pred(myclose, 2).
+body_pred(cook, 2).
+body_pred(dress, 2).
+body_pred(drink, 2).
+body_pred(eat, 2).
+body_pred(fix, 2).
+body_pred(grasp, 2).
+body_pred(hold, 2).
+body_pred(lie, 2).
+body_pred(myopen, 2).
+body_pred(photograph, 2).
+body_pred(play, 2).
+body_pred(pour, 2).
+body_pred(put, 2).
+body_pred(run, 2).
+body_pred(sit, 2).
+body_pred(snuggle, 2).
+body_pred(stand, 2).
+body_pred(take, 2).
+body_pred(talk, 2).
+body_pred(throw, 2).
+body_pred(tidy, 2).
+body_pred(turn, 2).
+body_pred(undress, 2).
+body_pred(walk, 2).
+body_pred(wash, 2).
+body_pred(watch, 2).
+body_pred(work, 2).
+03:40:16 Generating programs of size: 2
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:5 fn:1853 tn:1131 fp:1 size:2 mdl:1856
+03:40:16 add_looking_at(A,B):- snuggle(A,B).
+03:40:16 ********************
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:57 fn:1801 tn:1086 fp:46 size:2 mdl:1849
+03:40:16 add_looking_at(A,B):- hold(A,B).
+03:40:16 ********************
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:17 fn:1841 tn:1127 fp:5 size:2 mdl:1848
+03:40:16 add_looking_at(A,B):- undress(A,B).
+03:40:16 ********************
+03:40:16 ********************
+03:40:16 New best hypothesis:
+03:40:16 tp:131 fn:1727 tn:1057 fp:75 size:2 mdl:1804
+03:40:16 add_looking_at(A,B):- take(A,B).
+03:40:16 ********************
+03:40:16 Generating programs of size: 3
+03:40:27 ********************
+03:40:27 New best hypothesis:
+03:40:27 tp:234 fn:1624 tn:1002 fp:130 size:16 mdl:1770
+03:40:27 add_looking_at(A,B):- snuggle(A,B).
+03:40:27 add_looking_at(A,B):- hold(A,B).
+03:40:27 add_looking_at(A,B):- pour(A,B).
+03:40:27 add_looking_at(A,B):- walk(A,B).
+03:40:27 add_looking_at(A,B):- undress(A,B).
+03:40:27 add_looking_at(A,B):- talk(A,B).
+03:40:27 add_looking_at(A,B):- take(A,B).
+03:40:27 add_looking_at(A,B):- lie(A,B).
+03:40:27 ********************
+03:40:36 Generating programs of size: 4
+03:41:18 Generating programs of size: 5
+03:41:28 ********************
+03:41:28 New best hypothesis:
+03:41:28 tp:240 fn:1618 tn:1002 fp:130 size:20 mdl:1768
+03:41:28 add_looking_at(A,B):- snuggle(A,B).
+03:41:28 add_looking_at(A,B):- hold(A,B).
+03:41:28 add_looking_at(A,B):- pour(A,B).
+03:41:28 add_looking_at(A,B):- walk(A,B).
+03:41:28 add_looking_at(A,B):- undress(A,B).
+03:41:28 add_looking_at(A,B):- talk(A,B).
+03:41:28 add_looking_at(A,B):- take(A,B).
+03:41:28 add_looking_at(A,B):- lie(A,B).
+03:41:28 add_looking_at(A,B):- grasp(A,C),grasp(D,C),myopen(D,B).
+03:41:28 ********************
+03:41:46 Generating programs of size: 6
+03:42:07 Generating programs of size: 7
+03:42:25 Generating programs of size: 8
+03:42:40 Generating programs of size: 9
+********** SOLUTION **********
+Precision:0.65 Recall:0.13 TP:240 FN:1618 TN:1002 FP:130 Size:20 MDL:1768
+add_looking_at(A,B):- snuggle(A,B).
+add_looking_at(A,B):- hold(A,B).
+add_looking_at(A,B):- pour(A,B).
+add_looking_at(A,B):- walk(A,B).
+add_looking_at(A,B):- undress(A,B).
+add_looking_at(A,B):- talk(A,B).
+add_looking_at(A,B):- take(A,B).
+add_looking_at(A,B):- lie(A,B).
+add_looking_at(A,B):- grasp(A,C),grasp(D,C),myopen(D,B).
+******************************
