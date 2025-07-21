@@ -1,69 +1,69 @@
-18:52:01 Generating programs of size: 2
-18:52:01 ********************
-18:52:01 New best hypothesis:
-18:52:01 tp:3 fn:1825 tn:1498 fp:0 size:2 mdl:1827
-18:52:01 add_not_contacting(A,B):- awaken(A,B).
-18:52:01 ********************
-18:52:11 ********************
-18:52:11 New best hypothesis:
-18:52:11 tp:5 fn:1823 tn:1497 fp:1 size:2 mdl:1826
-18:52:11 add_not_contacting(A,B):- snuggle(A,B).
-18:52:11 ********************
-18:52:11 ********************
-18:52:11 New best hypothesis:
-18:52:11 tp:106 fn:1722 tn:1402 fp:96 size:2 mdl:1820
-18:52:11 add_not_contacting(A,B):- myclose(A,B).
-18:52:11 ********************
-18:52:11 ********************
-18:52:11 New best hypothesis:
-18:52:11 tp:346 fn:1482 tn:1283 fp:215 size:2 mdl:1699
-18:52:11 add_not_contacting(A,B):- put(A,B).
-18:52:11 ********************
-18:52:11 Generating programs of size: 3
-18:52:21 ********************
-18:52:22 New best hypothesis:
-18:52:22 tp:582 fn:1246 tn:1157 fp:341 size:16 mdl:1603
-18:52:22 add_not_contacting(A,B):- awaken(A,B).
-18:52:22 add_not_contacting(A,B):- snuggle(A,B).
-18:52:22 add_not_contacting(A,B):- myclose(A,B).
-18:52:22 add_not_contacting(A,B):- put(A,B).
-18:52:22 add_not_contacting(A,B):- wash(A,B).
-18:52:22 add_not_contacting(A,B):- undress(A,B).
-18:52:22 add_not_contacting(A,B):- throw(A,B).
-18:52:22 add_not_contacting(A,B):- eat(A,B).
-18:52:22 ********************
-18:52:27 Generating programs of size: 4
-18:52:37 ********************
-18:52:37 New best hypothesis:
-18:52:37 tp:586 fn:1242 tn:1157 fp:341 size:19 mdl:1602
-18:52:37 add_not_contacting(A,B):- awaken(A,B).
-18:52:37 add_not_contacting(A,B):- snuggle(A,B).
-18:52:37 add_not_contacting(A,B):- myclose(A,B).
-18:52:37 add_not_contacting(A,B):- put(A,B).
-18:52:37 add_not_contacting(A,B):- wash(A,B).
-18:52:37 add_not_contacting(A,B):- undress(A,B).
-18:52:37 add_not_contacting(A,B):- throw(A,B).
-18:52:37 add_not_contacting(A,B):- eat(A,B).
-18:52:37 add_not_contacting(A,B):- watch(A,B),play(A,B).
-18:52:37 ********************
-18:53:27 Generating programs of size: 5
-18:53:37 ********************
-18:53:37 New best hypothesis:
-18:53:37 tp:588 fn:1240 tn:1157 fp:341 size:20 mdl:1601
-18:53:37 add_not_contacting(A,B):- awaken(A,B).
-18:53:37 add_not_contacting(A,B):- snuggle(A,B).
-18:53:37 add_not_contacting(A,B):- myclose(A,B).
-18:53:37 add_not_contacting(A,B):- put(A,B).
-18:53:37 add_not_contacting(A,B):- wash(A,B).
-18:53:37 add_not_contacting(A,B):- undress(A,B).
-18:53:37 add_not_contacting(A,B):- throw(A,B).
-18:53:37 add_not_contacting(A,B):- eat(A,B).
-18:53:37 add_not_contacting(A,B):- work(A,C),work(D,C),play(D,B).
-18:53:37 ********************
-18:53:57 Generating programs of size: 6
-18:54:21 Generating programs of size: 7
-18:54:45 Generating programs of size: 8
-18:55:00 Generating programs of size: 9
+20:48:16 Generating programs of size: 2
+20:48:16 ********************
+20:48:16 New best hypothesis:
+20:48:16 tp:3 fn:1825 tn:1498 fp:0 size:2 mdl:1827
+20:48:16 add_not_contacting(A,B):- awaken(A,B).
+20:48:16 ********************
+20:48:26 ********************
+20:48:26 New best hypothesis:
+20:48:26 tp:5 fn:1823 tn:1497 fp:1 size:2 mdl:1826
+20:48:26 add_not_contacting(A,B):- snuggle(A,B).
+20:48:26 ********************
+20:48:26 ********************
+20:48:26 New best hypothesis:
+20:48:26 tp:106 fn:1722 tn:1402 fp:96 size:2 mdl:1820
+20:48:26 add_not_contacting(A,B):- myclose(A,B).
+20:48:26 ********************
+20:48:26 ********************
+20:48:26 New best hypothesis:
+20:48:26 tp:346 fn:1482 tn:1283 fp:215 size:2 mdl:1699
+20:48:26 add_not_contacting(A,B):- put(A,B).
+20:48:26 ********************
+20:48:26 Generating programs of size: 3
+20:48:36 ********************
+20:48:36 New best hypothesis:
+20:48:36 tp:582 fn:1246 tn:1157 fp:341 size:16 mdl:1603
+20:48:36 add_not_contacting(A,B):- awaken(A,B).
+20:48:36 add_not_contacting(A,B):- snuggle(A,B).
+20:48:36 add_not_contacting(A,B):- myclose(A,B).
+20:48:36 add_not_contacting(A,B):- put(A,B).
+20:48:36 add_not_contacting(A,B):- wash(A,B).
+20:48:36 add_not_contacting(A,B):- undress(A,B).
+20:48:36 add_not_contacting(A,B):- throw(A,B).
+20:48:36 add_not_contacting(A,B):- eat(A,B).
+20:48:36 ********************
+20:48:42 Generating programs of size: 4
+20:48:52 ********************
+20:48:52 New best hypothesis:
+20:48:52 tp:586 fn:1242 tn:1157 fp:341 size:19 mdl:1602
+20:48:52 add_not_contacting(A,B):- awaken(A,B).
+20:48:52 add_not_contacting(A,B):- snuggle(A,B).
+20:48:52 add_not_contacting(A,B):- myclose(A,B).
+20:48:52 add_not_contacting(A,B):- put(A,B).
+20:48:52 add_not_contacting(A,B):- wash(A,B).
+20:48:52 add_not_contacting(A,B):- undress(A,B).
+20:48:52 add_not_contacting(A,B):- throw(A,B).
+20:48:52 add_not_contacting(A,B):- eat(A,B).
+20:48:52 add_not_contacting(A,B):- play(A,B),watch(A,B).
+20:48:52 ********************
+20:49:38 Generating programs of size: 5
+20:49:48 ********************
+20:49:48 New best hypothesis:
+20:49:48 tp:588 fn:1240 tn:1157 fp:341 size:20 mdl:1601
+20:49:48 add_not_contacting(A,B):- awaken(A,B).
+20:49:48 add_not_contacting(A,B):- snuggle(A,B).
+20:49:48 add_not_contacting(A,B):- myclose(A,B).
+20:49:48 add_not_contacting(A,B):- put(A,B).
+20:49:48 add_not_contacting(A,B):- wash(A,B).
+20:49:48 add_not_contacting(A,B):- undress(A,B).
+20:49:48 add_not_contacting(A,B):- throw(A,B).
+20:49:48 add_not_contacting(A,B):- eat(A,B).
+20:49:48 add_not_contacting(A,B):- play(D,B),work(D,C),work(A,C).
+20:49:48 ********************
+20:50:08 Generating programs of size: 6
+20:50:34 Generating programs of size: 7
+20:50:58 Generating programs of size: 8
+20:51:13 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.63 Recall:0.32 TP:588 FN:1240 TN:1157 FP:341 Size:20 MDL:1601
 add_not_contacting(A,B):- awaken(A,B).
@@ -74,14 +74,5 @@ add_not_contacting(A,B):- wash(A,B).
 add_not_contacting(A,B):- undress(A,B).
 add_not_contacting(A,B):- throw(A,B).
 add_not_contacting(A,B):- eat(A,B).
-add_not_contacting(A,B):- work(A,C),work(D,C),play(D,B).
+add_not_contacting(A,B):- play(D,B),work(D,C),work(A,C).
 ******************************
-(<popper.core.Literal object at 0x7b4fcc4d08b0>, frozenset({<popper.core.Literal object at 0x7b4fcc4e8430>})) positives covered: 3 negatives covered: 0
-(<popper.core.Literal object at 0x7b4fcc4d08b0>, frozenset({<popper.core.Literal object at 0x7b4fbeccbc10>})) positives covered: 5 negatives covered: 1
-(<popper.core.Literal object at 0x7b4fcc4d08b0>, frozenset({<popper.core.Literal object at 0x7b4fbecd68b0>})) positives covered: 106 negatives covered: 96
-(<popper.core.Literal object at 0x7b4fcc4d08b0>, frozenset({<popper.core.Literal object at 0x7b4fbecd6e50>})) positives covered: 346 negatives covered: 215
-(<popper.core.Literal object at 0x7b4fcc4d08b0>, frozenset({<popper.core.Literal object at 0x7b4fbece60d0>})) positives covered: 6 negatives covered: 3
-(<popper.core.Literal object at 0x7b4fcc4d08b0>, frozenset({<popper.core.Literal object at 0x7b4fbeccb0d0>})) positives covered: 26 negatives covered: 1
-(<popper.core.Literal object at 0x7b4fcc4d08b0>, frozenset({<popper.core.Literal object at 0x7b4fbece0af0>})) positives covered: 78 negatives covered: 13
-(<popper.core.Literal object at 0x7b4fcc4d08b0>, frozenset({<popper.core.Literal object at 0x7b4fbece6670>})) positives covered: 30 negatives covered: 12
-(<popper.core.Literal object at 0x7b4fcc4d08b0>, frozenset({<popper.core.Literal object at 0x7b4fbecdba00>, <popper.core.Literal object at 0x7b4fbecc62b0>, <popper.core.Literal object at 0x7b4fbecdbd00>})) positives covered: 6 negatives covered: 0

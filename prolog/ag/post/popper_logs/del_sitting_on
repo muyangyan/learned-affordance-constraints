@@ -1,16 +1,15 @@
-18:52:01 Generating programs of size: 2
-18:52:01 ********************
-18:52:01 New best hypothesis:
-18:52:01 tp:10 fn:287 tn:512 fp:4 size:2 mdl:293
-18:52:01 del_sitting_on(A,B):- sit(A,B).
-18:52:01 ********************
-18:52:02 Generating programs of size: 3
-18:52:09 Generating programs of size: 4
-18:52:16 Generating programs of size: 5
-18:52:48 Generating programs of size: 6
-18:52:53 Generating programs of size: 7
+20:48:16 Generating programs of size: 2
+20:48:16 ********************
+20:48:16 New best hypothesis:
+20:48:16 tp:10 fn:287 tn:512 fp:4 size:2 mdl:293
+20:48:16 del_sitting_on(A,B):- sit(A,B).
+20:48:16 ********************
+20:48:16 Generating programs of size: 3
+20:48:24 Generating programs of size: 4
+20:48:32 Generating programs of size: 5
+20:48:54 Generating programs of size: 6
+20:48:59 Generating programs of size: 7
 ********** SOLUTION **********
 Precision:0.71 Recall:0.03 TP:10 FN:287 TN:512 FP:4 Size:2 MDL:293
 del_sitting_on(A,B):- sit(A,B).
 ******************************
-(<popper.core.Literal object at 0x79ed4ebf18b0>, frozenset({<popper.core.Literal object at 0x79ed413cef70>})) positives covered: 10 negatives covered: 4

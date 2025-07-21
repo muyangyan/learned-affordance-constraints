@@ -1,15 +1,14 @@
-18:52:01 Generating programs of size: 2
-18:52:01 ********************
-18:52:01 New best hypothesis:
-18:52:01 tp:9 fn:18 tn:2 fp:0 size:2 mdl:20
-18:52:01 del_eating(A,B):- put(A,B).
-18:52:01 ********************
-18:52:01 Generating programs of size: 3
-18:52:03 Generating programs of size: 4
-18:52:03 Generating programs of size: 5
-18:52:04 Generating programs of size: 6
+20:48:15 Generating programs of size: 2
+20:48:15 ********************
+20:48:15 New best hypothesis:
+20:48:15 tp:9 fn:18 tn:2 fp:0 size:2 mdl:20
+20:48:15 del_eating(A,B):- put(A,B).
+20:48:15 ********************
+20:48:15 Generating programs of size: 3
+20:48:17 Generating programs of size: 4
+20:48:17 Generating programs of size: 5
+20:48:18 Generating programs of size: 6
 ********** SOLUTION **********
 Precision:1.00 Recall:0.33 TP:9 FN:18 TN:2 FP:0 Size:2 MDL:20
 del_eating(A,B):- put(A,B).
 ******************************
-(<popper.core.Literal object at 0x71afacff18e0>, frozenset({<popper.core.Literal object at 0x71af9f800e80>})) positives covered: 9 negatives covered: 0

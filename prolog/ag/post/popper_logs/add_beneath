@@ -1,39 +1,39 @@
-18:52:00 Generating programs of size: 2
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:8 fn:536 tn:750 fp:3 size:2 mdl:541
-18:52:00 add_beneath(A,B):- hold(B,A).
-18:52:00 ********************
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:37 fn:507 tn:734 fp:19 size:2 mdl:528
-18:52:00 add_beneath(A,B):- sit(B,A).
-18:52:00 ********************
-18:52:00 Generating programs of size: 3
-18:52:07 ********************
-18:52:07 New best hypothesis:
-18:52:07 tp:68 fn:476 tn:726 fp:27 size:10 mdl:513
-18:52:07 add_beneath(A,B):- hold(B,A).
-18:52:07 add_beneath(A,B):- sit(B,A).
-18:52:07 add_beneath(A,B):- put(B,A).
-18:52:07 add_beneath(A,B):- eat(B,A).
-18:52:07 add_beneath(A,B):- myopen(B,A).
-18:52:07 ********************
-18:52:11 Generating programs of size: 4
-18:52:17 ********************
-18:52:17 New best hypothesis:
-18:52:17 tp:51 fn:493 tn:745 fp:8 size:11 mdl:512
-18:52:17 add_beneath(A,B):- hold(B,A).
-18:52:17 add_beneath(A,B):- put(B,A).
-18:52:17 add_beneath(A,B):- eat(B,A).
-18:52:17 add_beneath(A,B):- myopen(B,A).
-18:52:17 add_beneath(A,B):- sit(C,A),sit(B,C).
-18:52:17 ********************
-18:52:40 Generating programs of size: 5
-18:52:51 Generating programs of size: 6
-18:52:59 Generating programs of size: 7
-18:53:06 Generating programs of size: 8
-18:53:12 Generating programs of size: 9
+20:48:14 Generating programs of size: 2
+20:48:14 ********************
+20:48:14 New best hypothesis:
+20:48:14 tp:8 fn:536 tn:750 fp:3 size:2 mdl:541
+20:48:14 add_beneath(A,B):- hold(B,A).
+20:48:14 ********************
+20:48:14 ********************
+20:48:14 New best hypothesis:
+20:48:14 tp:37 fn:507 tn:734 fp:19 size:2 mdl:528
+20:48:14 add_beneath(A,B):- sit(B,A).
+20:48:14 ********************
+20:48:15 Generating programs of size: 3
+20:48:21 ********************
+20:48:21 New best hypothesis:
+20:48:21 tp:68 fn:476 tn:726 fp:27 size:10 mdl:513
+20:48:21 add_beneath(A,B):- hold(B,A).
+20:48:21 add_beneath(A,B):- sit(B,A).
+20:48:21 add_beneath(A,B):- put(B,A).
+20:48:21 add_beneath(A,B):- eat(B,A).
+20:48:21 add_beneath(A,B):- myopen(B,A).
+20:48:21 ********************
+20:48:25 Generating programs of size: 4
+20:48:31 ********************
+20:48:31 New best hypothesis:
+20:48:31 tp:51 fn:493 tn:745 fp:8 size:11 mdl:512
+20:48:31 add_beneath(A,B):- hold(B,A).
+20:48:31 add_beneath(A,B):- put(B,A).
+20:48:31 add_beneath(A,B):- eat(B,A).
+20:48:31 add_beneath(A,B):- myopen(B,A).
+20:48:31 add_beneath(A,B):- sit(C,A),sit(B,C).
+20:48:31 ********************
+20:48:58 Generating programs of size: 5
+20:49:09 Generating programs of size: 6
+20:49:16 Generating programs of size: 7
+20:49:23 Generating programs of size: 8
+20:49:30 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.86 Recall:0.09 TP:51 FN:493 TN:745 FP:8 Size:11 MDL:512
 add_beneath(A,B):- hold(B,A).
@@ -42,8 +42,3 @@ add_beneath(A,B):- eat(B,A).
 add_beneath(A,B):- myopen(B,A).
 add_beneath(A,B):- sit(C,A),sit(B,C).
 ******************************
-(<popper.core.Literal object at 0x7af5a24508b0>, frozenset({<popper.core.Literal object at 0x7af594c3d2e0>})) positives covered: 8 negatives covered: 3
-(<popper.core.Literal object at 0x7af5a24508b0>, frozenset({<popper.core.Literal object at 0x7af594c43f40>})) positives covered: 19 negatives covered: 4
-(<popper.core.Literal object at 0x7af5a24508b0>, frozenset({<popper.core.Literal object at 0x7af594c53760>})) positives covered: 3 negatives covered: 1
-(<popper.core.Literal object at 0x7af5a24508b0>, frozenset({<popper.core.Literal object at 0x7af5a2459e20>})) positives covered: 3 negatives covered: 0
-(<popper.core.Literal object at 0x7af5a24508b0>, frozenset({<popper.core.Literal object at 0x7af594c4d190>, <popper.core.Literal object at 0x7af594c4d0d0>})) positives covered: 20 negatives covered: 0

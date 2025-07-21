@@ -108,25 +108,29 @@ def extract_usable_frames(root, object_annotations, examples_df, position, thres
         positions = ['pre', 'post']
     else:
         positions = [position]
-    for pos in positions:
-        examples_df[f'{pos}_frame'] = None
+    examples_df[f'pre_frame'] = None
+    examples_df[f'post_frame'] = None
 
     for index, row in examples_df.iterrows():
         video_id = row['vid']
 
-        for pos in positions:
+        for pos in ['pre', 'post']:
             timestep = row[f'{pos}_time']
             fps = fps_dict[video_id]
-            frame_idx = time_to_frame(root, video_id, timestep, fps, threshold, object_annotations)
+            vet = pos in positions # whether or not we care about the validity of the frame
+            frame_idx = time_to_frame(root, video_id, timestep, fps, threshold, object_annotations, vet=vet)
             if frame_idx:
                 examples_df.at[index, f'{pos}_frame'] = frame_idx
     return examples_df.dropna()
 
-def time_to_frame(root, video_id, timestep, fps, threshold, object_annotations):
+def time_to_frame(root, video_id, timestep, fps, threshold, object_annotations, vet=True):
     frame_idx = get_frame_from_time(root, video_id, timestep, fps)
     if frame_idx:
         deviation = abs((frame_idx / fps) - timestep)
-        if deviation < threshold and get_id(video_id, frame_idx) in object_annotations:
+        if vet:
+            if deviation < threshold and get_id(video_id, frame_idx) in object_annotations:
+                return frame_idx
+        else:
             return frame_idx
     return None
 

@@ -1,26 +1,23 @@
-18:52:00 Generating programs of size: 2
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:10 fn:71 tn:32 fp:0 size:2 mdl:73
-18:52:00 add_above(A,B):- put(B,A).
-18:52:00 ********************
-18:52:00 Generating programs of size: 3
-18:52:03 ********************
-18:52:03 New best hypothesis:
-18:52:03 tp:19 fn:62 tn:29 fp:3 size:6 mdl:71
-18:52:03 add_above(A,B):- put(B,A).
-18:52:03 add_above(A,B):- watch(B,A).
-18:52:03 add_above(A,B):- take(B,A).
-18:52:03 ********************
-18:52:06 Generating programs of size: 4
-18:52:09 Generating programs of size: 5
-18:52:12 Generating programs of size: 6
+20:48:14 Generating programs of size: 2
+20:48:14 ********************
+20:48:14 New best hypothesis:
+20:48:14 tp:10 fn:71 tn:32 fp:0 size:2 mdl:73
+20:48:14 add_above(A,B):- put(B,A).
+20:48:14 ********************
+20:48:14 Generating programs of size: 3
+20:48:17 ********************
+20:48:17 New best hypothesis:
+20:48:17 tp:19 fn:62 tn:29 fp:3 size:6 mdl:71
+20:48:17 add_above(A,B):- put(B,A).
+20:48:17 add_above(A,B):- watch(B,A).
+20:48:17 add_above(A,B):- take(B,A).
+20:48:17 ********************
+20:48:20 Generating programs of size: 4
+20:48:21 Generating programs of size: 5
+20:48:25 Generating programs of size: 6
 ********** SOLUTION **********
 Precision:0.86 Recall:0.23 TP:19 FN:62 TN:29 FP:3 Size:6 MDL:71
 add_above(A,B):- put(B,A).
 add_above(A,B):- watch(B,A).
 add_above(A,B):- take(B,A).
 ******************************
-(<popper.core.Literal object at 0x7534691108e0>, frozenset({<popper.core.Literal object at 0x75345b916f70>})) positives covered: 10 negatives covered: 0
-(<popper.core.Literal object at 0x7534691108e0>, frozenset({<popper.core.Literal object at 0x753469128af0>})) positives covered: 5 negatives covered: 2
-(<popper.core.Literal object at 0x7534691108e0>, frozenset({<popper.core.Literal object at 0x75345b91b550>})) positives covered: 6 negatives covered: 1

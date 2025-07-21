@@ -1,41 +1,41 @@
-18:52:00 Generating programs of size: 2
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:9 fn:724 tn:228 fp:2 size:2 mdl:728
-18:52:00 add_unsure(A,B):- drink(A,B).
-18:52:00 ********************
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:27 fn:706 tn:225 fp:5 size:2 mdl:713
-18:52:00 add_unsure(A,B):- hold(A,B).
-18:52:00 ********************
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:70 fn:663 tn:190 fp:40 size:2 mdl:705
-18:52:00 add_unsure(A,B):- put(A,B).
-18:52:00 ********************
-18:52:00 Generating programs of size: 3
-18:52:09 ********************
-18:52:09 New best hypothesis:
-18:52:09 tp:226 fn:507 tn:128 fp:102 size:22 mdl:631
-18:52:09 add_unsure(A,B):- drink(A,B).
-18:52:09 add_unsure(A,B):- hold(A,B).
-18:52:09 add_unsure(A,B):- sit(A,B).
-18:52:09 add_unsure(A,B):- put(A,B).
-18:52:09 add_unsure(A,B):- walk(A,B).
-18:52:09 add_unsure(A,B):- play(A,B).
-18:52:09 add_unsure(A,B):- undress(A,B).
-18:52:09 add_unsure(A,B):- throw(A,B).
-18:52:09 add_unsure(A,B):- eat(A,B).
-18:52:09 add_unsure(A,B):- myopen(A,B).
-18:52:09 add_unsure(A,B):- take(A,B).
-18:52:09 ********************
-18:52:15 Generating programs of size: 4
-18:52:51 Generating programs of size: 5
-18:53:05 Generating programs of size: 6
-18:53:19 Generating programs of size: 7
-18:53:31 Generating programs of size: 8
-18:53:42 Generating programs of size: 9
+20:48:14 Generating programs of size: 2
+20:48:14 ********************
+20:48:14 New best hypothesis:
+20:48:14 tp:9 fn:724 tn:228 fp:2 size:2 mdl:728
+20:48:14 add_unsure(A,B):- drink(A,B).
+20:48:14 ********************
+20:48:14 ********************
+20:48:14 New best hypothesis:
+20:48:14 tp:27 fn:706 tn:225 fp:5 size:2 mdl:713
+20:48:14 add_unsure(A,B):- hold(A,B).
+20:48:14 ********************
+20:48:14 ********************
+20:48:14 New best hypothesis:
+20:48:14 tp:70 fn:663 tn:190 fp:40 size:2 mdl:705
+20:48:14 add_unsure(A,B):- put(A,B).
+20:48:14 ********************
+20:48:14 Generating programs of size: 3
+20:48:23 ********************
+20:48:23 New best hypothesis:
+20:48:23 tp:226 fn:507 tn:128 fp:102 size:22 mdl:631
+20:48:23 add_unsure(A,B):- drink(A,B).
+20:48:23 add_unsure(A,B):- hold(A,B).
+20:48:23 add_unsure(A,B):- sit(A,B).
+20:48:23 add_unsure(A,B):- put(A,B).
+20:48:23 add_unsure(A,B):- walk(A,B).
+20:48:23 add_unsure(A,B):- play(A,B).
+20:48:23 add_unsure(A,B):- undress(A,B).
+20:48:23 add_unsure(A,B):- throw(A,B).
+20:48:23 add_unsure(A,B):- eat(A,B).
+20:48:23 add_unsure(A,B):- myopen(A,B).
+20:48:23 add_unsure(A,B):- take(A,B).
+20:48:23 ********************
+20:48:29 Generating programs of size: 4
+20:49:43 Generating programs of size: 5
+20:49:58 Generating programs of size: 6
+20:50:12 Generating programs of size: 7
+20:50:24 Generating programs of size: 8
+20:50:35 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.69 Recall:0.31 TP:226 FN:507 TN:128 FP:102 Size:22 MDL:631
 add_unsure(A,B):- drink(A,B).
@@ -50,14 +50,3 @@ add_unsure(A,B):- eat(A,B).
 add_unsure(A,B):- myopen(A,B).
 add_unsure(A,B):- take(A,B).
 ******************************
-(<popper.core.Literal object at 0x776d2a9068e0>, frozenset({<popper.core.Literal object at 0x776d2a901e20>})) positives covered: 9 negatives covered: 2
-(<popper.core.Literal object at 0x776d2a9068e0>, frozenset({<popper.core.Literal object at 0x776d1d107220>})) positives covered: 27 negatives covered: 5
-(<popper.core.Literal object at 0x776d2a9068e0>, frozenset({<popper.core.Literal object at 0x776d1d112fa0>})) positives covered: 9 negatives covered: 2
-(<popper.core.Literal object at 0x776d2a9068e0>, frozenset({<popper.core.Literal object at 0x776d1d10de80>})) positives covered: 70 negatives covered: 40
-(<popper.core.Literal object at 0x776d2a9068e0>, frozenset({<popper.core.Literal object at 0x776d1d107d60>})) positives covered: 18 negatives covered: 5
-(<popper.core.Literal object at 0x776d2a9068e0>, frozenset({<popper.core.Literal object at 0x776d2a91efa0>})) positives covered: 3 negatives covered: 0
-(<popper.core.Literal object at 0x776d2a9068e0>, frozenset({<popper.core.Literal object at 0x776d1d102100>})) positives covered: 7 negatives covered: 3
-(<popper.core.Literal object at 0x776d2a9068e0>, frozenset({<popper.core.Literal object at 0x776d1d117b20>})) positives covered: 21 negatives covered: 12
-(<popper.core.Literal object at 0x776d2a9068e0>, frozenset({<popper.core.Literal object at 0x776d1d11d6a0>})) positives covered: 16 negatives covered: 7
-(<popper.core.Literal object at 0x776d2a9068e0>, frozenset({<popper.core.Literal object at 0x776d2a90fd60>})) positives covered: 25 negatives covered: 10
-(<popper.core.Literal object at 0x776d2a9068e0>, frozenset({<popper.core.Literal object at 0x776d1d112460>})) positives covered: 31 negatives covered: 20

@@ -48,13 +48,21 @@ def run_popper_for_item(item, label_type, prolog_path, log_folder, fn_weight, il
     prog, score, stats = learn_solution(settings)
     if prog is not None:
         print_prog_score(prog, score, settings.noisy, settings.mdl_weight)
+        tp, fn, tn, fp, size = score
+        num_positives = tp + fn
+        num_negatives = tn + fp
 
         if separate_clauses:
             tester = Tester(settings)   
             for p in prog:
                 results = tester.test_single_rule_all([p])
-                print(f'{p} positives covered: {len(results[0])} negatives covered: {len(results[1])}')
-            print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+                # positives_covered, negatives_covered = len(results[0]), len(results[1])
+                # precision = positives_covered / num_positives if num_positives > 0 else 0
+                # recall = positives_covered / num_positives if num_positives > 0 else 0
+                # f1 = 2 * precision * recall / (precision + recall) if precision + recall > 0 else 0
+                # print(f'{p} precision: {precision:.2f} recall: {recall:.2f} f1: {f1:.2f}')
+                # print(f'{p} positives covered: {positives_covered} negatives covered: {negatives_covered}')
+
     else:
         print('NO SOLUTION')
 

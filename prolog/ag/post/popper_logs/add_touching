@@ -1,41 +1,41 @@
-18:52:02 Generating programs of size: 2
-18:52:02 ********************
-18:52:02 New best hypothesis:
-18:52:02 tp:14 fn:886 tn:262 fp:8 size:2 mdl:896
-18:52:02 add_touching(A,B):- drink(A,B).
-18:52:02 ********************
-18:52:02 ********************
-18:52:02 New best hypothesis:
-18:52:02 tp:40 fn:860 tn:267 fp:3 size:2 mdl:865
-18:52:02 add_touching(A,B):- hold(A,B).
-18:52:02 ********************
-18:52:02 ********************
-18:52:02 New best hypothesis:
-18:52:02 tp:80 fn:820 tn:250 fp:20 size:2 mdl:842
-18:52:02 add_touching(A,B):- put(A,B).
-18:52:02 ********************
-18:52:02 Generating programs of size: 3
-18:52:10 ********************
-18:52:10 New best hypothesis:
-18:52:10 tp:314 fn:586 tn:195 fp:75 size:22 mdl:683
-18:52:10 add_touching(A,B):- drink(A,B).
-18:52:10 add_touching(A,B):- hold(A,B).
-18:52:10 add_touching(A,B):- put(A,B).
-18:52:10 add_touching(A,B):- walk(A,B).
-18:52:10 add_touching(A,B):- dress(A,B).
-18:52:10 add_touching(A,B):- play(A,B).
-18:52:10 add_touching(A,B):- undress(A,B).
-18:52:10 add_touching(A,B):- tidy(A,B).
-18:52:10 add_touching(A,B):- throw(A,B).
-18:52:10 add_touching(A,B):- myopen(A,B).
-18:52:10 add_touching(A,B):- take(A,B).
-18:52:10 ********************
-18:52:17 Generating programs of size: 4
-18:53:07 Generating programs of size: 5
-18:53:31 Generating programs of size: 6
-18:53:49 Generating programs of size: 7
-18:54:07 Generating programs of size: 8
-18:54:19 Generating programs of size: 9
+20:48:16 Generating programs of size: 2
+20:48:16 ********************
+20:48:16 New best hypothesis:
+20:48:16 tp:14 fn:886 tn:262 fp:8 size:2 mdl:896
+20:48:16 add_touching(A,B):- drink(A,B).
+20:48:16 ********************
+20:48:16 ********************
+20:48:16 New best hypothesis:
+20:48:16 tp:40 fn:860 tn:267 fp:3 size:2 mdl:865
+20:48:16 add_touching(A,B):- hold(A,B).
+20:48:16 ********************
+20:48:16 ********************
+20:48:16 New best hypothesis:
+20:48:16 tp:80 fn:820 tn:250 fp:20 size:2 mdl:842
+20:48:16 add_touching(A,B):- put(A,B).
+20:48:16 ********************
+20:48:16 Generating programs of size: 3
+20:48:24 ********************
+20:48:24 New best hypothesis:
+20:48:24 tp:314 fn:586 tn:195 fp:75 size:22 mdl:683
+20:48:24 add_touching(A,B):- drink(A,B).
+20:48:24 add_touching(A,B):- hold(A,B).
+20:48:24 add_touching(A,B):- put(A,B).
+20:48:24 add_touching(A,B):- walk(A,B).
+20:48:24 add_touching(A,B):- dress(A,B).
+20:48:24 add_touching(A,B):- play(A,B).
+20:48:24 add_touching(A,B):- undress(A,B).
+20:48:24 add_touching(A,B):- tidy(A,B).
+20:48:24 add_touching(A,B):- throw(A,B).
+20:48:24 add_touching(A,B):- myopen(A,B).
+20:48:24 add_touching(A,B):- take(A,B).
+20:48:24 ********************
+20:48:30 Generating programs of size: 4
+20:49:16 Generating programs of size: 5
+20:49:40 Generating programs of size: 6
+20:49:58 Generating programs of size: 7
+20:50:15 Generating programs of size: 8
+20:50:28 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.81 Recall:0.35 TP:314 FN:586 TN:195 FP:75 Size:22 MDL:683
 add_touching(A,B):- drink(A,B).
@@ -50,14 +50,3 @@ add_touching(A,B):- throw(A,B).
 add_touching(A,B):- myopen(A,B).
 add_touching(A,B):- take(A,B).
 ******************************
-(<popper.core.Literal object at 0x707756b508e0>, frozenset({<popper.core.Literal object at 0x707756b4be20>})) positives covered: 14 negatives covered: 8
-(<popper.core.Literal object at 0x707756b508e0>, frozenset({<popper.core.Literal object at 0x707749343220>})) positives covered: 40 negatives covered: 3
-(<popper.core.Literal object at 0x707756b508e0>, frozenset({<popper.core.Literal object at 0x707749349e80>})) positives covered: 80 negatives covered: 20
-(<popper.core.Literal object at 0x707756b508e0>, frozenset({<popper.core.Literal object at 0x707749343d60>})) positives covered: 10 negatives covered: 1
-(<popper.core.Literal object at 0x707756b508e0>, frozenset({<popper.core.Literal object at 0x707749359c40>})) positives covered: 3 negatives covered: 0
-(<popper.core.Literal object at 0x707756b508e0>, frozenset({<popper.core.Literal object at 0x707756b68fa0>})) positives covered: 5 negatives covered: 1
-(<popper.core.Literal object at 0x707756b508e0>, frozenset({<popper.core.Literal object at 0x70774933e100>})) positives covered: 3 negatives covered: 1
-(<popper.core.Literal object at 0x707756b508e0>, frozenset({<popper.core.Literal object at 0x707749339b20>})) positives covered: 13 negatives covered: 2
-(<popper.core.Literal object at 0x707756b508e0>, frozenset({<popper.core.Literal object at 0x707749353b20>})) positives covered: 12 negatives covered: 1
-(<popper.core.Literal object at 0x707756b508e0>, frozenset({<popper.core.Literal object at 0x707756b59d60>})) positives covered: 90 negatives covered: 36
-(<popper.core.Literal object at 0x707756b508e0>, frozenset({<popper.core.Literal object at 0x70774934e460>})) positives covered: 62 negatives covered: 5

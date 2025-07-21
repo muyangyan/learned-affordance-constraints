@@ -1,33 +1,33 @@
-18:52:00 Generating programs of size: 2
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:4 fn:93 tn:31 fp:1 size:2 mdl:96
-18:52:00 del_above(A,B):- awaken(B,A).
-18:52:00 ********************
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:4 fn:93 tn:32 fp:0 size:2 mdl:95
-18:52:00 del_above(A,B):- sit(B,A).
-18:52:00 ********************
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:10 fn:87 tn:32 fp:0 size:2 mdl:89
-18:52:00 del_above(A,B):- put(B,A).
-18:52:00 ********************
-18:52:00 Generating programs of size: 3
-18:52:03 ********************
-18:52:03 New best hypothesis:
-18:52:03 tp:34 fn:63 tn:28 fp:4 size:10 mdl:77
-18:52:03 del_above(A,B):- awaken(B,A).
-18:52:03 del_above(A,B):- sit(B,A).
-18:52:03 del_above(A,B):- put(B,A).
-18:52:03 del_above(A,B):- myopen(B,A).
-18:52:03 del_above(A,B):- take(B,A).
-18:52:03 ********************
-18:52:05 Generating programs of size: 4
-18:52:11 Generating programs of size: 5
-18:52:14 Generating programs of size: 6
-18:52:17 Generating programs of size: 7
+20:48:14 Generating programs of size: 2
+20:48:14 ********************
+20:48:14 New best hypothesis:
+20:48:14 tp:4 fn:93 tn:31 fp:1 size:2 mdl:96
+20:48:14 del_above(A,B):- awaken(B,A).
+20:48:14 ********************
+20:48:14 ********************
+20:48:14 New best hypothesis:
+20:48:14 tp:4 fn:93 tn:32 fp:0 size:2 mdl:95
+20:48:14 del_above(A,B):- sit(B,A).
+20:48:14 ********************
+20:48:14 ********************
+20:48:14 New best hypothesis:
+20:48:14 tp:10 fn:87 tn:32 fp:0 size:2 mdl:89
+20:48:14 del_above(A,B):- put(B,A).
+20:48:14 ********************
+20:48:15 Generating programs of size: 3
+20:48:17 ********************
+20:48:17 New best hypothesis:
+20:48:17 tp:34 fn:63 tn:28 fp:4 size:10 mdl:77
+20:48:17 del_above(A,B):- awaken(B,A).
+20:48:17 del_above(A,B):- sit(B,A).
+20:48:17 del_above(A,B):- put(B,A).
+20:48:17 del_above(A,B):- myopen(B,A).
+20:48:17 del_above(A,B):- take(B,A).
+20:48:17 ********************
+20:48:19 Generating programs of size: 4
+20:48:28 Generating programs of size: 5
+20:48:31 Generating programs of size: 6
+20:48:31 Generating programs of size: 7
 ********** SOLUTION **********
 Precision:0.89 Recall:0.35 TP:34 FN:63 TN:28 FP:4 Size:10 MDL:77
 del_above(A,B):- awaken(B,A).
@@ -36,8 +36,3 @@ del_above(A,B):- put(B,A).
 del_above(A,B):- myopen(B,A).
 del_above(A,B):- take(B,A).
 ******************************
-(<popper.core.Literal object at 0x739950e108b0>, frozenset({<popper.core.Literal object at 0x739950e28520>})) positives covered: 4 negatives covered: 1
-(<popper.core.Literal object at 0x739950e108b0>, frozenset({<popper.core.Literal object at 0x7399436130a0>})) positives covered: 4 negatives covered: 0
-(<popper.core.Literal object at 0x739950e108b0>, frozenset({<popper.core.Literal object at 0x739943609f40>})) positives covered: 10 negatives covered: 0
-(<popper.core.Literal object at 0x739950e108b0>, frozenset({<popper.core.Literal object at 0x739950e19e20>})) positives covered: 5 negatives covered: 2
-(<popper.core.Literal object at 0x739950e108b0>, frozenset({<popper.core.Literal object at 0x73994360e520>})) positives covered: 11 negatives covered: 1

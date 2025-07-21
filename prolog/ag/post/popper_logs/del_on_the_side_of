@@ -1,44 +1,44 @@
-18:52:00 Generating programs of size: 2
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:58 fn:1213 tn:576 fp:32 size:2 mdl:1247
-18:52:00 del_on_the_side_of(A,B):- hold(B,A).
-18:52:00 ********************
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:106 fn:1165 tn:536 fp:72 size:2 mdl:1239
-18:52:00 del_on_the_side_of(A,B):- put(B,A).
-18:52:00 ********************
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:130 fn:1141 tn:580 fp:28 size:2 mdl:1171
-18:52:00 del_on_the_side_of(A,B):- take(B,A).
-18:52:00 ********************
-18:52:01 Generating programs of size: 3
-18:52:11 ********************
-18:52:11 New best hypothesis:
-18:52:11 tp:464 fn:807 tn:385 fp:223 size:28 mdl:1058
-18:52:11 del_on_the_side_of(A,B):- hold(B,A).
-18:52:11 del_on_the_side_of(A,B):- sit(B,A).
-18:52:11 del_on_the_side_of(A,B):- put(B,A).
-18:52:11 del_on_the_side_of(A,B):- pour(B,A).
-18:52:11 del_on_the_side_of(A,B):- wash(B,A).
-18:52:11 del_on_the_side_of(A,B):- dress(B,A).
-18:52:11 del_on_the_side_of(A,B):- walk(B,A).
-18:52:11 del_on_the_side_of(A,B):- play(B,A).
-18:52:11 del_on_the_side_of(A,B):- undress(B,A).
-18:52:11 del_on_the_side_of(A,B):- throw(B,A).
-18:52:11 del_on_the_side_of(A,B):- eat(B,A).
-18:52:11 del_on_the_side_of(A,B):- myopen(B,A).
-18:52:11 del_on_the_side_of(A,B):- take(B,A).
-18:52:11 del_on_the_side_of(A,B):- snuggle(B,A).
-18:52:11 ********************
-18:52:18 Generating programs of size: 4
-18:53:13 Generating programs of size: 5
-18:53:43 Generating programs of size: 6
-18:54:09 Generating programs of size: 7
-18:54:33 Generating programs of size: 8
-18:54:51 Generating programs of size: 9
+20:48:15 Generating programs of size: 2
+20:48:15 ********************
+20:48:15 New best hypothesis:
+20:48:15 tp:58 fn:1213 tn:576 fp:32 size:2 mdl:1247
+20:48:15 del_on_the_side_of(A,B):- hold(B,A).
+20:48:15 ********************
+20:48:15 ********************
+20:48:15 New best hypothesis:
+20:48:15 tp:106 fn:1165 tn:536 fp:72 size:2 mdl:1239
+20:48:15 del_on_the_side_of(A,B):- put(B,A).
+20:48:15 ********************
+20:48:15 ********************
+20:48:15 New best hypothesis:
+20:48:15 tp:130 fn:1141 tn:580 fp:28 size:2 mdl:1171
+20:48:15 del_on_the_side_of(A,B):- take(B,A).
+20:48:15 ********************
+20:48:15 Generating programs of size: 3
+20:48:25 ********************
+20:48:25 New best hypothesis:
+20:48:25 tp:464 fn:807 tn:385 fp:223 size:28 mdl:1058
+20:48:25 del_on_the_side_of(A,B):- hold(B,A).
+20:48:25 del_on_the_side_of(A,B):- sit(B,A).
+20:48:25 del_on_the_side_of(A,B):- put(B,A).
+20:48:25 del_on_the_side_of(A,B):- pour(B,A).
+20:48:25 del_on_the_side_of(A,B):- wash(B,A).
+20:48:25 del_on_the_side_of(A,B):- dress(B,A).
+20:48:25 del_on_the_side_of(A,B):- walk(B,A).
+20:48:25 del_on_the_side_of(A,B):- play(B,A).
+20:48:25 del_on_the_side_of(A,B):- undress(B,A).
+20:48:25 del_on_the_side_of(A,B):- throw(B,A).
+20:48:25 del_on_the_side_of(A,B):- eat(B,A).
+20:48:25 del_on_the_side_of(A,B):- myopen(B,A).
+20:48:25 del_on_the_side_of(A,B):- take(B,A).
+20:48:25 del_on_the_side_of(A,B):- snuggle(B,A).
+20:48:25 ********************
+20:48:32 Generating programs of size: 4
+20:49:44 Generating programs of size: 5
+20:50:10 Generating programs of size: 6
+20:50:35 Generating programs of size: 7
+20:50:59 Generating programs of size: 8
+20:51:17 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.68 Recall:0.37 TP:464 FN:807 TN:385 FP:223 Size:28 MDL:1058
 del_on_the_side_of(A,B):- hold(B,A).
@@ -56,17 +56,3 @@ del_on_the_side_of(A,B):- myopen(B,A).
 del_on_the_side_of(A,B):- take(B,A).
 del_on_the_side_of(A,B):- snuggle(B,A).
 ******************************
-(<popper.core.Literal object at 0x753dc2c06880>, frozenset({<popper.core.Literal object at 0x753db53fa2b0>})) positives covered: 58 negatives covered: 32
-(<popper.core.Literal object at 0x753dc2c06880>, frozenset({<popper.core.Literal object at 0x753db540a070>})) positives covered: 22 negatives covered: 14
-(<popper.core.Literal object at 0x753dc2c06880>, frozenset({<popper.core.Literal object at 0x753db5400f10>})) positives covered: 106 negatives covered: 72
-(<popper.core.Literal object at 0x753dc2c06880>, frozenset({<popper.core.Literal object at 0x753dc2c193d0>})) positives covered: 10 negatives covered: 0
-(<popper.core.Literal object at 0x753dc2c06880>, frozenset({<popper.core.Literal object at 0x753db5410190>})) positives covered: 3 negatives covered: 1
-(<popper.core.Literal object at 0x753dc2c06880>, frozenset({<popper.core.Literal object at 0x753db5410cd0>})) positives covered: 5 negatives covered: 0
-(<popper.core.Literal object at 0x753dc2c06880>, frozenset({<popper.core.Literal object at 0x753db53fadf0>})) positives covered: 27 negatives covered: 12
-(<popper.core.Literal object at 0x753dc2c06880>, frozenset({<popper.core.Literal object at 0x753db53f0070>})) positives covered: 5 negatives covered: 1
-(<popper.core.Literal object at 0x753dc2c06880>, frozenset({<popper.core.Literal object at 0x753db53f5190>})) positives covered: 3 negatives covered: 0
-(<popper.core.Literal object at 0x753dc2c06880>, frozenset({<popper.core.Literal object at 0x753db540abb0>})) positives covered: 29 negatives covered: 8
-(<popper.core.Literal object at 0x753dc2c06880>, frozenset({<popper.core.Literal object at 0x753db5410730>})) positives covered: 8 negatives covered: 3
-(<popper.core.Literal object at 0x753dc2c06880>, frozenset({<popper.core.Literal object at 0x753dc2c0fdf0>})) positives covered: 79 negatives covered: 58
-(<popper.core.Literal object at 0x753dc2c06880>, frozenset({<popper.core.Literal object at 0x753db54054f0>})) positives covered: 130 negatives covered: 28
-(<popper.core.Literal object at 0x753dc2c06880>, frozenset({<popper.core.Literal object at 0x753db53f5cd0>})) positives covered: 6 negatives covered: 2

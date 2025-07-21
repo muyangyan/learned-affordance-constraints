@@ -73,9 +73,9 @@ def apply_rules(rules_name, rules_folder, bk_file, frame_ids, targets):
 
     for id in frame_ids:
         truth = np.zeros(len(targets))
-        for j,v in enumerate(targets):
+        for j,pred in enumerate(targets):
             # Convert target name to Prolog-compatible predicate name
-            predicate_name = normalize_predicate_name(v)
+            predicate_name = normalize_predicate_name(pred)
             q = Prolog.query(f'{predicate_name}_target(\'{id}_0\')')
             satisfied = False
             for q in q:

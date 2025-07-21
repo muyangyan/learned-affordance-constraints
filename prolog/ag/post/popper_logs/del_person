@@ -8227,7 +8227,7 @@ ERROR: /home/muyang/learned-affordance-constraints/prolog/ag/post/examples/verbs
 ERROR: /home/muyang/learned-affordance-constraints/prolog/ag/post/examples/verbs/del_person.pl:8228:62: Syntax error: Unbalanced operator
 ERROR: /home/muyang/learned-affordance-constraints/prolog/ag/post/examples/verbs/del_person.pl:8229:62: Syntax error: Unbalanced operator
 Traceback (most recent call last):
-  File "/home/muyang/learned-affordance-constraints/prolog/run_popper_single.py", line 74, in <module>
+  File "/home/muyang/learned-affordance-constraints/prolog/run_popper_single.py", line 83, in <module>
     run_popper_for_item(
   File "/home/muyang/learned-affordance-constraints/prolog/run_popper_single.py", line 48, in run_popper_for_item
     prog, score, stats = learn_solution(settings)

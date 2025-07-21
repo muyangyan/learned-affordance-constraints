@@ -1,26 +1,26 @@
-18:52:01 Generating programs of size: 2
-18:52:01 ********************
-18:52:01 New best hypothesis:
-18:52:01 tp:8 fn:69 tn:6 fp:0 size:2 mdl:71
-18:52:01 add_drinking_from(A,B):- drink(A,B).
-18:52:01 ********************
-18:52:01 ********************
-18:52:01 New best hypothesis:
-18:52:01 tp:16 fn:61 tn:6 fp:0 size:2 mdl:63
-18:52:01 add_drinking_from(A,B):- take(A,B).
-18:52:01 ********************
-18:52:01 Generating programs of size: 3
-18:52:02 ********************
-18:52:02 New best hypothesis:
-18:52:02 tp:35 fn:42 tn:6 fp:0 size:8 mdl:50
-18:52:02 add_drinking_from(A,B):- drink(A,B).
-18:52:02 add_drinking_from(A,B):- hold(A,B).
-18:52:02 add_drinking_from(A,B):- pour(A,B).
-18:52:02 add_drinking_from(A,B):- take(A,B).
-18:52:02 ********************
-18:52:05 Generating programs of size: 4
-18:52:08 Generating programs of size: 5
-18:52:10 Generating programs of size: 6
+20:48:15 Generating programs of size: 2
+20:48:15 ********************
+20:48:15 New best hypothesis:
+20:48:15 tp:8 fn:69 tn:6 fp:0 size:2 mdl:71
+20:48:15 add_drinking_from(A,B):- drink(A,B).
+20:48:15 ********************
+20:48:15 ********************
+20:48:15 New best hypothesis:
+20:48:15 tp:16 fn:61 tn:6 fp:0 size:2 mdl:63
+20:48:15 add_drinking_from(A,B):- take(A,B).
+20:48:15 ********************
+20:48:15 Generating programs of size: 3
+20:48:17 ********************
+20:48:17 New best hypothesis:
+20:48:17 tp:35 fn:42 tn:6 fp:0 size:8 mdl:50
+20:48:17 add_drinking_from(A,B):- drink(A,B).
+20:48:17 add_drinking_from(A,B):- hold(A,B).
+20:48:17 add_drinking_from(A,B):- pour(A,B).
+20:48:17 add_drinking_from(A,B):- take(A,B).
+20:48:17 ********************
+20:48:18 Generating programs of size: 4
+20:48:22 Generating programs of size: 5
+20:48:24 Generating programs of size: 6
 ********** SOLUTION **********
 Precision:1.00 Recall:0.45 TP:35 FN:42 TN:6 FP:0 Size:8 MDL:50
 add_drinking_from(A,B):- drink(A,B).
@@ -28,7 +28,3 @@ add_drinking_from(A,B):- hold(A,B).
 add_drinking_from(A,B):- pour(A,B).
 add_drinking_from(A,B):- take(A,B).
 ******************************
-(<popper.core.Literal object at 0x7d9d951e7880>, frozenset({<popper.core.Literal object at 0x7d9d951e2dc0>})) positives covered: 8 negatives covered: 0
-(<popper.core.Literal object at 0x7d9d951e7880>, frozenset({<popper.core.Literal object at 0x7d9d879c31c0>})) positives covered: 5 negatives covered: 0
-(<popper.core.Literal object at 0x7d9d951e7880>, frozenset({<popper.core.Literal object at 0x7d9d951fa2e0>})) positives covered: 6 negatives covered: 0
-(<popper.core.Literal object at 0x7d9d951e7880>, frozenset({<popper.core.Literal object at 0x7d9d879ce400>})) positives covered: 16 negatives covered: 0

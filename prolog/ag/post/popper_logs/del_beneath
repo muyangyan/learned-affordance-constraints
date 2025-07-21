@@ -1,31 +1,29 @@
-18:52:00 Generating programs of size: 2
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:14 fn:500 tn:749 fp:4 size:2 mdl:506
-18:52:00 del_beneath(A,B):- put(B,A).
-18:52:00 ********************
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:19 fn:495 tn:751 fp:2 size:2 mdl:499
-18:52:00 del_beneath(A,B):- take(B,A).
-18:52:00 ********************
-18:52:00 Generating programs of size: 3
-18:52:06 ********************
-18:52:06 New best hypothesis:
-18:52:06 tp:33 fn:481 tn:747 fp:6 size:4 mdl:491
-18:52:06 del_beneath(A,B):- put(B,A).
-18:52:06 del_beneath(A,B):- take(B,A).
-18:52:06 ********************
-18:52:10 Generating programs of size: 4
-18:52:40 Generating programs of size: 5
-18:52:55 Generating programs of size: 6
-18:53:01 Generating programs of size: 7
-18:53:06 Generating programs of size: 8
-18:53:11 Generating programs of size: 9
+20:48:14 Generating programs of size: 2
+20:48:15 ********************
+20:48:15 New best hypothesis:
+20:48:15 tp:14 fn:500 tn:749 fp:4 size:2 mdl:506
+20:48:15 del_beneath(A,B):- put(B,A).
+20:48:15 ********************
+20:48:15 ********************
+20:48:15 New best hypothesis:
+20:48:15 tp:19 fn:495 tn:751 fp:2 size:2 mdl:499
+20:48:15 del_beneath(A,B):- take(B,A).
+20:48:15 ********************
+20:48:15 Generating programs of size: 3
+20:48:21 ********************
+20:48:21 New best hypothesis:
+20:48:21 tp:33 fn:481 tn:747 fp:6 size:4 mdl:491
+20:48:21 del_beneath(A,B):- put(B,A).
+20:48:21 del_beneath(A,B):- take(B,A).
+20:48:21 ********************
+20:48:25 Generating programs of size: 4
+20:48:50 Generating programs of size: 5
+20:48:59 Generating programs of size: 6
+20:49:05 Generating programs of size: 7
+20:49:11 Generating programs of size: 8
+20:49:16 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.85 Recall:0.06 TP:33 FN:481 TN:747 FP:6 Size:4 MDL:491
 del_beneath(A,B):- put(B,A).
 del_beneath(A,B):- take(B,A).
 ******************************
-(<popper.core.Literal object at 0x77b9c8dd08e0>, frozenset({<popper.core.Literal object at 0x77b9bb5c9f70>})) positives covered: 14 negatives covered: 4
-(<popper.core.Literal object at 0x77b9c8dd08e0>, frozenset({<popper.core.Literal object at 0x77b9bb5ce550>})) positives covered: 19 negatives covered: 2

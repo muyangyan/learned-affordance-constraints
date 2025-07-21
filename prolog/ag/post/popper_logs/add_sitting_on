@@ -1,27 +1,27 @@
-18:52:01 Generating programs of size: 2
-18:52:01 ********************
-18:52:01 New best hypothesis:
-18:52:01 tp:7 fn:352 tn:516 fp:0 size:2 mdl:354
-18:52:01 add_sitting_on(A,B):- awaken(A,B).
-18:52:01 ********************
-18:52:07 ********************
-18:52:07 New best hypothesis:
-18:52:07 tp:38 fn:321 tn:512 fp:4 size:2 mdl:327
-18:52:07 add_sitting_on(A,B):- sit(A,B).
-18:52:07 ********************
-18:52:07 Generating programs of size: 3
-18:52:13 ********************
-18:52:13 New best hypothesis:
-18:52:13 tp:56 fn:303 tn:510 fp:6 size:8 mdl:317
-18:52:13 add_sitting_on(A,B):- awaken(A,B).
-18:52:13 add_sitting_on(A,B):- sit(A,B).
-18:52:13 add_sitting_on(A,B):- throw(A,B).
-18:52:13 add_sitting_on(A,B):- lie(A,B).
-18:52:13 ********************
-18:52:15 Generating programs of size: 4
-18:52:31 Generating programs of size: 5
-18:52:48 Generating programs of size: 6
-18:52:53 Generating programs of size: 7
+20:48:16 Generating programs of size: 2
+20:48:16 ********************
+20:48:16 New best hypothesis:
+20:48:16 tp:7 fn:352 tn:516 fp:0 size:2 mdl:354
+20:48:16 add_sitting_on(A,B):- awaken(A,B).
+20:48:16 ********************
+20:48:22 ********************
+20:48:22 New best hypothesis:
+20:48:22 tp:38 fn:321 tn:512 fp:4 size:2 mdl:327
+20:48:22 add_sitting_on(A,B):- sit(A,B).
+20:48:22 ********************
+20:48:22 Generating programs of size: 3
+20:48:29 ********************
+20:48:29 New best hypothesis:
+20:48:29 tp:56 fn:303 tn:510 fp:6 size:8 mdl:317
+20:48:29 add_sitting_on(A,B):- awaken(A,B).
+20:48:29 add_sitting_on(A,B):- sit(A,B).
+20:48:29 add_sitting_on(A,B):- throw(A,B).
+20:48:29 add_sitting_on(A,B):- lie(A,B).
+20:48:29 ********************
+20:48:31 Generating programs of size: 4
+20:48:41 Generating programs of size: 5
+20:48:51 Generating programs of size: 6
+20:48:56 Generating programs of size: 7
 ********** SOLUTION **********
 Precision:0.90 Recall:0.16 TP:56 FN:303 TN:510 FP:6 Size:8 MDL:317
 add_sitting_on(A,B):- awaken(A,B).
@@ -29,7 +29,3 @@ add_sitting_on(A,B):- sit(A,B).
 add_sitting_on(A,B):- throw(A,B).
 add_sitting_on(A,B):- lie(A,B).
 ******************************
-(<popper.core.Literal object at 0x7f184cc318e0>, frozenset({<popper.core.Literal object at 0x7f184cc49460>})) positives covered: 7 negatives covered: 0
-(<popper.core.Literal object at 0x7f184cc318e0>, frozenset({<popper.core.Literal object at 0x7f183f448fa0>})) positives covered: 38 negatives covered: 4
-(<popper.core.Literal object at 0x7f184cc318e0>, frozenset({<popper.core.Literal object at 0x7f183f44db20>})) positives covered: 5 negatives covered: 0
-(<popper.core.Literal object at 0x7f184cc318e0>, frozenset({<popper.core.Literal object at 0x7f183f458220>})) positives covered: 6 negatives covered: 2

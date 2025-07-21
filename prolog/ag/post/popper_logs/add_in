@@ -1,35 +1,35 @@
-18:52:00 Generating programs of size: 2
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:17 fn:152 tn:105 fp:5 size:2 mdl:159
-18:52:00 add_in(A,B):- put(B,A).
-18:52:00 ********************
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:16 fn:153 tn:108 fp:2 size:2 mdl:157
-18:52:00 add_in(A,B):- dress(B,A).
-18:52:00 ********************
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:28 fn:141 tn:101 fp:9 size:2 mdl:152
-18:52:00 add_in(A,B):- walk(B,A).
-18:52:00 ********************
-18:52:00 Generating programs of size: 3
-18:52:05 ********************
-18:52:05 New best hypothesis:
-18:52:05 tp:71 fn:98 tn:91 fp:19 size:10 mdl:127
-18:52:05 add_in(A,B):- put(B,A).
-18:52:05 add_in(A,B):- dress(B,A).
-18:52:05 add_in(A,B):- walk(B,A).
-18:52:05 add_in(A,B):- myopen(B,A).
-18:52:05 add_in(A,B):- take(B,A).
-18:52:05 ********************
-18:52:08 Generating programs of size: 4
-18:52:28 Generating programs of size: 5
-18:52:35 Generating programs of size: 6
-18:52:41 Generating programs of size: 7
-18:52:47 Generating programs of size: 8
-18:52:51 Generating programs of size: 9
+20:48:15 Generating programs of size: 2
+20:48:15 ********************
+20:48:15 New best hypothesis:
+20:48:15 tp:17 fn:152 tn:105 fp:5 size:2 mdl:159
+20:48:15 add_in(A,B):- put(B,A).
+20:48:15 ********************
+20:48:15 ********************
+20:48:15 New best hypothesis:
+20:48:15 tp:16 fn:153 tn:108 fp:2 size:2 mdl:157
+20:48:15 add_in(A,B):- dress(B,A).
+20:48:15 ********************
+20:48:15 ********************
+20:48:15 New best hypothesis:
+20:48:15 tp:28 fn:141 tn:101 fp:9 size:2 mdl:152
+20:48:15 add_in(A,B):- walk(B,A).
+20:48:15 ********************
+20:48:15 Generating programs of size: 3
+20:48:20 ********************
+20:48:20 New best hypothesis:
+20:48:20 tp:71 fn:98 tn:91 fp:19 size:10 mdl:127
+20:48:20 add_in(A,B):- put(B,A).
+20:48:20 add_in(A,B):- dress(B,A).
+20:48:20 add_in(A,B):- walk(B,A).
+20:48:20 add_in(A,B):- myopen(B,A).
+20:48:20 add_in(A,B):- take(B,A).
+20:48:20 ********************
+20:48:22 Generating programs of size: 4
+20:48:45 Generating programs of size: 5
+20:48:56 Generating programs of size: 6
+20:49:02 Generating programs of size: 7
+20:49:08 Generating programs of size: 8
+20:49:12 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.79 Recall:0.42 TP:71 FN:98 TN:91 FP:19 Size:10 MDL:127
 add_in(A,B):- put(B,A).
@@ -38,8 +38,3 @@ add_in(A,B):- walk(B,A).
 add_in(A,B):- myopen(B,A).
 add_in(A,B):- take(B,A).
 ******************************
-(<popper.core.Literal object at 0x7efdf24d08e0>, frozenset({<popper.core.Literal object at 0x7efde4cd6f70>})) positives covered: 17 negatives covered: 5
-(<popper.core.Literal object at 0x7efdf24d08e0>, frozenset({<popper.core.Literal object at 0x7efde4ce6d30>})) positives covered: 16 negatives covered: 2
-(<popper.core.Literal object at 0x7efdf24d08e0>, frozenset({<popper.core.Literal object at 0x7efde4cd0e50>})) positives covered: 28 negatives covered: 9
-(<popper.core.Literal object at 0x7efdf24d08e0>, frozenset({<popper.core.Literal object at 0x7efdf24d9e50>})) positives covered: 4 negatives covered: 0
-(<popper.core.Literal object at 0x7efdf24d08e0>, frozenset({<popper.core.Literal object at 0x7efde4cdb550>})) positives covered: 6 negatives covered: 3

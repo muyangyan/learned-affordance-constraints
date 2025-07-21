@@ -1,49 +1,44 @@
-18:52:01 Generating programs of size: 2
-18:52:01 ********************
-18:52:01 New best hypothesis:
-18:52:01 tp:115 fn:1711 tn:1401 fp:97 size:2 mdl:1810
-18:52:01 del_not_contacting(A,B):- hold(A,B).
-18:52:01 ********************
-18:52:01 ********************
-18:52:01 New best hypothesis:
-18:52:01 tp:306 fn:1520 tn:1444 fp:54 size:2 mdl:1576
-18:52:01 del_not_contacting(A,B):- take(A,B).
-18:52:01 ********************
-18:52:01 Generating programs of size: 3
-18:52:11 ********************
-18:52:11 New best hypothesis:
-18:52:11 tp:465 fn:1361 tn:1316 fp:182 size:10 mdl:1553
-18:52:11 del_not_contacting(A,B):- hold(A,B).
-18:52:11 del_not_contacting(A,B):- sit(A,B).
-18:52:11 del_not_contacting(A,B):- pour(A,B).
-18:52:11 del_not_contacting(A,B):- dress(A,B).
-18:52:11 del_not_contacting(A,B):- take(A,B).
-18:52:11 ********************
-18:52:19 Generating programs of size: 4
-18:52:29 ********************
-18:52:29 New best hypothesis:
-18:52:29 tp:448 fn:1378 tn:1344 fp:154 size:11 mdl:1543
-18:52:29 del_not_contacting(A,B):- hold(A,B).
-18:52:29 del_not_contacting(A,B):- pour(A,B).
-18:52:29 del_not_contacting(A,B):- dress(A,B).
-18:52:29 del_not_contacting(A,B):- take(A,B).
-18:52:29 del_not_contacting(A,B):- sit(A,C),sit(C,B).
-18:52:29 ********************
-18:53:10 Generating programs of size: 5
-18:53:46 Generating programs of size: 6
-18:54:15 Generating programs of size: 7
-18:54:51 Generating programs of size: 8
-18:55:41 Generating programs of size: 9
+20:48:16 Generating programs of size: 2
+20:48:16 ********************
+20:48:16 New best hypothesis:
+20:48:16 tp:115 fn:1711 tn:1401 fp:97 size:2 mdl:1810
+20:48:16 del_not_contacting(A,B):- hold(A,B).
+20:48:16 ********************
+20:48:16 ********************
+20:48:16 New best hypothesis:
+20:48:16 tp:306 fn:1520 tn:1444 fp:54 size:2 mdl:1576
+20:48:16 del_not_contacting(A,B):- take(A,B).
+20:48:16 ********************
+20:48:16 Generating programs of size: 3
+20:48:26 ********************
+20:48:26 New best hypothesis:
+20:48:26 tp:465 fn:1361 tn:1316 fp:182 size:10 mdl:1553
+20:48:26 del_not_contacting(A,B):- hold(A,B).
+20:48:26 del_not_contacting(A,B):- sit(A,B).
+20:48:26 del_not_contacting(A,B):- pour(A,B).
+20:48:26 del_not_contacting(A,B):- dress(A,B).
+20:48:26 del_not_contacting(A,B):- take(A,B).
+20:48:26 ********************
+20:48:33 Generating programs of size: 4
+20:48:43 ********************
+20:48:43 New best hypothesis:
+20:48:43 tp:448 fn:1378 tn:1344 fp:154 size:11 mdl:1543
+20:48:43 del_not_contacting(A,B):- hold(A,B).
+20:48:43 del_not_contacting(A,B):- pour(A,B).
+20:48:43 del_not_contacting(A,B):- dress(A,B).
+20:48:43 del_not_contacting(A,B):- take(A,B).
+20:48:43 del_not_contacting(A,B):- sit(C,B),sit(A,C).
+20:48:43 ********************
+20:49:26 Generating programs of size: 5
+20:49:58 Generating programs of size: 6
+20:50:26 Generating programs of size: 7
+20:50:59 Generating programs of size: 8
+20:51:48 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.74 Recall:0.25 TP:448 FN:1378 TN:1344 FP:154 Size:11 MDL:1543
 del_not_contacting(A,B):- hold(A,B).
 del_not_contacting(A,B):- pour(A,B).
 del_not_contacting(A,B):- dress(A,B).
 del_not_contacting(A,B):- take(A,B).
-del_not_contacting(A,B):- sit(A,C),sit(C,B).
+del_not_contacting(A,B):- sit(C,B),sit(A,C).
 ******************************
-(<popper.core.Literal object at 0x7c0729a108b0>, frozenset({<popper.core.Literal object at 0x7c071c23d1f0>})) positives covered: 115 negatives covered: 97
-(<popper.core.Literal object at 0x7c0729a108b0>, frozenset({<popper.core.Literal object at 0x7c0729a23310>})) positives covered: 11 negatives covered: 8
-(<popper.core.Literal object at 0x7c0729a108b0>, frozenset({<popper.core.Literal object at 0x7c071c253c10>})) positives covered: 13 negatives covered: 0
-(<popper.core.Literal object at 0x7c0729a108b0>, frozenset({<popper.core.Literal object at 0x7c071c248430>})) positives covered: 306 negatives covered: 54
-(<popper.core.Literal object at 0x7c0729a108b0>, frozenset({<popper.core.Literal object at 0x7c071c248fa0>, <popper.core.Literal object at 0x7c071c24d1c0>})) positives covered: 16 negatives covered: 2

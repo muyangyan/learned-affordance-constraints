@@ -1,27 +1,24 @@
-18:52:01 Generating programs of size: 2
-18:52:01 ********************
-18:52:01 New best hypothesis:
-18:52:01 tp:8 fn:131 tn:78 fp:0 size:2 mdl:133
-18:52:01 add_leaning_on(A,B):- sit(A,B).
-18:52:01 ********************
-18:52:01 Generating programs of size: 3
-18:52:05 ********************
-18:52:05 New best hypothesis:
-18:52:05 tp:15 fn:124 tn:77 fp:1 size:6 mdl:131
-18:52:05 add_leaning_on(A,B):- sit(A,B).
-18:52:05 add_leaning_on(A,B):- put(A,B).
-18:52:05 add_leaning_on(A,B):- lie(A,B).
-18:52:05 ********************
-18:52:07 Generating programs of size: 4
-18:52:13 Generating programs of size: 5
-18:52:17 Generating programs of size: 6
-18:52:18 Generating programs of size: 7
+20:48:15 Generating programs of size: 2
+20:48:15 ********************
+20:48:15 New best hypothesis:
+20:48:15 tp:8 fn:131 tn:78 fp:0 size:2 mdl:133
+20:48:15 add_leaning_on(A,B):- sit(A,B).
+20:48:15 ********************
+20:48:16 Generating programs of size: 3
+20:48:20 ********************
+20:48:20 New best hypothesis:
+20:48:20 tp:15 fn:124 tn:77 fp:1 size:6 mdl:131
+20:48:20 add_leaning_on(A,B):- sit(A,B).
+20:48:20 add_leaning_on(A,B):- put(A,B).
+20:48:20 add_leaning_on(A,B):- lie(A,B).
+20:48:20 ********************
+20:48:21 Generating programs of size: 4
+20:48:29 Generating programs of size: 5
+20:48:34 Generating programs of size: 6
+20:48:34 Generating programs of size: 7
 ********** SOLUTION **********
 Precision:0.94 Recall:0.11 TP:15 FN:124 TN:77 FP:1 Size:6 MDL:131
 add_leaning_on(A,B):- sit(A,B).
 add_leaning_on(A,B):- put(A,B).
 add_leaning_on(A,B):- lie(A,B).
 ******************************
-(<popper.core.Literal object at 0x75c2a46b18e0>, frozenset({<popper.core.Literal object at 0x75c296e88fa0>})) positives covered: 8 negatives covered: 0
-(<popper.core.Literal object at 0x75c2a46b18e0>, frozenset({<popper.core.Literal object at 0x75c296e83e80>})) positives covered: 4 negatives covered: 1
-(<popper.core.Literal object at 0x75c2a46b18e0>, frozenset({<popper.core.Literal object at 0x75c296e98220>})) positives covered: 3 negatives covered: 0

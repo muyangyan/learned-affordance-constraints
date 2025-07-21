@@ -1,29 +1,29 @@
-18:52:02 Generating programs of size: 2
-18:52:02 ********************
-18:52:02 New best hypothesis:
-18:52:02 tp:21 fn:161 tn:34 fp:11 size:2 mdl:174
-18:52:02 del_wearing(A,B):- put(A,B).
-18:52:02 ********************
-18:52:02 ********************
-18:52:02 New best hypothesis:
-18:52:02 tp:59 fn:123 tn:39 fp:6 size:2 mdl:131
-18:52:02 del_wearing(A,B):- undress(A,B).
-18:52:02 ********************
-18:52:02 Generating programs of size: 3
-18:52:07 ********************
-18:52:07 New best hypothesis:
-18:52:07 tp:97 fn:85 tn:22 fp:23 size:8 mdl:116
-18:52:07 del_wearing(A,B):- put(A,B).
-18:52:07 del_wearing(A,B):- undress(A,B).
-18:52:07 del_wearing(A,B):- throw(A,B).
-18:52:07 del_wearing(A,B):- take(A,B).
-18:52:07 ********************
-18:52:09 Generating programs of size: 4
-18:52:34 Generating programs of size: 5
-18:52:55 Generating programs of size: 6
-18:53:01 Generating programs of size: 7
-18:53:07 Generating programs of size: 8
-18:53:12 Generating programs of size: 9
+20:48:16 Generating programs of size: 2
+20:48:16 ********************
+20:48:16 New best hypothesis:
+20:48:16 tp:21 fn:161 tn:34 fp:11 size:2 mdl:174
+20:48:16 del_wearing(A,B):- put(A,B).
+20:48:16 ********************
+20:48:16 ********************
+20:48:16 New best hypothesis:
+20:48:16 tp:59 fn:123 tn:39 fp:6 size:2 mdl:131
+20:48:16 del_wearing(A,B):- undress(A,B).
+20:48:16 ********************
+20:48:16 Generating programs of size: 3
+20:48:21 ********************
+20:48:21 New best hypothesis:
+20:48:21 tp:97 fn:85 tn:22 fp:23 size:8 mdl:116
+20:48:21 del_wearing(A,B):- put(A,B).
+20:48:21 del_wearing(A,B):- undress(A,B).
+20:48:21 del_wearing(A,B):- throw(A,B).
+20:48:21 del_wearing(A,B):- take(A,B).
+20:48:21 ********************
+20:48:23 Generating programs of size: 4
+20:48:53 Generating programs of size: 5
+20:49:09 Generating programs of size: 6
+20:49:15 Generating programs of size: 7
+20:49:21 Generating programs of size: 8
+20:49:26 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.81 Recall:0.53 TP:97 FN:85 TN:22 FP:23 Size:8 MDL:116
 del_wearing(A,B):- put(A,B).
@@ -31,7 +31,3 @@ del_wearing(A,B):- undress(A,B).
 del_wearing(A,B):- throw(A,B).
 del_wearing(A,B):- take(A,B).
 ******************************
-(<popper.core.Literal object at 0x7319937108e0>, frozenset({<popper.core.Literal object at 0x731985f40e80>})) positives covered: 21 negatives covered: 11
-(<popper.core.Literal object at 0x7319937108e0>, frozenset({<popper.core.Literal object at 0x731985f35100>})) positives covered: 59 negatives covered: 6
-(<popper.core.Literal object at 0x7319937108e0>, frozenset({<popper.core.Literal object at 0x731985f4ab20>})) positives covered: 13 negatives covered: 3
-(<popper.core.Literal object at 0x7319937108e0>, frozenset({<popper.core.Literal object at 0x731985f45460>})) positives covered: 14 negatives covered: 3

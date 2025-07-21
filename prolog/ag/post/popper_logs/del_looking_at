@@ -1,46 +1,46 @@
-18:52:00 Generating programs of size: 2
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:11 fn:1944 tn:1131 fp:1 size:2 mdl:1947
-18:52:00 del_looking_at(A,B):- snuggle(A,B).
-18:52:00 ********************
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:134 fn:1821 tn:1071 fp:61 size:2 mdl:1884
-18:52:00 del_looking_at(A,B):- myclose(A,B).
-18:52:00 ********************
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:200 fn:1755 tn:1008 fp:124 size:2 mdl:1881
-18:52:00 del_looking_at(A,B):- put(A,B).
-18:52:00 ********************
-18:52:00 Generating programs of size: 3
-18:52:10 ********************
-18:52:10 New best hypothesis:
-18:52:10 tp:619 fn:1336 tn:770 fp:362 size:32 mdl:1730
-18:52:10 del_looking_at(A,B):- snuggle(A,B).
-18:52:10 del_looking_at(A,B):- myclose(A,B).
-18:52:10 del_looking_at(A,B):- cook(A,B).
-18:52:10 del_looking_at(A,B):- drink(A,B).
-18:52:10 del_looking_at(A,B):- hold(A,B).
-18:52:10 del_looking_at(A,B):- sit(A,B).
-18:52:10 del_looking_at(A,B):- grasp(A,B).
-18:52:10 del_looking_at(A,B):- put(A,B).
-18:52:10 del_looking_at(A,B):- work(A,B).
-18:52:10 del_looking_at(A,B):- watch(A,B).
-18:52:10 del_looking_at(A,B):- wash(A,B).
-18:52:10 del_looking_at(A,B):- walk(A,B).
-18:52:10 del_looking_at(A,B):- dress(A,B).
-18:52:10 del_looking_at(A,B):- turn(A,B).
-18:52:10 del_looking_at(A,B):- tidy(A,B).
-18:52:10 del_looking_at(A,B):- eat(A,B).
-18:52:10 ********************
-18:52:19 Generating programs of size: 4
-18:53:08 Generating programs of size: 5
-18:53:43 Generating programs of size: 6
-18:54:08 Generating programs of size: 7
-18:54:28 Generating programs of size: 8
-18:54:44 Generating programs of size: 9
+20:48:14 Generating programs of size: 2
+20:48:14 ********************
+20:48:14 New best hypothesis:
+20:48:14 tp:11 fn:1944 tn:1131 fp:1 size:2 mdl:1947
+20:48:14 del_looking_at(A,B):- snuggle(A,B).
+20:48:14 ********************
+20:48:14 ********************
+20:48:14 New best hypothesis:
+20:48:14 tp:134 fn:1821 tn:1071 fp:61 size:2 mdl:1884
+20:48:14 del_looking_at(A,B):- myclose(A,B).
+20:48:14 ********************
+20:48:14 ********************
+20:48:14 New best hypothesis:
+20:48:14 tp:200 fn:1755 tn:1008 fp:124 size:2 mdl:1881
+20:48:14 del_looking_at(A,B):- put(A,B).
+20:48:14 ********************
+20:48:14 Generating programs of size: 3
+20:48:24 ********************
+20:48:24 New best hypothesis:
+20:48:24 tp:619 fn:1336 tn:770 fp:362 size:32 mdl:1730
+20:48:24 del_looking_at(A,B):- snuggle(A,B).
+20:48:24 del_looking_at(A,B):- myclose(A,B).
+20:48:24 del_looking_at(A,B):- cook(A,B).
+20:48:24 del_looking_at(A,B):- drink(A,B).
+20:48:24 del_looking_at(A,B):- hold(A,B).
+20:48:24 del_looking_at(A,B):- sit(A,B).
+20:48:24 del_looking_at(A,B):- grasp(A,B).
+20:48:24 del_looking_at(A,B):- put(A,B).
+20:48:24 del_looking_at(A,B):- work(A,B).
+20:48:24 del_looking_at(A,B):- watch(A,B).
+20:48:24 del_looking_at(A,B):- wash(A,B).
+20:48:24 del_looking_at(A,B):- walk(A,B).
+20:48:24 del_looking_at(A,B):- dress(A,B).
+20:48:24 del_looking_at(A,B):- turn(A,B).
+20:48:24 del_looking_at(A,B):- tidy(A,B).
+20:48:24 del_looking_at(A,B):- eat(A,B).
+20:48:24 ********************
+20:48:33 Generating programs of size: 4
+20:49:26 Generating programs of size: 5
+20:49:59 Generating programs of size: 6
+20:50:23 Generating programs of size: 7
+20:50:44 Generating programs of size: 8
+20:50:59 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.63 Recall:0.32 TP:619 FN:1336 TN:770 FP:362 Size:32 MDL:1730
 del_looking_at(A,B):- snuggle(A,B).
@@ -60,19 +60,3 @@ del_looking_at(A,B):- turn(A,B).
 del_looking_at(A,B):- tidy(A,B).
 del_looking_at(A,B):- eat(A,B).
 ******************************
-(<popper.core.Literal object at 0x75bf2f0f28e0>, frozenset({<popper.core.Literal object at 0x75bf218cbc40>})) positives covered: 11 negatives covered: 1
-(<popper.core.Literal object at 0x75bf2f0f28e0>, frozenset({<popper.core.Literal object at 0x75bf218d68e0>})) positives covered: 134 negatives covered: 61
-(<popper.core.Literal object at 0x75bf2f0f28e0>, frozenset({<popper.core.Literal object at 0x75bf2f0f2c10>})) positives covered: 7 negatives covered: 4
-(<popper.core.Literal object at 0x75bf2f0f28e0>, frozenset({<popper.core.Literal object at 0x75bf2f0ede20>})) positives covered: 43 negatives covered: 32
-(<popper.core.Literal object at 0x75bf2f0f28e0>, frozenset({<popper.core.Literal object at 0x75bf218d0220>})) positives covered: 60 negatives covered: 46
-(<popper.core.Literal object at 0x75bf2f0f28e0>, frozenset({<popper.core.Literal object at 0x75bf218dbfa0>})) positives covered: 17 negatives covered: 0
-(<popper.core.Literal object at 0x75bf2f0f28e0>, frozenset({<popper.core.Literal object at 0x75bf2f104e80>})) positives covered: 3 negatives covered: 0
-(<popper.core.Literal object at 0x75bf2f0f28e0>, frozenset({<popper.core.Literal object at 0x75bf218d6e80>})) positives covered: 200 negatives covered: 124
-(<popper.core.Literal object at 0x75bf2f0f28e0>, frozenset({<popper.core.Literal object at 0x75bf218dba00>})) positives covered: 4 negatives covered: 2
-(<popper.core.Literal object at 0x75bf2f0f28e0>, frozenset({<popper.core.Literal object at 0x75bf2f10aa00>})) positives covered: 53 negatives covered: 47
-(<popper.core.Literal object at 0x75bf2f0f28e0>, frozenset({<popper.core.Literal object at 0x75bf218e6100>})) positives covered: 7 negatives covered: 5
-(<popper.core.Literal object at 0x75bf2f0f28e0>, frozenset({<popper.core.Literal object at 0x75bf218d0d60>})) positives covered: 7 negatives covered: 0
-(<popper.core.Literal object at 0x75bf2f0f28e0>, frozenset({<popper.core.Literal object at 0x75bf218e6c40>})) positives covered: 13 negatives covered: 2
-(<popper.core.Literal object at 0x75bf2f0f28e0>, frozenset({<popper.core.Literal object at 0x75bf218e0580>})) positives covered: 6 negatives covered: 4
-(<popper.core.Literal object at 0x75bf2f0f28e0>, frozenset({<popper.core.Literal object at 0x75bf218c6b20>})) positives covered: 26 negatives covered: 19
-(<popper.core.Literal object at 0x75bf2f0f28e0>, frozenset({<popper.core.Literal object at 0x75bf218e66a0>})) positives covered: 38 negatives covered: 24

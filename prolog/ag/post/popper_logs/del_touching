@@ -1,40 +1,40 @@
-18:52:02 Generating programs of size: 2
-18:52:02 ********************
-18:52:02 New best hypothesis:
-18:52:02 tp:3 fn:828 tn:270 fp:0 size:2 mdl:830
-18:52:02 del_touching(A,B):- awaken(A,B).
-18:52:02 ********************
-18:52:08 ********************
-18:52:08 New best hypothesis:
-18:52:08 tp:91 fn:740 tn:247 fp:23 size:2 mdl:765
-18:52:08 del_touching(A,B):- myclose(A,B).
-18:52:08 ********************
-18:52:08 Generating programs of size: 3
-18:52:15 ********************
-18:52:15 New best hypothesis:
-18:52:15 tp:291 fn:540 tn:190 fp:80 size:30 mdl:650
-18:52:15 del_touching(A,B):- awaken(A,B).
-18:52:15 del_touching(A,B):- myclose(A,B).
-18:52:15 del_touching(A,B):- cook(A,B).
-18:52:15 del_touching(A,B):- drink(A,B).
-18:52:15 del_touching(A,B):- sit(A,B).
-18:52:15 del_touching(A,B):- put(A,B).
-18:52:15 del_touching(A,B):- watch(A,B).
-18:52:15 del_touching(A,B):- pour(A,B).
-18:52:15 del_touching(A,B):- walk(A,B).
-18:52:15 del_touching(A,B):- play(A,B).
-18:52:15 del_touching(A,B):- undress(A,B).
-18:52:15 del_touching(A,B):- tidy(A,B).
-18:52:15 del_touching(A,B):- throw(A,B).
-18:52:15 del_touching(A,B):- eat(A,B).
-18:52:15 del_touching(A,B):- lie(A,B).
-18:52:15 ********************
-18:52:20 Generating programs of size: 4
-18:53:21 Generating programs of size: 5
-18:53:46 Generating programs of size: 6
-18:54:02 Generating programs of size: 7
-18:54:15 Generating programs of size: 8
-18:54:26 Generating programs of size: 9
+20:48:16 Generating programs of size: 2
+20:48:16 ********************
+20:48:16 New best hypothesis:
+20:48:16 tp:3 fn:828 tn:270 fp:0 size:2 mdl:830
+20:48:16 del_touching(A,B):- awaken(A,B).
+20:48:16 ********************
+20:48:22 ********************
+20:48:22 New best hypothesis:
+20:48:22 tp:91 fn:740 tn:247 fp:23 size:2 mdl:765
+20:48:22 del_touching(A,B):- myclose(A,B).
+20:48:22 ********************
+20:48:23 Generating programs of size: 3
+20:48:30 ********************
+20:48:30 New best hypothesis:
+20:48:30 tp:291 fn:540 tn:190 fp:80 size:30 mdl:650
+20:48:30 del_touching(A,B):- awaken(A,B).
+20:48:30 del_touching(A,B):- myclose(A,B).
+20:48:30 del_touching(A,B):- cook(A,B).
+20:48:30 del_touching(A,B):- drink(A,B).
+20:48:30 del_touching(A,B):- sit(A,B).
+20:48:30 del_touching(A,B):- put(A,B).
+20:48:30 del_touching(A,B):- watch(A,B).
+20:48:30 del_touching(A,B):- pour(A,B).
+20:48:30 del_touching(A,B):- walk(A,B).
+20:48:30 del_touching(A,B):- play(A,B).
+20:48:30 del_touching(A,B):- undress(A,B).
+20:48:30 del_touching(A,B):- tidy(A,B).
+20:48:30 del_touching(A,B):- throw(A,B).
+20:48:30 del_touching(A,B):- eat(A,B).
+20:48:30 del_touching(A,B):- lie(A,B).
+20:48:30 ********************
+20:48:35 Generating programs of size: 4
+20:49:29 Generating programs of size: 5
+20:49:45 Generating programs of size: 6
+20:49:59 Generating programs of size: 7
+20:50:13 Generating programs of size: 8
+20:50:25 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.78 Recall:0.35 TP:291 FN:540 TN:190 FP:80 Size:30 MDL:650
 del_touching(A,B):- awaken(A,B).
@@ -53,18 +53,3 @@ del_touching(A,B):- throw(A,B).
 del_touching(A,B):- eat(A,B).
 del_touching(A,B):- lie(A,B).
 ******************************
-(<popper.core.Literal object at 0x7cc1afeb18e0>, frozenset({<popper.core.Literal object at 0x7cc1afec9460>})) positives covered: 3 negatives covered: 0
-(<popper.core.Literal object at 0x7cc1afeb18e0>, frozenset({<popper.core.Literal object at 0x7cc1a26838e0>})) positives covered: 91 negatives covered: 23
-(<popper.core.Literal object at 0x7cc1afeb18e0>, frozenset({<popper.core.Literal object at 0x7cc1afeb1c10>})) positives covered: 4 negatives covered: 0
-(<popper.core.Literal object at 0x7cc1afeb18e0>, frozenset({<popper.core.Literal object at 0x7cc1afeace20>})) positives covered: 16 negatives covered: 8
-(<popper.core.Literal object at 0x7cc1afeb18e0>, frozenset({<popper.core.Literal object at 0x7cc1a2688fa0>})) positives covered: 14 negatives covered: 9
-(<popper.core.Literal object at 0x7cc1afeb18e0>, frozenset({<popper.core.Literal object at 0x7cc1a2683e80>})) positives covered: 74 negatives covered: 20
-(<popper.core.Literal object at 0x7cc1afeb18e0>, frozenset({<popper.core.Literal object at 0x7cc1afec9a00>})) positives covered: 22 negatives covered: 12
-(<popper.core.Literal object at 0x7cc1afeb18e0>, frozenset({<popper.core.Literal object at 0x7cc1afec3340>})) positives covered: 10 negatives covered: 2
-(<popper.core.Literal object at 0x7cc1afeb18e0>, frozenset({<popper.core.Literal object at 0x7cc1a267dd60>})) positives covered: 7 negatives covered: 1
-(<popper.core.Literal object at 0x7cc1afeb18e0>, frozenset({<popper.core.Literal object at 0x7cc1afec9fa0>})) positives covered: 8 negatives covered: 1
-(<popper.core.Literal object at 0x7cc1afeb18e0>, frozenset({<popper.core.Literal object at 0x7cc1a2678100>})) positives covered: 8 negatives covered: 1
-(<popper.core.Literal object at 0x7cc1afeb18e0>, frozenset({<popper.core.Literal object at 0x7cc1a2673b20>})) positives covered: 9 negatives covered: 2
-(<popper.core.Literal object at 0x7cc1afeb18e0>, frozenset({<popper.core.Literal object at 0x7cc1a268db20>})) positives covered: 22 negatives covered: 1
-(<popper.core.Literal object at 0x7cc1afeb18e0>, frozenset({<popper.core.Literal object at 0x7cc1a26936a0>})) positives covered: 6 negatives covered: 0
-(<popper.core.Literal object at 0x7cc1afeb18e0>, frozenset({<popper.core.Literal object at 0x7cc1a2698220>})) positives covered: 3 negatives covered: 0

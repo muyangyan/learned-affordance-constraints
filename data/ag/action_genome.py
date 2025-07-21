@@ -6,6 +6,7 @@ import os
 import pickle
 import shelve
 import warnings
+import time
 
 from PIL import Image
 import matplotlib.pyplot as plt
@@ -217,17 +218,20 @@ class ActionGenome(Dataset):
                 self.scene_graphs[id] = data
         
         # TODO: this is just because we didn't generate the bk for non-split dataset
-        if self.split is None or self.no_rules:
+        if self.no_rules:
             self.truth_values = None
         else:
             # TODO: maybe add an option to not have rules even when split valid?
             if self.position == 'both':
                 raise NotImplementedError('Truth values not implemented for both position')
             frame_ids = [get_id(row['vid'], row[f'{self.position}_frame']) for idx, row in self.df.iterrows()] # type: ignore
+            pre_rule_apply_time = time.time()
             self.truth_values = apply_rules(self.rules_name, 
                 os.path.join(self.prolog_folder, self.position, 'learned_rules'),
                 os.path.join(self.prolog_folder, f'bk.pl'),
                 frame_ids, self.get_target_classes())
+            post_rule_apply_time = time.time()
+            print(f'Rule application time: {post_rule_apply_time - pre_rule_apply_time} seconds')
 
         cache_data = { # all the actual data we need to save
             'df': self.df,
@@ -637,8 +641,8 @@ class SingleBothAG(ActionGenome):
 class SingleAG(ActionGenome):
     
     def __init__(self, cfg,
-                no_img=False, subset=True, split=None, position=None): # debug params
-        super().__init__(cfg, no_img, subset, split, position, label_mode='single')
+                no_img=False, subset=True, split=None, position=None, no_rules=False): # debug params
+        super().__init__(cfg, no_img, subset, split, position, label_mode='single', no_rules=no_rules)
         assert self.position == 'pre' or self.position == 'post'
 
     def create_labels(self, action_classes):
@@ -833,249 +837,6 @@ class MultiAG(ActionGenome):
             'truth_values': truth_values
         }
 
-class MultiBothAG(ActionGenome):
-    
-    def __init__(self, cfg,
-                no_img=False, subset=True, split=None, position=None, no_rules=False): # debug params
-        super().__init__(cfg, no_img, subset, split, position='both', label_mode='multi', no_rules=no_rules)
-
-    def create_labels(self, action_classes):
-        # action_classes is a list of actions (multi-label)
-        verb_classes, obj_classes = zip(*[self.action_verb_obj_map[action_class] for action_class in action_classes])
-
-        w = torch.tensor(action_classes, dtype=torch.long) # multiple actions
-        y = torch.tensor(verb_classes, dtype=torch.long)
-        o = torch.tensor([o if o is not None else -1 for o in obj_classes], dtype=torch.long)
-        return w, y, o
-
-    def __getitem__(self, index):
-        row = self.df[['vid', 'pre_frame', 'post_frame', 'action']].iloc[index].values #type: ignore
-        video_id, pre_frame, post_frame, action_classes = row
-
-        #full id is necessary since some actions start on the same frame
-        pre_id = get_id(video_id, pre_frame)
-        post_id = get_id(video_id, post_frame)
-
-        pre_scene_graph = self.scene_graphs[pre_id]
-        post_scene_graph = self.scene_graphs[post_id]
-
-        if self.no_img:
-            pre_image = None
-            post_image = None
-        else:
-            pre_image_path = os.path.join(self.root, 'frames', pre_id)
-            post_image_path = os.path.join(self.root, 'frames', post_id)
-            pre_image = Image.open(pre_image_path).convert('RGB')
-            post_image = Image.open(post_image_path).convert('RGB')
-
-        if self.truth_values is not None:
-            pre_truth_values = torch.tensor(self.truth_values[index]).float()
-            post_truth_values = torch.tensor(self.truth_values[index]).float()
-        else: 
-            pre_truth_values = None
-            post_truth_values = None
-
-        # Compute all labels (action_classes is a list in MultiBothAG)
-        verb_classes, obj_classes = zip(*[self.action_verb_obj_map[action_class] for action_class in action_classes])
-
-        pre_data = {
-            'id': pre_id,
-            'image': pre_image,
-            'scene_graph': pre_scene_graph,
-            'verb_labels': list(verb_classes),
-            'object_labels': list(obj_classes),
-            'action_labels': action_classes,
-            'truth_values': pre_truth_values
-        }
-        post_data = {
-            'id': post_id,
-            'image': post_image,
-            'scene_graph': post_scene_graph,
-            'verb_labels': list(verb_classes),
-            'object_labels': list(obj_classes),
-            'action_labels': action_classes,
-            'truth_values': post_truth_values
-        }
-        
-        return pre_data, post_data
-
-    def pred_collate(self, batch):
-        """
-        Collate function for multi-label both positions prediction.
-        Returns multi-hot tensors for verb_labels, object_labels, and action_labels.
-        The model will select appropriate labels based on cfg.data.label_type.
-        """
-        # batch is a list of (pre_data, post_data) tuples
-        pre_batch, post_batch = zip(*batch)
-        
-        # Extract from pre_batch
-        ids = [item['id'] for item in pre_batch]
-        images = [item['image'] for item in pre_batch]
-        scene_graphs = [item['scene_graph'] for item in pre_batch]
-        verb_labels_list = [item['verb_labels'] for item in pre_batch]
-        object_labels_list = [item['object_labels'] for item in pre_batch]
-        action_labels_list = [item['action_labels'] for item in pre_batch]
-        truth_values = [item['truth_values'] for item in pre_batch]
-        
-        sg_batch = Batch.from_data_list(scene_graphs, exclude_keys=['o'])
-        
-        # Create a 2D tensor for multi-label verbs with shape Batch x Classes
-        verb_labels = torch.zeros((len(verb_labels_list), len(self.verb_classes)), dtype=torch.float)
-        for i, verb_list in enumerate(verb_labels_list):
-            for verb_idx in verb_list:
-                verb_labels[i, verb_idx] = 1.0
-        
-        # Create multi-label object and action tensors
-        object_labels = torch.zeros((len(object_labels_list), len(self.object_classes)), dtype=torch.float)
-        for i, obj_list in enumerate(object_labels_list):
-            for obj_idx in obj_list:
-                if obj_idx is not None:
-                    object_labels[i, obj_idx] = 1.0
-        
-        action_labels = torch.zeros((len(action_labels_list), len(self.action_classes)), dtype=torch.float)
-        for i, action_list in enumerate(action_labels_list):
-            for action_idx in action_list:
-                action_labels[i, action_idx] = 1.0
-        
-        if self.no_img:
-            resized_images = None
-        else:
-            resized_images = [self.im_transform(img) for img in images]
-            resized_images = torch.stack(resized_images)
-        
-        if self.truth_values is not None:
-            truth_values = torch.stack(truth_values)
-        else:
-            truth_values = None
-
-        return {
-            'ids': ids,
-            'images': resized_images,
-            'scene_graphs': sg_batch,
-            'verb_labels': verb_labels,
-            'object_labels': object_labels,
-            'action_labels': action_labels,
-            'truth_values': truth_values
-        }
-    
-class EffectLearningAG(ActionGenome):
-    """
-    Dataset class specifically designed for learning add and delete effects.
-    Compares pre and post scene graphs to extract what changes occur.
-    """
-    
-    def __init__(self, cfg, no_img=False, subset=True, split=None, no_rules=False):
-        # Force position='both' and label_mode='single' for effect learning
-        super().__init__(cfg, no_img, subset, split, position='both', label_mode='single', no_rules=no_rules)
-        
-        # Extract effect data for all samples
-        self.effect_data = []
-        self._extract_all_effects()
-    
-    def _extract_all_effects(self):
-        """Extract add/delete effects for all samples in the dataset."""
-        print("Extracting add/delete effects from scene graphs...")
-        
-        for idx, row in self.df.iterrows():
-            video_id, pre_frame, post_frame, action_class = row[['vid', 'pre_frame', 'post_frame', 'action']].values
-            
-            pre_id = get_id(video_id, pre_frame)
-            post_id = get_id(video_id, post_frame)
-            
-            pre_sg = self.scene_graphs[pre_id]
-            post_sg = self.scene_graphs[post_id]
-            
-            # Extract effects
-            added_relations, deleted_relations = self.compare_scene_graphs(pre_sg, post_sg)
-            
-            # Get action information
-            verb_class, obj_class = self.action_verb_obj_map[action_class]
-            action_name = self.action_classes[action_class]
-            verb_name = self.verb_classes[verb_class]
-            
-            effect_sample = {
-                'idx': idx,
-                'pre_id': pre_id,
-                'post_id': post_id,
-                'action_class': action_class,
-                'action_name': action_name,
-                'verb_class': verb_class,
-                'verb_name': verb_name,
-                'obj_class': obj_class,
-                'added_relations': added_relations,
-                'deleted_relations': deleted_relations,
-                'pre_scene_graph': pre_sg,
-                'post_scene_graph': post_sg
-            }
-            
-            self.effect_data.append(effect_sample)
-        
-        print(f"Extracted effects for {len(self.effect_data)} samples")
-    
-    def __len__(self):
-        return len(self.effect_data)
-    
-    def __getitem__(self, index):
-        effect_sample = self.effect_data[index]
-        
-        # Load images if needed
-        if self.no_img:
-            pre_image = None
-            post_image = None
-        else:
-            pre_image_path = os.path.join(self.root, 'frames', effect_sample['pre_id'])
-            post_image_path = os.path.join(self.root, 'frames', effect_sample['post_id'])
-            pre_image = Image.open(pre_image_path).convert('RGB')
-            post_image = Image.open(post_image_path).convert('RGB')
-        
-        return {
-            'index': index,
-            'pre_id': effect_sample['pre_id'],
-            'post_id': effect_sample['post_id'],
-            'pre_image': pre_image,
-            'post_image': post_image,
-            'pre_scene_graph': effect_sample['pre_scene_graph'],
-            'post_scene_graph': effect_sample['post_scene_graph'],
-            'action_class': effect_sample['action_class'],
-            'action_name': effect_sample['action_name'],
-            'verb_class': effect_sample['verb_class'],
-            'verb_name': effect_sample['verb_name'],
-            'obj_class': effect_sample['obj_class'],
-            'added_relations': effect_sample['added_relations'],
-            'deleted_relations': effect_sample['deleted_relations']
-        }
-    
-    def get_all_unique_relations(self):
-        """Get all unique relations that appear in add/delete effects."""
-        all_relations = set()
-        for sample in self.effect_data:
-            for rel in sample['added_relations'] + sample['deleted_relations']:
-                all_relations.add(rel)
-        return list(all_relations)
-    
-    def get_effect_statistics(self):
-        """Get statistics about the effects in the dataset."""
-        total_adds = sum(len(sample['added_relations']) for sample in self.effect_data)
-        total_deletes = sum(len(sample['deleted_relations']) for sample in self.effect_data)
-        samples_with_adds = sum(1 for sample in self.effect_data if sample['added_relations'])
-        samples_with_deletes = sum(1 for sample in self.effect_data if sample['deleted_relations'])
-        
-        print(f"Effect Statistics:")
-        print(f"  Total add effects: {total_adds}")
-        print(f"  Total delete effects: {total_deletes}")
-        print(f"  Samples with adds: {samples_with_adds}/{len(self.effect_data)}")
-        print(f"  Samples with deletes: {samples_with_deletes}/{len(self.effect_data)}")
-        print(f"  Avg adds per sample: {total_adds/len(self.effect_data):.2f}")
-        print(f"  Avg deletes per sample: {total_deletes/len(self.effect_data):.2f}")
-        
-        return {
-            'total_adds': total_adds,
-            'total_deletes': total_deletes,
-            'samples_with_adds': samples_with_adds,
-            'samples_with_deletes': samples_with_deletes,
-            'avg_adds_per_sample': total_adds/len(self.effect_data),
-            'avg_deletes_per_sample': total_deletes/len(self.effect_data)
-        }
 
 # ✅ COMPLETED UPDATES FOR DUAL LABEL TYPE SUPPORT:
 #

@@ -1,43 +1,39 @@
-18:52:00 Generating programs of size: 2
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:13 fn:2109 tn:3402 fp:9 size:2 mdl:2120
-18:52:00 add_in_front_of(A,B):- walk(B,A).
-18:52:00 ********************
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:34 fn:2088 tn:3405 fp:6 size:2 mdl:2096
-18:52:00 add_in_front_of(A,B):- undress(B,A).
-18:52:00 ********************
-18:52:01 Generating programs of size: 3
-18:52:11 ********************
-18:52:11 New best hypothesis:
-18:52:11 tp:47 fn:2075 tn:3396 fp:15 size:4 mdl:2094
-18:52:11 add_in_front_of(A,B):- walk(B,A).
-18:52:11 add_in_front_of(A,B):- undress(B,A).
-18:52:11 ********************
-18:52:18 Generating programs of size: 4
-18:52:28 ********************
-18:52:28 New best hypothesis:
-18:52:28 tp:58 fn:2064 tn:3396 fp:15 size:10 mdl:2089
-18:52:28 add_in_front_of(A,B):- walk(B,A).
-18:52:28 add_in_front_of(A,B):- undress(B,A).
-18:52:28 add_in_front_of(A,B):- take(C,A),stand(C,B).
-18:52:28 add_in_front_of(A,B):- hold(B,A),tidy(B,A).
-18:52:28 ********************
-18:53:19 Generating programs of size: 5
-18:53:54 Generating programs of size: 6
-18:54:17 Generating programs of size: 7
-18:54:36 Generating programs of size: 8
-18:54:50 Generating programs of size: 9
+20:48:15 Generating programs of size: 2
+20:48:15 ********************
+20:48:15 New best hypothesis:
+20:48:15 tp:13 fn:2109 tn:3402 fp:9 size:2 mdl:2120
+20:48:15 add_in_front_of(A,B):- walk(B,A).
+20:48:15 ********************
+20:48:15 ********************
+20:48:15 New best hypothesis:
+20:48:15 tp:34 fn:2088 tn:3405 fp:6 size:2 mdl:2096
+20:48:15 add_in_front_of(A,B):- undress(B,A).
+20:48:15 ********************
+20:48:15 Generating programs of size: 3
+20:48:25 ********************
+20:48:25 New best hypothesis:
+20:48:25 tp:47 fn:2075 tn:3396 fp:15 size:4 mdl:2094
+20:48:25 add_in_front_of(A,B):- walk(B,A).
+20:48:25 add_in_front_of(A,B):- undress(B,A).
+20:48:25 ********************
+20:48:32 Generating programs of size: 4
+20:48:42 ********************
+20:48:42 New best hypothesis:
+20:48:42 tp:58 fn:2064 tn:3396 fp:15 size:10 mdl:2089
+20:48:42 add_in_front_of(A,B):- walk(B,A).
+20:48:42 add_in_front_of(A,B):- undress(B,A).
+20:48:42 add_in_front_of(A,B):- take(C,A),stand(C,B).
+20:48:42 add_in_front_of(A,B):- tidy(B,A),hold(B,A).
+20:48:42 ********************
+20:49:19 Generating programs of size: 5
+20:49:46 Generating programs of size: 6
+20:50:10 Generating programs of size: 7
+20:50:29 Generating programs of size: 8
+20:50:44 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.79 Recall:0.03 TP:58 FN:2064 TN:3396 FP:15 Size:10 MDL:2089
 add_in_front_of(A,B):- walk(B,A).
 add_in_front_of(A,B):- undress(B,A).
 add_in_front_of(A,B):- take(C,A),stand(C,B).
-add_in_front_of(A,B):- hold(B,A),tidy(B,A).
+add_in_front_of(A,B):- tidy(B,A),hold(B,A).
 ******************************
-(<popper.core.Literal object at 0x7e53164108e0>, frozenset({<popper.core.Literal object at 0x7e5308c03e50>})) positives covered: 13 negatives covered: 9
-(<popper.core.Literal object at 0x7e53164108e0>, frozenset({<popper.core.Literal object at 0x7e5308bfe1f0>})) positives covered: 34 negatives covered: 6
-(<popper.core.Literal object at 0x7e53164108e0>, frozenset({<popper.core.Literal object at 0x7e5308c0e640>, <popper.core.Literal object at 0x7e5308c09550>})) positives covered: 4 negatives covered: 0
-(<popper.core.Literal object at 0x7e53164108e0>, frozenset({<popper.core.Literal object at 0x7e5308c03310>, <popper.core.Literal object at 0x7e5308bf9c10>})) positives covered: 7 negatives covered: 0

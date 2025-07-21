@@ -33,28 +33,18 @@ def parse_logs(folder):
     rules = {}
     for file in os.listdir(folder):
         add_rule = True
+        rule = []
+        metrics = None
         with open(folder + '/' + file, 'r') as f:
             lines = f.readlines()
-
             if lines[-1].strip('\n') == "NO SOLUTION":
                 print(file, 'no solution')
                 rules[file] = None
                 continue
-            if lines[-1].strip('\n') != "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~": # clauses were separated
-                for line in reversed(lines[:-1]):
-                    line = line.strip('\n')
-                    if line == "******************************":
-                        break
-                    if line[-1] != '.' and line.startswith('Precision:'):
-                            metrics = parse_metrics(line)
-                    rule.append(line)
             elif lines[-1].strip('\n') != "******************************":
-                rule = []
-                metrics = None
                 print(file, 'stuck, fixing')
                 for line in reversed(lines[:-1]):
                     line = line.strip('\n')
-
                     if line.startswith('body_pred'):
                         print(file, 'no solution')
                         rules[file] = None
@@ -116,7 +106,10 @@ if __name__ == '__main__':
 
     config = load_yaml(args.config)
 
-    rules_folder = os.path.join(config.prolog_folder, config.data.position, "learned_rules")
-    log_folder = os.path.join(config.prolog_folder, config.data.position, "popper_logs")
+    preconditions_folder = os.path.join(config.prolog_folder, 'pre', "learned_rules")
+    preconditions_log_folder = os.path.join(config.prolog_folder, 'pre', "popper_logs")
+    write_rules(preconditions_folder, preconditions_log_folder, config.rules.name, config.ilp.fn_weight, config.ilp.timeout)
 
-    write_rules(rules_folder, log_folder, config.rules.name, config.ilp.fn_weight, config.ilp.timeout)
+    effects_folder = os.path.join(config.prolog_folder, 'post', "learned_rules")
+    effects_log_folder = os.path.join(config.prolog_folder, 'post', "popper_logs")
+    write_rules(effects_folder, effects_log_folder, config.rules.name, config.ilp.fn_weight, config.ilp.timeout)

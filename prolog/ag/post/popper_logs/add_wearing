@@ -1,26 +1,24 @@
-18:52:02 Generating programs of size: 2
-18:52:02 ********************
-18:52:02 New best hypothesis:
-18:52:02 tp:29 fn:83 tn:43 fp:2 size:2 mdl:87
-18:52:02 add_wearing(A,B):- dress(A,B).
-18:52:02 ********************
-18:52:02 Generating programs of size: 3
-18:52:05 ********************
-18:52:05 New best hypothesis:
-18:52:05 tp:36 fn:76 tn:40 fp:5 size:4 mdl:85
-18:52:05 add_wearing(A,B):- dress(A,B).
-18:52:05 add_wearing(A,B):- take(A,B).
-18:52:05 ********************
-18:52:07 Generating programs of size: 4
-18:52:24 Generating programs of size: 5
-18:52:28 Generating programs of size: 6
-18:52:28 Generating programs of size: 7
-18:52:31 Generating programs of size: 8
-18:52:31 Generating programs of size: 9
+20:48:16 Generating programs of size: 2
+20:48:16 ********************
+20:48:16 New best hypothesis:
+20:48:16 tp:29 fn:83 tn:43 fp:2 size:2 mdl:87
+20:48:16 add_wearing(A,B):- dress(A,B).
+20:48:16 ********************
+20:48:16 Generating programs of size: 3
+20:48:20 ********************
+20:48:20 New best hypothesis:
+20:48:20 tp:36 fn:76 tn:40 fp:5 size:4 mdl:85
+20:48:20 add_wearing(A,B):- dress(A,B).
+20:48:20 add_wearing(A,B):- take(A,B).
+20:48:20 ********************
+20:48:21 Generating programs of size: 4
+20:48:36 Generating programs of size: 5
+20:48:54 Generating programs of size: 6
+20:48:55 Generating programs of size: 7
+20:48:58 Generating programs of size: 8
+20:48:58 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.88 Recall:0.32 TP:36 FN:76 TN:40 FP:5 Size:4 MDL:85
 add_wearing(A,B):- dress(A,B).
 add_wearing(A,B):- take(A,B).
 ******************************
-(<popper.core.Literal object at 0x7986922908e0>, frozenset({<popper.core.Literal object at 0x798684a93c40>})) positives covered: 29 negatives covered: 2
-(<popper.core.Literal object at 0x7986922908e0>, frozenset({<popper.core.Literal object at 0x798684a88460>})) positives covered: 7 negatives covered: 3

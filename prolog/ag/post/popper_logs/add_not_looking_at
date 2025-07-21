@@ -1,41 +1,41 @@
-18:52:00 Generating programs of size: 2
-18:52:00 ********************
-18:52:00 New best hypothesis:
-18:52:00 tp:147 fn:2271 tn:2398 fp:65 size:2 mdl:2338
-18:52:00 add_not_looking_at(A,B):- myclose(A,B).
-18:52:00 ********************
-18:52:00 Generating programs of size: 3
-18:52:10 ********************
-18:52:10 New best hypothesis:
-18:52:10 tp:381 fn:2037 tn:2278 fp:185 size:16 mdl:2238
-18:52:10 add_not_looking_at(A,B):- myclose(A,B).
-18:52:10 add_not_looking_at(A,B):- cook(A,B).
-18:52:10 add_not_looking_at(A,B):- watch(A,B).
-18:52:10 add_not_looking_at(A,B):- pour(A,B).
-18:52:10 add_not_looking_at(A,B):- dress(A,B).
-18:52:10 add_not_looking_at(A,B):- play(A,B).
-18:52:10 add_not_looking_at(A,B):- eat(A,B).
-18:52:10 add_not_looking_at(A,B):- myopen(A,B).
-18:52:10 ********************
-18:52:20 Generating programs of size: 4
-18:52:30 ********************
-18:52:30 New best hypothesis:
-18:52:30 tp:395 fn:2023 tn:2270 fp:193 size:19 mdl:2235
-18:52:30 add_not_looking_at(A,B):- myclose(A,B).
-18:52:30 add_not_looking_at(A,B):- cook(A,B).
-18:52:30 add_not_looking_at(A,B):- watch(A,B).
-18:52:30 add_not_looking_at(A,B):- pour(A,B).
-18:52:30 add_not_looking_at(A,B):- dress(A,B).
-18:52:30 add_not_looking_at(A,B):- play(A,B).
-18:52:30 add_not_looking_at(A,B):- eat(A,B).
-18:52:30 add_not_looking_at(A,B):- myopen(A,B).
-18:52:30 add_not_looking_at(A,B):- sit(A,C),sit(C,B).
-18:52:30 ********************
-18:52:59 Generating programs of size: 5
-18:53:26 Generating programs of size: 6
-18:53:56 Generating programs of size: 7
-18:54:32 Generating programs of size: 8
-18:55:29 Generating programs of size: 9
+20:48:14 Generating programs of size: 2
+20:48:14 ********************
+20:48:14 New best hypothesis:
+20:48:14 tp:147 fn:2271 tn:2398 fp:65 size:2 mdl:2338
+20:48:14 add_not_looking_at(A,B):- myclose(A,B).
+20:48:14 ********************
+20:48:14 Generating programs of size: 3
+20:48:24 ********************
+20:48:24 New best hypothesis:
+20:48:24 tp:381 fn:2037 tn:2278 fp:185 size:16 mdl:2238
+20:48:24 add_not_looking_at(A,B):- myclose(A,B).
+20:48:24 add_not_looking_at(A,B):- cook(A,B).
+20:48:24 add_not_looking_at(A,B):- watch(A,B).
+20:48:24 add_not_looking_at(A,B):- pour(A,B).
+20:48:24 add_not_looking_at(A,B):- dress(A,B).
+20:48:24 add_not_looking_at(A,B):- play(A,B).
+20:48:24 add_not_looking_at(A,B):- eat(A,B).
+20:48:24 add_not_looking_at(A,B):- myopen(A,B).
+20:48:24 ********************
+20:48:34 Generating programs of size: 4
+20:48:44 ********************
+20:48:44 New best hypothesis:
+20:48:44 tp:395 fn:2023 tn:2270 fp:193 size:19 mdl:2235
+20:48:44 add_not_looking_at(A,B):- myclose(A,B).
+20:48:44 add_not_looking_at(A,B):- cook(A,B).
+20:48:44 add_not_looking_at(A,B):- watch(A,B).
+20:48:44 add_not_looking_at(A,B):- pour(A,B).
+20:48:44 add_not_looking_at(A,B):- dress(A,B).
+20:48:44 add_not_looking_at(A,B):- play(A,B).
+20:48:44 add_not_looking_at(A,B):- eat(A,B).
+20:48:44 add_not_looking_at(A,B):- myopen(A,B).
+20:48:44 add_not_looking_at(A,B):- sit(C,B),sit(A,C).
+20:48:44 ********************
+20:49:11 Generating programs of size: 5
+20:49:37 Generating programs of size: 6
+20:50:07 Generating programs of size: 7
+20:50:39 Generating programs of size: 8
+20:51:49 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.67 Recall:0.16 TP:395 FN:2023 TN:2270 FP:193 Size:19 MDL:2235
 add_not_looking_at(A,B):- myclose(A,B).
@@ -46,14 +46,5 @@ add_not_looking_at(A,B):- dress(A,B).
 add_not_looking_at(A,B):- play(A,B).
 add_not_looking_at(A,B):- eat(A,B).
 add_not_looking_at(A,B):- myopen(A,B).
-add_not_looking_at(A,B):- sit(A,C),sit(C,B).
+add_not_looking_at(A,B):- sit(C,B),sit(A,C).
 ******************************
-(<popper.core.Literal object at 0x7d98165c68b0>, frozenset({<popper.core.Literal object at 0x7d9808dc98b0>})) positives covered: 147 negatives covered: 65
-(<popper.core.Literal object at 0x7d98165c68b0>, frozenset({<popper.core.Literal object at 0x7d98165c6be0>})) positives covered: 12 negatives covered: 3
-(<popper.core.Literal object at 0x7d98165c68b0>, frozenset({<popper.core.Literal object at 0x7d98165de9d0>})) positives covered: 55 negatives covered: 19
-(<popper.core.Literal object at 0x7d98165c68b0>, frozenset({<popper.core.Literal object at 0x7d98165d9310>})) positives covered: 13 negatives covered: 8
-(<popper.core.Literal object at 0x7d98165c68b0>, frozenset({<popper.core.Literal object at 0x7d9808dd9c10>})) positives covered: 13 negatives covered: 5
-(<popper.core.Literal object at 0x7d98165c68b0>, frozenset({<popper.core.Literal object at 0x7d98165def70>})) positives covered: 14 negatives covered: 6
-(<popper.core.Literal object at 0x7d98165c68b0>, frozenset({<popper.core.Literal object at 0x7d9808dd9670>})) positives covered: 44 negatives covered: 21
-(<popper.core.Literal object at 0x7d98165c68b0>, frozenset({<popper.core.Literal object at 0x7d98165cfd30>})) positives covered: 87 negatives covered: 60
-(<popper.core.Literal object at 0x7d98165c68b0>, frozenset({<popper.core.Literal object at 0x7d9808dcefa0>, <popper.core.Literal object at 0x7d9808dd31c0>})) positives covered: 14 negatives covered: 8
