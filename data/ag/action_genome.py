@@ -289,10 +289,6 @@ class ActionGenome(Dataset):
         else:
             raise ValueError(f"Unsupported label_type: {self.label_type}")
     
-    def get_num_target_classes(self):
-        """Return the number of target classes based on label_type."""
-        return len(self.get_target_classes())
-    
     def get_target_priors(self):
         """Return the appropriate priors based on label_type."""
         if self.label_type == 'verb':
@@ -330,56 +326,6 @@ class ActionGenome(Dataset):
         action_priors = np.array([action_counts[action]/length for action in action_counts])
         
         return verb_priors, noun_priors, action_priors
-
-    def compare_scene_graphs(self, pre_sg, post_sg):
-        """
-        Compare pre and post scene graphs to extract add and delete effects.
-        
-        Args:
-            pre_sg: Pre-action scene graph (PyG Data object)
-            post_sg: Post-action scene graph (PyG Data object)
-            
-        Returns:
-            added_relations: List of (src_obj, rel, dst_obj) tuples that were added
-            deleted_relations: List of (src_obj, rel, dst_obj) tuples that were deleted
-        """
-        # Extract relationships from both scene graphs
-        def extract_relationships(sg):
-            relationships = set()
-            if sg.edge_index.size(1) > 0:  # Check if there are edges
-                for i, (src_idx, dst_idx) in enumerate(sg.edge_index.T):
-                    src_obj = self.object_classes[sg.node_type[src_idx].item()]
-                    dst_obj = self.object_classes[sg.node_type[dst_idx].item()]
-                    rel_name = self.relationship_classes[sg.edge_type[i].item()]
-                    relationships.add((src_obj, rel_name, dst_obj))
-            return relationships
-        
-        pre_relations = extract_relationships(pre_sg)
-        post_relations = extract_relationships(post_sg)
-        
-        # Compute add and delete effects
-        added_relations = list(post_relations - pre_relations)
-        deleted_relations = list(pre_relations - post_relations)
-        
-        return added_relations, deleted_relations
-    
-    def normalize_relation_for_prolog(self, relation_tuple):
-        """
-        Convert a relation tuple to Prolog-compatible format.
-        
-        Args:
-            relation_tuple: (src_obj, rel_name, dst_obj)
-            
-        Returns:
-            prolog_relation: String in format "rel_name(src_obj, dst_obj)"
-        """
-        src_obj, rel_name, dst_obj = relation_tuple
-        # Replace problematic characters for Prolog
-        src_obj = src_obj.replace('/', '_').replace('-', '_')
-        dst_obj = dst_obj.replace('/', '_').replace('-', '_')
-        rel_name = rel_name.replace('/', '_').replace('-', '_')
-        return f"{rel_name}({src_obj}, {dst_obj})"
-
 
     def init_vocab(self, verb_whitelist_file):
 

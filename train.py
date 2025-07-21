@@ -46,9 +46,9 @@ def init_model_train(cfg, train_set):
     rgcn_params = (num_obj_classes, node_feature_size, rgcn_hidden_dim, num_rel_classes)
     
     # Use helper methods to get appropriate classes and priors based on label_type
-    num_classes = train_set.get_num_target_classes()
     priors = train_set.get_target_priors()
     class_names = train_set.get_target_classes()
+    num_classes = len(class_names)
     
     model_params = {'rgcn_params': rgcn_params,
                     'vit_hidden_dim': vit_hidden_dim,
