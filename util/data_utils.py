@@ -71,6 +71,15 @@ def clean_df(df, split_ids, action_map):
 
     return cleaned_df
 
+def sample_df(df, num_samples, random_idxs_file):
+    with open(random_idxs_file, 'r') as f:
+        randomized_idxs = json.load(f)
+    df = df.iloc[randomized_idxs[:num_samples]]
+    print(f'num_samples was given, downsampled to {len(df)} samples')
+    return df
+
+
+
 # DEPRECATED
 '''
 def load_examples(action_df, position, label_mode='single'):

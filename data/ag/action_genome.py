@@ -21,6 +21,7 @@ import torchvision.transforms as T
 from util.data_utils import (
     apply_subset,
     clean_df,
+    sample_df,
     extract_usable_frames,
     get_id,
     load_verb_whitelist,
@@ -29,6 +30,7 @@ from util.rule_utils import normalize_predicate_name
 from pyswip import Prolog
 
 FRAME_MATCH_THRESHOLD = 1
+# This transform is constant and works for both ViT and MViT models
 TRANSFORM = T.Compose([
                 T.Resize(size=(224, 224)),
                 T.ToTensor(),
@@ -81,8 +83,6 @@ class ActionGenome(Dataset):
                      If None, uses cfg.data.position
         """
         # INITIALIZE PARAMS AND CACHING ==================================================
-        assert cfg.data.label_type in ['verb', 'verbnoun']
-        assert split in ['train', 'test', 'val', None]
 
         super().__init__()
         self.root = cfg.data_root
@@ -90,24 +90,19 @@ class ActionGenome(Dataset):
         self.prolog_folder = cfg.prolog_folder
         self.rules_name = cfg.rules.name
         self.no_rules = no_rules
-
-        
         self.label_mode = label_mode if label_mode is not None else cfg.data.label_mode
-        assert self.label_mode in ['single', 'multi', 'long']
-        # Use position parameter if provided, otherwise use config position
         self.position = position if position is not None else cfg.data.position
-        assert self.position in ['pre', 'post', 'both']
-
-        assert not (self.label_mode == 'multi' and self.position == 'both')
-
         self.label_type = cfg.data.label_type
         num_samples = cfg.data.num_samples
-
         self.no_img = no_img
         self.split = split
-
-        # This transform is constant and works for both ViT and MViT models
         self.im_transform = TRANSFORM
+        assert self.label_type in ['verb', 'verbnoun']
+        assert self.split in ['train', 'test', 'val', None]
+        assert self.label_mode in ['single', 'multi', 'long']
+        assert self.position in ['pre', 'post', 'both']
+        assert not (self.label_mode == 'multi' and self.position == 'both')
+        assert not self.position == 'both' or self.no_rules
 
         params = { # params that actually affect the dataset
             'root': self.root,
@@ -123,10 +118,7 @@ class ActionGenome(Dataset):
             'split': split
         }
 
-        # Generate cache key and check for cached data
         cache_file = self._get_cache_file(params)
-        
-        # Try to load from cache
         if self._load_from_cache(cache_file):
             return
 
@@ -139,74 +131,53 @@ class ActionGenome(Dataset):
         random_idxs_file = os.path.join(self.meta_root, 'randomized_idxs.json')
 
         self.init_vocab(verb_whitelist_file)
-        raw_df, split_ids, fps_dict = self.load_annotations(split_file)
+        raw_df, split_ids, fps_dict, object_annotations = self.load_annotations(split_file)
 
-        cleaned_df = clean_df(raw_df, split_ids, self.action_mapper)
-        usable_df = extract_usable_frames(self.root, self.object_annotations, cleaned_df, self.position, FRAME_MATCH_THRESHOLD, fps_dict)
+        df = clean_df(raw_df, split_ids, self.action_mapper)
+        df = extract_usable_frames(self.root, object_annotations, df, self.position, FRAME_MATCH_THRESHOLD, fps_dict)
+
         if subset:
             frame_validity_df = pd.read_csv(frame_validity_file)
             apply_subset_partial = partial(apply_subset, frame_validity_df=frame_validity_df, position=self.position)
-            final_df = usable_df[usable_df.apply(apply_subset_partial, axis=1)]
-        else:
-            final_df = usable_df
+            df = df[df.apply(apply_subset_partial, axis=1)]
 
-        #up until here each row is a single action
         # FOR SAMPLE EFFICIENCY EXPERIMENTS
         if num_samples is not None and num_samples > 0:
-            with open(random_idxs_file, 'r') as f:
-                randomized_idxs = json.load(f)
-            single_df = final_df.iloc[randomized_idxs[:num_samples]]
-            print(f'Using {len(single_df)} samples')
-        else:
-            single_df = final_df
-            print(f'Using all {len(final_df)} samples')
+            df = sample_df(df, num_samples, random_idxs_file)
 
-        #differentiate between single and multi-label
-        if self.label_mode == 'single':
-            length = len(single_df)
-            self.df = single_df[['vid', 'pre_frame', 'post_frame', 'action']]
+        # initialize priors
+        if self.split == 'train' or self.split == None:
+            self.verb_priors, self.noun_priors, self.action_priors = self.compute_priors(df)
         else:
-            multi_df = single_df.copy()
-            multi_df[f'video_{self.position}'] = multi_df['vid'] + '_' + multi_df[f'{self.position}_frame'].astype(str)
-            multi_df = multi_df.groupby(f'video_{self.position}').agg({
+            self.verb_priors, self.noun_priors, self.action_priors = None, None, None
+
+        #up until here each row is a single action, now differentiate between single and multi-label
+
+        # CHECK IF THIS IS NECESSARY -- WHAT ARE COLUMNS BEFORE
+        df = df[['vid', 'pre_frame', 'post_frame', 'action']]
+
+        if self.label_mode == 'multi':
+            df[f'video_{self.position}'] = df['vid'] + '_' + df[f'{self.position}_frame'].astype(str)
+            df = df.groupby(f'video_{self.position}').agg({
                 'vid': 'first',
                 f'{self.position}_frame': 'first',
                 'action': lambda x: list(x.astype(int))
             }).reset_index(drop=True)
-            self.df = multi_df
-            length = len(multi_df)
-
-        
-        # initialize priors
-        if self.split == 'train' or self.split == None:
-            self.verb_priors, self.noun_priors, self.action_priors = self.compute_priors(single_df, length)
-        else:
-            self.verb_priors = None
-            self.noun_priors = None
-            self.action_priors = None
-
+            self.df = df
             
-
         #create pyg scene graphs
         self.scene_graphs = {}
         for idx, row in self.df.iterrows(): # type: ignore
             for pos in ['pre', 'post'] if self.position == 'both' else [self.position]:
                 id = get_id(row['vid'], row[f'{pos}_frame'])
                 action_classes = row['action']
-
                 data = self.create_scene_graph(id, action_classes)
                 self.scene_graphs[id] = data
 
-        
         if self.no_rules:
             self.truth_values = None
         else:
-            # TODO: maybe add an option to not have rules even when split valid?
-            if self.position == 'both':
-                raise NotImplementedError('Truth values not implemented for both position')
-
             self.init_prolog()
-
             frame_ids = [get_id(row['vid'], row[f'{self.position}_frame']) for idx, row in self.df.iterrows()] # type: ignore
             self.truth_values = [self.apply_rules_single(frame_id) for frame_id in frame_ids]
 
@@ -226,7 +197,6 @@ class ActionGenome(Dataset):
             'noun_priors': self.noun_priors,
             'action_priors': self.action_priors,
         }
-        # Save to cache for future use
         self._save_to_cache(cache_file, cache_data)
 
     def __len__(self):
@@ -235,8 +205,11 @@ class ActionGenome(Dataset):
     def __getitem__(self, index):
         pass
 
-    def create_scene_graph(self, id, action_classes):
-        objects = [obj for obj in self.object_annotations[id] if obj['visible']] # visible objects only
+    def create_labels(self, action_classes):
+        pass
+
+    def create_scene_graph(self, id, action_classes, object_annotations):
+        objects = [obj for obj in object_annotations[id] if obj['visible']] # visible objects only
 
         # unpack dict into nodes and edges, replace '/' with '_' in object classes for prolog compatibility
         nodes = ["person"] + [obj['class'].replace('/', '_') for obj in objects]
@@ -277,9 +250,6 @@ class ActionGenome(Dataset):
                     node_type=node_type, edge_type=edge_type, y=y, w=w, o=o, id=id)
         return data
 
-    def create_labels(self, action_classes):
-        pass
-    
     def get_target_classes(self):
         """Return the appropriate target classes based on label_type."""
         if self.label_type == 'verb':
@@ -298,7 +268,9 @@ class ActionGenome(Dataset):
         else:
             raise ValueError(f"Unsupported label_type: {self.label_type}")
 
-    def compute_priors(self, single_df, length):
+    def compute_priors(self, single_df):
+        length = len(single_df)
+
         # Expand actions into verb, nouns. Used only for priors.
         single_df['verb'] = single_df['action'].apply(lambda x: self.action_verb_obj_map[x][0])
         single_df['noun'] = single_df['action'].apply(lambda x: self.action_verb_obj_map[x][1])
@@ -453,10 +425,8 @@ class ActionGenome(Dataset):
         self.prolog.consult(bk_file)
 
     def load_annotations(self, split_file):
-        with open(os.path.join(self.root, 'annotations/person_bbox.pkl'), 'rb') as f:
-            self.person_annotations = pickle.load(f)
         with open(os.path.join(self.root, 'annotations/object_bbox_and_relationship.pkl'), 'rb') as f:
-            self.object_annotations = pickle.load(f)
+            object_annotations = pickle.load(f)
         with open(os.path.join(self.root, 'annotations/Muyang/framerates.csv'), 'r') as f:
             fps_df = pd.read_csv(f)
             fps_dict = fps_df.set_index('video_id')['frame_rate'].to_dict()
@@ -477,7 +447,7 @@ class ActionGenome(Dataset):
             else:
                 with open(os.path.join(self.root, f'annotations/Charades/Charades_v1_train.csv'), 'r') as f:
                     raw_df = pd.read_csv(f)
-        return raw_df, split_ids, fps_dict
+        return raw_df, split_ids, fps_dict, object_annotations
 
     def apply_rules_single(self, frame_id):
         truth = np.zeros(len(self.normalized_targets))
