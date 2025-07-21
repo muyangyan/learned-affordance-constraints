@@ -79,6 +79,7 @@ class ActionGenome(Dataset):
             position: Override position from config ('pre', 'post', 'both').
                      If None, uses cfg.data.position
         """
+        # INITIALIZE PARAMS AND CACHING ==================================================
         assert cfg.data.label_type in ['verb', 'verbnoun']
         assert split in ['train', 'test', 'val', None]
 
@@ -89,12 +90,13 @@ class ActionGenome(Dataset):
         self.rules_name = cfg.rules.name
         self.no_rules = no_rules
 
+        
+        self.label_mode = label_mode if label_mode is not None else cfg.data.label_mode
+        assert self.label_mode in ['single', 'multi', 'long']
         # Use position parameter if provided, otherwise use config position
         self.position = position if position is not None else cfg.data.position
         assert self.position in ['pre', 'post', 'both']
-        
-        self.label_mode = label_mode if label_mode is not None else cfg.data.label_mode
-        assert self.label_mode in ['single', 'multi']
+
         assert not (self.label_mode == 'multi' and self.position == 'both')
 
         self.label_type = cfg.data.label_type
@@ -127,6 +129,7 @@ class ActionGenome(Dataset):
         if self._load_from_cache(cache_file):
             return
 
+        # CREATE DATAFRAME ==================================================
         print("Cache not found, creating dataset from scratch...")
 
         split_file = os.path.join(self.meta_root, 'split_train_val.json')
@@ -135,31 +138,7 @@ class ActionGenome(Dataset):
         random_idxs_file = os.path.join(self.meta_root, 'randomized_idxs.json')
 
         self.init_vocab(verb_whitelist_file)
-
-        with open(os.path.join(self.root, 'annotations/person_bbox.pkl'), 'rb') as f:
-            self.person_annotations = pickle.load(f)
-        with open(os.path.join(self.root, 'annotations/object_bbox_and_relationship.pkl'), 'rb') as f:
-            self.object_annotations = pickle.load(f)
-        with open(os.path.join(self.root, 'annotations/Muyang/framerates.csv'), 'r') as f:
-            fps_df = pd.read_csv(f)
-            fps_dict = fps_df.set_index('video_id')['frame_rate'].to_dict()
-
-        with open(split_file, 'r') as f:
-            split_dict = json.load(f)
-        if split == None:
-            split_ids = split_dict['train']+split_dict['val']+split_dict['test']
-            with open(os.path.join(self.root, f'annotations/Charades/Charades_v1_train.csv'), 'r') as f:
-                raw_df = pd.read_csv(f)
-            with open(os.path.join(self.root, f'annotations/Charades/Charades_v1_test.csv'), 'r') as f:
-                raw_df = pd.concat([raw_df, pd.read_csv(f)])
-        else:
-            split_ids = split_dict[split]
-            if split == 'test':
-                with open(os.path.join(self.root, f'annotations/Charades/Charades_v1_test.csv'), 'r') as f:
-                    raw_df = pd.read_csv(f)
-            else:
-                with open(os.path.join(self.root, f'annotations/Charades/Charades_v1_train.csv'), 'r') as f:
-                    raw_df = pd.read_csv(f)
+        raw_df, split_ids, fps_dict = self.load_annotations(split_file)
 
         cleaned_df = clean_df(raw_df, split_ids, self.action_mapper)
         usable_df = extract_usable_frames(self.root, self.object_annotations, cleaned_df, self.position, FRAME_MATCH_THRESHOLD, fps_dict)
@@ -216,8 +195,8 @@ class ActionGenome(Dataset):
 
                 data = self.create_scene_graph(id, action_classes)
                 self.scene_graphs[id] = data
+
         
-        # TODO: this is just because we didn't generate the bk for non-split dataset
         if self.no_rules:
             self.truth_values = None
         else:
@@ -225,10 +204,11 @@ class ActionGenome(Dataset):
             if self.position == 'both':
                 raise NotImplementedError('Truth values not implemented for both position')
             frame_ids = [get_id(row['vid'], row[f'{self.position}_frame']) for idx, row in self.df.iterrows()] # type: ignore
+            bk_filename = f'bk.pl' if self.split is None else f'{self.split}_bk.pl'
             pre_rule_apply_time = time.time()
             self.truth_values = apply_rules(self.rules_name, 
                 os.path.join(self.prolog_folder, self.position, 'learned_rules'),
-                os.path.join(self.prolog_folder, f'bk.pl'),
+                os.path.join(self.prolog_folder, bk_filename),
                 frame_ids, self.get_target_classes())
             post_rule_apply_time = time.time()
             print(f'Rule application time: {post_rule_apply_time - pre_rule_apply_time} seconds')
@@ -515,6 +495,33 @@ class ActionGenome(Dataset):
             'lie' : ['lying_on'],
             'take' : ['holding', 'carrying', 'touching'],
         }
+
+    def load_annotations(self, split_file):
+        with open(os.path.join(self.root, 'annotations/person_bbox.pkl'), 'rb') as f:
+            self.person_annotations = pickle.load(f)
+        with open(os.path.join(self.root, 'annotations/object_bbox_and_relationship.pkl'), 'rb') as f:
+            self.object_annotations = pickle.load(f)
+        with open(os.path.join(self.root, 'annotations/Muyang/framerates.csv'), 'r') as f:
+            fps_df = pd.read_csv(f)
+            fps_dict = fps_df.set_index('video_id')['frame_rate'].to_dict()
+
+        with open(split_file, 'r') as f:
+            split_dict = json.load(f)
+        if self.split == None:
+            split_ids = split_dict['train']+split_dict['val']+split_dict['test']
+            with open(os.path.join(self.root, f'annotations/Charades/Charades_v1_train.csv'), 'r') as f:
+                raw_df = pd.read_csv(f)
+            with open(os.path.join(self.root, f'annotations/Charades/Charades_v1_test.csv'), 'r') as f:
+                raw_df = pd.concat([raw_df, pd.read_csv(f)])
+        else:
+            split_ids = split_dict[self.split]
+            if self.split == 'test':
+                with open(os.path.join(self.root, f'annotations/Charades/Charades_v1_test.csv'), 'r') as f:
+                    raw_df = pd.read_csv(f)
+            else:
+                with open(os.path.join(self.root, f'annotations/Charades/Charades_v1_train.csv'), 'r') as f:
+                    raw_df = pd.read_csv(f)
+        return raw_df, split_ids, fps_dict
 
 class SingleBothAG(ActionGenome):
 

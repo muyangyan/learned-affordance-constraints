@@ -22,7 +22,7 @@ class PrologData:
     '''
     initialize vocabulary
     '''
-    def __init__(self, prolog_root, position, dataset, model=None, split=None):
+    def __init__(self, prolog_root, position, dataset, model=None):
         self.root = prolog_root
         self.pos_root = os.path.join(self.root, position)
 
@@ -33,11 +33,11 @@ class PrologData:
 
         self.model = model 
         self.dataset = dataset
-        self.split = split
+        self.split = self.dataset.split
 
-        assert split in ['train', 'val', 'test', None]
+        assert self.split in ['train', 'val', 'test', None]
 
-        self.bk_filename = os.path.join(self.root, 'bk.pl')
+        self.bk_filename = os.path.join(self.root, f'{self.split}_bk.pl')
         self.transition_bk_filename = os.path.join(self.root, 'transition_bk.pl') # for effect learning
         if not os.path.exists(self.bk_filename):
             os.makedirs(os.path.dirname(self.bk_filename), exist_ok=True)
@@ -388,37 +388,42 @@ def main(config):
 
     prolog_folder = config.prolog_folder
 
-    if args.generate_bk:
-        # generate full unfiltered BK for every frame
-        print("Generating background knowledge for all frames...")
-        full_ag = MultiAG(config, no_img=True, split=None, position='pre', subset=False, no_rules=True)
-        full_pd = PrologData(prolog_folder, 'pre', full_ag, model=None, split=None)
-        full_pd.write_bk()
-
-    if args.generate_effects:
+    if args.effects:
         # generate posneg examples for valid post train frames
         print("Generating examples for effect learning...")
         post_ag = SingleBothAG(config, no_img=True, split='train', subset=True, no_rules=True)
-        post_pd = PrologData(prolog_folder, 'post', post_ag, model=None, split=None)
+        post_pd = PrologData(prolog_folder, 'post', post_ag, model=None)
         post_pd.init_general_bias(config.data.forbidden_nodes, config.data.forbidden_edges, write_verbs=True, skip_preds=True)
         post_pd.write_effects_bk_and_examples()
 
-    if args.generate_pre:
+    if args.preconds:
         # generate posneg examples for valid pre train frames
         print("Generating examples for pre-frames...")
         pre_ag = MultiAG(config, no_img=True, split='train', position='pre', subset=True, no_rules=True)
-        pre_pd = PrologData(prolog_folder, 'pre', pre_ag, model=None, split=None)
+        pre_pd = PrologData(prolog_folder, 'pre', pre_ag, model=None)
+        pre_pd.write_bk()
         pre_pd.init_general_bias(config.data.forbidden_nodes, config.data.forbidden_edges)
 
         pre_pd.write_verbs()
         pre_pd.write_actions()
+    
+    if args.val_test:
+        print("Generating bk for val and test frames...")
+        pre_ag = MultiAG(config, no_img=True, split='val', position='pre', subset=True, no_rules=True)
+        pre_pd = PrologData(prolog_folder, 'pre', pre_ag, model=None)
+        pre_pd.write_bk()
 
+        pre_ag = MultiAG(config, no_img=True, split='test', position='pre', subset=True, no_rules=True)
+        pre_pd = PrologData(prolog_folder, 'pre', pre_ag, model=None)
+        pre_pd.write_bk()
+    
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--config', type=str, default='configs/ag.yaml', help='Path to config file')
-    parser.add_argument('--generate_bk', action='store_true', help='Generate background knowledge for all frames')
-    parser.add_argument('--generate_effects', action='store_true', help='Generate background knowledge for all frames')
-    parser.add_argument('--generate_pre', action='store_true', help='Generate background knowledge for all frames')
+    parser.add_argument('--effects', action='store_true', help='Generate effects bk and examples')
+    parser.add_argument('--preconds', action='store_true', help='Generate preconds bk and examples')
+    parser.add_argument('--val_test', action='store_true', help='Generate val and test bk')
+    #parser.add_argument('--all', action='store_true', help='Generate all bk and examples')
 
     args = parser.parse_args()
 

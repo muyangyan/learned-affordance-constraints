@@ -24,7 +24,7 @@ def main(config):
     # Define paths
     data_folder = config.data_folder
     prolog_path = os.path.join(config.prolog_folder, config.data.position)
-    bk_filename = 'bk.pl' if config.data.position == 'pre' else 'transition_bk.pl'
+    bk_filename = 'train_bk.pl' if config.data.position == 'pre' else 'transition_bk.pl'
     fn_weight = config.ilp.fn_weight
     ilp_timeout = config.ilp.timeout
     label_type = config.data.label_type
