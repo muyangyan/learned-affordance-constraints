@@ -1,39 +1,39 @@
-20:48:16 Generating programs of size: 2
-20:48:16 ********************
-20:48:16 New best hypothesis:
-20:48:16 tp:115 fn:1711 tn:1401 fp:97 size:2 mdl:1810
-20:48:16 del_not_contacting(A,B):- hold(A,B).
-20:48:16 ********************
-20:48:16 ********************
-20:48:16 New best hypothesis:
-20:48:16 tp:306 fn:1520 tn:1444 fp:54 size:2 mdl:1576
-20:48:16 del_not_contacting(A,B):- take(A,B).
-20:48:16 ********************
-20:48:16 Generating programs of size: 3
-20:48:26 ********************
-20:48:26 New best hypothesis:
-20:48:26 tp:465 fn:1361 tn:1316 fp:182 size:10 mdl:1553
-20:48:26 del_not_contacting(A,B):- hold(A,B).
-20:48:26 del_not_contacting(A,B):- sit(A,B).
-20:48:26 del_not_contacting(A,B):- pour(A,B).
-20:48:26 del_not_contacting(A,B):- dress(A,B).
-20:48:26 del_not_contacting(A,B):- take(A,B).
-20:48:26 ********************
-20:48:33 Generating programs of size: 4
-20:48:43 ********************
-20:48:43 New best hypothesis:
-20:48:43 tp:448 fn:1378 tn:1344 fp:154 size:11 mdl:1543
-20:48:43 del_not_contacting(A,B):- hold(A,B).
-20:48:43 del_not_contacting(A,B):- pour(A,B).
-20:48:43 del_not_contacting(A,B):- dress(A,B).
-20:48:43 del_not_contacting(A,B):- take(A,B).
-20:48:43 del_not_contacting(A,B):- sit(C,B),sit(A,C).
-20:48:43 ********************
-20:49:26 Generating programs of size: 5
-20:49:58 Generating programs of size: 6
-20:50:26 Generating programs of size: 7
-20:50:59 Generating programs of size: 8
-20:51:48 Generating programs of size: 9
+22:22:08 Generating programs of size: 2
+22:22:08 ********************
+22:22:08 New best hypothesis:
+22:22:08 tp:115 fn:1711 tn:1401 fp:97 size:2 mdl:1810
+22:22:08 del_not_contacting(A,B):- hold(A,B).
+22:22:08 ********************
+22:22:08 ********************
+22:22:08 New best hypothesis:
+22:22:08 tp:306 fn:1520 tn:1444 fp:54 size:2 mdl:1576
+22:22:08 del_not_contacting(A,B):- take(A,B).
+22:22:08 ********************
+22:22:08 Generating programs of size: 3
+22:22:18 ********************
+22:22:18 New best hypothesis:
+22:22:18 tp:465 fn:1361 tn:1316 fp:182 size:10 mdl:1553
+22:22:18 del_not_contacting(A,B):- hold(A,B).
+22:22:18 del_not_contacting(A,B):- sit(A,B).
+22:22:18 del_not_contacting(A,B):- pour(A,B).
+22:22:18 del_not_contacting(A,B):- dress(A,B).
+22:22:18 del_not_contacting(A,B):- take(A,B).
+22:22:18 ********************
+22:22:25 Generating programs of size: 4
+22:22:36 ********************
+22:22:36 New best hypothesis:
+22:22:36 tp:448 fn:1378 tn:1344 fp:154 size:11 mdl:1543
+22:22:36 del_not_contacting(A,B):- hold(A,B).
+22:22:36 del_not_contacting(A,B):- pour(A,B).
+22:22:36 del_not_contacting(A,B):- dress(A,B).
+22:22:36 del_not_contacting(A,B):- take(A,B).
+22:22:36 del_not_contacting(A,B):- sit(C,B),sit(A,C).
+22:22:36 ********************
+22:23:09 Generating programs of size: 5
+22:23:34 Generating programs of size: 6
+22:24:04 Generating programs of size: 7
+22:24:42 Generating programs of size: 8
+22:25:42 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.74 Recall:0.25 TP:448 FN:1378 TN:1344 FP:154 Size:11 MDL:1543
 del_not_contacting(A,B):- hold(A,B).

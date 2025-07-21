@@ -1,29 +1,29 @@
-20:48:16 Generating programs of size: 2
-20:48:16 ********************
-20:48:16 New best hypothesis:
-20:48:16 tp:21 fn:161 tn:34 fp:11 size:2 mdl:174
-20:48:16 del_wearing(A,B):- put(A,B).
-20:48:16 ********************
-20:48:16 ********************
-20:48:16 New best hypothesis:
-20:48:16 tp:59 fn:123 tn:39 fp:6 size:2 mdl:131
-20:48:16 del_wearing(A,B):- undress(A,B).
-20:48:16 ********************
-20:48:16 Generating programs of size: 3
-20:48:21 ********************
-20:48:21 New best hypothesis:
-20:48:21 tp:97 fn:85 tn:22 fp:23 size:8 mdl:116
-20:48:21 del_wearing(A,B):- put(A,B).
-20:48:21 del_wearing(A,B):- undress(A,B).
-20:48:21 del_wearing(A,B):- throw(A,B).
-20:48:21 del_wearing(A,B):- take(A,B).
-20:48:21 ********************
-20:48:23 Generating programs of size: 4
-20:48:53 Generating programs of size: 5
-20:49:09 Generating programs of size: 6
-20:49:15 Generating programs of size: 7
-20:49:21 Generating programs of size: 8
-20:49:26 Generating programs of size: 9
+22:22:08 Generating programs of size: 2
+22:22:08 ********************
+22:22:08 New best hypothesis:
+22:22:08 tp:21 fn:161 tn:34 fp:11 size:2 mdl:174
+22:22:08 del_wearing(A,B):- put(A,B).
+22:22:08 ********************
+22:22:08 ********************
+22:22:08 New best hypothesis:
+22:22:08 tp:59 fn:123 tn:39 fp:6 size:2 mdl:131
+22:22:08 del_wearing(A,B):- undress(A,B).
+22:22:08 ********************
+22:22:09 Generating programs of size: 3
+22:22:13 ********************
+22:22:13 New best hypothesis:
+22:22:13 tp:97 fn:85 tn:22 fp:23 size:8 mdl:116
+22:22:13 del_wearing(A,B):- put(A,B).
+22:22:13 del_wearing(A,B):- undress(A,B).
+22:22:13 del_wearing(A,B):- throw(A,B).
+22:22:13 del_wearing(A,B):- take(A,B).
+22:22:13 ********************
+22:22:15 Generating programs of size: 4
+22:22:47 Generating programs of size: 5
+22:23:03 Generating programs of size: 6
+22:23:10 Generating programs of size: 7
+22:23:15 Generating programs of size: 8
+22:23:20 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.81 Recall:0.53 TP:97 FN:85 TN:22 FP:23 Size:8 MDL:116
 del_wearing(A,B):- put(A,B).

@@ -1,33 +1,32 @@
-20:48:14 Generating programs of size: 2
-20:48:14 ********************
-20:48:14 New best hypothesis:
-20:48:14 tp:4 fn:93 tn:31 fp:1 size:2 mdl:96
-20:48:14 del_above(A,B):- awaken(B,A).
-20:48:14 ********************
-20:48:14 ********************
-20:48:14 New best hypothesis:
-20:48:14 tp:4 fn:93 tn:32 fp:0 size:2 mdl:95
-20:48:14 del_above(A,B):- sit(B,A).
-20:48:14 ********************
-20:48:14 ********************
-20:48:14 New best hypothesis:
-20:48:14 tp:10 fn:87 tn:32 fp:0 size:2 mdl:89
-20:48:14 del_above(A,B):- put(B,A).
-20:48:14 ********************
-20:48:15 Generating programs of size: 3
-20:48:17 ********************
-20:48:17 New best hypothesis:
-20:48:17 tp:34 fn:63 tn:28 fp:4 size:10 mdl:77
-20:48:17 del_above(A,B):- awaken(B,A).
-20:48:17 del_above(A,B):- sit(B,A).
-20:48:17 del_above(A,B):- put(B,A).
-20:48:17 del_above(A,B):- myopen(B,A).
-20:48:17 del_above(A,B):- take(B,A).
-20:48:17 ********************
-20:48:19 Generating programs of size: 4
-20:48:28 Generating programs of size: 5
-20:48:31 Generating programs of size: 6
-20:48:31 Generating programs of size: 7
+22:22:07 Generating programs of size: 2
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:4 fn:93 tn:31 fp:1 size:2 mdl:96
+22:22:07 del_above(A,B):- awaken(B,A).
+22:22:07 ********************
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:4 fn:93 tn:32 fp:0 size:2 mdl:95
+22:22:07 del_above(A,B):- sit(B,A).
+22:22:07 ********************
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:10 fn:87 tn:32 fp:0 size:2 mdl:89
+22:22:07 del_above(A,B):- put(B,A).
+22:22:07 ********************
+22:22:07 Generating programs of size: 3
+22:22:10 ********************
+22:22:10 New best hypothesis:
+22:22:10 tp:34 fn:63 tn:28 fp:4 size:10 mdl:77
+22:22:10 del_above(A,B):- awaken(B,A).
+22:22:10 del_above(A,B):- sit(B,A).
+22:22:10 del_above(A,B):- put(B,A).
+22:22:10 del_above(A,B):- myopen(B,A).
+22:22:10 del_above(A,B):- take(B,A).
+22:22:10 ********************
+22:22:16 Generating programs of size: 4
+22:22:24 Generating programs of size: 5
+22:22:27 Generating programs of size: 6
 ********** SOLUTION **********
 Precision:0.89 Recall:0.35 TP:34 FN:63 TN:28 FP:4 Size:10 MDL:77
 del_above(A,B):- awaken(B,A).

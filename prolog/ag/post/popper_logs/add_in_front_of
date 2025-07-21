@@ -1,39 +1,39 @@
-20:48:15 Generating programs of size: 2
-20:48:15 ********************
-20:48:15 New best hypothesis:
-20:48:15 tp:13 fn:2109 tn:3402 fp:9 size:2 mdl:2120
-20:48:15 add_in_front_of(A,B):- walk(B,A).
-20:48:15 ********************
-20:48:15 ********************
-20:48:15 New best hypothesis:
-20:48:15 tp:34 fn:2088 tn:3405 fp:6 size:2 mdl:2096
-20:48:15 add_in_front_of(A,B):- undress(B,A).
-20:48:15 ********************
-20:48:15 Generating programs of size: 3
-20:48:25 ********************
-20:48:25 New best hypothesis:
-20:48:25 tp:47 fn:2075 tn:3396 fp:15 size:4 mdl:2094
-20:48:25 add_in_front_of(A,B):- walk(B,A).
-20:48:25 add_in_front_of(A,B):- undress(B,A).
-20:48:25 ********************
-20:48:32 Generating programs of size: 4
-20:48:42 ********************
-20:48:42 New best hypothesis:
-20:48:42 tp:58 fn:2064 tn:3396 fp:15 size:10 mdl:2089
-20:48:42 add_in_front_of(A,B):- walk(B,A).
-20:48:42 add_in_front_of(A,B):- undress(B,A).
-20:48:42 add_in_front_of(A,B):- take(C,A),stand(C,B).
-20:48:42 add_in_front_of(A,B):- tidy(B,A),hold(B,A).
-20:48:42 ********************
-20:49:19 Generating programs of size: 5
-20:49:46 Generating programs of size: 6
-20:50:10 Generating programs of size: 7
-20:50:29 Generating programs of size: 8
-20:50:44 Generating programs of size: 9
+22:22:07 Generating programs of size: 2
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:13 fn:2109 tn:3402 fp:9 size:2 mdl:2120
+22:22:07 add_in_front_of(A,B):- walk(B,A).
+22:22:07 ********************
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:34 fn:2088 tn:3405 fp:6 size:2 mdl:2096
+22:22:07 add_in_front_of(A,B):- undress(B,A).
+22:22:07 ********************
+22:22:07 Generating programs of size: 3
+22:22:17 ********************
+22:22:17 New best hypothesis:
+22:22:17 tp:47 fn:2075 tn:3396 fp:15 size:4 mdl:2094
+22:22:17 add_in_front_of(A,B):- walk(B,A).
+22:22:17 add_in_front_of(A,B):- undress(B,A).
+22:22:17 ********************
+22:22:24 Generating programs of size: 4
+22:22:34 ********************
+22:22:34 New best hypothesis:
+22:22:34 tp:58 fn:2064 tn:3396 fp:15 size:10 mdl:2089
+22:22:34 add_in_front_of(A,B):- walk(B,A).
+22:22:34 add_in_front_of(A,B):- undress(B,A).
+22:22:34 add_in_front_of(A,B):- take(C,A),stand(C,B).
+22:22:34 add_in_front_of(A,B):- hold(B,A),tidy(B,A).
+22:22:34 ********************
+22:23:23 Generating programs of size: 5
+22:23:55 Generating programs of size: 6
+22:24:18 Generating programs of size: 7
+22:24:38 Generating programs of size: 8
+22:24:53 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.79 Recall:0.03 TP:58 FN:2064 TN:3396 FP:15 Size:10 MDL:2089
 add_in_front_of(A,B):- walk(B,A).
 add_in_front_of(A,B):- undress(B,A).
 add_in_front_of(A,B):- take(C,A),stand(C,B).
-add_in_front_of(A,B):- tidy(B,A),hold(B,A).
+add_in_front_of(A,B):- hold(B,A),tidy(B,A).
 ******************************

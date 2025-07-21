@@ -1,35 +1,35 @@
-20:48:15 Generating programs of size: 2
-20:48:15 ********************
-20:48:15 New best hypothesis:
-20:48:15 tp:17 fn:152 tn:105 fp:5 size:2 mdl:159
-20:48:15 add_in(A,B):- put(B,A).
-20:48:15 ********************
-20:48:15 ********************
-20:48:15 New best hypothesis:
-20:48:15 tp:16 fn:153 tn:108 fp:2 size:2 mdl:157
-20:48:15 add_in(A,B):- dress(B,A).
-20:48:15 ********************
-20:48:15 ********************
-20:48:15 New best hypothesis:
-20:48:15 tp:28 fn:141 tn:101 fp:9 size:2 mdl:152
-20:48:15 add_in(A,B):- walk(B,A).
-20:48:15 ********************
-20:48:15 Generating programs of size: 3
-20:48:20 ********************
-20:48:20 New best hypothesis:
-20:48:20 tp:71 fn:98 tn:91 fp:19 size:10 mdl:127
-20:48:20 add_in(A,B):- put(B,A).
-20:48:20 add_in(A,B):- dress(B,A).
-20:48:20 add_in(A,B):- walk(B,A).
-20:48:20 add_in(A,B):- myopen(B,A).
-20:48:20 add_in(A,B):- take(B,A).
-20:48:20 ********************
-20:48:22 Generating programs of size: 4
-20:48:45 Generating programs of size: 5
-20:48:56 Generating programs of size: 6
-20:49:02 Generating programs of size: 7
-20:49:08 Generating programs of size: 8
-20:49:12 Generating programs of size: 9
+22:22:07 Generating programs of size: 2
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:17 fn:152 tn:105 fp:5 size:2 mdl:159
+22:22:07 add_in(A,B):- put(B,A).
+22:22:07 ********************
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:16 fn:153 tn:108 fp:2 size:2 mdl:157
+22:22:07 add_in(A,B):- dress(B,A).
+22:22:07 ********************
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:28 fn:141 tn:101 fp:9 size:2 mdl:152
+22:22:07 add_in(A,B):- walk(B,A).
+22:22:07 ********************
+22:22:07 Generating programs of size: 3
+22:22:12 ********************
+22:22:12 New best hypothesis:
+22:22:12 tp:71 fn:98 tn:91 fp:19 size:10 mdl:127
+22:22:12 add_in(A,B):- put(B,A).
+22:22:12 add_in(A,B):- dress(B,A).
+22:22:12 add_in(A,B):- walk(B,A).
+22:22:12 add_in(A,B):- myopen(B,A).
+22:22:12 add_in(A,B):- take(B,A).
+22:22:12 ********************
+22:22:15 Generating programs of size: 4
+22:22:40 Generating programs of size: 5
+22:22:53 Generating programs of size: 6
+22:22:59 Generating programs of size: 7
+22:23:05 Generating programs of size: 8
+22:23:09 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.79 Recall:0.42 TP:71 FN:98 TN:91 FP:19 Size:10 MDL:127
 add_in(A,B):- put(B,A).

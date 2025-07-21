@@ -1,22 +1,22 @@
-20:48:16 Generating programs of size: 2
-20:48:16 ********************
-20:48:16 New best hypothesis:
-20:48:16 tp:9 fn:125 tn:36 fp:1 size:2 mdl:128
-20:48:16 del_lying_on(A,B):- sit(A,B).
-20:48:16 ********************
-20:48:16 Generating programs of size: 3
-20:48:21 ********************
-20:48:21 New best hypothesis:
-20:48:21 tp:13 fn:121 tn:35 fp:2 size:4 mdl:127
-20:48:21 del_lying_on(A,B):- sit(A,B).
-20:48:21 del_lying_on(A,B):- lie(A,B).
-20:48:21 ********************
-20:48:25 Generating programs of size: 4
-20:48:29 Generating programs of size: 5
-20:48:36 Generating programs of size: 6
-20:48:36 Generating programs of size: 7
-20:48:39 Generating programs of size: 8
-20:48:39 Generating programs of size: 9
+22:22:08 Generating programs of size: 2
+22:22:08 ********************
+22:22:08 New best hypothesis:
+22:22:08 tp:9 fn:125 tn:36 fp:1 size:2 mdl:128
+22:22:08 del_lying_on(A,B):- sit(A,B).
+22:22:08 ********************
+22:22:08 Generating programs of size: 3
+22:22:12 ********************
+22:22:12 New best hypothesis:
+22:22:12 tp:13 fn:121 tn:35 fp:2 size:4 mdl:127
+22:22:12 del_lying_on(A,B):- sit(A,B).
+22:22:12 del_lying_on(A,B):- lie(A,B).
+22:22:12 ********************
+22:22:14 Generating programs of size: 4
+22:22:22 Generating programs of size: 5
+22:22:34 Generating programs of size: 6
+22:22:38 Generating programs of size: 7
+22:22:38 Generating programs of size: 8
+22:22:38 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.87 Recall:0.10 TP:13 FN:121 TN:35 FP:2 Size:4 MDL:127
 del_lying_on(A,B):- sit(A,B).

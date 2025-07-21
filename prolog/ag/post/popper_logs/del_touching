@@ -1,40 +1,40 @@
-20:48:16 Generating programs of size: 2
-20:48:16 ********************
-20:48:16 New best hypothesis:
-20:48:16 tp:3 fn:828 tn:270 fp:0 size:2 mdl:830
-20:48:16 del_touching(A,B):- awaken(A,B).
-20:48:16 ********************
-20:48:22 ********************
-20:48:22 New best hypothesis:
-20:48:22 tp:91 fn:740 tn:247 fp:23 size:2 mdl:765
-20:48:22 del_touching(A,B):- myclose(A,B).
-20:48:22 ********************
-20:48:23 Generating programs of size: 3
-20:48:30 ********************
-20:48:30 New best hypothesis:
-20:48:30 tp:291 fn:540 tn:190 fp:80 size:30 mdl:650
-20:48:30 del_touching(A,B):- awaken(A,B).
-20:48:30 del_touching(A,B):- myclose(A,B).
-20:48:30 del_touching(A,B):- cook(A,B).
-20:48:30 del_touching(A,B):- drink(A,B).
-20:48:30 del_touching(A,B):- sit(A,B).
-20:48:30 del_touching(A,B):- put(A,B).
-20:48:30 del_touching(A,B):- watch(A,B).
-20:48:30 del_touching(A,B):- pour(A,B).
-20:48:30 del_touching(A,B):- walk(A,B).
-20:48:30 del_touching(A,B):- play(A,B).
-20:48:30 del_touching(A,B):- undress(A,B).
-20:48:30 del_touching(A,B):- tidy(A,B).
-20:48:30 del_touching(A,B):- throw(A,B).
-20:48:30 del_touching(A,B):- eat(A,B).
-20:48:30 del_touching(A,B):- lie(A,B).
-20:48:30 ********************
-20:48:35 Generating programs of size: 4
-20:49:29 Generating programs of size: 5
-20:49:45 Generating programs of size: 6
-20:49:59 Generating programs of size: 7
-20:50:13 Generating programs of size: 8
-20:50:25 Generating programs of size: 9
+22:22:08 Generating programs of size: 2
+22:22:08 ********************
+22:22:08 New best hypothesis:
+22:22:08 tp:3 fn:828 tn:270 fp:0 size:2 mdl:830
+22:22:08 del_touching(A,B):- awaken(A,B).
+22:22:08 ********************
+22:22:14 ********************
+22:22:14 New best hypothesis:
+22:22:14 tp:91 fn:740 tn:247 fp:23 size:2 mdl:765
+22:22:14 del_touching(A,B):- myclose(A,B).
+22:22:14 ********************
+22:22:14 Generating programs of size: 3
+22:22:22 ********************
+22:22:22 New best hypothesis:
+22:22:22 tp:291 fn:540 tn:190 fp:80 size:30 mdl:650
+22:22:22 del_touching(A,B):- awaken(A,B).
+22:22:22 del_touching(A,B):- myclose(A,B).
+22:22:22 del_touching(A,B):- cook(A,B).
+22:22:22 del_touching(A,B):- drink(A,B).
+22:22:22 del_touching(A,B):- sit(A,B).
+22:22:22 del_touching(A,B):- put(A,B).
+22:22:22 del_touching(A,B):- watch(A,B).
+22:22:22 del_touching(A,B):- pour(A,B).
+22:22:22 del_touching(A,B):- walk(A,B).
+22:22:22 del_touching(A,B):- play(A,B).
+22:22:22 del_touching(A,B):- undress(A,B).
+22:22:22 del_touching(A,B):- tidy(A,B).
+22:22:22 del_touching(A,B):- throw(A,B).
+22:22:22 del_touching(A,B):- eat(A,B).
+22:22:22 del_touching(A,B):- lie(A,B).
+22:22:22 ********************
+22:22:27 Generating programs of size: 4
+22:23:21 Generating programs of size: 5
+22:23:39 Generating programs of size: 6
+22:23:55 Generating programs of size: 7
+22:24:09 Generating programs of size: 8
+22:24:20 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.78 Recall:0.35 TP:291 FN:540 TN:190 FP:80 Size:30 MDL:650
 del_touching(A,B):- awaken(A,B).

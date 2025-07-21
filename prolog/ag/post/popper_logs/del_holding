@@ -1,38 +1,38 @@
-20:48:15 Generating programs of size: 2
-20:48:16 ********************
-20:48:16 New best hypothesis:
-20:48:16 tp:9 fn:1541 tn:1233 fp:3 size:2 mdl:1546
-20:48:16 del_holding(A,B):- snuggle(A,B).
-20:48:16 ********************
-20:48:16 ********************
-20:48:16 New best hypothesis:
-20:48:16 tp:48 fn:1502 tn:1199 fp:37 size:2 mdl:1541
-20:48:16 del_holding(A,B):- myclose(A,B).
-20:48:16 ********************
-20:48:16 ********************
-20:48:16 New best hypothesis:
-20:48:16 tp:325 fn:1225 tn:1095 fp:141 size:2 mdl:1368
-20:48:16 del_holding(A,B):- put(A,B).
-20:48:16 ********************
-20:48:16 Generating programs of size: 3
-20:48:26 ********************
-20:48:26 New best hypothesis:
-20:48:26 tp:479 fn:1071 tn:1028 fp:208 size:16 mdl:1295
-20:48:26 del_holding(A,B):- snuggle(A,B).
-20:48:26 del_holding(A,B):- myclose(A,B).
-20:48:26 del_holding(A,B):- hold(A,B).
-20:48:26 del_holding(A,B):- put(A,B).
-20:48:26 del_holding(A,B):- walk(A,B).
-20:48:26 del_holding(A,B):- dress(A,B).
-20:48:26 del_holding(A,B):- tidy(A,B).
-20:48:26 del_holding(A,B):- throw(A,B).
-20:48:26 ********************
-20:48:32 Generating programs of size: 4
-20:49:26 Generating programs of size: 5
-20:49:47 Generating programs of size: 6
-20:50:05 Generating programs of size: 7
-20:50:24 Generating programs of size: 8
-20:50:49 Generating programs of size: 9
+22:22:08 Generating programs of size: 2
+22:22:08 ********************
+22:22:08 New best hypothesis:
+22:22:08 tp:9 fn:1541 tn:1233 fp:3 size:2 mdl:1546
+22:22:08 del_holding(A,B):- snuggle(A,B).
+22:22:08 ********************
+22:22:08 ********************
+22:22:08 New best hypothesis:
+22:22:08 tp:48 fn:1502 tn:1199 fp:37 size:2 mdl:1541
+22:22:08 del_holding(A,B):- myclose(A,B).
+22:22:08 ********************
+22:22:08 ********************
+22:22:08 New best hypothesis:
+22:22:08 tp:325 fn:1225 tn:1095 fp:141 size:2 mdl:1368
+22:22:08 del_holding(A,B):- put(A,B).
+22:22:08 ********************
+22:22:08 Generating programs of size: 3
+22:22:18 ********************
+22:22:18 New best hypothesis:
+22:22:18 tp:479 fn:1071 tn:1028 fp:208 size:16 mdl:1295
+22:22:18 del_holding(A,B):- snuggle(A,B).
+22:22:18 del_holding(A,B):- myclose(A,B).
+22:22:18 del_holding(A,B):- hold(A,B).
+22:22:18 del_holding(A,B):- put(A,B).
+22:22:18 del_holding(A,B):- walk(A,B).
+22:22:18 del_holding(A,B):- dress(A,B).
+22:22:18 del_holding(A,B):- tidy(A,B).
+22:22:18 del_holding(A,B):- throw(A,B).
+22:22:18 ********************
+22:22:24 Generating programs of size: 4
+22:23:18 Generating programs of size: 5
+22:23:42 Generating programs of size: 6
+22:24:00 Generating programs of size: 7
+22:24:22 Generating programs of size: 8
+22:24:49 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.70 Recall:0.31 TP:479 FN:1071 TN:1028 FP:208 Size:16 MDL:1295
 del_holding(A,B):- snuggle(A,B).

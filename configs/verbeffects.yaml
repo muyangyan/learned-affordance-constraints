@@ -25,7 +25,7 @@ model:
   weight_scheme: 'uniform' # uniform, inverse, invsqrt
 
 rules: # used in training time as well
-  name: 'full_verb_effect_rules'
+  name: 'full_verb_rules'
   mode: 'soft'
   recall_threshold: 0.8
   constraint_weight: 0.5 # can be changed at test time

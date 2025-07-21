@@ -1,39 +1,39 @@
-20:48:15 Generating programs of size: 2
-20:48:15 ********************
-20:48:15 New best hypothesis:
-20:48:15 tp:9 fn:531 tn:573 fp:3 size:2 mdl:536
-20:48:15 del_behind(A,B):- awaken(B,A).
-20:48:15 ********************
-20:48:15 ********************
-20:48:15 New best hypothesis:
-20:48:15 tp:13 fn:527 tn:575 fp:1 size:2 mdl:530
-20:48:15 del_behind(A,B):- hold(B,A).
-20:48:15 ********************
-20:48:15 ********************
-20:48:15 New best hypothesis:
-20:48:15 tp:26 fn:514 tn:574 fp:2 size:2 mdl:518
-20:48:15 del_behind(A,B):- take(B,A).
-20:48:15 ********************
-20:48:15 Generating programs of size: 3
-20:48:22 ********************
-20:48:22 New best hypothesis:
-20:48:22 tp:90 fn:450 tn:549 fp:27 size:18 mdl:495
-20:48:22 del_behind(A,B):- awaken(B,A).
-20:48:22 del_behind(A,B):- hold(B,A).
-20:48:22 del_behind(A,B):- walk(B,A).
-20:48:22 del_behind(A,B):- undress(B,A).
-20:48:22 del_behind(A,B):- tidy(B,A).
-20:48:22 del_behind(A,B):- throw(B,A).
-20:48:22 del_behind(A,B):- myopen(B,A).
-20:48:22 del_behind(A,B):- take(B,A).
-20:48:22 del_behind(A,B):- lie(B,A).
-20:48:22 ********************
-20:48:27 Generating programs of size: 4
-20:49:00 Generating programs of size: 5
-20:49:16 Generating programs of size: 6
-20:49:26 Generating programs of size: 7
-20:49:34 Generating programs of size: 8
-20:49:40 Generating programs of size: 9
+22:22:07 Generating programs of size: 2
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:9 fn:531 tn:573 fp:3 size:2 mdl:536
+22:22:07 del_behind(A,B):- awaken(B,A).
+22:22:07 ********************
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:13 fn:527 tn:575 fp:1 size:2 mdl:530
+22:22:07 del_behind(A,B):- hold(B,A).
+22:22:07 ********************
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:26 fn:514 tn:574 fp:2 size:2 mdl:518
+22:22:07 del_behind(A,B):- take(B,A).
+22:22:07 ********************
+22:22:07 Generating programs of size: 3
+22:22:14 ********************
+22:22:14 New best hypothesis:
+22:22:14 tp:90 fn:450 tn:549 fp:27 size:18 mdl:495
+22:22:14 del_behind(A,B):- awaken(B,A).
+22:22:14 del_behind(A,B):- hold(B,A).
+22:22:14 del_behind(A,B):- walk(B,A).
+22:22:14 del_behind(A,B):- undress(B,A).
+22:22:14 del_behind(A,B):- tidy(B,A).
+22:22:14 del_behind(A,B):- throw(B,A).
+22:22:14 del_behind(A,B):- myopen(B,A).
+22:22:14 del_behind(A,B):- take(B,A).
+22:22:14 del_behind(A,B):- lie(B,A).
+22:22:14 ********************
+22:22:19 Generating programs of size: 4
+22:22:51 Generating programs of size: 5
+22:23:06 Generating programs of size: 6
+22:23:15 Generating programs of size: 7
+22:23:23 Generating programs of size: 8
+22:23:29 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.77 Recall:0.17 TP:90 FN:450 TN:549 FP:27 Size:18 MDL:495
 del_behind(A,B):- awaken(B,A).

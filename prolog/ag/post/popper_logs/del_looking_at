@@ -1,46 +1,46 @@
-20:48:14 Generating programs of size: 2
-20:48:14 ********************
-20:48:14 New best hypothesis:
-20:48:14 tp:11 fn:1944 tn:1131 fp:1 size:2 mdl:1947
-20:48:14 del_looking_at(A,B):- snuggle(A,B).
-20:48:14 ********************
-20:48:14 ********************
-20:48:14 New best hypothesis:
-20:48:14 tp:134 fn:1821 tn:1071 fp:61 size:2 mdl:1884
-20:48:14 del_looking_at(A,B):- myclose(A,B).
-20:48:14 ********************
-20:48:14 ********************
-20:48:14 New best hypothesis:
-20:48:14 tp:200 fn:1755 tn:1008 fp:124 size:2 mdl:1881
-20:48:14 del_looking_at(A,B):- put(A,B).
-20:48:14 ********************
-20:48:14 Generating programs of size: 3
-20:48:24 ********************
-20:48:24 New best hypothesis:
-20:48:24 tp:619 fn:1336 tn:770 fp:362 size:32 mdl:1730
-20:48:24 del_looking_at(A,B):- snuggle(A,B).
-20:48:24 del_looking_at(A,B):- myclose(A,B).
-20:48:24 del_looking_at(A,B):- cook(A,B).
-20:48:24 del_looking_at(A,B):- drink(A,B).
-20:48:24 del_looking_at(A,B):- hold(A,B).
-20:48:24 del_looking_at(A,B):- sit(A,B).
-20:48:24 del_looking_at(A,B):- grasp(A,B).
-20:48:24 del_looking_at(A,B):- put(A,B).
-20:48:24 del_looking_at(A,B):- work(A,B).
-20:48:24 del_looking_at(A,B):- watch(A,B).
-20:48:24 del_looking_at(A,B):- wash(A,B).
-20:48:24 del_looking_at(A,B):- walk(A,B).
-20:48:24 del_looking_at(A,B):- dress(A,B).
-20:48:24 del_looking_at(A,B):- turn(A,B).
-20:48:24 del_looking_at(A,B):- tidy(A,B).
-20:48:24 del_looking_at(A,B):- eat(A,B).
-20:48:24 ********************
-20:48:33 Generating programs of size: 4
-20:49:26 Generating programs of size: 5
-20:49:59 Generating programs of size: 6
-20:50:23 Generating programs of size: 7
-20:50:44 Generating programs of size: 8
-20:50:59 Generating programs of size: 9
+22:22:06 Generating programs of size: 2
+22:22:06 ********************
+22:22:06 New best hypothesis:
+22:22:06 tp:11 fn:1944 tn:1131 fp:1 size:2 mdl:1947
+22:22:06 del_looking_at(A,B):- snuggle(A,B).
+22:22:06 ********************
+22:22:06 ********************
+22:22:06 New best hypothesis:
+22:22:06 tp:134 fn:1821 tn:1071 fp:61 size:2 mdl:1884
+22:22:06 del_looking_at(A,B):- myclose(A,B).
+22:22:06 ********************
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:200 fn:1755 tn:1008 fp:124 size:2 mdl:1881
+22:22:07 del_looking_at(A,B):- put(A,B).
+22:22:07 ********************
+22:22:07 Generating programs of size: 3
+22:22:17 ********************
+22:22:17 New best hypothesis:
+22:22:17 tp:619 fn:1336 tn:770 fp:362 size:32 mdl:1730
+22:22:17 del_looking_at(A,B):- snuggle(A,B).
+22:22:17 del_looking_at(A,B):- myclose(A,B).
+22:22:17 del_looking_at(A,B):- cook(A,B).
+22:22:17 del_looking_at(A,B):- drink(A,B).
+22:22:17 del_looking_at(A,B):- hold(A,B).
+22:22:17 del_looking_at(A,B):- sit(A,B).
+22:22:17 del_looking_at(A,B):- grasp(A,B).
+22:22:17 del_looking_at(A,B):- put(A,B).
+22:22:17 del_looking_at(A,B):- work(A,B).
+22:22:17 del_looking_at(A,B):- watch(A,B).
+22:22:17 del_looking_at(A,B):- wash(A,B).
+22:22:17 del_looking_at(A,B):- walk(A,B).
+22:22:17 del_looking_at(A,B):- dress(A,B).
+22:22:17 del_looking_at(A,B):- turn(A,B).
+22:22:17 del_looking_at(A,B):- tidy(A,B).
+22:22:17 del_looking_at(A,B):- eat(A,B).
+22:22:17 ********************
+22:22:26 Generating programs of size: 4
+22:23:25 Generating programs of size: 5
+22:23:58 Generating programs of size: 6
+22:24:23 Generating programs of size: 7
+22:24:45 Generating programs of size: 8
+22:25:00 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.63 Recall:0.32 TP:619 FN:1336 TN:770 FP:362 Size:32 MDL:1730
 del_looking_at(A,B):- snuggle(A,B).

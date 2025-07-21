@@ -50,7 +50,7 @@ class PrologData:
     '''
     convert a pyg data object to prolog. returns a list of strings
     '''
-    def pyg_to_prolog(self, clean_id, data, action_idxs=None):
+    def pyg_to_prolog(self, clean_id, data, action_idxs=None, exclude_person=False):
         node_types = data.node_type #NOT vocabs
         edge_types = data.edge_type 
         # if post_frame_id is not None:
@@ -67,6 +67,8 @@ class PrologData:
         
         example = []
         for id, node_type in zip(node_ids, node_types):
+            if exclude_person and node_type == 0:
+                continue
             example.append(f'{self.node_vocab[node_type]}({id}).')
 
         #assert relations between nodes
@@ -258,7 +260,10 @@ class PrologData:
 
         # collect the positive and negative examples
         examples = {}
-        for pred_name in self.edge_vocab + self.node_vocab:
+        valid_predicates = self.edge_vocab + self.node_vocab
+        valid_predicates.remove('person') # person is always assumed to be present
+
+        for pred_name in valid_predicates:
             examples[f'pos_add_{pred_name}'] = []
             examples[f'pos_del_{pred_name}'] = []
             examples[f'neg_add_{pred_name}'] = []
@@ -273,8 +278,8 @@ class PrologData:
             clean_pair_id = f'{sanitize_frame_id(pre_id)}_{sanitize_frame_id(post_id)}'
 
             pre_state_with_action = self.pyg_to_prolog(clean_pair_id, pre_scene_graph, action)
-            pre_state = self.pyg_to_prolog(clean_pair_id, pre_scene_graph)
-            post_state = self.pyg_to_prolog(clean_pair_id, post_scene_graph)
+            pre_state = self.pyg_to_prolog(clean_pair_id, pre_scene_graph, exclude_person=True)
+            post_state = self.pyg_to_prolog(clean_pair_id, post_scene_graph, exclude_person=True)
 
             # write the pre-state into the effects_bk file
             pre_state_with_action = '\n'.join(pre_state_with_action)

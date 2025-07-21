@@ -43,7 +43,9 @@ def main(config):
     # WHITELIST CREATION
     if config.data.position == 'post':
         dataset = SingleBothAG(config, no_img=True, split='train', subset=True, no_rules=True)
-        whitelist = create_effects_whitelist(dataset.object_classes + dataset.relationship_classes)
+        valid_predicates = dataset.object_classes + dataset.relationship_classes
+        valid_predicates.remove('person')
+        whitelist = create_effects_whitelist(valid_predicates)
     else:
         if label_type == 'verb':
             whitelist_file = os.path.join(data_folder, "verb_whitelist.txt")

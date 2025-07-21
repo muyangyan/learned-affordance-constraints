@@ -1,14 +1,14 @@
-20:48:16 Generating programs of size: 2
-20:48:16 ********************
-20:48:16 New best hypothesis:
-20:48:16 tp:4 fn:63 tn:87 fp:1 size:2 mdl:66
-20:48:16 del_standing_on(A,B):- lie(A,B).
-20:48:16 ********************
-20:48:16 Generating programs of size: 3
-20:48:20 Generating programs of size: 4
-20:48:29 Generating programs of size: 5
-20:48:35 Generating programs of size: 6
-20:48:36 Generating programs of size: 7
+22:22:08 Generating programs of size: 2
+22:22:08 ********************
+22:22:08 New best hypothesis:
+22:22:08 tp:4 fn:63 tn:87 fp:1 size:2 mdl:66
+22:22:08 del_standing_on(A,B):- lie(A,B).
+22:22:08 ********************
+22:22:08 Generating programs of size: 3
+22:22:16 Generating programs of size: 4
+22:22:21 Generating programs of size: 5
+22:22:32 Generating programs of size: 6
+22:22:32 Generating programs of size: 7
 ********** SOLUTION **********
 Precision:0.80 Recall:0.06 TP:4 FN:63 TN:87 FP:1 Size:2 MDL:66
 del_standing_on(A,B):- lie(A,B).

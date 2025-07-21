@@ -1,19 +1,19 @@
-20:48:15 Generating programs of size: 2
-20:48:15 ********************
-20:48:15 New best hypothesis:
-20:48:15 tp:11 fn:41 tn:17 fp:1 size:2 mdl:44
-20:48:15 del_carrying(A,B):- put(A,B).
-20:48:15 ********************
-20:48:15 Generating programs of size: 3
-20:48:16 ********************
-20:48:16 New best hypothesis:
-20:48:16 tp:19 fn:33 tn:16 fp:2 size:4 mdl:39
-20:48:16 del_carrying(A,B):- put(A,B).
-20:48:16 del_carrying(A,B):- throw(A,B).
-20:48:16 ********************
-20:48:17 Generating programs of size: 4
-20:48:19 Generating programs of size: 5
-20:48:20 Generating programs of size: 6
+22:22:07 Generating programs of size: 2
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:11 fn:41 tn:17 fp:1 size:2 mdl:44
+22:22:07 del_carrying(A,B):- put(A,B).
+22:22:07 ********************
+22:22:07 Generating programs of size: 3
+22:22:09 ********************
+22:22:09 New best hypothesis:
+22:22:09 tp:19 fn:33 tn:16 fp:2 size:4 mdl:39
+22:22:09 del_carrying(A,B):- put(A,B).
+22:22:09 del_carrying(A,B):- throw(A,B).
+22:22:09 ********************
+22:22:10 Generating programs of size: 4
+22:22:10 Generating programs of size: 5
+22:22:12 Generating programs of size: 6
 ********** SOLUTION **********
 Precision:0.90 Recall:0.37 TP:19 FN:33 TN:16 FP:2 Size:4 MDL:39
 del_carrying(A,B):- put(A,B).

@@ -1,31 +1,31 @@
-20:48:15 Generating programs of size: 2
-20:48:15 ********************
-20:48:15 New best hypothesis:
-20:48:15 tp:3 fn:50 tn:18 fp:0 size:2 mdl:52
-20:48:15 add_carrying(A,B):- snuggle(A,B).
-20:48:15 ********************
-20:48:15 ********************
-20:48:15 New best hypothesis:
-20:48:15 tp:5 fn:48 tn:18 fp:0 size:2 mdl:50
-20:48:15 add_carrying(A,B):- hold(A,B).
-20:48:15 ********************
-20:48:15 ********************
-20:48:15 New best hypothesis:
-20:48:15 tp:12 fn:41 tn:18 fp:0 size:2 mdl:43
-20:48:15 add_carrying(A,B):- take(A,B).
-20:48:15 ********************
-20:48:15 Generating programs of size: 3
-20:48:16 ********************
-20:48:16 New best hypothesis:
-20:48:16 tp:18 fn:35 tn:18 fp:0 size:6 mdl:41
-20:48:16 add_carrying(A,B):- snuggle(A,B).
-20:48:16 add_carrying(A,B):- hold(A,B).
-20:48:16 add_carrying(A,B):- take(A,B).
-20:48:16 ********************
-20:48:20 Generating programs of size: 4
-20:48:24 Generating programs of size: 5
-20:48:26 Generating programs of size: 6
-20:48:26 Generating programs of size: 7
+22:22:07 Generating programs of size: 2
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:3 fn:50 tn:18 fp:0 size:2 mdl:52
+22:22:07 add_carrying(A,B):- snuggle(A,B).
+22:22:07 ********************
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:5 fn:48 tn:18 fp:0 size:2 mdl:50
+22:22:07 add_carrying(A,B):- hold(A,B).
+22:22:07 ********************
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:12 fn:41 tn:18 fp:0 size:2 mdl:43
+22:22:07 add_carrying(A,B):- take(A,B).
+22:22:07 ********************
+22:22:07 Generating programs of size: 3
+22:22:09 ********************
+22:22:09 New best hypothesis:
+22:22:09 tp:18 fn:35 tn:18 fp:0 size:6 mdl:41
+22:22:09 add_carrying(A,B):- snuggle(A,B).
+22:22:09 add_carrying(A,B):- hold(A,B).
+22:22:09 add_carrying(A,B):- take(A,B).
+22:22:09 ********************
+22:22:10 Generating programs of size: 4
+22:22:19 Generating programs of size: 5
+22:22:21 Generating programs of size: 6
+22:22:21 Generating programs of size: 7
 ********** SOLUTION **********
 Precision:1.00 Recall:0.34 TP:18 FN:35 TN:18 FP:0 Size:6 MDL:41
 add_carrying(A,B):- snuggle(A,B).

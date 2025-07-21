@@ -1,45 +1,45 @@
-20:48:15 Generating programs of size: 2
-20:48:15 ********************
-20:48:15 New best hypothesis:
-20:48:15 tp:6 fn:734 tn:576 fp:0 size:2 mdl:736
-20:48:15 add_behind(A,B):- drink(B,A).
-20:48:15 ********************
-20:48:15 ********************
-20:48:15 New best hypothesis:
-20:48:15 tp:30 fn:710 tn:575 fp:1 size:2 mdl:713
-20:48:15 add_behind(A,B):- hold(B,A).
-20:48:15 ********************
-20:48:15 ********************
-20:48:15 New best hypothesis:
-20:48:15 tp:84 fn:656 tn:560 fp:16 size:2 mdl:674
-20:48:15 add_behind(A,B):- put(B,A).
-20:48:15 ********************
-20:48:15 Generating programs of size: 3
-20:48:23 ********************
-20:48:23 New best hypothesis:
-20:48:23 tp:355 fn:385 tn:504 fp:72 size:30 mdl:487
-20:48:23 add_behind(A,B):- drink(B,A).
-20:48:23 add_behind(A,B):- hold(B,A).
-20:48:23 add_behind(A,B):- sit(B,A).
-20:48:23 add_behind(A,B):- put(B,A).
-20:48:23 add_behind(A,B):- watch(B,A).
-20:48:23 add_behind(A,B):- wash(B,A).
-20:48:23 add_behind(A,B):- walk(B,A).
-20:48:23 add_behind(A,B):- undress(B,A).
-20:48:23 add_behind(A,B):- turn(B,A).
-20:48:23 add_behind(A,B):- tidy(B,A).
-20:48:23 add_behind(A,B):- throw(B,A).
-20:48:23 add_behind(A,B):- myopen(B,A).
-20:48:23 add_behind(A,B):- myclose(B,A).
-20:48:23 add_behind(A,B):- take(B,A).
-20:48:23 add_behind(A,B):- snuggle(B,A).
-20:48:23 ********************
-20:48:30 Generating programs of size: 4
-20:49:08 Generating programs of size: 5
-20:49:26 Generating programs of size: 6
-20:49:42 Generating programs of size: 7
-20:49:56 Generating programs of size: 8
-20:50:08 Generating programs of size: 9
+22:22:07 Generating programs of size: 2
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:6 fn:734 tn:576 fp:0 size:2 mdl:736
+22:22:07 add_behind(A,B):- drink(B,A).
+22:22:07 ********************
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:30 fn:710 tn:575 fp:1 size:2 mdl:713
+22:22:07 add_behind(A,B):- hold(B,A).
+22:22:07 ********************
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:84 fn:656 tn:560 fp:16 size:2 mdl:674
+22:22:07 add_behind(A,B):- put(B,A).
+22:22:07 ********************
+22:22:07 Generating programs of size: 3
+22:22:15 ********************
+22:22:15 New best hypothesis:
+22:22:15 tp:355 fn:385 tn:504 fp:72 size:30 mdl:487
+22:22:15 add_behind(A,B):- drink(B,A).
+22:22:15 add_behind(A,B):- hold(B,A).
+22:22:15 add_behind(A,B):- sit(B,A).
+22:22:15 add_behind(A,B):- put(B,A).
+22:22:15 add_behind(A,B):- watch(B,A).
+22:22:15 add_behind(A,B):- wash(B,A).
+22:22:15 add_behind(A,B):- walk(B,A).
+22:22:15 add_behind(A,B):- undress(B,A).
+22:22:15 add_behind(A,B):- turn(B,A).
+22:22:15 add_behind(A,B):- tidy(B,A).
+22:22:15 add_behind(A,B):- throw(B,A).
+22:22:15 add_behind(A,B):- myopen(B,A).
+22:22:15 add_behind(A,B):- myclose(B,A).
+22:22:15 add_behind(A,B):- take(B,A).
+22:22:15 add_behind(A,B):- snuggle(B,A).
+22:22:15 ********************
+22:22:22 Generating programs of size: 4
+22:23:01 Generating programs of size: 5
+22:23:18 Generating programs of size: 6
+22:23:33 Generating programs of size: 7
+22:23:48 Generating programs of size: 8
+22:24:00 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.83 Recall:0.48 TP:355 FN:385 TN:504 FP:72 Size:30 MDL:487
 add_behind(A,B):- drink(B,A).

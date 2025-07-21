@@ -1,39 +1,39 @@
-20:48:14 Generating programs of size: 2
-20:48:14 ********************
-20:48:14 New best hypothesis:
-20:48:14 tp:8 fn:536 tn:750 fp:3 size:2 mdl:541
-20:48:14 add_beneath(A,B):- hold(B,A).
-20:48:14 ********************
-20:48:14 ********************
-20:48:14 New best hypothesis:
-20:48:14 tp:37 fn:507 tn:734 fp:19 size:2 mdl:528
-20:48:14 add_beneath(A,B):- sit(B,A).
-20:48:14 ********************
-20:48:15 Generating programs of size: 3
-20:48:21 ********************
-20:48:21 New best hypothesis:
-20:48:21 tp:68 fn:476 tn:726 fp:27 size:10 mdl:513
-20:48:21 add_beneath(A,B):- hold(B,A).
-20:48:21 add_beneath(A,B):- sit(B,A).
-20:48:21 add_beneath(A,B):- put(B,A).
-20:48:21 add_beneath(A,B):- eat(B,A).
-20:48:21 add_beneath(A,B):- myopen(B,A).
-20:48:21 ********************
-20:48:25 Generating programs of size: 4
-20:48:31 ********************
-20:48:31 New best hypothesis:
-20:48:31 tp:51 fn:493 tn:745 fp:8 size:11 mdl:512
-20:48:31 add_beneath(A,B):- hold(B,A).
-20:48:31 add_beneath(A,B):- put(B,A).
-20:48:31 add_beneath(A,B):- eat(B,A).
-20:48:31 add_beneath(A,B):- myopen(B,A).
-20:48:31 add_beneath(A,B):- sit(C,A),sit(B,C).
-20:48:31 ********************
-20:48:58 Generating programs of size: 5
-20:49:09 Generating programs of size: 6
-20:49:16 Generating programs of size: 7
-20:49:23 Generating programs of size: 8
-20:49:30 Generating programs of size: 9
+22:22:07 Generating programs of size: 2
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:8 fn:536 tn:750 fp:3 size:2 mdl:541
+22:22:07 add_beneath(A,B):- hold(B,A).
+22:22:07 ********************
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:37 fn:507 tn:734 fp:19 size:2 mdl:528
+22:22:07 add_beneath(A,B):- sit(B,A).
+22:22:07 ********************
+22:22:07 Generating programs of size: 3
+22:22:14 ********************
+22:22:14 New best hypothesis:
+22:22:14 tp:68 fn:476 tn:726 fp:27 size:10 mdl:513
+22:22:14 add_beneath(A,B):- hold(B,A).
+22:22:14 add_beneath(A,B):- sit(B,A).
+22:22:14 add_beneath(A,B):- put(B,A).
+22:22:14 add_beneath(A,B):- eat(B,A).
+22:22:14 add_beneath(A,B):- myopen(B,A).
+22:22:14 ********************
+22:22:18 Generating programs of size: 4
+22:22:24 ********************
+22:22:24 New best hypothesis:
+22:22:24 tp:51 fn:493 tn:745 fp:8 size:11 mdl:512
+22:22:24 add_beneath(A,B):- hold(B,A).
+22:22:24 add_beneath(A,B):- put(B,A).
+22:22:24 add_beneath(A,B):- eat(B,A).
+22:22:24 add_beneath(A,B):- myopen(B,A).
+22:22:24 add_beneath(A,B):- sit(C,A),sit(B,C).
+22:22:24 ********************
+22:22:55 Generating programs of size: 5
+22:23:12 Generating programs of size: 6
+22:23:20 Generating programs of size: 7
+22:23:27 Generating programs of size: 8
+22:23:33 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.86 Recall:0.09 TP:51 FN:493 TN:745 FP:8 Size:11 MDL:512
 add_beneath(A,B):- hold(B,A).

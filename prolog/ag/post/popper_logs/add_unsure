@@ -1,41 +1,41 @@
-20:48:14 Generating programs of size: 2
-20:48:14 ********************
-20:48:14 New best hypothesis:
-20:48:14 tp:9 fn:724 tn:228 fp:2 size:2 mdl:728
-20:48:14 add_unsure(A,B):- drink(A,B).
-20:48:14 ********************
-20:48:14 ********************
-20:48:14 New best hypothesis:
-20:48:14 tp:27 fn:706 tn:225 fp:5 size:2 mdl:713
-20:48:14 add_unsure(A,B):- hold(A,B).
-20:48:14 ********************
-20:48:14 ********************
-20:48:14 New best hypothesis:
-20:48:14 tp:70 fn:663 tn:190 fp:40 size:2 mdl:705
-20:48:14 add_unsure(A,B):- put(A,B).
-20:48:14 ********************
-20:48:14 Generating programs of size: 3
-20:48:23 ********************
-20:48:23 New best hypothesis:
-20:48:23 tp:226 fn:507 tn:128 fp:102 size:22 mdl:631
-20:48:23 add_unsure(A,B):- drink(A,B).
-20:48:23 add_unsure(A,B):- hold(A,B).
-20:48:23 add_unsure(A,B):- sit(A,B).
-20:48:23 add_unsure(A,B):- put(A,B).
-20:48:23 add_unsure(A,B):- walk(A,B).
-20:48:23 add_unsure(A,B):- play(A,B).
-20:48:23 add_unsure(A,B):- undress(A,B).
-20:48:23 add_unsure(A,B):- throw(A,B).
-20:48:23 add_unsure(A,B):- eat(A,B).
-20:48:23 add_unsure(A,B):- myopen(A,B).
-20:48:23 add_unsure(A,B):- take(A,B).
-20:48:23 ********************
-20:48:29 Generating programs of size: 4
-20:49:43 Generating programs of size: 5
-20:49:58 Generating programs of size: 6
-20:50:12 Generating programs of size: 7
-20:50:24 Generating programs of size: 8
-20:50:35 Generating programs of size: 9
+22:22:07 Generating programs of size: 2
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:9 fn:724 tn:228 fp:2 size:2 mdl:728
+22:22:07 add_unsure(A,B):- drink(A,B).
+22:22:07 ********************
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:27 fn:706 tn:225 fp:5 size:2 mdl:713
+22:22:07 add_unsure(A,B):- hold(A,B).
+22:22:07 ********************
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:70 fn:663 tn:190 fp:40 size:2 mdl:705
+22:22:07 add_unsure(A,B):- put(A,B).
+22:22:07 ********************
+22:22:07 Generating programs of size: 3
+22:22:15 ********************
+22:22:15 New best hypothesis:
+22:22:15 tp:226 fn:507 tn:128 fp:102 size:22 mdl:631
+22:22:15 add_unsure(A,B):- drink(A,B).
+22:22:15 add_unsure(A,B):- hold(A,B).
+22:22:15 add_unsure(A,B):- sit(A,B).
+22:22:15 add_unsure(A,B):- put(A,B).
+22:22:15 add_unsure(A,B):- walk(A,B).
+22:22:15 add_unsure(A,B):- play(A,B).
+22:22:15 add_unsure(A,B):- undress(A,B).
+22:22:15 add_unsure(A,B):- throw(A,B).
+22:22:15 add_unsure(A,B):- eat(A,B).
+22:22:15 add_unsure(A,B):- myopen(A,B).
+22:22:15 add_unsure(A,B):- take(A,B).
+22:22:15 ********************
+22:22:22 Generating programs of size: 4
+22:23:15 Generating programs of size: 5
+22:23:30 Generating programs of size: 6
+22:23:44 Generating programs of size: 7
+22:23:56 Generating programs of size: 8
+22:24:08 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.69 Recall:0.31 TP:226 FN:507 TN:128 FP:102 Size:22 MDL:631
 add_unsure(A,B):- drink(A,B).

@@ -93,6 +93,9 @@ def write_rules(rules_folder, logs_folder, rules_name, weight, timeout):
                 continue
 
             rule, metrics = rule_pair
+            if metrics is None:
+                print(f'rule {predicate} no metrics')
+                continue
             f.write(f'%%PRECISION: {metrics["precision"]:.2f} RECALL: {metrics["recall"]:.2f} TP: {metrics["tp"]} FN: {metrics["fn"]} TN: {metrics["tn"]} FP: {metrics["fp"]}\n')
 
             for line in rule:

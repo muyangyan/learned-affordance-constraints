@@ -1,26 +1,26 @@
-20:48:15 Generating programs of size: 2
-20:48:15 ********************
-20:48:15 New best hypothesis:
-20:48:15 tp:8 fn:69 tn:6 fp:0 size:2 mdl:71
-20:48:15 add_drinking_from(A,B):- drink(A,B).
-20:48:15 ********************
-20:48:15 ********************
-20:48:15 New best hypothesis:
-20:48:15 tp:16 fn:61 tn:6 fp:0 size:2 mdl:63
-20:48:15 add_drinking_from(A,B):- take(A,B).
-20:48:15 ********************
-20:48:15 Generating programs of size: 3
-20:48:17 ********************
-20:48:17 New best hypothesis:
-20:48:17 tp:35 fn:42 tn:6 fp:0 size:8 mdl:50
-20:48:17 add_drinking_from(A,B):- drink(A,B).
-20:48:17 add_drinking_from(A,B):- hold(A,B).
-20:48:17 add_drinking_from(A,B):- pour(A,B).
-20:48:17 add_drinking_from(A,B):- take(A,B).
-20:48:17 ********************
-20:48:18 Generating programs of size: 4
-20:48:22 Generating programs of size: 5
-20:48:24 Generating programs of size: 6
+22:22:07 Generating programs of size: 2
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:8 fn:69 tn:6 fp:0 size:2 mdl:71
+22:22:07 add_drinking_from(A,B):- drink(A,B).
+22:22:07 ********************
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:16 fn:61 tn:6 fp:0 size:2 mdl:63
+22:22:07 add_drinking_from(A,B):- take(A,B).
+22:22:07 ********************
+22:22:07 Generating programs of size: 3
+22:22:09 ********************
+22:22:09 New best hypothesis:
+22:22:09 tp:35 fn:42 tn:6 fp:0 size:8 mdl:50
+22:22:09 add_drinking_from(A,B):- drink(A,B).
+22:22:09 add_drinking_from(A,B):- hold(A,B).
+22:22:09 add_drinking_from(A,B):- pour(A,B).
+22:22:09 add_drinking_from(A,B):- take(A,B).
+22:22:09 ********************
+22:22:11 Generating programs of size: 4
+22:22:14 Generating programs of size: 5
+22:22:16 Generating programs of size: 6
 ********** SOLUTION **********
 Precision:1.00 Recall:0.45 TP:35 FN:42 TN:6 FP:0 Size:8 MDL:50
 add_drinking_from(A,B):- drink(A,B).

@@ -1,40 +1,40 @@
-20:48:14 Generating programs of size: 2
-20:48:14 ********************
-20:48:14 New best hypothesis:
-20:48:14 tp:13 fn:2144 tn:2455 fp:8 size:2 mdl:2154
-20:48:14 del_not_looking_at(A,B):- pour(A,B).
-20:48:14 ********************
-20:48:14 ********************
-20:48:14 New best hypothesis:
-20:48:14 tp:105 fn:2052 tn:2403 fp:60 size:2 mdl:2114
-20:48:14 del_not_looking_at(A,B):- myopen(A,B).
-20:48:14 ********************
-20:48:14 Generating programs of size: 3
-20:48:24 ********************
-20:48:24 New best hypothesis:
-20:48:24 tp:249 fn:1908 tn:2315 fp:148 size:10 mdl:2066
-20:48:24 del_not_looking_at(A,B):- pour(A,B).
-20:48:24 del_not_looking_at(A,B):- photograph(A,B).
-20:48:24 del_not_looking_at(A,B):- myopen(A,B).
-20:48:24 del_not_looking_at(A,B):- talk(A,B).
-20:48:24 del_not_looking_at(A,B):- take(A,B).
-20:48:24 ********************
-20:48:33 Generating programs of size: 4
-20:48:43 ********************
-20:48:43 New best hypothesis:
-20:48:43 tp:253 fn:1904 tn:2315 fp:148 size:13 mdl:2065
-20:48:43 del_not_looking_at(A,B):- pour(A,B).
-20:48:43 del_not_looking_at(A,B):- photograph(A,B).
-20:48:43 del_not_looking_at(A,B):- myopen(A,B).
-20:48:43 del_not_looking_at(A,B):- talk(A,B).
-20:48:43 del_not_looking_at(A,B):- take(A,B).
-20:48:43 del_not_looking_at(A,B):- sit(A,B),work(A,B).
-20:48:43 ********************
-20:49:13 Generating programs of size: 5
-20:49:36 Generating programs of size: 6
-20:50:05 Generating programs of size: 7
-20:50:27 Generating programs of size: 8
-20:50:43 Generating programs of size: 9
+22:22:07 Generating programs of size: 2
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:13 fn:2144 tn:2455 fp:8 size:2 mdl:2154
+22:22:07 del_not_looking_at(A,B):- pour(A,B).
+22:22:07 ********************
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:105 fn:2052 tn:2403 fp:60 size:2 mdl:2114
+22:22:07 del_not_looking_at(A,B):- myopen(A,B).
+22:22:07 ********************
+22:22:07 Generating programs of size: 3
+22:22:17 ********************
+22:22:17 New best hypothesis:
+22:22:17 tp:249 fn:1908 tn:2315 fp:148 size:10 mdl:2066
+22:22:17 del_not_looking_at(A,B):- pour(A,B).
+22:22:17 del_not_looking_at(A,B):- photograph(A,B).
+22:22:17 del_not_looking_at(A,B):- myopen(A,B).
+22:22:17 del_not_looking_at(A,B):- talk(A,B).
+22:22:17 del_not_looking_at(A,B):- take(A,B).
+22:22:17 ********************
+22:22:26 Generating programs of size: 4
+22:22:36 ********************
+22:22:36 New best hypothesis:
+22:22:36 tp:253 fn:1904 tn:2315 fp:148 size:13 mdl:2065
+22:22:36 del_not_looking_at(A,B):- pour(A,B).
+22:22:36 del_not_looking_at(A,B):- photograph(A,B).
+22:22:36 del_not_looking_at(A,B):- myopen(A,B).
+22:22:36 del_not_looking_at(A,B):- talk(A,B).
+22:22:36 del_not_looking_at(A,B):- take(A,B).
+22:22:36 del_not_looking_at(A,B):- sit(A,B),work(A,B).
+22:22:36 ********************
+22:23:13 Generating programs of size: 5
+22:23:49 Generating programs of size: 6
+22:24:16 Generating programs of size: 7
+22:24:38 Generating programs of size: 8
+22:24:54 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.63 Recall:0.12 TP:253 FN:1904 TN:2315 FP:148 Size:13 MDL:2065
 del_not_looking_at(A,B):- pour(A,B).

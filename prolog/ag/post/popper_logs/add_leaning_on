@@ -1,21 +1,21 @@
-20:48:15 Generating programs of size: 2
-20:48:15 ********************
-20:48:15 New best hypothesis:
-20:48:15 tp:8 fn:131 tn:78 fp:0 size:2 mdl:133
-20:48:15 add_leaning_on(A,B):- sit(A,B).
-20:48:15 ********************
-20:48:16 Generating programs of size: 3
-20:48:20 ********************
-20:48:20 New best hypothesis:
-20:48:20 tp:15 fn:124 tn:77 fp:1 size:6 mdl:131
-20:48:20 add_leaning_on(A,B):- sit(A,B).
-20:48:20 add_leaning_on(A,B):- put(A,B).
-20:48:20 add_leaning_on(A,B):- lie(A,B).
-20:48:20 ********************
-20:48:21 Generating programs of size: 4
-20:48:29 Generating programs of size: 5
-20:48:34 Generating programs of size: 6
-20:48:34 Generating programs of size: 7
+22:22:08 Generating programs of size: 2
+22:22:08 ********************
+22:22:08 New best hypothesis:
+22:22:08 tp:8 fn:131 tn:78 fp:0 size:2 mdl:133
+22:22:08 add_leaning_on(A,B):- sit(A,B).
+22:22:08 ********************
+22:22:08 Generating programs of size: 3
+22:22:12 ********************
+22:22:12 New best hypothesis:
+22:22:12 tp:15 fn:124 tn:77 fp:1 size:6 mdl:131
+22:22:12 add_leaning_on(A,B):- sit(A,B).
+22:22:12 add_leaning_on(A,B):- put(A,B).
+22:22:12 add_leaning_on(A,B):- lie(A,B).
+22:22:12 ********************
+22:22:13 Generating programs of size: 4
+22:22:20 Generating programs of size: 5
+22:22:24 Generating programs of size: 6
+22:22:24 Generating programs of size: 7
 ********** SOLUTION **********
 Precision:0.94 Recall:0.11 TP:15 FN:124 TN:77 FP:1 Size:6 MDL:131
 add_leaning_on(A,B):- sit(A,B).

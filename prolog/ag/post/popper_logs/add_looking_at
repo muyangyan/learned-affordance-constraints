@@ -1,56 +1,56 @@
-20:48:14 Generating programs of size: 2
-20:48:14 ********************
-20:48:14 New best hypothesis:
-20:48:14 tp:5 fn:1853 tn:1131 fp:1 size:2 mdl:1856
-20:48:14 add_looking_at(A,B):- snuggle(A,B).
-20:48:14 ********************
-20:48:14 ********************
-20:48:14 New best hypothesis:
-20:48:14 tp:57 fn:1801 tn:1086 fp:46 size:2 mdl:1849
-20:48:14 add_looking_at(A,B):- hold(A,B).
-20:48:14 ********************
-20:48:14 ********************
-20:48:14 New best hypothesis:
-20:48:14 tp:17 fn:1841 tn:1127 fp:5 size:2 mdl:1848
-20:48:14 add_looking_at(A,B):- undress(A,B).
-20:48:14 ********************
-20:48:14 ********************
-20:48:14 New best hypothesis:
-20:48:14 tp:131 fn:1727 tn:1057 fp:75 size:2 mdl:1804
-20:48:14 add_looking_at(A,B):- take(A,B).
-20:48:14 ********************
-20:48:14 Generating programs of size: 3
-20:48:24 ********************
-20:48:24 New best hypothesis:
-20:48:24 tp:234 fn:1624 tn:1002 fp:130 size:16 mdl:1770
-20:48:24 add_looking_at(A,B):- snuggle(A,B).
-20:48:24 add_looking_at(A,B):- hold(A,B).
-20:48:24 add_looking_at(A,B):- pour(A,B).
-20:48:24 add_looking_at(A,B):- walk(A,B).
-20:48:24 add_looking_at(A,B):- undress(A,B).
-20:48:24 add_looking_at(A,B):- talk(A,B).
-20:48:24 add_looking_at(A,B):- take(A,B).
-20:48:24 add_looking_at(A,B):- lie(A,B).
-20:48:24 ********************
-20:48:32 Generating programs of size: 4
-20:49:23 Generating programs of size: 5
-20:49:33 ********************
-20:49:33 New best hypothesis:
-20:49:33 tp:240 fn:1618 tn:1002 fp:130 size:20 mdl:1768
-20:49:33 add_looking_at(A,B):- snuggle(A,B).
-20:49:33 add_looking_at(A,B):- hold(A,B).
-20:49:33 add_looking_at(A,B):- pour(A,B).
-20:49:33 add_looking_at(A,B):- walk(A,B).
-20:49:33 add_looking_at(A,B):- undress(A,B).
-20:49:33 add_looking_at(A,B):- talk(A,B).
-20:49:33 add_looking_at(A,B):- take(A,B).
-20:49:33 add_looking_at(A,B):- lie(A,B).
-20:49:33 add_looking_at(A,B):- grasp(A,C),grasp(D,C),myopen(D,B).
-20:49:33 ********************
-20:49:54 Generating programs of size: 6
-20:50:15 Generating programs of size: 7
-20:50:34 Generating programs of size: 8
-20:50:48 Generating programs of size: 9
+22:22:06 Generating programs of size: 2
+22:22:06 ********************
+22:22:06 New best hypothesis:
+22:22:06 tp:5 fn:1853 tn:1131 fp:1 size:2 mdl:1856
+22:22:06 add_looking_at(A,B):- snuggle(A,B).
+22:22:06 ********************
+22:22:06 ********************
+22:22:06 New best hypothesis:
+22:22:06 tp:57 fn:1801 tn:1086 fp:46 size:2 mdl:1849
+22:22:06 add_looking_at(A,B):- hold(A,B).
+22:22:06 ********************
+22:22:06 ********************
+22:22:06 New best hypothesis:
+22:22:06 tp:17 fn:1841 tn:1127 fp:5 size:2 mdl:1848
+22:22:06 add_looking_at(A,B):- undress(A,B).
+22:22:06 ********************
+22:22:06 ********************
+22:22:06 New best hypothesis:
+22:22:06 tp:131 fn:1727 tn:1057 fp:75 size:2 mdl:1804
+22:22:06 add_looking_at(A,B):- take(A,B).
+22:22:06 ********************
+22:22:07 Generating programs of size: 3
+22:22:17 ********************
+22:22:17 New best hypothesis:
+22:22:17 tp:234 fn:1624 tn:1002 fp:130 size:16 mdl:1770
+22:22:17 add_looking_at(A,B):- snuggle(A,B).
+22:22:17 add_looking_at(A,B):- hold(A,B).
+22:22:17 add_looking_at(A,B):- pour(A,B).
+22:22:17 add_looking_at(A,B):- walk(A,B).
+22:22:17 add_looking_at(A,B):- undress(A,B).
+22:22:17 add_looking_at(A,B):- talk(A,B).
+22:22:17 add_looking_at(A,B):- take(A,B).
+22:22:17 add_looking_at(A,B):- lie(A,B).
+22:22:17 ********************
+22:22:25 Generating programs of size: 4
+22:23:09 Generating programs of size: 5
+22:23:19 ********************
+22:23:19 New best hypothesis:
+22:23:19 tp:240 fn:1618 tn:1002 fp:130 size:20 mdl:1768
+22:23:19 add_looking_at(A,B):- snuggle(A,B).
+22:23:19 add_looking_at(A,B):- hold(A,B).
+22:23:19 add_looking_at(A,B):- pour(A,B).
+22:23:19 add_looking_at(A,B):- walk(A,B).
+22:23:19 add_looking_at(A,B):- undress(A,B).
+22:23:19 add_looking_at(A,B):- talk(A,B).
+22:23:19 add_looking_at(A,B):- take(A,B).
+22:23:19 add_looking_at(A,B):- lie(A,B).
+22:23:19 add_looking_at(A,B):- grasp(A,D),grasp(C,D),myopen(C,B).
+22:23:19 ********************
+22:23:40 Generating programs of size: 6
+22:24:00 Generating programs of size: 7
+22:24:18 Generating programs of size: 8
+22:24:32 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.65 Recall:0.13 TP:240 FN:1618 TN:1002 FP:130 Size:20 MDL:1768
 add_looking_at(A,B):- snuggle(A,B).
@@ -61,5 +61,5 @@ add_looking_at(A,B):- undress(A,B).
 add_looking_at(A,B):- talk(A,B).
 add_looking_at(A,B):- take(A,B).
 add_looking_at(A,B):- lie(A,B).
-add_looking_at(A,B):- grasp(A,C),grasp(D,C),myopen(D,B).
+add_looking_at(A,B):- grasp(A,D),grasp(C,D),myopen(C,B).
 ******************************

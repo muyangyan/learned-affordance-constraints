@@ -1,69 +1,69 @@
-20:48:16 Generating programs of size: 2
-20:48:16 ********************
-20:48:16 New best hypothesis:
-20:48:16 tp:3 fn:1825 tn:1498 fp:0 size:2 mdl:1827
-20:48:16 add_not_contacting(A,B):- awaken(A,B).
-20:48:16 ********************
-20:48:26 ********************
-20:48:26 New best hypothesis:
-20:48:26 tp:5 fn:1823 tn:1497 fp:1 size:2 mdl:1826
-20:48:26 add_not_contacting(A,B):- snuggle(A,B).
-20:48:26 ********************
-20:48:26 ********************
-20:48:26 New best hypothesis:
-20:48:26 tp:106 fn:1722 tn:1402 fp:96 size:2 mdl:1820
-20:48:26 add_not_contacting(A,B):- myclose(A,B).
-20:48:26 ********************
-20:48:26 ********************
-20:48:26 New best hypothesis:
-20:48:26 tp:346 fn:1482 tn:1283 fp:215 size:2 mdl:1699
-20:48:26 add_not_contacting(A,B):- put(A,B).
-20:48:26 ********************
-20:48:26 Generating programs of size: 3
-20:48:36 ********************
-20:48:36 New best hypothesis:
-20:48:36 tp:582 fn:1246 tn:1157 fp:341 size:16 mdl:1603
-20:48:36 add_not_contacting(A,B):- awaken(A,B).
-20:48:36 add_not_contacting(A,B):- snuggle(A,B).
-20:48:36 add_not_contacting(A,B):- myclose(A,B).
-20:48:36 add_not_contacting(A,B):- put(A,B).
-20:48:36 add_not_contacting(A,B):- wash(A,B).
-20:48:36 add_not_contacting(A,B):- undress(A,B).
-20:48:36 add_not_contacting(A,B):- throw(A,B).
-20:48:36 add_not_contacting(A,B):- eat(A,B).
-20:48:36 ********************
-20:48:42 Generating programs of size: 4
-20:48:52 ********************
-20:48:52 New best hypothesis:
-20:48:52 tp:586 fn:1242 tn:1157 fp:341 size:19 mdl:1602
-20:48:52 add_not_contacting(A,B):- awaken(A,B).
-20:48:52 add_not_contacting(A,B):- snuggle(A,B).
-20:48:52 add_not_contacting(A,B):- myclose(A,B).
-20:48:52 add_not_contacting(A,B):- put(A,B).
-20:48:52 add_not_contacting(A,B):- wash(A,B).
-20:48:52 add_not_contacting(A,B):- undress(A,B).
-20:48:52 add_not_contacting(A,B):- throw(A,B).
-20:48:52 add_not_contacting(A,B):- eat(A,B).
-20:48:52 add_not_contacting(A,B):- play(A,B),watch(A,B).
-20:48:52 ********************
-20:49:38 Generating programs of size: 5
-20:49:48 ********************
-20:49:48 New best hypothesis:
-20:49:48 tp:588 fn:1240 tn:1157 fp:341 size:20 mdl:1601
-20:49:48 add_not_contacting(A,B):- awaken(A,B).
-20:49:48 add_not_contacting(A,B):- snuggle(A,B).
-20:49:48 add_not_contacting(A,B):- myclose(A,B).
-20:49:48 add_not_contacting(A,B):- put(A,B).
-20:49:48 add_not_contacting(A,B):- wash(A,B).
-20:49:48 add_not_contacting(A,B):- undress(A,B).
-20:49:48 add_not_contacting(A,B):- throw(A,B).
-20:49:48 add_not_contacting(A,B):- eat(A,B).
-20:49:48 add_not_contacting(A,B):- play(D,B),work(D,C),work(A,C).
-20:49:48 ********************
-20:50:08 Generating programs of size: 6
-20:50:34 Generating programs of size: 7
-20:50:58 Generating programs of size: 8
-20:51:13 Generating programs of size: 9
+22:22:08 Generating programs of size: 2
+22:22:08 ********************
+22:22:08 New best hypothesis:
+22:22:08 tp:3 fn:1825 tn:1498 fp:0 size:2 mdl:1827
+22:22:08 add_not_contacting(A,B):- awaken(A,B).
+22:22:08 ********************
+22:22:18 ********************
+22:22:18 New best hypothesis:
+22:22:18 tp:5 fn:1823 tn:1497 fp:1 size:2 mdl:1826
+22:22:18 add_not_contacting(A,B):- snuggle(A,B).
+22:22:18 ********************
+22:22:18 ********************
+22:22:18 New best hypothesis:
+22:22:18 tp:106 fn:1722 tn:1402 fp:96 size:2 mdl:1820
+22:22:18 add_not_contacting(A,B):- myclose(A,B).
+22:22:18 ********************
+22:22:18 ********************
+22:22:18 New best hypothesis:
+22:22:18 tp:346 fn:1482 tn:1283 fp:215 size:2 mdl:1699
+22:22:18 add_not_contacting(A,B):- put(A,B).
+22:22:18 ********************
+22:22:18 Generating programs of size: 3
+22:22:28 ********************
+22:22:28 New best hypothesis:
+22:22:28 tp:582 fn:1246 tn:1157 fp:341 size:16 mdl:1603
+22:22:28 add_not_contacting(A,B):- awaken(A,B).
+22:22:28 add_not_contacting(A,B):- snuggle(A,B).
+22:22:28 add_not_contacting(A,B):- myclose(A,B).
+22:22:28 add_not_contacting(A,B):- put(A,B).
+22:22:28 add_not_contacting(A,B):- wash(A,B).
+22:22:28 add_not_contacting(A,B):- undress(A,B).
+22:22:28 add_not_contacting(A,B):- throw(A,B).
+22:22:28 add_not_contacting(A,B):- eat(A,B).
+22:22:28 ********************
+22:22:34 Generating programs of size: 4
+22:22:44 ********************
+22:22:44 New best hypothesis:
+22:22:44 tp:586 fn:1242 tn:1157 fp:341 size:19 mdl:1602
+22:22:44 add_not_contacting(A,B):- awaken(A,B).
+22:22:44 add_not_contacting(A,B):- snuggle(A,B).
+22:22:44 add_not_contacting(A,B):- myclose(A,B).
+22:22:44 add_not_contacting(A,B):- put(A,B).
+22:22:44 add_not_contacting(A,B):- wash(A,B).
+22:22:44 add_not_contacting(A,B):- undress(A,B).
+22:22:44 add_not_contacting(A,B):- throw(A,B).
+22:22:44 add_not_contacting(A,B):- eat(A,B).
+22:22:44 add_not_contacting(A,B):- play(A,B),watch(A,B).
+22:22:44 ********************
+22:23:30 Generating programs of size: 5
+22:23:40 ********************
+22:23:40 New best hypothesis:
+22:23:40 tp:588 fn:1240 tn:1157 fp:341 size:20 mdl:1601
+22:23:40 add_not_contacting(A,B):- awaken(A,B).
+22:23:40 add_not_contacting(A,B):- snuggle(A,B).
+22:23:40 add_not_contacting(A,B):- myclose(A,B).
+22:23:40 add_not_contacting(A,B):- put(A,B).
+22:23:40 add_not_contacting(A,B):- wash(A,B).
+22:23:40 add_not_contacting(A,B):- undress(A,B).
+22:23:40 add_not_contacting(A,B):- throw(A,B).
+22:23:40 add_not_contacting(A,B):- eat(A,B).
+22:23:40 add_not_contacting(A,B):- play(D,B),work(A,C),work(D,C).
+22:23:40 ********************
+22:24:00 Generating programs of size: 6
+22:24:27 Generating programs of size: 7
+22:24:53 Generating programs of size: 8
+22:25:08 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.63 Recall:0.32 TP:588 FN:1240 TN:1157 FP:341 Size:20 MDL:1601
 add_not_contacting(A,B):- awaken(A,B).
@@ -74,5 +74,5 @@ add_not_contacting(A,B):- wash(A,B).
 add_not_contacting(A,B):- undress(A,B).
 add_not_contacting(A,B):- throw(A,B).
 add_not_contacting(A,B):- eat(A,B).
-add_not_contacting(A,B):- play(D,B),work(D,C),work(A,C).
+add_not_contacting(A,B):- play(D,B),work(A,C),work(D,C).
 ******************************

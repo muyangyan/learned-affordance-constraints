@@ -1,13 +1,13 @@
-20:48:15 Generating programs of size: 2
-20:48:15 ********************
-20:48:15 New best hypothesis:
-20:48:15 tp:9 fn:18 tn:2 fp:0 size:2 mdl:20
-20:48:15 del_eating(A,B):- put(A,B).
-20:48:15 ********************
-20:48:15 Generating programs of size: 3
-20:48:17 Generating programs of size: 4
-20:48:17 Generating programs of size: 5
-20:48:18 Generating programs of size: 6
+22:22:07 Generating programs of size: 2
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:9 fn:18 tn:2 fp:0 size:2 mdl:20
+22:22:07 del_eating(A,B):- put(A,B).
+22:22:07 ********************
+22:22:08 Generating programs of size: 3
+22:22:09 Generating programs of size: 4
+22:22:10 Generating programs of size: 5
+22:22:11 Generating programs of size: 6
 ********** SOLUTION **********
 Precision:1.00 Recall:0.33 TP:9 FN:18 TN:2 FP:0 Size:2 MDL:20
 del_eating(A,B):- put(A,B).

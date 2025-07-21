@@ -1,47 +1,47 @@
-20:48:14 Generating programs of size: 2
-20:48:14 ********************
-20:48:14 New best hypothesis:
-20:48:14 tp:26 fn:783 tn:222 fp:8 size:2 mdl:793
-20:48:14 del_unsure(A,B):- myclose(A,B).
-20:48:14 ********************
-20:48:14 ********************
-20:48:14 New best hypothesis:
-20:48:14 tp:29 fn:780 tn:225 fp:5 size:2 mdl:787
-20:48:14 del_unsure(A,B):- hold(A,B).
-20:48:14 ********************
-20:48:14 ********************
-20:48:14 New best hypothesis:
-20:48:14 tp:85 fn:724 tn:190 fp:40 size:2 mdl:766
-20:48:14 del_unsure(A,B):- put(A,B).
-20:48:14 ********************
-20:48:14 Generating programs of size: 3
-20:48:24 ********************
-20:48:24 New best hypothesis:
-20:48:24 tp:347 fn:462 tn:113 fp:117 size:34 mdl:613
-20:48:24 del_unsure(A,B):- myclose(A,B).
-20:48:24 del_unsure(A,B):- cook(A,B).
-20:48:24 del_unsure(A,B):- drink(A,B).
-20:48:24 del_unsure(A,B):- hold(A,B).
-20:48:24 del_unsure(A,B):- sit(A,B).
-20:48:24 del_unsure(A,B):- put(A,B).
-20:48:24 del_unsure(A,B):- watch(A,B).
-20:48:24 del_unsure(A,B):- walk(A,B).
-20:48:24 del_unsure(A,B):- play(A,B).
-20:48:24 del_unsure(A,B):- undress(A,B).
-20:48:24 del_unsure(A,B):- turn(A,B).
-20:48:24 del_unsure(A,B):- tidy(A,B).
-20:48:24 del_unsure(A,B):- throw(A,B).
-20:48:24 del_unsure(A,B):- eat(A,B).
-20:48:24 del_unsure(A,B):- myopen(A,B).
-20:48:24 del_unsure(A,B):- take(A,B).
-20:48:24 del_unsure(A,B):- lie(A,B).
-20:48:24 ********************
-20:48:32 Generating programs of size: 4
-20:49:11 Generating programs of size: 5
-20:49:30 Generating programs of size: 6
-20:49:45 Generating programs of size: 7
-20:49:59 Generating programs of size: 8
-20:50:11 Generating programs of size: 9
+22:22:07 Generating programs of size: 2
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:26 fn:783 tn:222 fp:8 size:2 mdl:793
+22:22:07 del_unsure(A,B):- myclose(A,B).
+22:22:07 ********************
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:29 fn:780 tn:225 fp:5 size:2 mdl:787
+22:22:07 del_unsure(A,B):- hold(A,B).
+22:22:07 ********************
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:85 fn:724 tn:190 fp:40 size:2 mdl:766
+22:22:07 del_unsure(A,B):- put(A,B).
+22:22:07 ********************
+22:22:07 Generating programs of size: 3
+22:22:16 ********************
+22:22:16 New best hypothesis:
+22:22:16 tp:347 fn:462 tn:113 fp:117 size:34 mdl:613
+22:22:16 del_unsure(A,B):- myclose(A,B).
+22:22:16 del_unsure(A,B):- cook(A,B).
+22:22:16 del_unsure(A,B):- drink(A,B).
+22:22:16 del_unsure(A,B):- hold(A,B).
+22:22:16 del_unsure(A,B):- sit(A,B).
+22:22:16 del_unsure(A,B):- put(A,B).
+22:22:16 del_unsure(A,B):- watch(A,B).
+22:22:16 del_unsure(A,B):- walk(A,B).
+22:22:16 del_unsure(A,B):- play(A,B).
+22:22:16 del_unsure(A,B):- undress(A,B).
+22:22:16 del_unsure(A,B):- turn(A,B).
+22:22:16 del_unsure(A,B):- tidy(A,B).
+22:22:16 del_unsure(A,B):- throw(A,B).
+22:22:16 del_unsure(A,B):- eat(A,B).
+22:22:16 del_unsure(A,B):- myopen(A,B).
+22:22:16 del_unsure(A,B):- take(A,B).
+22:22:16 del_unsure(A,B):- lie(A,B).
+22:22:16 ********************
+22:22:24 Generating programs of size: 4
+22:23:08 Generating programs of size: 5
+22:23:31 Generating programs of size: 6
+22:23:47 Generating programs of size: 7
+22:24:02 Generating programs of size: 8
+22:24:14 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.75 Recall:0.43 TP:347 FN:462 TN:113 FP:117 Size:34 MDL:613
 del_unsure(A,B):- myclose(A,B).

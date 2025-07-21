@@ -1,27 +1,27 @@
-20:48:14 Generating programs of size: 2
-20:48:15 ********************
-20:48:15 New best hypothesis:
-20:48:15 tp:14 fn:500 tn:749 fp:4 size:2 mdl:506
-20:48:15 del_beneath(A,B):- put(B,A).
-20:48:15 ********************
-20:48:15 ********************
-20:48:15 New best hypothesis:
-20:48:15 tp:19 fn:495 tn:751 fp:2 size:2 mdl:499
-20:48:15 del_beneath(A,B):- take(B,A).
-20:48:15 ********************
-20:48:15 Generating programs of size: 3
-20:48:21 ********************
-20:48:21 New best hypothesis:
-20:48:21 tp:33 fn:481 tn:747 fp:6 size:4 mdl:491
-20:48:21 del_beneath(A,B):- put(B,A).
-20:48:21 del_beneath(A,B):- take(B,A).
-20:48:21 ********************
-20:48:25 Generating programs of size: 4
-20:48:50 Generating programs of size: 5
-20:48:59 Generating programs of size: 6
-20:49:05 Generating programs of size: 7
-20:49:11 Generating programs of size: 8
-20:49:16 Generating programs of size: 9
+22:22:07 Generating programs of size: 2
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:14 fn:500 tn:749 fp:4 size:2 mdl:506
+22:22:07 del_beneath(A,B):- put(B,A).
+22:22:07 ********************
+22:22:07 ********************
+22:22:07 New best hypothesis:
+22:22:07 tp:19 fn:495 tn:751 fp:2 size:2 mdl:499
+22:22:07 del_beneath(A,B):- take(B,A).
+22:22:07 ********************
+22:22:07 Generating programs of size: 3
+22:22:13 ********************
+22:22:13 New best hypothesis:
+22:22:13 tp:33 fn:481 tn:747 fp:6 size:4 mdl:491
+22:22:13 del_beneath(A,B):- put(B,A).
+22:22:13 del_beneath(A,B):- take(B,A).
+22:22:13 ********************
+22:22:22 Generating programs of size: 4
+22:23:02 Generating programs of size: 5
+22:23:11 Generating programs of size: 6
+22:23:17 Generating programs of size: 7
+22:23:22 Generating programs of size: 8
+22:23:28 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.85 Recall:0.06 TP:33 FN:481 TN:747 FP:6 Size:4 MDL:491
 del_beneath(A,B):- put(B,A).
