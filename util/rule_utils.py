@@ -3,6 +3,8 @@ import json
 import numpy as np
 from pyswip import Prolog
 
+import time
+
 def normalize_predicate_name(name):
     """
     Convert a class name to a Prolog-compatible predicate name.
@@ -58,30 +60,51 @@ def get_rule_precisions_recalls(rules_json, priors, classes):
             #precisions[i] = 0.0
     return precisions, recalls
 
-# evaluate each rule - just get the binary truth values
-def apply_rules(rules_name, rules_folder, bk_file, frame_ids, targets):
-    print('Applying learned rules-----------------')
-    print('rules_name:', rules_name)
-    print('bk_file:', bk_file)
-    truths = []
-
-    rules_file = os.path.join(rules_folder, f'{rules_name}.pl')
-    _ = Prolog()
-
-    Prolog.consult(rules_file)
-    Prolog.consult(bk_file)
-
-    for id in frame_ids:
-        truth = np.zeros(len(targets))
-        for j,pred in enumerate(targets):
-            # Convert target name to Prolog-compatible predicate name
-            predicate_name = normalize_predicate_name(pred)
-            q = Prolog.query(f'{predicate_name}_target(\'{id}_0\')')
-            satisfied = False
-            for q in q:
-                satisfied = True
-                break
-            truth[j] = 1 if satisfied else 0
-        truths.append(truth)
-    truths = np.stack(truths)
-    return truths
+def compare_apply_rules_performance(rules_name, rules_folder, bk_file, frame_ids, targets):
+    """
+    Compare performance between original and batched versions of apply_rules.
+    """
+    print("Performance Comparison of apply_rules variants")
+    print("=" * 60)
+    
+    results = {}
+    
+    # Test original version
+    print("Testing original apply_rules...")
+    start_time = time.time()
+    original_result = apply_rules(rules_name, rules_folder, bk_file, frame_ids, targets)
+    original_time = time.time() - start_time
+    results['original'] = (original_time, original_result)
+    print(f"Original time: {original_time:.4f} seconds")
+    
+    # Test batched versions
+    batched_functions = [
+        ('batched_v1', apply_rules_batched),
+        ('batched_clean', apply_rules_batched_clean),
+    ]
+    
+    for name, func in batched_functions:
+        try:
+            print(f"\nTesting {name}...")
+            start_time = time.time()
+            batched_result = func(rules_name, rules_folder, bk_file, frame_ids, targets)
+            batched_time = time.time() - start_time
+            results[name] = (batched_time, batched_result)
+            
+            # Check if results match
+            if np.array_equal(original_result, batched_result):
+                speedup = original_time / batched_time if batched_time > 0 else float('inf')
+                print(f"{name} time: {batched_time:.4f} seconds (✓ correct, {speedup:.2f}x speedup)")
+            else:
+                print(f"{name} time: {batched_time:.4f} seconds (✗ different results!)")
+        except Exception as e:
+            print(f"{name} failed: {e}")
+    
+    print("\n" + "=" * 60)
+    print("Summary:")
+    for name, (exec_time, _) in results.items():
+        if name != 'original':
+            speedup = results['original'][0] / exec_time if exec_time > 0 else float('inf')
+            print(f"{name}: {exec_time:.4f}s ({speedup:.2f}x speedup)")
+    
+    return results

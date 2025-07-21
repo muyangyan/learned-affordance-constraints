@@ -25,7 +25,8 @@ from util.data_utils import (
     get_id,
     load_verb_whitelist,
 )
-from util.rule_utils import apply_rules
+from util.rule_utils import normalize_predicate_name
+from pyswip import Prolog
 
 FRAME_MATCH_THRESHOLD = 1
 TRANSFORM = T.Compose([
@@ -203,15 +204,11 @@ class ActionGenome(Dataset):
             # TODO: maybe add an option to not have rules even when split valid?
             if self.position == 'both':
                 raise NotImplementedError('Truth values not implemented for both position')
+
+            self.init_prolog()
+
             frame_ids = [get_id(row['vid'], row[f'{self.position}_frame']) for idx, row in self.df.iterrows()] # type: ignore
-            bk_filename = f'bk.pl' if self.split is None else f'{self.split}_bk.pl'
-            pre_rule_apply_time = time.time()
-            self.truth_values = apply_rules(self.rules_name, 
-                os.path.join(self.prolog_folder, self.position, 'learned_rules'),
-                os.path.join(self.prolog_folder, bk_filename),
-                frame_ids, self.get_target_classes())
-            post_rule_apply_time = time.time()
-            print(f'Rule application time: {post_rule_apply_time - pre_rule_apply_time} seconds')
+            self.truth_values = [self.apply_rules_single(frame_id) for frame_id in frame_ids]
 
         cache_data = { # all the actual data we need to save
             'df': self.df,
@@ -406,11 +403,6 @@ class ActionGenome(Dataset):
         f.close()
         
 
-
-        #self.attention_relationships = self.relationship_classes[0:3]
-        #self.spatial_relationships = self.relationship_classes[3:9]
-        #self.contacting_relationships = self.relationship_classes[9:]
-
         #hardcoded mapping
         self.charades_ag_obj_map = {}
         with open(os.path.join(self.root, 'annotations/charades_to_ag_obj_map.txt'), 'r') as f:
@@ -495,6 +487,24 @@ class ActionGenome(Dataset):
             'lie' : ['lying_on'],
             'take' : ['holding', 'carrying', 'touching'],
         }
+    
+    def init_prolog(self):
+        '''
+        loads all rules and background knowledge into prolog
+        '''
+        bk_filename = f'bk.pl' if self.split is None else f'{self.split}_bk.pl'
+        bk_file = os.path.join(self.prolog_folder, self.position, 'learned_rules', bk_filename)
+        rule_file = os.path.join(self.prolog_folder, self.position, 'learned_rules', f'{self.rules_name}.pl')
+
+        self.prolog = Prolog()
+        self.normalized_targets = [normalize_predicate_name(pred) for pred in self.get_target_classes()]
+        # Create a helper predicate that checks all targets for a given frame
+        for i, predicate_name in enumerate(self.normalized_targets):
+            clause = f"check_all_targets(FrameId, {i}) :- {predicate_name}_target(FrameId)"
+            self.prolog.assertz(clause)
+
+        self.prolog.consult(rule_file)
+        self.prolog.consult(bk_file)
 
     def load_annotations(self, split_file):
         with open(os.path.join(self.root, 'annotations/person_bbox.pkl'), 'rb') as f:
@@ -522,6 +532,15 @@ class ActionGenome(Dataset):
                 with open(os.path.join(self.root, f'annotations/Charades/Charades_v1_train.csv'), 'r') as f:
                     raw_df = pd.read_csv(f)
         return raw_df, split_ids, fps_dict
+
+    def apply_rules_single(self, frame_id):
+        truth = np.zeros(len(self.normalized_targets))
+        frame_atom = f"'{frame_id}_0'"
+        query = f"findall(Index, check_all_targets({frame_atom}, Index), SatisfiedIndices)"
+        result = next(self.prolog.query(query), {})
+        indices = result.get('SatisfiedIndices', [])
+        truth[indices] = 1
+        return truth
 
 class SingleBothAG(ActionGenome):
 
