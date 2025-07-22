@@ -17,6 +17,7 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset
 from torch_geometric.data import Batch, Data
 import torchvision.transforms as T
+from abc import abstractmethod
 
 from util.data_utils import (
     apply_subset,
@@ -25,9 +26,15 @@ from util.data_utils import (
     extract_usable_frames,
     get_id,
     load_verb_whitelist,
+    create_scene_graph,
 )
 from util.rule_utils import normalize_predicate_name
 from pyswip import Prolog
+
+def timecheck(last_time):
+    time_taken = time.time() - last_time
+    print(f'Time since last check: {time_taken} seconds')
+    return time.time()
 
 FRAME_MATCH_THRESHOLD = 1
 # This transform is constant and works for both ViT and MViT models
@@ -132,30 +139,29 @@ class ActionGenome(Dataset):
 
         self.init_vocab(verb_whitelist_file)
         raw_df, split_ids, fps_dict, object_annotations = self.load_annotations(split_file)
-
         df = clean_df(raw_df, split_ids, self.action_mapper)
         df = extract_usable_frames(self.root, object_annotations, df, self.position, FRAME_MATCH_THRESHOLD, fps_dict)
 
         if subset:
+            print('apply subset')
             frame_validity_df = pd.read_csv(frame_validity_file)
             apply_subset_partial = partial(apply_subset, frame_validity_df=frame_validity_df, position=self.position)
             df = df[df.apply(apply_subset_partial, axis=1)]
+            last_time = timecheck(last_time)
 
         # FOR SAMPLE EFFICIENCY EXPERIMENTS
         if num_samples is not None and num_samples > 0:
             df = sample_df(df, num_samples, random_idxs_file)
 
-        # initialize priors
+        print('initialize priors')
         if self.split == 'train' or self.split == None:
             self.verb_priors, self.noun_priors, self.action_priors = self.compute_priors(df)
         else:
             self.verb_priors, self.noun_priors, self.action_priors = None, None, None
+        last_time = timecheck(last_time)
 
         #up until here each row is a single action, now differentiate between single and multi-label
-
-        # CHECK IF THIS IS NECESSARY -- WHAT ARE COLUMNS BEFORE
         df = df[['vid', 'pre_frame', 'post_frame', 'action']]
-
         if self.label_mode == 'multi':
             df[f'video_{self.position}'] = df['vid'] + '_' + df[f'{self.position}_frame'].astype(str)
             df = df.groupby(f'video_{self.position}').agg({
@@ -163,23 +169,28 @@ class ActionGenome(Dataset):
                 f'{self.position}_frame': 'first',
                 'action': lambda x: list(x.astype(int))
             }).reset_index(drop=True)
-            self.df = df
+        self.df = df
             
-        #create pyg scene graphs
+        print('create scene graphs')
         self.scene_graphs = {}
-        for idx, row in self.df.iterrows(): # type: ignore
+        for _, row in self.df.iterrows(): # type: ignore
             for pos in ['pre', 'post'] if self.position == 'both' else [self.position]:
                 id = get_id(row['vid'], row[f'{pos}_frame'])
                 action_classes = row['action']
-                data = self.create_scene_graph(id, action_classes)
+                data = create_scene_graph(id, action_classes, object_annotations, 
+                                        self.object_classes, self.relationship_classes,
+                                        self.create_labels) #TODO: see if we can pass this in
                 self.scene_graphs[id] = data
+        last_time = timecheck(last_time)
 
+        print('apply rules')
         if self.no_rules:
             self.truth_values = None
         else:
             self.init_prolog()
-            frame_ids = [get_id(row['vid'], row[f'{self.position}_frame']) for idx, row in self.df.iterrows()] # type: ignore
+            frame_ids = [get_id(row['vid'], row[f'{self.position}_frame']) for _, row in self.df.iterrows()] # type: ignore
             self.truth_values = [self.apply_rules_single(frame_id) for frame_id in frame_ids]
+        last_time = timecheck(last_time)
 
         cache_data = { # all the actual data we need to save
             'df': self.df,
@@ -202,53 +213,13 @@ class ActionGenome(Dataset):
     def __len__(self):
         return len(self.df)
     
+    @abstractmethod
     def __getitem__(self, index):
         pass
 
+    @abstractmethod
     def create_labels(self, action_classes):
         pass
-
-    def create_scene_graph(self, id, action_classes, object_annotations):
-        objects = [obj for obj in object_annotations[id] if obj['visible']] # visible objects only
-
-        # unpack dict into nodes and edges, replace '/' with '_' in object classes for prolog compatibility
-        nodes = ["person"] + [obj['class'].replace('/', '_') for obj in objects]
-        nodes = [self.object_classes.index(node) for node in nodes]
-
-        edges = []
-        for i,annot in enumerate(objects):
-            for rel in annot['attention_relationship']:
-                edges.append([0, i+1, self.relationship_classes.index(rel)])
-            for rel in annot['spatial_relationship']:
-                edges.append([i+1, 0, self.relationship_classes.index(rel)])
-            for rel in annot['contacting_relationship']:
-                edges.append([0, i+1, self.relationship_classes.index(rel)])
-
-        # create data object using nodes and edges
-        node_type = torch.tensor(nodes)
-        x = F.one_hot(node_type, num_classes=len(self.object_classes)).float()
-
-        edge_index = []
-        edge_type = []
-        for src, dst, rel in edges:
-            edge_index.append([src, dst])
-            edge_type.append(rel)
-        edge_index = torch.tensor(edge_index, dtype=torch.long).t().contiguous()
-        edge_type = torch.tensor(edge_type, dtype=torch.long) # Adjust dtype as needed
-
-        edge_attr = F.one_hot(edge_type, num_classes=len(self.relationship_classes)).float()
-
-        # Create labels using subclass implementation
-        labels = self.create_labels(action_classes)
-        if labels is not None:
-            w, y, o = labels # type: ignore
-        else:
-            # Default empty labels if create_labels not implemented
-            w, y, o = torch.tensor([]), torch.tensor([]), torch.tensor([])
-
-        data = Data(x, edge_index=edge_index, edge_attr=edge_attr, \
-                    node_type=node_type, edge_type=edge_type, y=y, w=w, o=o, id=id)
-        return data
 
     def get_target_classes(self):
         """Return the appropriate target classes based on label_type."""
@@ -464,13 +435,7 @@ class SingleBothAG(ActionGenome):
                 no_img=False, subset=True, split=None, position=None, no_rules=False): # debug params
         super().__init__(cfg, no_img, subset, split, position='both', label_mode='single', no_rules=no_rules)
 
-    def create_labels(self, action_classes):
-        #in this case action_classes is a single action
-        verb_class, obj_class = self.action_verb_obj_map[action_classes]
-        w = torch.tensor([action_classes], dtype=torch.long) # only the specific action taken
-        y = torch.tensor([verb_class], dtype=torch.long)
-        o = torch.tensor([]) if obj_class is None else torch.tensor([obj_class], dtype=torch.long)
-        return w, y, o
+
 
     def __getitem__(self, index):
         row = self.df[['vid', 'pre_frame', 'post_frame', 'action']].iloc[index].values #type: ignore

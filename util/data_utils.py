@@ -2,6 +2,9 @@ import os
 import json
 import pandas as pd
 import shelve
+import torch
+import torch.nn.functional as F
+from torch_geometric.data import Data
 
 #graph stuff
 def check_edge_exists(data, edge_label, src_label, dst_label):
@@ -20,7 +23,6 @@ def check_edge_exists(data, edge_label, src_label, dst_label):
 # frame_validity_df row: {'id': '[vid]_[frame idx]', 'pre': True/False, 'post': True/False}
 # row: {'vid': [vid], 'pre_frame': [frame idx], 'post_frame': [frame idx], ...}
 def apply_subset(row, frame_validity_df, position):
-
     if position == 'pre':
         pre_id = get_id(row['vid'], row['pre_frame'])
         selection = frame_validity_df.loc[frame_validity_df['id'] == pre_id, 'pre']
@@ -78,7 +80,48 @@ def sample_df(df, num_samples, random_idxs_file):
     print(f'num_samples was given, downsampled to {len(df)} samples')
     return df
 
+def create_scene_graph(id, action_classes, object_annotations, 
+                    object_classes, relationship_classes, create_labels_func):
+    objects = [obj for obj in object_annotations[id] if obj['visible']] # visible objects only
 
+    # unpack dict into nodes and edges, replace '/' with '_' in object classes for prolog compatibility
+    nodes = ["person"] + [obj['class'].replace('/', '_') for obj in objects]
+    nodes = [object_classes.index(node) for node in nodes]
+
+    edges = []
+    for i,annot in enumerate(objects):
+        for rel in annot['attention_relationship']:
+            edges.append([0, i+1, relationship_classes.index(rel)])
+        for rel in annot['spatial_relationship']:
+            edges.append([i+1, 0, relationship_classes.index(rel)])
+        for rel in annot['contacting_relationship']:
+            edges.append([0, i+1, relationship_classes.index(rel)])
+
+    # create data object using nodes and edges
+    node_type = torch.tensor(nodes)
+    x = F.one_hot(node_type, num_classes=len(object_classes)).float()
+
+    edge_index = []
+    edge_type = []
+    for src, dst, rel in edges:
+        edge_index.append([src, dst])
+        edge_type.append(rel)
+    edge_index = torch.tensor(edge_index, dtype=torch.long).t().contiguous()
+    edge_type = torch.tensor(edge_type, dtype=torch.long) # Adjust dtype as needed
+
+    edge_attr = F.one_hot(edge_type, num_classes=len(relationship_classes)).float()
+
+    # Create labels using subclass implementation
+    labels = create_labels_func(action_classes)
+    if labels is not None:
+        w, y, o = labels # type: ignore
+    else:
+        # Default empty labels if create_labels not implemented
+        w, y, o = torch.tensor([]), torch.tensor([]), torch.tensor([])
+
+    data = Data(x, edge_index=edge_index, edge_attr=edge_attr, \
+                node_type=node_type, edge_type=edge_type, y=y, w=w, o=o, id=id)
+    return data
 
 # DEPRECATED
 '''
