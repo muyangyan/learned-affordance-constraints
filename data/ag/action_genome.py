@@ -144,6 +144,7 @@ class ActionGenome(Dataset):
 
         if subset:
             print('apply subset')
+            last_time = time.time()
             frame_validity_df = pd.read_csv(frame_validity_file)
             apply_subset_partial = partial(apply_subset, frame_validity_df=frame_validity_df, position=self.position)
             df = df[df.apply(apply_subset_partial, axis=1)]
@@ -153,12 +154,10 @@ class ActionGenome(Dataset):
         if num_samples is not None and num_samples > 0:
             df = sample_df(df, num_samples, random_idxs_file)
 
-        print('initialize priors')
         if self.split == 'train' or self.split == None:
             self.verb_priors, self.noun_priors, self.action_priors = self.compute_priors(df)
         else:
             self.verb_priors, self.noun_priors, self.action_priors = None, None, None
-        last_time = timecheck(last_time)
 
         #up until here each row is a single action, now differentiate between single and multi-label
         df = df[['vid', 'pre_frame', 'post_frame', 'action']]
@@ -171,7 +170,7 @@ class ActionGenome(Dataset):
             }).reset_index(drop=True)
         self.df = df
             
-        print('create scene graphs')
+        last_time = time.time()
         self.scene_graphs = {}
         for _, row in self.df.iterrows(): # type: ignore
             for pos in ['pre', 'post'] if self.position == 'both' else [self.position]:
@@ -181,9 +180,9 @@ class ActionGenome(Dataset):
                                         self.object_classes, self.relationship_classes,
                                         self.create_labels) #TODO: see if we can pass this in
                 self.scene_graphs[id] = data
-        last_time = timecheck(last_time)
 
         print('apply rules')
+        last_time = time.time()
         if self.no_rules:
             self.truth_values = None
         else:
@@ -382,7 +381,7 @@ class ActionGenome(Dataset):
         loads all rules and background knowledge into prolog
         '''
         bk_filename = f'bk.pl' if self.split is None else f'{self.split}_bk.pl'
-        bk_file = os.path.join(self.prolog_folder, self.position, 'learned_rules', bk_filename)
+        bk_file = os.path.join(self.prolog_folder, bk_filename)
         rule_file = os.path.join(self.prolog_folder, self.position, 'learned_rules', f'{self.rules_name}.pl')
 
         self.prolog = Prolog()
