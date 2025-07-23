@@ -106,7 +106,7 @@ class ActionGenome(Dataset):
         self.im_transform = TRANSFORM
         assert self.label_type in ['verb', 'verbnoun']
         assert self.split in ['train', 'test', 'val', None]
-        assert self.label_mode in ['single', 'multi', 'long']
+        assert self.label_mode in ['single', 'multi']
         assert self.position in ['pre', 'post', 'both']
         assert not (self.label_mode == 'multi' and self.position == 'both')
         assert not self.position == 'both' or self.no_rules

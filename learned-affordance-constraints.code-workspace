@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../../data/Datasets/ag"
+		},
+		{
+			"path": "../rdgnn_icra_2023"
+		}
+	],
+    "settings": {}
+}
