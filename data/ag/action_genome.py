@@ -28,7 +28,7 @@ from util.data_utils import (
     load_verb_whitelist,
     create_scene_graph,
 )
-from util.rule_utils import normalize_predicate_name
+from util.rule_utils import normalize_predicate_name, sanitize_frame_id
 from pyswip import Prolog
 
 def timecheck(last_time):
@@ -208,9 +208,9 @@ class ActionGenome(Dataset):
             last_time = time.time()
             self.init_prolog()
             frame_ids = [get_id(row['vid'], row[f'{self.position}_frame']) for _, row in self.df.iterrows()] # type: ignore
-            self.preconds_truth_values = [self.apply_rules(frame_id, self.normalized_precond_targets) for frame_id in frame_ids]
+            self.preconds_truth_values = [self.apply_rules(frame_id, self.normalized_precond_targets, target_type='precond') for frame_id in frame_ids]
             if self.normalized_effect_targets is not None:
-                self.effects_truth_values = [self.apply_rules(frame_id, self.normalized_effect_targets) for frame_id in frame_ids]
+                self.effects_truth_values = [self.apply_rules(frame_id, self.normalized_effect_targets, target_type='effect') for frame_id in frame_ids]
             else:
                 self.effects_truth_values = None
             self.truth_values = self.preconds_truth_values  # For backward compatibility with ActionAG
@@ -430,13 +430,14 @@ class ActionGenome(Dataset):
                     raw_df = pd.read_csv(f)
         return raw_df, split_ids, fps_dict, object_annotations
 
-    def apply_rules(self, frame_id, targets):
+    def apply_rules(self, frame_id, targets, target_type='precond'):
         truth = np.zeros(len(targets))
-        frame_atom = f"'{frame_id}_0'"
-        query = f"findall(Index, check_all_targets({frame_atom}, Index), SatisfiedIndices)"
+        frame_atom = f'x_{sanitize_frame_id(frame_id)}_0'
+        query = f"findall(Index, check_all_targets_{target_type}({frame_atom}, Index), SatisfiedIndices)"
         result = next(self.prolog.query(query), {})
         indices = result.get('SatisfiedIndices', [])
         truth[indices] = 1
+        print(indices)
         return truth
     
 class ActionAG(ActionGenome):
@@ -481,7 +482,7 @@ class ActionAG(ActionGenome):
         self.normalized_effect_targets = None
         # Create a helper predicate that checks all targets for a given frame
         for i, predicate_name in enumerate(self.normalized_precond_targets):
-            clause = f"check_all_targets(FrameId, {i}) :- {predicate_name}_target(FrameId)"
+            clause = f"check_all_targets_precond(FrameId, {i}) :- {predicate_name}_target(FrameId)"
             self.prolog.assertz(clause)
 
         self.prolog.consult(rule_file)
@@ -724,10 +725,10 @@ class SingleBothAG(ActionGenome):
         self.normalized_effect_targets = [normalize_predicate_name(pred) for pred in self.effect_classes]
         # Create a helper predicate that checks all targets for a given frame
         for i, predicate_name in enumerate(self.normalized_precond_targets):
-            clause = f"check_all_targets(FrameId, {i}) :- {predicate_name}_target(FrameId)"
+            clause = f"check_all_targets_precond(FrameId, {i}) :- {predicate_name}_target(FrameId)"
             self.prolog.assertz(clause)
         for i, predicate_name in enumerate(self.normalized_effect_targets):
-            clause = f"check_all_targets(FrameId, {i}) :- {predicate_name}_target(FrameId)"
+            clause = f"check_all_targets_effect(FrameId, {i}) :- {predicate_name}_target(FrameId)"
             self.prolog.assertz(clause)
 
         self.prolog.consult(precond_rule_file)
