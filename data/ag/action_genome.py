@@ -155,10 +155,13 @@ class ActionGenome(Dataset):
         if num_samples is not None and num_samples > 0:
             df = sample_df(df, num_samples, random_idxs_file)
 
+        print('compute action priors')
+        last_time = time.time()
         if self.split == 'train' or self.split == None:
-            self.verb_priors, self.noun_priors, self.action_priors = self.compute_priors(df)
+            self.verb_priors, self.noun_priors, self.action_priors = self.compute_action_priors(df)
         else:
             self.verb_priors, self.noun_priors, self.action_priors = None, None, None
+        last_time = timecheck(last_time)
 
         #up until here each row is a single action, now differentiate between single and multi-label
         df = df[['vid', 'pre_frame', 'post_frame', 'action']]
@@ -171,7 +174,6 @@ class ActionGenome(Dataset):
             }).reset_index(drop=True)
         self.df = df
             
-        last_time = time.time()
         self.scene_graphs = {}
         self.timesteps = {}  # Store timesteps for each frame ID
         
@@ -192,15 +194,27 @@ class ActionGenome(Dataset):
                                         self.create_labels) #TODO: see if we can pass this in
                 self.scene_graphs[id] = data
 
-        print('apply rules')
+        print('compute relationship priors')
         last_time = time.time()
+        self.relationship_priors = self.compute_relationship_priors()
+        last_time = timecheck(last_time)
+
         if self.no_rules:
-            self.truth_values = None
+            self.preconds_truth_values = None
+            self.effects_truth_values = None
+            self.truth_values = None  # For backward compatibility
         else:
+            print('apply rules')
+            last_time = time.time()
             self.init_prolog()
             frame_ids = [get_id(row['vid'], row[f'{self.position}_frame']) for _, row in self.df.iterrows()] # type: ignore
-            self.truth_values = [self.apply_rules_single(frame_id) for frame_id in frame_ids]
-        last_time = timecheck(last_time)
+            self.preconds_truth_values = [self.apply_rules(frame_id, self.normalized_precond_targets) for frame_id in frame_ids]
+            if self.normalized_effect_targets is not None:
+                self.effects_truth_values = [self.apply_rules(frame_id, self.normalized_effect_targets) for frame_id in frame_ids]
+            else:
+                self.effects_truth_values = None
+            self.truth_values = self.preconds_truth_values  # For backward compatibility with ActionAG
+            last_time = timecheck(last_time)
 
         cache_data = { # all the actual data we need to save
             'df': self.df,
@@ -214,10 +228,12 @@ class ActionGenome(Dataset):
             'verb_mapper': self.verb_mapper,
             'action_verb_obj_map': self.action_verb_obj_map,
             'verb_result_rel_map': self.verb_result_rel_map,
-            'truth_values': self.truth_values,
+            'preconds_truth_values': self.preconds_truth_values,
+            'effects_truth_values': self.effects_truth_values,
             'verb_priors': self.verb_priors,
             'noun_priors': self.noun_priors,
             'action_priors': self.action_priors,
+            'relationship_priors': self.relationship_priors,
         }
         self._save_to_cache(cache_file, cache_data)
 
@@ -232,7 +248,7 @@ class ActionGenome(Dataset):
     def create_labels(self, action_classes):
         pass
 
-    def compute_priors(self, single_df):
+    def compute_action_priors(self, single_df):
         length = len(single_df)
 
         # Expand actions into verb, nouns. Used only for priors.
@@ -260,8 +276,23 @@ class ActionGenome(Dataset):
             if i not in action_counts:
                 action_counts[i] = 0
         action_priors = np.array([action_counts[action]/length for action in action_counts])
-        
+
         return verb_priors, noun_priors, action_priors
+    
+    def compute_relationship_priors(self):
+        # Compute relationship priors
+        rel_counts = [0] * len(self.relationship_classes)
+        total_pairs = 0
+        for sg in self.scene_graphs.values():
+            num_nodes = sg.x.shape[0] if sg.x is not None else 0
+            if num_nodes > 1:
+                total_pairs += num_nodes * (num_nodes - 1)
+                if hasattr(sg, 'edge_type') and sg.edge_type is not None:
+                    for edge_type in sg.edge_type:
+                        if 0 <= edge_type < len(self.relationship_classes):
+                            rel_counts[edge_type] += 1
+        rel_priors = np.array([count / max(1, total_pairs) for count in rel_counts])
+        return rel_priors
 
     def init_vocab(self, verb_whitelist_file):
 
@@ -370,23 +401,9 @@ class ActionGenome(Dataset):
             'take' : ['holding', 'carrying', 'touching'],
         }
     
+    @abstractmethod
     def init_prolog(self):
-        '''
-        loads all rules and background knowledge into prolog
-        '''
-        bk_filename = f'bk.pl' if self.split is None else f'{self.split}_bk.pl'
-        bk_file = os.path.join(self.prolog_folder, bk_filename)
-        rule_file = os.path.join(self.prolog_folder, self.position, 'learned_rules', f'{self.rules_name}.pl')
-
-        self.prolog = Prolog()
-        self.normalized_targets = [normalize_predicate_name(pred) for pred in self.get_target_classes()]
-        # Create a helper predicate that checks all targets for a given frame
-        for i, predicate_name in enumerate(self.normalized_targets):
-            clause = f"check_all_targets(FrameId, {i}) :- {predicate_name}_target(FrameId)"
-            self.prolog.assertz(clause)
-
-        self.prolog.consult(rule_file)
-        self.prolog.consult(bk_file)
+        pass
 
     def load_annotations(self, split_file):
         with open(os.path.join(self.root, 'annotations/object_bbox_and_relationship.pkl'), 'rb') as f:
@@ -413,15 +430,15 @@ class ActionGenome(Dataset):
                     raw_df = pd.read_csv(f)
         return raw_df, split_ids, fps_dict, object_annotations
 
-    def apply_rules_single(self, frame_id):
-        truth = np.zeros(len(self.normalized_targets))
+    def apply_rules(self, frame_id, targets):
+        truth = np.zeros(len(targets))
         frame_atom = f"'{frame_id}_0'"
         query = f"findall(Index, check_all_targets({frame_atom}, Index), SatisfiedIndices)"
         result = next(self.prolog.query(query), {})
         indices = result.get('SatisfiedIndices', [])
         truth[indices] = 1
         return truth
-
+    
 class ActionAG(ActionGenome):
     """
     ActionGenome variant for action prediction tasks.
@@ -450,12 +467,37 @@ class ActionAG(ActionGenome):
             return self.action_priors
         else:
             raise ValueError(f"Unsupported label_type: {self.label_type}")
+    
+    def init_prolog(self):
+        '''
+        loads all rules and background knowledge into prolog
+        '''
+        bk_filename = f'bk.pl' if self.split is None else f'{self.split}_bk.pl'
+        bk_file = os.path.join(self.prolog_folder, bk_filename)
+        rule_file = os.path.join(self.prolog_folder, self.position, 'learned_rules', f'{self.rules_name}.pl')
+
+        self.prolog = Prolog()
+        self.normalized_precond_targets = [normalize_predicate_name(pred) for pred in self.get_target_classes()]
+        self.normalized_effect_targets = None
+        # Create a helper predicate that checks all targets for a given frame
+        for i, predicate_name in enumerate(self.normalized_precond_targets):
+            clause = f"check_all_targets(FrameId, {i}) :- {predicate_name}_target(FrameId)"
+            self.prolog.assertz(clause)
+
+        self.prolog.consult(rule_file)
+        self.prolog.consult(bk_file)
+
 
 class SingleBothAG(ActionGenome):
 
     def __init__(self, cfg,
                 no_img=False, subset=True, split=None, position=None, no_rules=False): # debug params
         super().__init__(cfg, no_img, subset, split, position='both', label_mode='single', no_rules=no_rules)
+
+        #create effect classes 
+        add_effect_classes = [f'add_{pred}' for pred in self.relationship_classes]
+        del_effect_classes = [f'del_{pred}' for pred in self.relationship_classes]
+        self.effect_classes = add_effect_classes + del_effect_classes
 
     def create_labels(self, action_classes):
         #in this case action_classes is a single action  
@@ -489,12 +531,20 @@ class SingleBothAG(ActionGenome):
             pre_image = Image.open(pre_image_path).convert('RGB')
             post_image = Image.open(post_image_path).convert('RGB')
 
-        if self.truth_values is not None:
-            pre_truth_values = torch.tensor(self.truth_values[index]).float()
-            post_truth_values = torch.tensor(self.truth_values[index]).float()
-        else: 
-            pre_truth_values = None
-            post_truth_values = None
+        # Get both precondition and effect truth values for SingleBothAG
+        if self.preconds_truth_values is not None:
+            pre_preconds_truth_values = torch.tensor(self.preconds_truth_values[index]).float()
+            post_preconds_truth_values = torch.tensor(self.preconds_truth_values[index]).float()
+        else:
+            pre_preconds_truth_values = None
+            post_preconds_truth_values = None
+            
+        if self.effects_truth_values is not None:
+            pre_effects_truth_values = torch.tensor(self.effects_truth_values[index]).float()
+            post_effects_truth_values = torch.tensor(self.effects_truth_values[index]).float()
+        else:
+            pre_effects_truth_values = None
+            post_effects_truth_values = None
 
         # Always compute all labels
         verb_class, obj_class = self.action_verb_obj_map[action_class]
@@ -506,7 +556,9 @@ class SingleBothAG(ActionGenome):
             'verb_label': verb_class,
             'object_label': obj_class,
             'action_label': action_class,
-            'truth_values': pre_truth_values,
+            'preconds_truth_values': pre_preconds_truth_values,
+            'effects_truth_values': pre_effects_truth_values,
+            'truth_values': pre_preconds_truth_values,  # For compatibility
             'timestep': pre_timestep
         }
         post_data = {
@@ -516,7 +568,9 @@ class SingleBothAG(ActionGenome):
             'verb_label': verb_class,
             'object_label': obj_class,
             'action_label': action_class,
-            'truth_values': post_truth_values,
+            'preconds_truth_values': post_preconds_truth_values,
+            'effects_truth_values': post_effects_truth_values,
+            'truth_values': post_preconds_truth_values,  # For compatibility
             'timestep': post_timestep
         }
         
@@ -594,14 +648,16 @@ class SingleBothAG(ActionGenome):
         pre_images = [item['image'] for item in pre_batch]
         pre_scene_graphs = [item['scene_graph'] for item in pre_batch]
         action_labels = [item['action_label'] for item in pre_batch]
-        pre_truth_values = [item['truth_values'] for item in pre_batch]
+        pre_preconds_truth_values = [item['preconds_truth_values'] for item in pre_batch]
+        pre_effects_truth_values = [item['effects_truth_values'] for item in pre_batch]
         pre_timesteps = [item['timestep'] for item in pre_batch]
         
         # Extract from post_batch (next state - target)
         post_ids = [item['id'] for item in post_batch]
         post_images = [item['image'] for item in post_batch]
         post_scene_graphs = [item['scene_graph'] for item in post_batch]
-        post_truth_values = [item['truth_values'] for item in post_batch]
+        post_preconds_truth_values = [item['preconds_truth_values'] for item in post_batch]
+        post_effects_truth_values = [item['effects_truth_values'] for item in post_batch]
         post_timesteps = [item['timestep'] for item in post_batch]
         
         # Batch scene graphs
@@ -621,12 +677,20 @@ class SingleBothAG(ActionGenome):
             post_resized_images = [self.im_transform(img) for img in post_images]
             post_resized_images = torch.stack(post_resized_images)
         
-        if self.truth_values is not None:
-            pre_truth_values = torch.stack(pre_truth_values)
-            post_truth_values = torch.stack(post_truth_values)
+        # Stack truth values if they exist
+        if pre_preconds_truth_values[0] is not None:
+            pre_preconds_truth_values = torch.stack(pre_preconds_truth_values)
+            post_preconds_truth_values = torch.stack(post_preconds_truth_values)
         else:
-            pre_truth_values = None
-            post_truth_values = None
+            pre_preconds_truth_values = None
+            post_preconds_truth_values = None
+            
+        if pre_effects_truth_values[0] is not None:
+            pre_effects_truth_values = torch.stack(pre_effects_truth_values)
+            post_effects_truth_values = torch.stack(post_effects_truth_values)
+        else:
+            pre_effects_truth_values = None
+            post_effects_truth_values = None
 
         return {
             'ids': ids,
@@ -636,21 +700,48 @@ class SingleBothAG(ActionGenome):
             'pre_scene_graphs': pre_sg_batch,
             'post_scene_graphs': post_sg_batch,
             'action_labels': action_one_hot,
-            'pre_truth_values': pre_truth_values,
-            'post_truth_values': post_truth_values,
-            'truth_values': pre_truth_values,  # for compatibility
+            'pre_preconds_truth_values': pre_preconds_truth_values,
+            'post_preconds_truth_values': post_preconds_truth_values,
+            'pre_effects_truth_values': pre_effects_truth_values,
+            'post_effects_truth_values': post_effects_truth_values,
+            'truth_values': pre_preconds_truth_values,  # for compatibility
             'pre_timesteps': torch.tensor(pre_timesteps, dtype=torch.float),
             'post_timesteps': torch.tensor(post_timesteps, dtype=torch.float),
             'timesteps': torch.tensor(pre_timesteps, dtype=torch.float)  # for compatibility
         }
+    
+    def init_prolog(self):
+        '''
+        loads all rules and background knowledge into prolog
+        '''
+        bk_filename = f'bk.pl' if self.split is None else f'{self.split}_bk.pl'
+        bk_file = os.path.join(self.prolog_folder, bk_filename)
+        precond_rule_file = os.path.join(self.prolog_folder, 'pre', 'learned_rules', f'{self.rules_name}.pl')
+        effect_rule_file = os.path.join(self.prolog_folder, 'post', 'learned_rules', f'{self.rules_name}.pl')
+
+        self.prolog = Prolog()
+        self.normalized_precond_targets = [normalize_predicate_name(pred) for pred in self.verb_classes]
+        self.normalized_effect_targets = [normalize_predicate_name(pred) for pred in self.effect_classes]
+        # Create a helper predicate that checks all targets for a given frame
+        for i, predicate_name in enumerate(self.normalized_precond_targets):
+            clause = f"check_all_targets(FrameId, {i}) :- {predicate_name}_target(FrameId)"
+            self.prolog.assertz(clause)
+        for i, predicate_name in enumerate(self.normalized_effect_targets):
+            clause = f"check_all_targets(FrameId, {i}) :- {predicate_name}_target(FrameId)"
+            self.prolog.assertz(clause)
+
+        self.prolog.consult(precond_rule_file)
+        self.prolog.consult(effect_rule_file)
+        self.prolog.consult(bk_file)
 
     def get_target_classes(self):
-        """Return classes for state prediction - same as action classes for compatibility."""
-        return self.action_classes
+        return self.relationship_classes
     
     def get_target_priors(self):
-        """Return priors for state prediction - same as action priors for compatibility."""
-        return self.action_priors
+        return self.get_relationship_priors()
+
+    def get_relationship_priors(self):
+        return self.relationship_priors
 
 class SingleAG(ActionAG):
 

@@ -95,6 +95,10 @@ def test_stateleapr(config_path):
     print("Creating StateLeaPR model...")
     model = StateLeaPR(cfg, model_params)
     
+    # Set loss weights based on relationship priors
+    relationship_priors = dataset.get_relationship_priors()
+    model.set_loss_weights(relationship_priors)
+    
     print("Running prediction test...")
     model.eval()
     with torch.no_grad():

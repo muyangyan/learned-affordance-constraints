@@ -23,7 +23,7 @@ ilp:
 model:
   type: 'simple_state_transition' # joint, rgcn, vit, simple_state_transition, rdgnn
   weight_scheme: 'uniform' # uniform, inverse, invsqrt
-  rel_pos_weight: 10
+  rel_pos_weight: 2
 
 
 rules: # used in training time as well
@@ -34,7 +34,7 @@ rules: # used in training time as well
 train:
   epochs: 30
   batch_size: 16
-  devices: [0,1,2,3,4]
+  devices: [4,5,6,7]
   lr: 1e-3
 
 test:

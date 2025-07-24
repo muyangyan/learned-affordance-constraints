@@ -319,13 +319,10 @@ class StateLeaPR(L.LightningModule):
         # State prediction specific setup
         self.model_type = cfg.model.type
         self.nn_model = get_model(self.model_type, model_params)
-        # Loss function for multi-label edge classification with uniform weighting
-        rel_pos_weight = getattr(cfg.model, 'rel_pos_weight', 1.0)
-        pos_weight = torch.full((model_params['num_relations'],), rel_pos_weight)
-        self.criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight)
+        # Loss function for multi-label edge classification (will be set with priors)
+        self.criterion = None  # Will be set when relationship priors are available
         self.edge_threshold = 0.5  # Threshold for edge prediction
-        
-        print(f"Using uniform pos_weight={rel_pos_weight} for all {model_params['num_relations']} relationship types")
+        self.rel_pos_weight_factor = getattr(cfg.model, 'rel_pos_weight', 1.0)  # Scaling factor
         
         # Initialize metrics for multi-label edge prediction
         self.train_edge_metrics = MetricCollection({
@@ -333,6 +330,7 @@ class StateLeaPR(L.LightningModule):
             'edge_recall': Recall(task='multilabel', num_labels=model_params['num_relations'], average='macro'),
             'edge_f1': F1Score(task='multilabel', num_labels=model_params['num_relations'], average='macro'),
             'edge_accuracy': Accuracy(task='multilabel', num_labels=model_params['num_relations']),
+            'edge_mAP': AveragePrecision(task='multilabel', num_labels=model_params['num_relations'], average='macro'),
         })
         
         self.val_edge_metrics = MetricCollection({
@@ -340,6 +338,7 @@ class StateLeaPR(L.LightningModule):
             'edge_recall': Recall(task='multilabel', num_labels=model_params['num_relations'], average='macro'),
             'edge_f1': F1Score(task='multilabel', num_labels=model_params['num_relations'], average='macro'),
             'edge_accuracy': Accuracy(task='multilabel', num_labels=model_params['num_relations']),
+            'edge_mAP': AveragePrecision(task='multilabel', num_labels=model_params['num_relations'], average='macro'),
         })
         
         # Track edge statistics
@@ -351,6 +350,30 @@ class StateLeaPR(L.LightningModule):
         }
         
         self.save_hyperparameters()
+    
+    def set_loss_weights(self, relationship_priors):
+        """Set BCEWithLogitsLoss with pos_weight based on relationship priors"""
+        if relationship_priors is None:
+            print("No relationship priors available, using uniform pos_weight")
+            pos_weight = torch.full((self.nn_model.num_relations,), self.rel_pos_weight_factor)
+        else:
+            # Calculate pos_weight as ((1 - prior) / prior) * scaling_factor
+            pos_weight = []
+            for prior in relationship_priors:
+                if prior < 1e-8:  # Handle very rare/missing relationships
+                    weight = 100.0 * self.rel_pos_weight_factor
+                else:
+                    weight = ((1.0 - prior) / prior) * self.rel_pos_weight_factor
+                    weight = min(weight, 100.0)  # Cap extreme weights
+                pos_weight.append(weight)
+            pos_weight = torch.tensor(pos_weight, dtype=torch.float32)
+            print(f"Relationship priors-based pos_weights (factor={self.rel_pos_weight_factor}):")
+            for i, (prior, weight) in enumerate(zip(relationship_priors, pos_weight)):
+                if prior > 0:
+                    print(f"  Rel {i}: prior={prior:.6f}, pos_weight={weight:.2f}")
+        
+        self.criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight)
+        print(f"Set BCEWithLogitsLoss with {len(pos_weight)} pos_weights")
 
     def compute_edge_classification_loss(self, edge_logits_data, target_graph, num_relations):
         """
@@ -396,6 +419,9 @@ class StateLeaPR(L.LightningModule):
                     for edge_type in target_edges[(src, tgt)]:
                         if 0 <= edge_type < num_relations:
                             target_labels[pair_idx, edge_type] = 1.0
+        
+        if self.criterion is None:
+            raise ValueError("Loss criterion not initialized. Call set_loss_weights() first.")
         
         return self.criterion(all_logits, target_labels)
     
@@ -466,6 +492,7 @@ class StateLeaPR(L.LightningModule):
         train_acc = self.trainer.callback_metrics.get('train_edge_acc', 0.0)
         train_prec = self.trainer.callback_metrics.get('train_edge_prec', 0.0) 
         train_recall = self.trainer.callback_metrics.get('train_edge_recall', 0.0)
+        train_mAP = self.trainer.callback_metrics.get('train_edge_mAP', 0.0)
         train_actual = self.trainer.callback_metrics.get('train_actual_edges', 0.0)
         train_predicted = self.trainer.callback_metrics.get('train_predicted_edges', 0.0)
         
@@ -473,6 +500,7 @@ class StateLeaPR(L.LightningModule):
         print(f"  Edge Accuracy: {train_acc:.4f}")
         print(f"  Edge Precision: {train_prec:.4f}")
         print(f"  Edge Recall: {train_recall:.4f}")
+        print(f"  Edge mAP: {train_mAP:.4f}")
         print(f"  Avg Actual Edges per batch: {train_actual:.1f}")
         print(f"  Avg Predicted Edges per batch: {train_predicted:.1f}")
     
@@ -481,6 +509,7 @@ class StateLeaPR(L.LightningModule):
         val_acc = self.trainer.callback_metrics.get('val_edge_acc', 0.0)
         val_prec = self.trainer.callback_metrics.get('val_edge_prec', 0.0)
         val_recall = self.trainer.callback_metrics.get('val_edge_recall', 0.0)
+        val_mAP = self.trainer.callback_metrics.get('val_edge_mAP', 0.0)
         val_actual = self.trainer.callback_metrics.get('val_actual_edges', 0.0)
         val_predicted = self.trainer.callback_metrics.get('val_predicted_edges', 0.0)
         
@@ -488,6 +517,7 @@ class StateLeaPR(L.LightningModule):
         print(f"  Edge Accuracy: {val_acc:.4f}")
         print(f"  Edge Precision: {val_prec:.4f}")
         print(f"  Edge Recall: {val_recall:.4f}")
+        print(f"  Edge mAP: {val_mAP:.4f}")
         print(f"  Avg Actual Edges per batch: {val_actual:.1f}")
         print(f"  Avg Predicted Edges per batch: {val_predicted:.1f}")
         print("-" * 50)
@@ -529,6 +559,7 @@ class StateLeaPR(L.LightningModule):
             self.log('train_edge_acc', edge_metrics.get('edge_accuracy', 0.0), on_step=False, on_epoch=True, prog_bar=True)
             self.log('train_edge_prec', edge_metrics.get('edge_precision', 0.0), on_step=False, on_epoch=True)
             self.log('train_edge_recall', edge_metrics.get('edge_recall', 0.0), on_step=False, on_epoch=True)
+            self.log('train_edge_mAP', edge_metrics.get('edge_mAP', 0.0), on_step=False, on_epoch=True, prog_bar=True)
             self.log('train_actual_edges', float(edge_metrics.get('actual_edges', 0)), on_step=False, on_epoch=True)
             self.log('train_predicted_edges', float(edge_metrics.get('predicted_edges', 0)), on_step=False, on_epoch=True)
         
@@ -550,6 +581,7 @@ class StateLeaPR(L.LightningModule):
             self.log('val_edge_acc', edge_metrics.get('edge_accuracy', 0.0), on_step=False, on_epoch=True, prog_bar=True)
             self.log('val_edge_prec', edge_metrics.get('edge_precision', 0.0), on_step=False, on_epoch=True, prog_bar=True)
             self.log('val_edge_recall', edge_metrics.get('edge_recall', 0.0), on_step=False, on_epoch=True, prog_bar=True)
+            self.log('val_edge_mAP', edge_metrics.get('edge_mAP', 0.0), on_step=False, on_epoch=True, prog_bar=True)
             self.log('val_actual_edges', float(edge_metrics.get('actual_edges', 0)), on_step=False, on_epoch=True)
             self.log('val_predicted_edges', float(edge_metrics.get('predicted_edges', 0)), on_step=False, on_epoch=True)
 

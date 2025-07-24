@@ -49,6 +49,11 @@ def init_stateleapr_model(cfg, train_set):
     print(f"  Num relations: {model_params['num_relations']}")
     
     model = StateLeaPR(cfg, model_params)
+    
+    # Set loss weights based on relationship priors
+    relationship_priors = train_set.get_relationship_priors()
+    model.set_loss_weights(relationship_priors)
+    
     return model
 
 def train_stateleapr(cfg, run_name):
