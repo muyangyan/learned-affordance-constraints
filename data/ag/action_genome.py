@@ -104,7 +104,7 @@ class ActionGenome(Dataset):
         self.no_img = no_img
         self.split = split
         self.im_transform = TRANSFORM
-        assert self.label_type in ['verb', 'verbnoun']
+        assert self.label_type in ['verb', 'verbnoun', 'state']
         assert self.split in ['train', 'test', 'val', None]
         assert self.label_mode in ['single', 'multi']
         assert self.position in ['pre', 'post', 'both']
@@ -149,6 +149,7 @@ class ActionGenome(Dataset):
             apply_subset_partial = partial(apply_subset, frame_validity_df=frame_validity_df, position=self.position)
             df = df[df.apply(apply_subset_partial, axis=1)]
             last_time = timecheck(last_time)
+        print(f'total samples: {len(df)}')
 
         # FOR SAMPLE EFFICIENCY EXPERIMENTS
         if num_samples is not None and num_samples > 0:
@@ -172,9 +173,19 @@ class ActionGenome(Dataset):
             
         last_time = time.time()
         self.scene_graphs = {}
+        self.timesteps = {}  # Store timesteps for each frame ID
+        
         for _, row in self.df.iterrows(): # type: ignore
             for pos in ['pre', 'post'] if self.position == 'both' else [self.position]:
                 id = get_id(row['vid'], row[f'{pos}_frame'])
+                
+                # Compute timestep for this frame
+                video_id = row['vid']
+                frame_number = row[f'{pos}_frame']
+                fps = fps_dict[video_id]  # Default to 30 fps if not found
+                timestep = frame_number / fps
+                self.timesteps[id] = timestep
+                
                 action_classes = row['action']
                 data = create_scene_graph(id, action_classes, object_annotations, 
                                         self.object_classes, self.relationship_classes,
@@ -194,6 +205,7 @@ class ActionGenome(Dataset):
         cache_data = { # all the actual data we need to save
             'df': self.df,
             'scene_graphs': self.scene_graphs,
+            'timesteps': self.timesteps,
             'verb_classes': self.verb_classes,
             'action_classes': self.action_classes,
             'object_classes': self.object_classes,
@@ -219,24 +231,6 @@ class ActionGenome(Dataset):
     @abstractmethod
     def create_labels(self, action_classes):
         pass
-
-    def get_target_classes(self):
-        """Return the appropriate target classes based on label_type."""
-        if self.label_type == 'verb':
-            return self.verb_classes
-        elif self.label_type == 'verbnoun':
-            return self.action_classes
-        else:
-            raise ValueError(f"Unsupported label_type: {self.label_type}")
-    
-    def get_target_priors(self):
-        """Return the appropriate priors based on label_type."""
-        if self.label_type == 'verb':
-            return self.verb_priors
-        elif self.label_type == 'verbnoun':
-            return self.action_priors
-        else:
-            raise ValueError(f"Unsupported label_type: {self.label_type}")
 
     def compute_priors(self, single_df):
         length = len(single_df)
@@ -428,13 +422,48 @@ class ActionGenome(Dataset):
         truth[indices] = 1
         return truth
 
+class ActionAG(ActionGenome):
+    """
+    ActionGenome variant for action prediction tasks.
+    Inherits from ActionGenome and adds action-prediction specific functionality.
+    """
+    
+    def __init__(self, cfg, no_img=False, subset=True, split=None, position=None, label_mode='single', no_rules=False):
+        # Ensure action prediction specific assertions
+        assert cfg.data.label_type in ['verb', 'verbnoun'], f"ActionAG supports only 'verb' or 'verbnoun', got {cfg.data.label_type}"
+        super().__init__(cfg, no_img, subset, split, position, label_mode, no_rules)
+
+    def get_target_classes(self):
+        """Return the appropriate target classes based on label_type."""
+        if self.label_type == 'verb':
+            return self.verb_classes
+        elif self.label_type == 'verbnoun':
+            return self.action_classes
+        else:
+            raise ValueError(f"Unsupported label_type: {self.label_type}")
+    
+    def get_target_priors(self):
+        """Return the appropriate priors based on label_type."""
+        if self.label_type == 'verb':
+            return self.verb_priors
+        elif self.label_type == 'verbnoun':
+            return self.action_priors
+        else:
+            raise ValueError(f"Unsupported label_type: {self.label_type}")
+
 class SingleBothAG(ActionGenome):
 
     def __init__(self, cfg,
                 no_img=False, subset=True, split=None, position=None, no_rules=False): # debug params
         super().__init__(cfg, no_img, subset, split, position='both', label_mode='single', no_rules=no_rules)
 
-
+    def create_labels(self, action_classes):
+        #in this case action_classes is a single action  
+        verb_class, obj_class = self.action_verb_obj_map[action_classes]
+        w = torch.tensor([action_classes], dtype=torch.long) # only the specific action taken
+        y = torch.tensor([verb_class], dtype=torch.long)
+        o = torch.tensor([]) if obj_class is None else torch.tensor([obj_class], dtype=torch.long)
+        return w, y, o
 
     def __getitem__(self, index):
         row = self.df[['vid', 'pre_frame', 'post_frame', 'action']].iloc[index].values #type: ignore
@@ -446,6 +475,10 @@ class SingleBothAG(ActionGenome):
 
         pre_scene_graph = self.scene_graphs[pre_id]
         post_scene_graph = self.scene_graphs[post_id]
+
+        # Get timesteps for both frames
+        pre_timestep = self.timesteps[pre_id]
+        post_timestep = self.timesteps[post_id]
 
         if self.no_img:
             pre_image = None
@@ -473,7 +506,8 @@ class SingleBothAG(ActionGenome):
             'verb_label': verb_class,
             'object_label': obj_class,
             'action_label': action_class,
-            'truth_values': pre_truth_values
+            'truth_values': pre_truth_values,
+            'timestep': pre_timestep
         }
         post_data = {
             'id': post_id,
@@ -482,7 +516,8 @@ class SingleBothAG(ActionGenome):
             'verb_label': verb_class,
             'object_label': obj_class,
             'action_label': action_class,
-            'truth_values': post_truth_values
+            'truth_values': post_truth_values,
+            'timestep': post_timestep
         }
         
         return pre_data, post_data
@@ -504,6 +539,7 @@ class SingleBothAG(ActionGenome):
         object_labels = [item['object_label'] for item in pre_batch]
         action_labels = [item['action_label'] for item in pre_batch]
         truth_values = [item['truth_values'] for item in pre_batch]
+        timesteps = [item['timestep'] for item in pre_batch]
         
         sg_batch = Batch.from_data_list(scene_graphs, exclude_keys=['o'])
         
@@ -541,11 +577,83 @@ class SingleBothAG(ActionGenome):
             'verb_labels': verb_one_hot,
             'object_labels': object_one_hot,
             'action_labels': action_one_hot,
-            'truth_values': truth_values
+            'truth_values': truth_values,
+            'timesteps': torch.tensor(timesteps, dtype=torch.float)
         }
         
-class SingleAG(ActionGenome):
+    def state_collate(self, batch):
+        """
+        Collate function for state prediction using StateLeaPR.
+        Returns both pre and post scene graphs for state transition modeling.
+        """
+        # batch is a list of (pre_data, post_data) tuples
+        pre_batch, post_batch = zip(*batch)
+        
+        # Extract from pre_batch (previous state)
+        ids = [item['id'] for item in pre_batch]
+        pre_images = [item['image'] for item in pre_batch]
+        pre_scene_graphs = [item['scene_graph'] for item in pre_batch]
+        action_labels = [item['action_label'] for item in pre_batch]
+        pre_truth_values = [item['truth_values'] for item in pre_batch]
+        pre_timesteps = [item['timestep'] for item in pre_batch]
+        
+        # Extract from post_batch (next state - target)
+        post_ids = [item['id'] for item in post_batch]
+        post_images = [item['image'] for item in post_batch]
+        post_scene_graphs = [item['scene_graph'] for item in post_batch]
+        post_truth_values = [item['truth_values'] for item in post_batch]
+        post_timesteps = [item['timestep'] for item in post_batch]
+        
+        # Batch scene graphs
+        pre_sg_batch = Batch.from_data_list(pre_scene_graphs, exclude_keys=['o'])
+        post_sg_batch = Batch.from_data_list(post_scene_graphs, exclude_keys=['o'])
+        
+        # Convert action labels to one-hot tensors
+        action_tensor = torch.tensor(action_labels, dtype=torch.long)
+        action_one_hot = F.one_hot(action_tensor, len(self.action_classes)).float()
+        
+        if self.no_img:
+            pre_resized_images = None
+            post_resized_images = None
+        else:
+            pre_resized_images = [self.im_transform(img) for img in pre_images]
+            pre_resized_images = torch.stack(pre_resized_images)
+            post_resized_images = [self.im_transform(img) for img in post_images]
+            post_resized_images = torch.stack(post_resized_images)
+        
+        if self.truth_values is not None:
+            pre_truth_values = torch.stack(pre_truth_values)
+            post_truth_values = torch.stack(post_truth_values)
+        else:
+            pre_truth_values = None
+            post_truth_values = None
+
+        return {
+            'ids': ids,
+            'post_ids': post_ids,
+            'pre_images': pre_resized_images,
+            'post_images': post_resized_images,
+            'pre_scene_graphs': pre_sg_batch,
+            'post_scene_graphs': post_sg_batch,
+            'action_labels': action_one_hot,
+            'pre_truth_values': pre_truth_values,
+            'post_truth_values': post_truth_values,
+            'truth_values': pre_truth_values,  # for compatibility
+            'pre_timesteps': torch.tensor(pre_timesteps, dtype=torch.float),
+            'post_timesteps': torch.tensor(post_timesteps, dtype=torch.float),
+            'timesteps': torch.tensor(pre_timesteps, dtype=torch.float)  # for compatibility
+        }
+
+    def get_target_classes(self):
+        """Return classes for state prediction - same as action classes for compatibility."""
+        return self.action_classes
     
+    def get_target_priors(self):
+        """Return priors for state prediction - same as action priors for compatibility."""
+        return self.action_priors
+
+class SingleAG(ActionAG):
+
     def __init__(self, cfg,
                 no_img=False, subset=True, split=None, position=None, no_rules=False): # debug params
         super().__init__(cfg, no_img, subset, split, position, label_mode='single', no_rules=no_rules)
@@ -565,6 +673,7 @@ class SingleAG(ActionGenome):
 
         id = get_id(video_id, frame_idx)
         scene_graph = self.scene_graphs[id]
+        timestep = self.timesteps[id]
 
         if self.no_img:
             image = None
@@ -587,7 +696,8 @@ class SingleAG(ActionGenome):
             'verb_label': verb_class,
             'object_label': obj_class,
             'action_label': action_classes,
-            'truth_values': truth_values
+            'truth_values': truth_values,
+            'timestep': timestep
         }
 
     def pred_collate(self, batch):
@@ -603,6 +713,7 @@ class SingleAG(ActionGenome):
         object_labels = [item['object_label'] for item in batch]
         action_labels = [item['action_label'] for item in batch]
         truth_values = [item['truth_values'] for item in batch]
+        timesteps = [item['timestep'] for item in batch]
         
         sg_batch = Batch.from_data_list(scene_graphs, exclude_keys=['o'])
         
@@ -640,10 +751,11 @@ class SingleAG(ActionGenome):
             'verb_labels': verb_one_hot,
             'object_labels': object_one_hot,
             'action_labels': action_one_hot,
-            'truth_values': truth_values
+            'truth_values': truth_values,
+            'timesteps': torch.tensor(timesteps, dtype=torch.float)
         }
 
-class MultiAG(ActionGenome):
+class MultiAG(ActionAG):
     
     def __init__(self, cfg,
                 no_img=False, subset=True, split=None, position=None, no_rules=False): # debug params
@@ -663,6 +775,7 @@ class MultiAG(ActionGenome):
 
         id = get_id(video_id, frame_idx)
         scene_graph = self.scene_graphs[id]
+        timestep = self.timesteps[id]
 
         if self.no_img:
             image = None
@@ -685,7 +798,8 @@ class MultiAG(ActionGenome):
             'verb_labels': list(verb_classes),
             'object_labels': list(obj_classes),
             'action_labels': action_classes, # list of action indices
-            'truth_values': truth_values
+            'truth_values': truth_values,
+            'timestep': timestep
         }
 
     def pred_collate(self, batch):
@@ -701,6 +815,7 @@ class MultiAG(ActionGenome):
         object_labels_list = [item['object_labels'] for item in batch]
         action_labels_list = [item['action_labels'] for item in batch]
         truth_values = [item['truth_values'] for item in batch]
+        timesteps = [item['timestep'] for item in batch]
         
         sg_batch = Batch.from_data_list(scene_graphs, exclude_keys=['o'])
         
@@ -740,7 +855,8 @@ class MultiAG(ActionGenome):
             'verb_labels': verb_labels,
             'object_labels': object_labels,
             'action_labels': action_labels,
-            'truth_values': truth_values
+            'truth_values': truth_values,
+            'timesteps': torch.tensor(timesteps, dtype=torch.float)
         }
 
 

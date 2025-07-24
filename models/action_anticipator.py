@@ -11,7 +11,7 @@ from util.rule_utils import get_rule_precisions_recalls
 import pytorch_lightning as L 
 
 from torchmetrics import MetricCollection
-from torchmetrics import Accuracy, Precision, Recall, AveragePrecision, F1Score
+from torchmetrics import Accuracy, Precision, Recall, AveragePrecision, F1Score, MeanSquaredError, MeanAbsoluteError
 
 class BaseLeaPR(L.LightningModule):
     def __init__(self, cfg, model_params, weight, priors, classes):
@@ -28,19 +28,6 @@ class BaseLeaPR(L.LightningModule):
         precisions, recalls = get_rule_precisions_recalls(rules_json, priors, classes)
 
         self.nn_model = get_model(self.model_type, model_params)
-
-        # Initialize constraint_weight as a learnable parameter vector
-        #initial_constraint_weight = cfg.rules.constraint_weight
-        #self.constraint_weight = nn.Parameter(torch.full((num_classes,), initial_constraint_weight, dtype=torch.float))
-        
-        # Cross-attention module for neural output and rule truth values
-        # self.rule_attn = nn.MultiheadAttention(
-        #     embed_dim=num_classes,
-        #     dropout=0.3,
-        #     num_heads=1,
-        #     batch_first=True
-        # )
-
 
         # Cache rule tensors as buffers (automatically move with model) =================
         self.register_buffer('weight', weight)
@@ -100,25 +87,6 @@ class BaseLeaPR(L.LightningModule):
     def forward(self, img, sg, truth_values):
         inputs = {'img': img, 'sg': sg, 'truth_values': truth_values}
         output = self.nn_model(inputs)
-        # if self.constraint_mode not in ['neural', 'rules']: # TODO: a little ugly
-
-        #     neural_output_expanded = output.unsqueeze(1)  # [batch_size, 1, num_classes]
-        #     truth_values_expanded = truth_values.unsqueeze(1)    # [batch_size, 1, num_classes]
-            
-        #     # Apply cross-attention: neural_output attends to rule truth values
-        #     attn_output, _ = self.rule_attn(
-        #         query=neural_output_expanded,      # What we want to enhance
-        #         key=truth_values_expanded,         # What we attend to
-        #         value=truth_values_expanded        # What we use to enhance
-        #     )
-            
-        #     # Squeeze back to original shape and combine with neural output
-        #     attn_output = attn_output.squeeze(1)   # [batch_size, num_classes]
-        #     enhanced_output = output + attn_output  # Residual connection
-            
-        #     # Apply constraints to the enhanced output
-        #     constraints = self.compute_constraints(truth_values)
-        #     output = self.apply_constraints(enhanced_output, constraints)
         return output
         
     
@@ -337,6 +305,272 @@ class SingleLeaPR(BaseLeaPR):
         metrics_dict = self.test_metrics(out, labels)
         self.log_dict(metrics_dict, on_step=False, on_epoch=True, prog_bar=True)
 
-class SeqLeaPR(BaseLeaPR):
-    def __init__(self, cfg, model_params, weight, priors, classes):
-        super().__init__(cfg, model_params, weight, priors, classes)
+
+class StateLeaPR(L.LightningModule):
+    """
+    LeaPR for state prediction - predicts next state given previous state and action.
+    Inherits directly from LightningModule and is designed specifically for state transitions.
+    """
+    
+    def __init__(self, cfg, model_params):
+        super().__init__()
+        self.lr = float(cfg.train.lr)
+        
+        # State prediction specific setup
+        self.model_type = cfg.model.type
+        self.nn_model = get_model(self.model_type, model_params)
+        # Loss function for multi-label edge classification with uniform weighting
+        rel_pos_weight = getattr(cfg.model, 'rel_pos_weight', 1.0)
+        pos_weight = torch.full((model_params['num_relations'],), rel_pos_weight)
+        self.criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight)
+        self.edge_threshold = 0.5  # Threshold for edge prediction
+        
+        print(f"Using uniform pos_weight={rel_pos_weight} for all {model_params['num_relations']} relationship types")
+        
+        # Initialize metrics for multi-label edge prediction
+        self.train_edge_metrics = MetricCollection({
+            'edge_precision': Precision(task='multilabel', num_labels=model_params['num_relations'], average='macro'),
+            'edge_recall': Recall(task='multilabel', num_labels=model_params['num_relations'], average='macro'),
+            'edge_f1': F1Score(task='multilabel', num_labels=model_params['num_relations'], average='macro'),
+            'edge_accuracy': Accuracy(task='multilabel', num_labels=model_params['num_relations']),
+        })
+        
+        self.val_edge_metrics = MetricCollection({
+            'edge_precision': Precision(task='multilabel', num_labels=model_params['num_relations'], average='macro'),
+            'edge_recall': Recall(task='multilabel', num_labels=model_params['num_relations'], average='macro'),
+            'edge_f1': F1Score(task='multilabel', num_labels=model_params['num_relations'], average='macro'),
+            'edge_accuracy': Accuracy(task='multilabel', num_labels=model_params['num_relations']),
+        })
+        
+        # Track edge statistics
+        self.edge_stats = {
+            'total_pairs': 0,
+            'actual_edges': 0,
+            'predicted_edges': 0,
+            'correct_edges': 0
+        }
+        
+        self.save_hyperparameters()
+
+    def compute_edge_classification_loss(self, edge_logits_data, target_graph, num_relations):
+        """
+        Compute BCEWithLogitsLoss for multi-label edge classification.
+        
+        Args:
+            edge_logits_data: Dict with 'logits' (list of logits) and 'pairs' (list of (i,j) pairs)
+            target_graph: Ground truth graph with edge_index and edge_type
+            num_relations: Number of relationship types
+        """
+        edge_logits = edge_logits_data['logits']
+        edge_pairs = edge_logits_data['pairs']
+        
+        if len(edge_logits) == 0:
+            return torch.tensor(0.0, requires_grad=True, device=self.device)
+        
+        # Stack all edge logits: [num_pairs, num_relations]
+        all_logits = torch.stack(edge_logits)
+        
+        # Create multi-label target: [num_pairs, num_relations]
+        num_pairs = all_logits.shape[0]
+        target_labels = torch.zeros(num_pairs, num_relations, device=all_logits.device)
+        
+        # Map target relationships to pairs
+        if target_graph.edge_index.numel() > 0:
+            # Create mapping from (src, tgt) to list of edge types
+            target_edges = {}
+            target_edge_index = target_graph.edge_index
+            target_edge_type = target_graph.edge_type
+            
+            for k in range(target_edge_index.shape[1]):
+                src = target_edge_index[0, k].item()
+                tgt = target_edge_index[1, k].item()
+                edge_type = target_edge_type[k].item()
+                
+                if (src, tgt) not in target_edges:
+                    target_edges[(src, tgt)] = []
+                target_edges[(src, tgt)].append(edge_type)
+            
+            # Set target labels for each pair
+            for pair_idx, (src, tgt) in enumerate(edge_pairs):
+                if (src, tgt) in target_edges:
+                    for edge_type in target_edges[(src, tgt)]:
+                        if 0 <= edge_type < num_relations:
+                            target_labels[pair_idx, edge_type] = 1.0
+        
+        return self.criterion(all_logits, target_labels)
+    
+    def compute_edge_metrics(self, edge_logits_data, target_graph, phase='train'):
+        """Compute interpretable multi-label edge prediction metrics"""
+        edge_logits = edge_logits_data['logits']
+        edge_pairs = edge_logits_data['pairs']
+        
+        if len(edge_logits) == 0:
+            return {}
+        
+        # Get predictions using threshold
+        all_logits = torch.stack(edge_logits)  # [num_pairs, num_relations]
+        predictions = (torch.sigmoid(all_logits) > self.edge_threshold).float()
+        
+        # Create multi-label targets
+        num_pairs, num_relations = all_logits.shape
+        targets = torch.zeros(num_pairs, num_relations, device=all_logits.device)
+        
+        # Map target relationships to pairs
+        num_actual_edges = 0
+        if target_graph.edge_index.numel() > 0:
+            target_edges = {}
+            target_edge_index = target_graph.edge_index
+            target_edge_type = target_graph.edge_type
+            
+            for k in range(target_edge_index.shape[1]):
+                src = target_edge_index[0, k].item()
+                tgt = target_edge_index[1, k].item()
+                edge_type = target_edge_type[k].item()
+                
+                if (src, tgt) not in target_edges:
+                    target_edges[(src, tgt)] = []
+                target_edges[(src, tgt)].append(edge_type)
+            
+            for pair_idx, (src, tgt) in enumerate(edge_pairs):
+                if (src, tgt) in target_edges:
+                    for edge_type in target_edges[(src, tgt)]:
+                        if 0 <= edge_type < num_relations:
+                            targets[pair_idx, edge_type] = 1.0
+                            num_actual_edges += 1
+        
+        # Compute metrics
+        if phase == 'train':
+            metrics = self.train_edge_metrics(predictions, targets)
+        else:
+            metrics = self.val_edge_metrics(predictions, targets)
+        
+        # Compute additional statistics
+        predicted_edges = predictions.sum().item()
+        actual_edges = targets.sum().item()
+        correct_edges = (predictions * targets).sum().item()
+        
+        stats = {
+            'total_pairs': num_pairs,
+            'actual_edges': actual_edges,
+            'predicted_edges': predicted_edges,
+            'correct_edges': correct_edges,
+            'edge_precision': correct_edges / max(1, predicted_edges),
+            'edge_recall': correct_edges / max(1, actual_edges)
+        }
+        
+        return {**metrics, **stats}
+    
+    def on_train_epoch_end(self):
+        """Print detailed training statistics"""
+        # Get current metrics
+        train_acc = self.trainer.callback_metrics.get('train_edge_acc', 0.0)
+        train_prec = self.trainer.callback_metrics.get('train_edge_prec', 0.0) 
+        train_recall = self.trainer.callback_metrics.get('train_edge_recall', 0.0)
+        train_actual = self.trainer.callback_metrics.get('train_actual_edges', 0.0)
+        train_predicted = self.trainer.callback_metrics.get('train_predicted_edges', 0.0)
+        
+        print(f"\nEpoch {self.current_epoch} Training Summary:")
+        print(f"  Edge Accuracy: {train_acc:.4f}")
+        print(f"  Edge Precision: {train_prec:.4f}")
+        print(f"  Edge Recall: {train_recall:.4f}")
+        print(f"  Avg Actual Edges per batch: {train_actual:.1f}")
+        print(f"  Avg Predicted Edges per batch: {train_predicted:.1f}")
+    
+    def on_validation_epoch_end(self):
+        """Print detailed validation statistics"""
+        val_acc = self.trainer.callback_metrics.get('val_edge_acc', 0.0)
+        val_prec = self.trainer.callback_metrics.get('val_edge_prec', 0.0)
+        val_recall = self.trainer.callback_metrics.get('val_edge_recall', 0.0)
+        val_actual = self.trainer.callback_metrics.get('val_actual_edges', 0.0)
+        val_predicted = self.trainer.callback_metrics.get('val_predicted_edges', 0.0)
+        
+        print(f"Epoch {self.current_epoch} Validation Summary:")
+        print(f"  Edge Accuracy: {val_acc:.4f}")
+        print(f"  Edge Precision: {val_prec:.4f}")
+        print(f"  Edge Recall: {val_recall:.4f}")
+        print(f"  Avg Actual Edges per batch: {val_actual:.1f}")
+        print(f"  Avg Predicted Edges per batch: {val_predicted:.1f}")
+        print("-" * 50)
+
+    def get_state_action_from_batch(self, batch):
+        """Extract previous state (image + scene graph) and action from batch"""
+        prev_images = batch['pre_images']
+        prev_scene_graphs = batch['pre_scene_graphs']
+        action = batch['action_labels']
+        return prev_images, prev_scene_graphs, action
+
+    def get_next_state_from_batch(self, batch):
+        """Extract target next state (scene graph only) from batch"""
+        next_scene_graphs = batch['post_scene_graphs']
+        return next_scene_graphs
+
+    def forward(self, prev_images, prev_scene_graphs, action):
+        """Forward pass for state prediction - predicts next scene graph only"""
+        inputs = {
+            'prev_images': prev_images, 
+            'prev_scene_graphs': prev_scene_graphs, 
+            'action': action
+        }
+        return self.nn_model(inputs)  # Returns (next_state, edge_logits)
+        
+    def training_step(self, batch, batch_idx):
+        prev_images, prev_scene_graphs, action = self.get_state_action_from_batch(batch)
+        next_scene_graphs = self.get_next_state_from_batch(batch)
+        
+        predicted_next_state, edge_logits_data = self(prev_images, prev_scene_graphs, action)
+        loss = self.compute_edge_classification_loss(edge_logits_data, next_scene_graphs, self.nn_model.num_relations)
+        
+        # Compute meaningful metrics
+        edge_metrics = self.compute_edge_metrics(edge_logits_data, next_scene_graphs, phase='train')
+        
+        # Log everything
+        self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True)
+        if edge_metrics:
+            self.log('train_edge_acc', edge_metrics.get('edge_accuracy', 0.0), on_step=False, on_epoch=True, prog_bar=True)
+            self.log('train_edge_prec', edge_metrics.get('edge_precision', 0.0), on_step=False, on_epoch=True)
+            self.log('train_edge_recall', edge_metrics.get('edge_recall', 0.0), on_step=False, on_epoch=True)
+            self.log('train_actual_edges', float(edge_metrics.get('actual_edges', 0)), on_step=False, on_epoch=True)
+            self.log('train_predicted_edges', float(edge_metrics.get('predicted_edges', 0)), on_step=False, on_epoch=True)
+        
+        return loss
+
+    def validation_step(self, batch, batch_idx):
+        prev_images, prev_scene_graphs, action = self.get_state_action_from_batch(batch)
+        next_scene_graphs = self.get_next_state_from_batch(batch)
+        
+        predicted_next_state, edge_logits_data = self(prev_images, prev_scene_graphs, action)
+        loss = self.compute_edge_classification_loss(edge_logits_data, next_scene_graphs, self.nn_model.num_relations)
+        
+        # Compute meaningful metrics
+        edge_metrics = self.compute_edge_metrics(edge_logits_data, next_scene_graphs, phase='val')
+        
+        # Log everything
+        self.log('val_loss', loss, on_step=False, on_epoch=True, prog_bar=True)
+        if edge_metrics:
+            self.log('val_edge_acc', edge_metrics.get('edge_accuracy', 0.0), on_step=False, on_epoch=True, prog_bar=True)
+            self.log('val_edge_prec', edge_metrics.get('edge_precision', 0.0), on_step=False, on_epoch=True, prog_bar=True)
+            self.log('val_edge_recall', edge_metrics.get('edge_recall', 0.0), on_step=False, on_epoch=True, prog_bar=True)
+            self.log('val_actual_edges', float(edge_metrics.get('actual_edges', 0)), on_step=False, on_epoch=True)
+            self.log('val_predicted_edges', float(edge_metrics.get('predicted_edges', 0)), on_step=False, on_epoch=True)
+
+    def test_step(self, batch, batch_idx):
+        prev_images, prev_scene_graphs, action = self.get_state_action_from_batch(batch)
+        next_scene_graphs = self.get_next_state_from_batch(batch)
+        
+        predicted_next_state, edge_logits_data = self(prev_images, prev_scene_graphs, action)
+        loss = self.compute_edge_classification_loss(edge_logits_data, next_scene_graphs, self.nn_model.num_relations)
+        
+        self.log('test_loss', loss, on_step=False, on_epoch=True, prog_bar=True)
+
+    def predict_step(self, batch, batch_idx):
+        ids = batch['ids']
+        prev_images, prev_scene_graphs, action = self.get_state_action_from_batch(batch)
+        next_scene_graphs = self.get_next_state_from_batch(batch)
+        
+        predicted_next_state, edge_logits_data = self(prev_images, prev_scene_graphs, action)
+        
+        return ids, prev_images, prev_scene_graphs, action, next_scene_graphs, predicted_next_state, edge_logits_data
+
+    def configure_optimizers(self):
+        return Adam(self.parameters(), lr=self.lr)
+
