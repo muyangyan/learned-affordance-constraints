@@ -59,3 +59,19 @@ def get_rule_precisions_recalls(rules_json, priors, classes):
             precisions[i] = priors[i]
             #precisions[i] = 0.0
     return precisions, recalls
+
+
+# meant to be used as a lambda function for creating a pandas column
+def join_vid_and_pre_frame(row):
+    return f"{row['vid']}.mp4/{str(row['pre_frame']).zfill(6)}.png"
+
+# atom comes as shown in the bk files. has the x in front and the obj type idx at the end.
+# returns the sanitized frame id and the object type idx
+def get_id_obj_from_sanitized_atom(atom):
+    #ex: x_00607_mp4_000168_png_15
+    # frame id should be 00607_mp4_000168_png
+    # obj type should be 15
+    parts = atom.split('_')
+    sanitized_frame_id = '_'.join(parts[1:-1])
+    obj_type = int(parts[-1])
+    return sanitized_frame_id, obj_type

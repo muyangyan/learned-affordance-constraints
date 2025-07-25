@@ -70,7 +70,7 @@ def parse_logs(folder):
             rules[file] = (rule, metrics)
     return rules
 
-def write_rules(rules_folder, logs_folder, rules_name, weight, timeout):
+def write_rules(rules_folder, logs_folder, rules_name, weight, timeout, label_type):
     print('writing rules to:', rules_folder)
     print('parsing logs from:', logs_folder)
     print('rules name:', rules_name)
@@ -89,7 +89,18 @@ def write_rules(rules_folder, logs_folder, rules_name, weight, timeout):
             f.write(f'%%{predicate}\n')
             if rule_pair is None:
                 f.write('%%No solution\n')
-                f.write(f'{predicate}_target(_).\n\n')
+
+                with open(os.path.join(rules_folder, '..', 'biases', 'verbs', predicate + '.pl'), 'r') as bias_f:
+                    bias_lines = bias_f.readlines()
+                    for line in bias_lines:
+                        if line.startswith('head_pred'):
+                            arity = int(line.split(',')[1].split(')')[0])
+                            break
+                args = ','.join(['_']*arity)
+                if predicate.startswith('add_') or predicate.startswith('del_'): #TODO: hacky
+                    f.write(f'{predicate}({args}).\n\n')
+                else:
+                    f.write(f'{predicate}_target(_).\n\n')
                 continue
 
             rule, metrics = rule_pair
@@ -108,11 +119,17 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     config = load_yaml(args.config)
+    if config.data.label_type == 'verb':
+        label_type = 'verbs'
+    elif config.data.label_type == 'verbnoun':
+        label_type = 'actions'
+    else:
+        raise ValueError(f'Invalid label type: {config.data.label_type}')
 
     preconditions_folder = os.path.join(config.prolog_folder, 'pre', "learned_rules")
     preconditions_log_folder = os.path.join(config.prolog_folder, 'pre', "popper_logs")
-    write_rules(preconditions_folder, preconditions_log_folder, config.rules.name, config.ilp.fn_weight, config.ilp.timeout)
+    write_rules(preconditions_folder, preconditions_log_folder, config.rules.name, config.ilp.fn_weight, config.ilp.timeout, label_type)
 
     effects_folder = os.path.join(config.prolog_folder, 'post', "learned_rules")
     effects_log_folder = os.path.join(config.prolog_folder, 'post', "popper_logs")
-    write_rules(effects_folder, effects_log_folder, config.rules.name, config.ilp.fn_weight, config.ilp.timeout)
+    write_rules(effects_folder, effects_log_folder, config.rules.name, config.ilp.fn_weight, config.ilp.timeout, label_type)

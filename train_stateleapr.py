@@ -21,7 +21,7 @@ torch.set_float32_matmul_precision('medium')
 
 def get_datasets(cfg):
     """Get train and validation datasets for state prediction"""
-    PartialAG = partial(SingleBothAG, cfg, no_rules=True)  # No rules needed for state prediction
+    PartialAG = partial(SingleBothAG, cfg, no_rules=False)
     
     train_set = PartialAG(split='train')
     val_set = PartialAG(split='val')
@@ -104,7 +104,7 @@ def train_stateleapr(cfg, run_name):
         monitor='val_loss',
         dirpath=f'{cfg.runs_folder}/{run_name}/checkpoints/',
         filename='{epoch:02d}-{val_loss:.4f}',
-        save_top_k=5,
+        save_top_k=2,
         save_last=True,
         every_n_epochs=1,
         mode='min',  # Minimize validation loss

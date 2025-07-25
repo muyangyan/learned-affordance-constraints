@@ -34,7 +34,7 @@ rules: # used in training time as well
 train:
   epochs: 30
   batch_size: 16
-  devices: [4,5,6,7]
+  devices: [0]
   lr: 1e-3
 
 test:

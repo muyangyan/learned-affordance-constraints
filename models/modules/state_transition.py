@@ -70,7 +70,7 @@ class SimpleStateTransitionModel(nn.Module):
         predicted_edges = []
         predicted_edge_types = []
         all_edge_logits = []  # Store logits for loss computation
-        all_edge_pairs = []   # Store corresponding (i,j) pairs for loss computation
+        all_edge_pairs = []   # Store corresponding object type pairs for loss computation
         
         # Process each graph in the batch
         batch_indices = prev_scene_graphs.batch
@@ -80,6 +80,7 @@ class SimpleStateTransitionModel(nn.Module):
             # Get nodes for this graph
             node_mask = batch_indices == batch_idx
             graph_nodes = prev_scene_graphs.x[node_mask]  # [num_nodes, node_dim]
+            graph_node_types = prev_scene_graphs.node_type[node_mask]  # [num_nodes]
             num_nodes = graph_nodes.shape[0]
             
             # Get features for this graph
@@ -87,7 +88,7 @@ class SimpleStateTransitionModel(nn.Module):
             image_feat = image_features[batch_idx]  # [hidden_dim]
             action_feat = action_features[batch_idx]  # [hidden_dim]
             
-            # Global node indices for this graph
+            # Global node indices for this graph (still needed for predicted graph construction)
             global_node_indices = torch.where(node_mask)[0]
             
             # Predict for all pairs (i, j) where i != j
@@ -107,18 +108,20 @@ class SimpleStateTransitionModel(nn.Module):
                         edge_logits = self.edge_classifier(pair_features)  # [num_relations]
                         all_edge_logits.append(edge_logits)
                         
-                        # Store the corresponding global node indices for this prediction
-                        global_i = global_node_indices[i].item()
-                        global_j = global_node_indices[j].item()
-                        all_edge_pairs.append((global_i, global_j))
+                        # Store object type pairs instead of node indices
+                        src_obj_type = graph_node_types[i].item()
+                        tgt_obj_type = graph_node_types[j].item()
+                        all_edge_pairs.append((src_obj_type, tgt_obj_type))
                         
                         # Use threshold-based prediction (multi-label)
                         edge_probs = torch.sigmoid(edge_logits)
                         threshold = 0.5
                         predicted_relations = torch.where(edge_probs > threshold)[0]
                         
-                        # Add edges for each predicted relationship type
+                        # Add edges for each predicted relationship type (still need node indices for graph construction)
                         for rel_type in predicted_relations:
+                            global_i = global_node_indices[i].item()
+                            global_j = global_node_indices[j].item()
                             predicted_edges.append([global_i, global_j])
                             predicted_edge_types.append(rel_type.item())
         

@@ -338,7 +338,7 @@ class PrologData:
                         f.write(f'{pos_or_neg}({effect_type}_{ex}).\n')
             else:
                 print(f'No examples found for {effect_type}_{pred_name}')
-                effect_arity = 0
+                effect_arity = 0 #TODO: hacky. currently just manually fixing after parsing
             with(open(bias_filename, 'w+')) as f:
                 f.write(':- style_check(-discontiguous).\n')
                 f.write(f'max_vars({self.max_vars}).\n')

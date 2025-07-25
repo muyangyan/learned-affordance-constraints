@@ -131,72 +131,64 @@ class StateLeaPR(L.LightningModule):
         self.criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight)
         print(f"Set BCEWithLogitsLoss with {len(pos_weight)} pos_weights")
     
-    def compute_constraints(self, truth_values, precisions, recalls, priors):
-        """
-        Compute precondition rule constraints from binary truth values using precision/recall.
-        Similar to BaseLeaPR's compute_constraints but for precondition rules.
-        """
-        if precisions is None:
-            return None
+    # def compute_constraints(self, truth_values, precisions, recalls, priors):
+    #     """
+    #     Compute precondition rule constraints from binary truth values using precision/recall.
+    #     Similar to BaseLeaPR's compute_constraints but for precondition rules.
+    #     """
+    #     if precisions is None:
+    #         return None
             
-        satisfied_mask = truth_values.bool()
+    #     satisfied_mask = truth_values.bool()
         
-        if truth_values.ndim == 2:
-            precisions = precisions.unsqueeze(0)
-            recalls = recalls.unsqueeze(0) 
-            priors = priors.unsqueeze(0)
-        else:
-            precisions = precisions
-            recalls = recalls
-            priors = priors
+    #     if truth_values.ndim == 2:
+    #         precisions = precisions.unsqueeze(0)
+    #         recalls = recalls.unsqueeze(0) 
+    #         priors = priors.unsqueeze(0)
+    #     else:
+    #         precisions = precisions
+    #         recalls = recalls
+    #         priors = priors
         
-        result = torch.where(satisfied_mask, precisions, (1 - recalls) * priors).float()
-        return result
+    #     result = torch.where(satisfied_mask, precisions, (1 - recalls) * priors).float()
+    #     return result
     
-    def apply_constraints(self, edge_probs, edge_pairs, effect_constraints=None, weight=0.5):
-        """
-        Apply rule constraints to edge prediction logits. TODO: 
+    
+    # is the pair the obj type or the index of the obj in the scene graph?
+    def apply_constraints(self, edge_probs, edge_pairs, prior_probs, groundings, weight=0.5):
+        #self.effect_precisions
+        # groundings, with shape (num_frames, num_effects, max_arity)
+        # we will search through to get the truth value for each effect and the grounding
+        # i.e. types of objects. 
+        # RESTS ON ASSUMPTION THAT THERE CAN BE UP TO ONE OF EACH OBJECT TYPE PER FRAME
+        max_arity = groundings.shape[2]
+        truth_values = (groundings.sum(dim=2) > -max_arity).long() #1 where there is a grounding, 0 otherwise
+        masked_precisions = self.effect_precisions * truth_values
+
+
+
         
-        Args:
-            edge_logits_data: Dict with 'logits' and 'pairs' from model forward pass
-            precond_constraints: Precondition rule constraints (optional)
-            effect_constraints: Effect rule constraints (optional) 
-            weight: Constraint weight for joint modes
-        """
-        if self.constraint_mode == 'neural':
-            # No constraints applied, return original logits
-            return edge_logits_data
-        elif self.constraint_mode == 'rules':
-            # Use only rule-based predictions (would need rule-based edge prediction logic)
-            # For now, return original logits as this mode needs specific rule implementation
-            return edge_logits_data
-        elif self.constraint_mode in ['joint', 'joint_v1', 'joint_v2']:
-            # Apply constraints to edge logits
-            if effect_constraints is not None:
-                # For state prediction, effect constraints are more relevant
-                # Convert effect constraints to edge-level constraints (implementation needed)
-                # For now, return original logits
-                pass
-            return edge_logits_data
-        else:
-            raise ValueError(f'Invalid constraint mode: {self.constraint_mode}')
+
+
+
     
     def set_constraint_params(self, constraint_mode='neural', constraint_weight=0.5):
         """Set constraint parameters for testing"""
         self.constraint_mode = constraint_mode
         self.constraint_weight = constraint_weight
 
-    def compute_edge_classification_loss(self, edge_logits_data, target_graph, num_relations):
+    def compute_edge_classification_loss(self, edge_logits_data, prev_graph, target_graph, num_relations):
         """
-        Compute BCEWithLogitsLoss for multi-label edge classification.
+        Compute BCEWithLogitsLoss for multi-label edge classification using object-type based matching.
         
         Args:
-            edge_logits_data: Dict with 'logits' (list of logits) and 'pairs' (list of (i,j) pairs)
-            target_graph: Ground truth graph with edge_index and edge_type
+            edge_logits_data: Dict with 'logits' (list of logits) and 'pairs' (list of object type pairs)
+            prev_graph: Previous state graph (not used since pairs are already object types)
+            target_graph: Ground truth post-state graph with edge_index and edge_type
             num_relations: Number of relationship types
         """
         edge_logits = edge_logits_data['logits']
-        edge_pairs = edge_logits_data['pairs']
+        edge_pairs = edge_logits_data['pairs']  # Already object type pairs
         
         if len(edge_logits) == 0:
             return torch.tensor(0.0, requires_grad=True, device=self.device)
@@ -208,26 +200,30 @@ class StateLeaPR(L.LightningModule):
         num_pairs = all_logits.shape[0]
         target_labels = torch.zeros(num_pairs, num_relations, device=all_logits.device)
         
-        # Map target relationships to pairs
+        # Convert target graph edges to object type pairs
+        target_obj_type_edges = {}
         if target_graph.edge_index.numel() > 0:
-            # Create mapping from (src, tgt) to list of edge types
-            target_edges = {}
             target_edge_index = target_graph.edge_index
             target_edge_type = target_graph.edge_type
             
             for k in range(target_edge_index.shape[1]):
-                src = target_edge_index[0, k].item()
-                tgt = target_edge_index[1, k].item()
+                src_idx = target_edge_index[0, k].item()
+                tgt_idx = target_edge_index[1, k].item()
                 edge_type = target_edge_type[k].item()
                 
-                if (src, tgt) not in target_edges:
-                    target_edges[(src, tgt)] = []
-                target_edges[(src, tgt)].append(edge_type)
+                # Convert to object types
+                src_obj_type = target_graph.node_type[src_idx].item() if hasattr(target_graph, 'node_type') else src_idx
+                tgt_obj_type = target_graph.node_type[tgt_idx].item() if hasattr(target_graph, 'node_type') else tgt_idx
+                obj_type_pair = (src_obj_type, tgt_obj_type)
+                
+                if obj_type_pair not in target_obj_type_edges:
+                    target_obj_type_edges[obj_type_pair] = []
+                target_obj_type_edges[obj_type_pair].append(edge_type)
             
-            # Set target labels for each pair
-            for pair_idx, (src, tgt) in enumerate(edge_pairs):
-                if (src, tgt) in target_edges:
-                    for edge_type in target_edges[(src, tgt)]:
+            # Set target labels based on object type matching
+            for pair_idx, obj_type_pair in enumerate(edge_pairs):
+                if obj_type_pair in target_obj_type_edges:
+                    for edge_type in target_obj_type_edges[obj_type_pair]:
                         if 0 <= edge_type < num_relations:
                             target_labels[pair_idx, edge_type] = 1.0
         
@@ -236,10 +232,10 @@ class StateLeaPR(L.LightningModule):
         
         return self.criterion(all_logits, target_labels)
     
-    def compute_edge_metrics(self, edge_logits_data, target_graph, phase='train'):
-        """Compute interpretable multi-label edge prediction metrics"""
+    def compute_edge_metrics(self, edge_logits_data, prev_graph, target_graph, phase='train'):
+        """Compute interpretable multi-label edge prediction metrics using object-type based matching"""
         edge_logits = edge_logits_data['logits']
-        edge_pairs = edge_logits_data['pairs']
+        edge_pairs = edge_logits_data['pairs']  # Already object type pairs
         
         if len(edge_logits) == 0:
             return {}
@@ -247,33 +243,38 @@ class StateLeaPR(L.LightningModule):
         # Get predictions using threshold
         all_logits = torch.stack(edge_logits)  # [num_pairs, num_relations]
         pred_probs = torch.sigmoid(all_logits)
-        #predictions = (torch.sigmoid(all_logits) > self.edge_threshold)  # Convert to integer
         
         # Create multi-label targets
         num_pairs, num_relations = all_logits.shape
         targets = torch.zeros(num_pairs, num_relations, dtype=torch.long, device=all_logits.device)
         
-        # Map target relationships to pairs
+        # Convert target graph edges to object type pairs
+        target_obj_type_edges = {}
         num_actual_edges = 0
         if target_graph.edge_index.numel() > 0:
-            target_edges = {}
             target_edge_index = target_graph.edge_index
             target_edge_type = target_graph.edge_type
             
             for k in range(target_edge_index.shape[1]):
-                src = target_edge_index[0, k].item()
-                tgt = target_edge_index[1, k].item()
+                src_idx = target_edge_index[0, k].item()
+                tgt_idx = target_edge_index[1, k].item()
                 edge_type = target_edge_type[k].item()
                 
-                if (src, tgt) not in target_edges:
-                    target_edges[(src, tgt)] = []
-                target_edges[(src, tgt)].append(edge_type)
+                # Convert to object types
+                src_obj_type = target_graph.node_type[src_idx].item() if hasattr(target_graph, 'node_type') else src_idx
+                tgt_obj_type = target_graph.node_type[tgt_idx].item() if hasattr(target_graph, 'node_type') else tgt_idx
+                obj_type_pair = (src_obj_type, tgt_obj_type)
+                
+                if obj_type_pair not in target_obj_type_edges:
+                    target_obj_type_edges[obj_type_pair] = []
+                target_obj_type_edges[obj_type_pair].append(edge_type)
             
-            for pair_idx, (src, tgt) in enumerate(edge_pairs):
-                if (src, tgt) in target_edges:
-                    for edge_type in target_edges[(src, tgt)]:
+            # Set target labels based on object type matching
+            for pair_idx, obj_type_pair in enumerate(edge_pairs):
+                if obj_type_pair in target_obj_type_edges:
+                    for edge_type in target_obj_type_edges[obj_type_pair]:
                         if 0 <= edge_type < num_relations:
-                            targets[pair_idx, edge_type] = 1  # Use integer 1 instead of float 1.0
+                            targets[pair_idx, edge_type] = 1
                             num_actual_edges += 1
         
         # Compute metrics
@@ -352,10 +353,10 @@ class StateLeaPR(L.LightningModule):
         next_scene_graphs = batch['post_scene_graphs']
         
         predicted_next_state, edge_logits_data = self(prev_images, prev_scene_graphs, action)
-        loss = self.compute_edge_classification_loss(edge_logits_data, next_scene_graphs, self.nn_model.num_relations)
+        loss = self.compute_edge_classification_loss(edge_logits_data, prev_scene_graphs, next_scene_graphs, self.nn_model.num_relations)
         
         # Compute meaningful metrics
-        edge_metrics = self.compute_edge_metrics(edge_logits_data, next_scene_graphs, phase='train')
+        edge_metrics = self.compute_edge_metrics(edge_logits_data, prev_scene_graphs, next_scene_graphs, phase='train')
         
         # Log everything
         self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True)
@@ -376,10 +377,10 @@ class StateLeaPR(L.LightningModule):
         next_scene_graphs = batch['post_scene_graphs']
         
         predicted_next_state, edge_logits_data = self(prev_images, prev_scene_graphs, action)
-        loss = self.compute_edge_classification_loss(edge_logits_data, next_scene_graphs, self.nn_model.num_relations)
+        loss = self.compute_edge_classification_loss(edge_logits_data, prev_scene_graphs, next_scene_graphs, self.nn_model.num_relations)
         
         # Compute meaningful metrics
-        edge_metrics = self.compute_edge_metrics(edge_logits_data, next_scene_graphs, phase='val')
+        edge_metrics = self.compute_edge_metrics(edge_logits_data, prev_scene_graphs, next_scene_graphs, phase='val')
         
         # Log everything
         self.log('val_loss', loss, on_step=False, on_epoch=True, prog_bar=True)
@@ -412,17 +413,17 @@ class StateLeaPR(L.LightningModule):
             # Get effect truth values from batch (no precondition constraints for dynamics)
             effect_truth_values = batch.get('pre_effects_truth_values')
             
-            # Compute effect constraints only
-            effect_constraints = None
-            if effect_truth_values is not None:
-                effect_constraints = self.compute_constraints(effect_truth_values,
-                                                            self.effect_precisions,
-                                                            self.effect_recalls,
-                                                            self.effect_priors)
+            # # Compute effect constraints only
+            # effect_constraints = None
+            # if effect_truth_values is not None:
+            #     effect_constraints = self.compute_constraints(effect_truth_values,
+            #                                                 self.effect_precisions,
+            #                                                 self.effect_recalls,
+            #                                                 self.effect_priors)
             
             # Apply constraints to edge probabilities
             preds_probs = self.apply_constraints(
-                preds_probs, None, effect_constraints,  # precond_constraints=None
+                preds_probs, None, effect_truth_values,  # precond_constraints=None
                 weight=getattr(self, 'constraint_weight', 0.5)
             )
         

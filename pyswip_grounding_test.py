@@ -66,9 +66,10 @@ import time
 
 arities = [2, 2, 1]
 heads = ['add_holding', 'del_holding', 'del_mug']
+obj_vocab = {'person': 0, 'mug': 1, 'hat': 2}
 num_frames = 3
 
-groundings = torch.zeros(num_frames, len(heads), max(arities), dtype=torch.long)
+groundings = torch.full((num_frames, len(heads), max(arities)), -1, dtype=torch.long) #frame, head, arg
 truth_values = torch.zeros(num_frames, len(heads), dtype=torch.long)
 
 time_start = time.time()
@@ -86,7 +87,8 @@ for i, head in enumerate(heads):
                 truth_values[frame_idx, i] = 1
                 for j in range(arities[i]):
                     atom = r[f'X_{j}']
-                    groundings[frame_idx, i, j] = int(atom.split('_')[1])
+                    obj_type = obj_vocab[atom.split('_')[0]]
+                    groundings[frame_idx, i, j] = obj_type
                 break
 print(f'Time taken: {time.time() - time_start} seconds')
 print(truth_values)

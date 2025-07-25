@@ -1,7 +1,7 @@
 :- style_check(-discontiguous).
 max_vars(6).
 max_body(8).
-head_pred(del_twisting, 0).
+head_pred(del_twisting, 2).
 body_pred(awaken, 2).
 body_pred(myclose, 2).
 body_pred(cook, 2).

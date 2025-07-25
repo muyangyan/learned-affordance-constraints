@@ -9,8 +9,8 @@ runs_folder: "runs/"
 #data parameters
 data:
   train_split_ratio: 0.6
-  position: 'pre'
-  label_type: 'verbnoun' # verb or verbnoun
+  position: 'both'
+  label_type: 'state' # verb or verbnoun or state
   label_mode: 'single' # single or multi
   num_samples: -1
   forbidden_nodes: []
@@ -21,21 +21,20 @@ ilp:
   fn_weight: 1
 
 model:
-  type: 'joint_mvit' # joint, rgcn, vit
-  weight_scheme: 'uniform' # uniform, inverse, invsqrt
+  type: 'simple_state_transition' # joint, rgcn, vit, simple_state_transition, rdgnn
+  weight_scheme: 'uniform' # uniform, inverse, invsqrt, neg_pos_ratio
+  rel_pos_weight: 10
+
 
 rules: # used in training time as well
-  name: 'full_action_rules'
-  mode: 'soft'
+  name: 'full_verb_rules'
   recall_threshold: 0.8
-  constraint_weight: 1 # can be changed at test time
+  constraint_weight: 0.5 # can be changed at test time
 
 train:
-  # the constraint mode to use during training. 'neural' for no rules, 'joint_X' otherwise
-  constraint_mode: 'joint_v1'
   epochs: 30
   batch_size: 16
-  devices: [0,1,2,3]
+  devices: [0]
   lr: 1e-3
 
 test:
