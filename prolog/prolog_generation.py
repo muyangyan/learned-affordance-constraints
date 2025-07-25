@@ -245,9 +245,10 @@ class PrologData:
         for inputs in self.dataset:
             id = inputs['id']
             data = inputs['scene_graph']
+            action_idxs = inputs['action_labels']
             clean_id = sanitize_frame_id(id)
 
-            example = self.pyg_to_prolog(clean_id, data)
+            example = self.pyg_to_prolog(clean_id, data, action_idxs=action_idxs)
             example = '\n'.join(example)
             with(open(self.bk_filename, 'a')) as f:
                 f.write(f'%%frame id: {id}\n')

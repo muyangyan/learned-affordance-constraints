@@ -11,7 +11,7 @@ from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.loggers import TensorBoardLogger
 
-from models.action_anticipator import StateLeaPR
+from models.state_predictor import StateLeaPR
 
 from util.config_utils import load_yaml
 import argparse
@@ -38,7 +38,7 @@ def init_stateleapr_model(cfg, train_set):
     model_params = {
         'node_dim': num_obj_classes,        # Node feature dimension (one-hot object types)
         'action_dim': num_action_classes,   # Action dimension (one-hot action)
-        'hidden_dim': 256,                  # Hidden dimension for networks
+        'hidden_dim': 128,                  # Hidden dimension for networks
         'num_relations': num_rel_classes    # Number of relationship types
     }
     
@@ -48,12 +48,21 @@ def init_stateleapr_model(cfg, train_set):
     print(f"  Hidden dim: {model_params['hidden_dim']}")
     print(f"  Num relations: {model_params['num_relations']}")
     
-    model = StateLeaPR(cfg, model_params)
+    # Get class information and priors for rule loading
+    verb_classes = train_set.verb_classes
+    effect_classes = train_set.effect_classes
+    verb_priors = train_set.verb_priors
+    effect_priors = train_set.effect_priors
+    
+    print(f"Rule constraint setup:")
+    print(f"  Verb classes: {len(verb_classes)}")
+    print(f"  Effect classes (relationships): {len(effect_classes)}")
+    
+    model = StateLeaPR(cfg, model_params, verb_classes, effect_classes, verb_priors, effect_priors)
     
     # Set loss weights based on relationship priors
-    relationship_priors = train_set.get_relationship_priors()
+    relationship_priors = train_set.get_relationship_priors() #TODO: relation-only assumption
     model.set_loss_weights(relationship_priors)
-    
     return model
 
 def train_stateleapr(cfg, run_name):

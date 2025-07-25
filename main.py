@@ -14,6 +14,8 @@ import randomname
 
 from test import test
 from train import train
+from test_stateleapr import test_stateleapr
+from train_stateleapr import train_stateleapr
 
 import subprocess
 
@@ -60,12 +62,19 @@ def main(cfg, args):
         
         print('Training new model - source config: ', args.config, 'run: ', run_name)
         
-        #subprocess.run(['python', 'train.py', '--config', args.config, '--run_name', run_name])
-        if len(cfg.train.devices) == 1:
-            train(cfg, run_name)
+        # Route to StateLeaPR training if label_type is 'state'
+        if cfg.data.label_type == 'state':
+            print('Using StateLeaPR training...')
+            if len(cfg.train.devices) == 1:
+                train_stateleapr(cfg, run_name)
+            else:
+                subprocess.run(['python', 'train_stateleapr.py', '--config', args.config, '--run', run_name])
         else:
-            #print('Distributed training not supported yet, please run train.py manually')
-            subprocess.run(['python', 'train.py', '--config', args.config, '--run', run_name])
+            # Regular action prediction training
+            if len(cfg.train.devices) == 1:
+                train(cfg, run_name)
+            else:
+                subprocess.run(['python', 'train.py', '--config', args.config, '--run', run_name])
             
     else:
         '''
@@ -74,7 +83,14 @@ def main(cfg, args):
         test_run_name = create_test_directories(cfg, args)
             
         print('Testing model - run: ', args.run, 'test_run: ', test_run_name)
-        test(cfg, args.run, test_run_name)
+        
+        # Route to StateLeaPR testing if label_type is 'state'
+        if cfg.data.label_type == 'state':
+            print('Using StateLeaPR testing...')
+            test_stateleapr(cfg, args.run, test_run_name)
+        else:
+            # Regular action prediction testing
+            test(cfg, args.run, test_run_name)
 
 
 if __name__ == '__main__':

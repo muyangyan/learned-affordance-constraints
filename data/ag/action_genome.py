@@ -196,7 +196,10 @@ class ActionGenome(Dataset):
 
         print('compute relationship priors')
         last_time = time.time()
-        self.relationship_priors = self.compute_relationship_priors()
+        if self.split == 'train' or self.split == None:
+            self.relationship_priors = self.compute_relationship_priors()
+        else:
+            self.relationship_priors = None
         last_time = timecheck(last_time)
 
         if self.no_rules:
@@ -206,14 +209,16 @@ class ActionGenome(Dataset):
         else:
             print('apply rules')
             last_time = time.time()
+
             self.init_prolog()
-            frame_ids = [get_id(row['vid'], row[f'{self.position}_frame']) for _, row in self.df.iterrows()] # type: ignore
+            frame_ids = [get_id(row['vid'], row[f'pre_frame']) for _, row in self.df.iterrows()] # type: ignore
             self.preconds_truth_values = [self.apply_rules(frame_id, self.normalized_precond_targets, target_type='precond') for frame_id in frame_ids]
             if self.normalized_effect_targets is not None:
                 self.effects_truth_values = [self.apply_rules(frame_id, self.normalized_effect_targets, target_type='effect') for frame_id in frame_ids]
             else:
                 self.effects_truth_values = None
             self.truth_values = self.preconds_truth_values  # For backward compatibility with ActionAG
+
             last_time = timecheck(last_time)
 
         cache_data = { # all the actual data we need to save
@@ -236,6 +241,16 @@ class ActionGenome(Dataset):
             'relationship_priors': self.relationship_priors,
         }
         self._save_to_cache(cache_file, cache_data)
+
+    def apply_rules(self, frame_id, targets, target_type='precond'):
+        truth = np.zeros(len(targets))
+        frame_atom = f'x_{sanitize_frame_id(frame_id)}_0'
+        query = f"findall(Index, check_all_targets_{target_type}({frame_atom}, Index), SatisfiedIndices)"
+        result = next(self.prolog.query(query), {})
+        indices = result.get('SatisfiedIndices', [])
+        truth[indices] = 1
+        print(indices)
+        return truth
 
     def __len__(self):
         return len(self.df)
@@ -430,15 +445,7 @@ class ActionGenome(Dataset):
                     raw_df = pd.read_csv(f)
         return raw_df, split_ids, fps_dict, object_annotations
 
-    def apply_rules(self, frame_id, targets, target_type='precond'):
-        truth = np.zeros(len(targets))
-        frame_atom = f'x_{sanitize_frame_id(frame_id)}_0'
-        query = f"findall(Index, check_all_targets_{target_type}({frame_atom}, Index), SatisfiedIndices)"
-        result = next(self.prolog.query(query), {})
-        indices = result.get('SatisfiedIndices', [])
-        truth[indices] = 1
-        print(indices)
-        return truth
+
     
 class ActionAG(ActionGenome):
     """
@@ -499,6 +506,77 @@ class SingleBothAG(ActionGenome):
         add_effect_classes = [f'add_{pred}' for pred in self.relationship_classes]
         del_effect_classes = [f'del_{pred}' for pred in self.relationship_classes]
         self.effect_classes = add_effect_classes + del_effect_classes
+        if self.split == 'train':
+            self.effect_priors = self.compute_effect_priors()
+        else:
+            self.effect_priors = None
+    
+    def compute_effect_priors(self):
+        """Compute prior probabilities for add/delete effects on relationships."""
+        # Initialize counters for each effect type
+        effect_counts = {effect_class: 0 for effect_class in self.effect_classes}
+        total_transitions = 0
+        
+        for pre_data, post_data in self:
+            pre_scene_graph = pre_data['scene_graph']
+            post_scene_graph = post_data['scene_graph']
+            
+            # Convert scene graphs to comparable relationship sets
+            pre_relationships = self._extract_relationships(pre_scene_graph)
+            post_relationships = self._extract_relationships(post_scene_graph)
+            
+            # Compute add and delete effects
+            add_effects = post_relationships - pre_relationships
+            del_effects = pre_relationships - post_relationships
+            
+            # Count effects for each predicate
+            for effect in add_effects:
+                pred_name = effect.split('(')[0]
+                add_effect_name = f'add_{pred_name}'
+                if add_effect_name in effect_counts:
+                    effect_counts[add_effect_name] += 1
+                    
+            for effect in del_effects:
+                pred_name = effect.split('(')[0]
+                del_effect_name = f'del_{pred_name}'
+                if del_effect_name in effect_counts:
+                    effect_counts[del_effect_name] += 1
+            
+            total_transitions += 1
+        
+        # Convert counts to probabilities
+        effect_priors = np.array([effect_counts[effect_class] / max(1, total_transitions) 
+                                 for effect_class in self.effect_classes])
+        
+        return effect_priors
+    
+    def _extract_relationships(self, scene_graph):
+        """Extract relationship statements from a PyG scene graph for comparison."""
+        if scene_graph.edge_type is None or len(scene_graph.edge_type) == 0:
+            return set()
+            
+        node_types = scene_graph.node_type
+        edge_types = scene_graph.edge_type
+        edge_index = scene_graph.edge_index
+        
+        relationships = set()
+        
+        # Create relationships between nodes (excluding person nodes for consistency)
+        for i, (src, tgt) in enumerate(edge_index.T):
+            # Skip relationships involving person (node type 0)
+            if node_types[src] == 0 or node_types[tgt] == 0:
+                continue
+                
+            edge_type = edge_types[i]
+            relationship_name = self.relationship_classes[edge_type]
+            src_node_type = self.object_classes[node_types[src]]
+            tgt_node_type = self.object_classes[node_types[tgt]]
+            
+            # Create a normalized relationship representation
+            # Use indices to create consistent variable names
+            relationships.add(f'{relationship_name}(obj_{src_node_type}, obj_{tgt_node_type})')
+        
+        return relationships
 
     def create_labels(self, action_classes):
         #in this case action_classes is a single action  
@@ -534,18 +612,14 @@ class SingleBothAG(ActionGenome):
 
         # Get both precondition and effect truth values for SingleBothAG
         if self.preconds_truth_values is not None:
-            pre_preconds_truth_values = torch.tensor(self.preconds_truth_values[index]).float()
-            post_preconds_truth_values = torch.tensor(self.preconds_truth_values[index]).float()
+            preconds_truth_values = torch.tensor(self.preconds_truth_values[index]).float()
         else:
-            pre_preconds_truth_values = None
-            post_preconds_truth_values = None
+            preconds_truth_values = None
             
         if self.effects_truth_values is not None:
-            pre_effects_truth_values = torch.tensor(self.effects_truth_values[index]).float()
-            post_effects_truth_values = torch.tensor(self.effects_truth_values[index]).float()
+            effects_truth_values = torch.tensor(self.effects_truth_values[index]).float()
         else:
-            pre_effects_truth_values = None
-            post_effects_truth_values = None
+            effects_truth_values = None
 
         # Always compute all labels
         verb_class, obj_class = self.action_verb_obj_map[action_class]
@@ -557,9 +631,9 @@ class SingleBothAG(ActionGenome):
             'verb_label': verb_class,
             'object_label': obj_class,
             'action_label': action_class,
-            'preconds_truth_values': pre_preconds_truth_values,
-            'effects_truth_values': pre_effects_truth_values,
-            'truth_values': pre_preconds_truth_values,  # For compatibility
+            'preconds_truth_values': preconds_truth_values,
+            'effects_truth_values': effects_truth_values,
+            'truth_values': preconds_truth_values,  # For compatibility
             'timestep': pre_timestep
         }
         post_data = {
@@ -569,9 +643,9 @@ class SingleBothAG(ActionGenome):
             'verb_label': verb_class,
             'object_label': obj_class,
             'action_label': action_class,
-            'preconds_truth_values': post_preconds_truth_values,
-            'effects_truth_values': post_effects_truth_values,
-            'truth_values': post_preconds_truth_values,  # For compatibility
+            'preconds_truth_values': None,
+            'effects_truth_values': None,
+            'truth_values': None,
             'timestep': post_timestep
         }
         

@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 
+import os
+import warnings
+warnings.filterwarnings("ignore")
+
 import torch
 import argparse
 from torch.utils.data import DataLoader
 
 from data.ag.action_genome import SingleBothAG
-from models.action_anticipator import StateLeaPR
+from models.state_predictor import StateLeaPR
 from util.config_utils import load_yaml
 
 def print_graph_predicates(graph, object_classes, relationship_classes, graph_name, batch_idx=0):
@@ -68,42 +72,93 @@ def print_graph_predicates(graph, object_classes, relationship_classes, graph_na
     else:
         print("  (no relationships)")
 
-def test_stateleapr(config_path):
-    cfg = load_yaml(config_path)
+def test_routine_stateleapr(cfg, run_name, test_run_name, model, dataset, loader):
+    """Test StateLeaPR with different constraint modes (similar to regular LeaPR)"""
     
-    print("Creating dataset...")
-    dataset = SingleBothAG(cfg, no_img=False, subset=False, split='train', no_rules=True)
+    # Test different constraint modes
+    constraint_modes = ['neural', 'joint']  # Add more modes as needed
+    
+    for constraint_mode in constraint_modes:
+        print(f'\nCONSTRAINT MODE: {constraint_mode}---------------------')
+        model.set_constraint_params(constraint_mode=constraint_mode, constraint_weight=0.5)
+        
+        model.eval()
+        with torch.no_grad():
+            for i, batch in enumerate(loader):
+                if i >= 5:  # Test only first 5 batches per mode
+                    break
+                
+                print(f"\nBatch {i+1} - Mode: {constraint_mode}")
+                print(f"Pre-state nodes: {batch['pre_scene_graphs'].x.shape}")
+                print(f"Post-state nodes: {batch['post_scene_graphs'].x.shape}")
+                
+                prev_images, prev_scene_graphs, action = model.get_state_action_from_batch(batch)
+                next_scene_graphs = model.get_next_state_from_batch(batch)
+                predicted_next_state, edge_logits_data = model(prev_images, prev_scene_graphs, action)
+                
+                # Apply constraints based on mode
+                if constraint_mode != 'neural':
+                    # Get truth values from batch
+                    precond_truth_values = batch.get('pre_preconds_truth_values')
+                    effect_truth_values = batch.get('pre_effects_truth_values')
+                    
+                    if precond_truth_values is not None or effect_truth_values is not None:
+                        print(f"  Applying {constraint_mode} constraints...")
+                        # Constraints are applied in predict_step automatically
+                    else:
+                        print(f"  No truth values available for constraints")
+                
+                # Print some results for first item in batch
+                if len(batch['ids']) > 0:
+                    pre_frame_id = batch['ids'][0]
+                    post_frame_id = batch['post_ids'][0]
+                    print(f"  Pre-frame: {pre_frame_id}")
+                    print(f"  Post-frame: {post_frame_id}")
+                    
+                    # Decode action
+                    action_idx = torch.argmax(action[0]).item()
+                    action_name = dataset.action_classes[action_idx] if action_idx < len(dataset.action_classes) else f"unknown_action_{action_idx}"
+                    print(f"  Action: {action_name}")
+                    
+                    # Print graph details for first batch item
+                    print_graph_predicates(prev_scene_graphs, dataset.object_classes, dataset.relationship_classes, 
+                                         "INPUT GRAPH", 0)
+                    print_graph_predicates(predicted_next_state, dataset.object_classes, dataset.relationship_classes, 
+                                         "PREDICTED NEXT GRAPH", 0)
+                    print_graph_predicates(next_scene_graphs, dataset.object_classes, dataset.relationship_classes, 
+                                         "GROUND TRUTH NEXT GRAPH", 0)
+
+def test_stateleapr(cfg, run_name, test_run_name):
+    """Test StateLeaPR model - compatible with main.py interface"""
+    
+    # Load checkpoint (assume it exists)
+    checkpoints_folder = os.path.join(cfg.runs_folder, run_name, 'checkpoints')
+    checkpoints = os.listdir(checkpoints_folder)
+    checkpoint = os.path.join(checkpoints_folder, checkpoints[0])
+    
+    model = StateLeaPR.load_from_checkpoint(checkpoint)
+    
+    assert cfg.test.data_split in ['test', 'val'], 'Invalid test split'
+    
+    print('Loading dataset for testing...')
+    dataset = SingleBothAG(cfg, no_img=False, subset=False, split=cfg.test.data_split, no_rules=False)
     dataloader = DataLoader(dataset, batch_size=2, shuffle=False, collate_fn=dataset.state_collate)
-    
-    sample_batch = next(iter(dataloader))
-    node_dim = sample_batch['pre_scene_graphs'].x.shape[1]
-    action_dim = sample_batch['action_labels'].shape[1]
-    num_relations = len(dataset.relationship_classes)
-    
-    print(f"Dataset info:")
-    print(f"  Node feature dim: {node_dim}")
-    print(f"  Action classes: {action_dim}")
-    print(f"  Relationship classes: {num_relations}")
-    
-    model_params = {
-        'node_dim': node_dim, 
-        'action_dim': action_dim, 
-        'hidden_dim': 256,
-        'num_relations': num_relations
-    }
-    
-    print("Creating StateLeaPR model...")
-    model = StateLeaPR(cfg, model_params)
     
     # Set loss weights based on relationship priors
     relationship_priors = dataset.get_relationship_priors()
     model.set_loss_weights(relationship_priors)
     
-    print("Running prediction test...")
+    print(f"Dataset length: {len(dataset)}")
+    print(f"Relationship classes: {len(dataset.relationship_classes)}")
+    
+    # Run constraint testing routine
+    test_routine_stateleapr(cfg, run_name, test_run_name, model, dataset, dataloader)
+    
+    print("Running additional prediction test...")
     model.eval()
     with torch.no_grad():
         for i, batch in enumerate(dataloader):
-            if i >= 20:  # Test only first 2 batches
+            if i >= 2:  # Test only first 2 batches
                 break
             
             print(f"\n{'='*50}")
@@ -114,8 +169,10 @@ def test_stateleapr(config_path):
             print(f"Pre-images: {batch['pre_images'].shape if batch['pre_images'] is not None else None}")
             print(f"Post-images: {batch['post_images'].shape if batch['post_images'] is not None else None}")
             
-            prev_images, prev_scene_graphs, action = model.get_state_action_from_batch(batch)
-            next_scene_graphs = model.get_next_state_from_batch(batch)
+            prev_images = batch['pre_images']
+            prev_scene_graphs = batch['pre_scene_graphs']
+            action = batch['action_labels']
+            next_scene_graphs = batch['post_scene_graphs']
             predicted_next_state, edge_logits_data = model(prev_images, prev_scene_graphs, action)
             loss = model.compute_edge_classification_loss(edge_logits_data, next_scene_graphs, len(dataset.relationship_classes))
             
@@ -162,6 +219,9 @@ def test_stateleapr(config_path):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--config', help='Path to config YAML file')
+    parser.add_argument('--run', type=str, default='none', help='Run name')
+    parser.add_argument('--test_run', type=str, default='none', help='Test run name')
     args = parser.parse_args()
-    test_stateleapr(args.config) 
+    
+    cfg = load_yaml(os.path.join('runs/', args.run, 'config.yaml'))
+    test_stateleapr(cfg, args.run, args.test_run) 
