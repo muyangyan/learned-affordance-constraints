@@ -132,90 +132,72 @@ class StateLeaPR(L.LightningModule):
         self.criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight)
         print(f"Set BCEWithLogitsLoss with {len(pos_weight)} pos_weights")
     
-    # def compute_constraints(self, truth_values, precisions, recalls, priors):
-    #     """
-    #     Compute precondition rule constraints from binary truth values using precision/recall.
-    #     Similar to BaseLeaPR's compute_constraints but for precondition rules.
-    #     """
-    #     if precisions is None:
-    #         return None
-            
-    #     satisfied_mask = truth_values.bool()
-        
-    #     if truth_values.ndim == 2:
-    #         precisions = precisions.unsqueeze(0)
-    #         recalls = recalls.unsqueeze(0) 
-    #         priors = priors.unsqueeze(0)
-    #     else:
-    #         precisions = precisions
-    #         recalls = recalls
-    #         priors = priors
-        
-    #     result = torch.where(satisfied_mask, precisions, (1 - recalls) * priors).float()
-    #     return result
-    
     
     # predicted_edge_probs: (total num edges in batch(fully connected), num_classes)
     # predicted_edge_pairs: (total num edges in batch, 2)
     # prior_edge_probs: (total num edges in gt batch(not fully connected), num_classes)
     # prior_edge_pairs: (total num edges in gt batch, 2)
     # groundings: (num_frames, num_effects, max_arity)
-    def apply_constraints(self, predicted_edge_probs, predicted_edge_pairs, prior_edge_probs, prior_edge_pairs, groundings, weight=0.5):
+    def apply_constraints(self, pred_input, prior_input, groundings, weight=0.5):
         #self.effect_precisions
         # we will search through to get the truth value for each effect and the grounding
         # i.e. types of objects. 
         # RESTS ON ASSUMPTION THAT THERE CAN BE UP TO ONE OF EACH OBJECT TYPE PER FRAME
+        pred_edge_probs, pred_edge_pairs, pred_batch_vec = pred_input
+        prior_edge_probs, prior_edge_pairs, prior_batch_vec = prior_input
 
         max_arity = groundings.shape[2]
 
         assert max_arity == 2
 
-        # [num_frames, num_effects]
-        truth_values = (groundings.sum(dim=2) > -max_arity).long() #1 where there is a grounding, 0 otherwise
-
-        # [num_frames, num_effects]
-        masked_precisions = truth_values * self.effect_precisions
-
-        # [num_frames, num_effects/2 (number of effect predicates)]
-        add_precisions = masked_precisions[:, len(masked_precisions)//2:]
-        del_precisions = masked_precisions[:, :len(masked_precisions)//2]
-        assert del_precisions.shape == add_precisions.shape
-
-
         #node_grounding_dxs = None #TODO: ASSUMING ONLY REL EFFECTS FOR NOW
         #node_groundings = None 
-        edge_grounding_idxs = (groundings.min(dim=2).values >= 0).long()
+        # [batch_size, num_effects]
+        edge_grounding_idxs = (groundings.min(dim=2).values >= 0).long() # same as truth values for rels
         edge_grounding_pairs = groundings[edge_grounding_idxs] #[total num edges affected by effects, max_arity]
-        edge_grounding_batch_idxs = torch.nonzero(edge_grounding_idxs, as_tuple=True)[0]
+        edge_grounding_batch_vec = torch.nonzero(edge_grounding_idxs, as_tuple=True)[0]
+
+        add_mask = torch.arange(len(self.effect_precisions)) < len(self.effect_precisions)//2 # [num_effects/2]
+        del_mask = torch.arange(len(self.effect_precisions)) >= len(self.effect_precisions)//2 # [num_effects/2]
+
+        # again, this only works because the columns of effect_precisions are only relationships rn
+        #node_mask = torch.zeros_like(add_mask)
+        edge_mask = torch.ones_like(add_mask)
+
+        # [batch_size, num_effects]
+        masked_precisions = edge_grounding_idxs * self.effect_precisions
+        edge_add_precisions = masked_precisions[:, add_mask * edge_mask]
+        edge_del_precisions = masked_precisions[:, del_mask * edge_mask]
+
+        def get_relevant_probs(batch_vec, edge_pairs, edge_probs):
+            edge_mapper = {(batch_vec[i], edge_pairs[i]): i for i in range(len(edge_pairs))}
+            relevant_probs = [edge_probs[edge_mapper[(edge_grounding_batch_vec[i], edge_grounding_pairs[i])]] for i in range(len(edge_grounding_pairs))]
+            relevant_probs = torch.stack(relevant_probs)
+            return relevant_probs, edge_mapper
+
+        relevant_prior_probs, prior_edge_mapper = get_relevant_probs(prior_batch_vec, prior_edge_pairs, prior_edge_probs)
+        relevant_pred_probs, pred_edge_mapper = get_relevant_probs(pred_batch_vec, pred_edge_pairs, pred_edge_probs)
+
+        def fuse_probs(prior, add, del_):
+            return prior * (1-del_) + (1 - prior) * add
+        symbolic_probs = fuse_probs(relevant_prior_probs, edge_add_precisions, edge_del_precisions)
+
+        final_probs = relevant_pred_probs * (symbolic_probs**weight)
+
+        # final probs is in the relevant subset of edges affected by effects
+        # expand back to the full edge space, matching size of pred_edge_probs
+
+        for i in range(len(final_probs)):
+            batch_idx = edge_grounding_batch_vec[i]
+            edge_pair = edge_grounding_pairs[i]
+            pred_edge_probs[pred_edge_mapper[(batch_idx, edge_pair)]] = final_probs[i]
+
+        return pred_edge_probs
 
 
 
 
 
-        prior_edge_mapper = {prior_edge_pairs[i]: prior_edge_probs[i] for i in range(len(prior_edge_pairs))}
-        relevant_prior_probs = torch.stack([prior_edge_mapper[pair] for pair in edge_grounding_pairs])
-
-
-        # [total num edges in batch, num_classes]
-        predicted_edge_probs = predicted_edge_probs * relevant_prior_probs
-
-        # [total num edges in batch, num_classes]
-        
-        return predicted_edge_probs
-
-
-
-
-
-
-
-
-
-        
-
-
-
-    
     def set_constraint_params(self, constraint_mode='neural', constraint_weight=0.5):
         """Set constraint parameters for testing"""
         self.constraint_mode = constraint_mode

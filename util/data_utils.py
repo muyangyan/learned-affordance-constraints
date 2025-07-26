@@ -262,7 +262,6 @@ def pyg_to_predicates(frame_id, data, node_vocab, edge_vocab):
 # takes pyg graph as input, returns edge probs and pairs
 # edge_probs: (num_edges, num_classes)
 # edge_pairs: (num_edges, 2)
-# object_classes and relationship_classes are lists of strings, for ordering
 def extract_edge_probs_and_pairs(graph_batch):
     graphs = graph_batch.to_data_list()
     edge_probs_list = []
