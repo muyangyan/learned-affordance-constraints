@@ -258,3 +258,31 @@ def pyg_to_predicates(frame_id, data, node_vocab, edge_vocab):
         example += f'{edge_vocab[type]}({node_ids[src]}, {node_ids[tgt]}).\n'
 
     return example
+
+# takes pyg graph as input, returns edge probs and pairs
+# edge_probs: (num_edges, num_classes)
+# edge_pairs: (num_edges, 2)
+# object_classes and relationship_classes are lists of strings, for ordering
+def extract_edge_probs_and_pairs(graph_batch):
+    graphs = graph_batch.to_data_list()
+    edge_probs_list = []
+    edge_pairs_list = []
+    for graph in graphs:
+        edge_probs = graph.edge_attr # should be one hot of types of edges between this pair of nodes
+        edge_pairs_idx = graph.edge_index.T # (num_edges, 2) index is that of the node in the graph
+
+        # RESTS ON ASSUMPTION THAT THERE CAN BE UP TO ONE OF EACH OBJECT TYPE PER FRAME
+        node_types = torch.argmax(graph.x, dim=1) # maps the node index to the type of the node
+
+        edge_pairs = []
+        for i, j in edge_pairs_idx:
+            edge_pairs.append((node_types[i], node_types[j]))
+        edge_pairs = torch.tensor(edge_pairs)
+
+        edge_probs_list.append(edge_probs)
+        edge_pairs_list.append(edge_pairs)
+
+    edge_probs = torch.stack(edge_probs_list)
+    edge_pairs = torch.stack(edge_pairs_list)
+
+    return edge_probs, edge_pairs

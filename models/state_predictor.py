@@ -8,6 +8,7 @@ import os
 import json
 from models.modules import get_model
 from util.rule_utils import get_rule_precisions_recalls
+from util.data_utils import extract_edge_probs_and_pairs
 import pytorch_lightning as L 
 
 from torchmetrics import MetricCollection
@@ -154,16 +155,59 @@ class StateLeaPR(L.LightningModule):
     #     return result
     
     
-    # is the pair the obj type or the index of the obj in the scene graph?
-    def apply_constraints(self, edge_probs, edge_pairs, prior_probs, groundings, weight=0.5):
+    # predicted_edge_probs: (total num edges in batch(fully connected), num_classes)
+    # predicted_edge_pairs: (total num edges in batch, 2)
+    # prior_edge_probs: (total num edges in gt batch(not fully connected), num_classes)
+    # prior_edge_pairs: (total num edges in gt batch, 2)
+    # groundings: (num_frames, num_effects, max_arity)
+    def apply_constraints(self, predicted_edge_probs, predicted_edge_pairs, prior_edge_probs, prior_edge_pairs, groundings, weight=0.5):
         #self.effect_precisions
-        # groundings, with shape (num_frames, num_effects, max_arity)
         # we will search through to get the truth value for each effect and the grounding
         # i.e. types of objects. 
         # RESTS ON ASSUMPTION THAT THERE CAN BE UP TO ONE OF EACH OBJECT TYPE PER FRAME
+
         max_arity = groundings.shape[2]
+
+        assert max_arity == 2
+
+        # [num_frames, num_effects]
         truth_values = (groundings.sum(dim=2) > -max_arity).long() #1 where there is a grounding, 0 otherwise
-        masked_precisions = self.effect_precisions * truth_values
+
+        # [num_frames, num_effects]
+        masked_precisions = truth_values * self.effect_precisions
+
+        # [num_frames, num_effects/2 (number of effect predicates)]
+        add_precisions = masked_precisions[:, len(masked_precisions)//2:]
+        del_precisions = masked_precisions[:, :len(masked_precisions)//2]
+        assert del_precisions.shape == add_precisions.shape
+
+
+        #node_grounding_dxs = None #TODO: ASSUMING ONLY REL EFFECTS FOR NOW
+        #node_groundings = None 
+        edge_grounding_idxs = (groundings.min(dim=2).values >= 0).long()
+        edge_grounding_pairs = groundings[edge_grounding_idxs] #[total num edges affected by effects, max_arity]
+        edge_grounding_batch_idxs = torch.nonzero(edge_grounding_idxs, as_tuple=True)[0]
+
+
+
+
+
+        prior_edge_mapper = {prior_edge_pairs[i]: prior_edge_probs[i] for i in range(len(prior_edge_pairs))}
+        relevant_prior_probs = torch.stack([prior_edge_mapper[pair] for pair in edge_grounding_pairs])
+
+
+        # [total num edges in batch, num_classes]
+        predicted_edge_probs = predicted_edge_probs * relevant_prior_probs
+
+        # [total num edges in batch, num_classes]
+        
+        return predicted_edge_probs
+
+
+
+
+
+
 
 
 
@@ -402,28 +446,24 @@ class StateLeaPR(L.LightningModule):
         pred_scene_graph, edge_logits_data = self(prev_images, prev_scene_graphs, action)
         
         # Separate edge_logits_data into preds and pairs
-        preds_logits = torch.stack(edge_logits_data['logits'])
-        pairs = edge_logits_data['pairs']
+        preds_logits = torch.stack(edge_logits_data['logits']) # [total edges in whole batch, num_relations]
+        preds_probs = torch.sigmoid(preds_logits)
+        preds_pairs = edge_logits_data['pairs'] # [total edges in whole batch, 2]
         
         # Apply sigmoid activation to convert logits to probabilities
-        preds_probs = torch.sigmoid(preds_logits)
         
         # Apply effect constraints only (this is a dynamics model predicting post-state)
         if self.constraint_mode != 'neural':
             # Get effect truth values from batch (no precondition constraints for dynamics)
-            effect_truth_values = batch.get('pre_effects_truth_values')
-            
-            # # Compute effect constraints only
-            # effect_constraints = None
-            # if effect_truth_values is not None:
-            #     effect_constraints = self.compute_constraints(effect_truth_values,
-            #                                                 self.effect_precisions,
-            #                                                 self.effect_recalls,
-            #                                                 self.effect_priors)
-            
+            prior_edge_probs, prior_edge_pairs = extract_edge_probs_and_pairs(prev_scene_graphs)
+
+            effect_groundings = batch.get('effects_groundings')
+
             # Apply constraints to edge probabilities
             preds_probs = self.apply_constraints(
-                preds_probs, None, effect_truth_values,  # precond_constraints=None
+                preds_probs, preds_pairs, 
+                prior_edge_probs, prior_edge_pairs,
+                effect_groundings, 
                 weight=getattr(self, 'constraint_weight', 0.5)
             )
         
@@ -433,7 +473,7 @@ class StateLeaPR(L.LightningModule):
         if self.preds is not None and preds_probs is not None and gt_scene_graphs is not None:
             self.preds[key] = {
                 'preds_probs': preds_probs,
-                'pairs': pairs,
+                'pairs': preds_pairs,
                 'gt_scene_graphs': gt_scene_graphs,
                 'pred_scene_graph': pred_scene_graph,
             }
