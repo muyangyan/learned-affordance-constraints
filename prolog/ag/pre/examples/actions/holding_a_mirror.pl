@@ -1,10 +1,11 @@
 %%keep negative probability: 0.0009198573572092306
 :- style_check(-discontiguous).
-neg(holding_a_mirror_target(x_02cyp_mp4_000099_png_0)).
-neg(holding_a_mirror_target(x_1yh1y_mp4_000050_png_0)).
-neg(holding_a_mirror_target(x_884c0_mp4_000201_png_0)).
-neg(holding_a_mirror_target(x_94yty_mp4_000394_png_0)).
+neg(holding_a_mirror_target(x_1nt8p_mp4_000572_png_0)).
+neg(holding_a_mirror_target(x_42uh8_mp4_000073_png_0)).
+neg(holding_a_mirror_target(x_csqlj_mp4_000057_png_0)).
+neg(holding_a_mirror_target(x_gsiyv_mp4_000167_png_0)).
 pos(holding_a_mirror_target(x_lrjs4_mp4_000526_png_0)).
-neg(holding_a_mirror_target(x_p3wqv_mp4_000887_png_0)).
-neg(holding_a_mirror_target(x_wmpww_mp4_000657_png_0)).
+neg(holding_a_mirror_target(x_q8xee_mp4_000392_png_0)).
+neg(holding_a_mirror_target(x_saft3_mp4_000060_png_0)).
+neg(holding_a_mirror_target(x_ut4qt_mp4_000447_png_0)).
 pos(holding_a_mirror_target(x_y4mw3_mp4_000200_png_0)).

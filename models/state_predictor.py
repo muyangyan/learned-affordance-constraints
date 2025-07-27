@@ -21,7 +21,7 @@ class StateLeaPR(L.LightningModule):
     Inherits directly from LightningModule and is designed specifically for state transitions.
     """
     
-    def __init__(self, cfg, model_params, verb_classes, effect_classes, verb_priors, effect_priors):
+    def __init__(self, cfg, model_params, verb_classes, effect_classes, verb_priors, effect_priors, relationship_priors):
         super().__init__()
         self.lr = float(cfg.train.lr)
         
@@ -29,12 +29,43 @@ class StateLeaPR(L.LightningModule):
         self.model_type = cfg.model.type
         self.nn_model = get_model(self.model_type, model_params)
         # Loss function for multi-label edge classification (will be set with priors)
-        self.criterion = None  # Will be set when relationship priors are available
         self.edge_threshold = 0.5  # Threshold for edge prediction
         self.rel_pos_weight_factor = getattr(cfg.model, 'rel_pos_weight', 1.0)  # Scaling factor
         self.weight_scheme = getattr(cfg.model, 'weight_scheme', 'uniform')  # Weight scheme for pos_weight
         # Constraint-related parameters
         self.constraint_mode = 'neural'  # Default mode
+
+
+ 
+        if self.weight_scheme == 'uniform' or relationship_priors is None:
+            if relationship_priors is None:
+                print("No relationship priors available")
+            print("Using uniform pos_weight")
+            pos_weight = torch.full((self.nn_model.num_relations,), self.rel_pos_weight_factor)
+        elif self.weight_scheme == 'neg_pos_ratio':
+            # Calcualte pos_weight relative to negatives/positives
+            # pos_weight = ((1 - prior) / prior) * scaling_factor
+            pos_weight = []
+            for prior in relationship_priors:
+                if prior < 1e-8:  # Handle very rare/missing relationships
+                    weight = 100.0 * self.rel_pos_weight_factor
+                else:
+                    weight = ((1.0 - prior) / prior) * self.rel_pos_weight_factor
+                    weight = min(weight, 100.0) # Cap extreme weights
+                pos_weight.append(weight)
+            pos_weight = torch.tensor(pos_weight, dtype=torch.float32)
+            print(f"Relationship priors-based pos_weights (factor={self.rel_pos_weight_factor}):")
+            for i, (prior, weight) in enumerate(zip(relationship_priors, pos_weight)):
+                if prior > 0:
+                    print(f"  Rel {i}: prior={prior:.6f}, pos_weight={weight:.2f}")
+        else:
+            raise ValueError(f"weight scheme {self.weight_scheme} not supported for state prediction")
+        
+        self.register_buffer('pos_weight', pos_weight)
+        self.criterion = nn.BCEWithLogitsLoss(pos_weight=self.pos_weight)
+        print(f"Set BCEWithLogitsLoss with {len(pos_weight)} pos_weights")
+
+
         
         # Load rule precisions and recalls from JSON files
         if hasattr(cfg, 'prolog_folder') and hasattr(cfg, 'rules'):
@@ -104,33 +135,7 @@ class StateLeaPR(L.LightningModule):
         }
         
         self.save_hyperparameters()
-    
-    def set_loss_weights(self, relationship_priors):
-        """Set BCEWithLogitsLoss with pos_weight based on relationship priors"""
-        if self.weight_scheme == 'uniform' or relationship_priors is None:
-            print("No relationship priors available, using uniform pos_weight")
-            pos_weight = torch.full((self.nn_model.num_relations,), self.rel_pos_weight_factor)
-        elif self.weight_scheme == 'neg_pos_ratio':
-            # Calcualte pos_weight relative to negatives/positives
-            # pos_weight = ((1 - prior) / prior) * scaling_factor
-            pos_weight = []
-            for prior in relationship_priors:
-                if prior < 1e-8:  # Handle very rare/missing relationships
-                    weight = 100.0 * self.rel_pos_weight_factor
-                else:
-                    weight = ((1.0 - prior) / prior) * self.rel_pos_weight_factor
-                    weight = min(weight, 100.0) # Cap extreme weights
-                pos_weight.append(weight)
-            pos_weight = torch.tensor(pos_weight, dtype=torch.float32)
-            print(f"Relationship priors-based pos_weights (factor={self.rel_pos_weight_factor}):")
-            for i, (prior, weight) in enumerate(zip(relationship_priors, pos_weight)):
-                if prior > 0:
-                    print(f"  Rel {i}: prior={prior:.6f}, pos_weight={weight:.2f}")
-        else:
-            raise ValueError(f"weight scheme {self.weight_scheme} not supported for state prediction")
-        
-        self.criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight)
-        print(f"Set BCEWithLogitsLoss with {len(pos_weight)} pos_weights")
+   
     
     
     # predicted_edge_probs: (total num edges in batch(fully connected), num_classes)
@@ -138,13 +143,16 @@ class StateLeaPR(L.LightningModule):
     # prior_edge_probs: (total num edges in gt batch(not fully connected), num_classes)
     # prior_edge_pairs: (total num edges in gt batch, 2)
     # groundings: (num_frames, num_effects, max_arity)
-    def apply_constraints(self, pred_input, prior_input, groundings, weight=0.5):
+    def apply_constraints(self, pred_input, prior_input, groundings, weight=0.5, constraint_mode='neural'):
         #self.effect_precisions
         # we will search through to get the truth value for each effect and the grounding
         # i.e. types of objects. 
         # RESTS ON ASSUMPTION THAT THERE CAN BE UP TO ONE OF EACH OBJECT TYPE PER FRAME
-        pred_edge_probs, pred_edge_pairs, pred_batch_vec = pred_input
-        prior_edge_probs, prior_edge_pairs, prior_batch_vec = prior_input
+        pred_edge_probs, pred_edge_pairs, pred_edge_batch_vec = pred_input
+        prior_edge_probs, prior_edge_pairs, prior_edge_batch_vec = prior_input
+
+        if constraint_mode == 'neural':
+            return pred_edge_probs
 
         max_arity = groundings.shape[2]
 
@@ -175,14 +183,18 @@ class StateLeaPR(L.LightningModule):
             relevant_probs = torch.stack(relevant_probs)
             return relevant_probs, edge_mapper
 
-        relevant_prior_probs, prior_edge_mapper = get_relevant_probs(prior_batch_vec, prior_edge_pairs, prior_edge_probs)
-        relevant_pred_probs, pred_edge_mapper = get_relevant_probs(pred_batch_vec, pred_edge_pairs, pred_edge_probs)
+        relevant_prior_probs, prior_edge_mapper = get_relevant_probs(prior_edge_batch_vec, prior_edge_pairs, prior_edge_probs)
+        relevant_pred_probs, pred_edge_mapper = get_relevant_probs(pred_edge_batch_vec, pred_edge_pairs, pred_edge_probs)
 
         def fuse_probs(prior, add, del_):
             return prior * (1-del_) + (1 - prior) * add
         symbolic_probs = fuse_probs(relevant_prior_probs, edge_add_precisions, edge_del_precisions)
 
-        final_probs = relevant_pred_probs * (symbolic_probs**weight)
+        if constraint_mode == 'rules':
+            pred_edge_probs = prior_edge_probs
+            final_probs = symbolic_probs
+        else:
+            final_probs = relevant_pred_probs * (symbolic_probs**weight)
 
         # final probs is in the relevant subset of edges affected by effects
         # expand back to the full edge space, matching size of pred_edge_probs
@@ -191,7 +203,6 @@ class StateLeaPR(L.LightningModule):
             batch_idx = edge_grounding_batch_vec[i]
             edge_pair = edge_grounding_pairs[i]
             pred_edge_probs[pred_edge_mapper[(batch_idx, edge_pair)]] = final_probs[i]
-
         return pred_edge_probs
 
 
@@ -428,74 +439,46 @@ class StateLeaPR(L.LightningModule):
         pred_scene_graph, edge_logits_data = self(prev_images, prev_scene_graphs, action)
         
         # Separate edge_logits_data into preds and pairs
-        preds_logits = torch.stack(edge_logits_data['logits']) # [total edges in whole batch, num_relations]
-        preds_probs = torch.sigmoid(preds_logits)
-        preds_pairs = edge_logits_data['pairs'] # [total edges in whole batch, 2]
+        pred_edge_logits = torch.stack(edge_logits_data['logits']) # [total edges in whole batch, num_relations]
+        pred_edge_probs = torch.sigmoid(pred_edge_logits)
+        pred_edge_pairs = torch.tensor(edge_logits_data['pairs']) # [total edges in whole batch, 2]
+        pred_edge_batch_vec = torch.zeros(len(pred_edge_pairs), device=pred_edge_logits.device)
         
-        # Apply sigmoid activation to convert logits to probabilities
         
-        # Apply effect constraints only (this is a dynamics model predicting post-state)
-        if self.constraint_mode != 'neural':
-            # Get effect truth values from batch (no precondition constraints for dynamics)
-            prior_edge_probs, prior_edge_pairs = extract_edge_probs_and_pairs(prev_scene_graphs)
+        # Get effect truth values from batch (no precondition constraints for dynamics)
+        prior_edge_probs, prior_edge_pairs, prior_edge_batch_vec = extract_edge_probs_and_pairs(prev_scene_graphs)
+        effect_groundings = batch.get('effects_groundings')
 
-            effect_groundings = batch.get('effects_groundings')
-
-            # Apply constraints to edge probabilities
-            preds_probs = self.apply_constraints(
-                preds_probs, preds_pairs, 
-                prior_edge_probs, prior_edge_pairs,
-                effect_groundings, 
-                weight=getattr(self, 'constraint_weight', 0.5)
-            )
+        # Apply constraints to edge probabilities
+        pred_edge_probs = self.apply_constraints(
+            (pred_edge_probs, pred_edge_pairs, pred_edge_batch_vec),
+            (prior_edge_probs, prior_edge_pairs, prior_edge_batch_vec),
+            effect_groundings, 
+            weight=getattr(self, 'constraint_weight', 0.5),
+            constraint_mode=self.constraint_mode
+        )
         
         # debug, metrics and logging
         self.ids.extend(ids)
+        batch_size = len(ids)
         key = self.constraint_mode
-        if self.preds is not None and preds_probs is not None and gt_scene_graphs is not None:
-            self.preds[key] = {
-                'preds_probs': preds_probs,
-                'pairs': preds_pairs,
+        if self.preds is not None and pred_edge_probs is not None and gt_scene_graphs is not None:
+            batch_result = {
+                'pred_edge_probs': pred_edge_probs,
+                'pred_edge_pairs': pred_edge_pairs,
+                'pred_edge_batch_vec': pred_edge_batch_vec,
                 'gt_scene_graphs': gt_scene_graphs,
                 'pred_scene_graph': pred_scene_graph,
             }
-        
-        # No loss computation in test_step (mirrors original LeaPR)
+            if key not in self.preds:
+                raise ValueError(f"Constraint mode {key} not found in preds")
+            self.preds[key].append(batch_result)
 
-    def predict_step(self, batch, batch_idx):
-        ids = batch['ids']
-        prev_images = batch['pre_images']
-        prev_scene_graphs = batch['pre_scene_graphs']
-        action = batch['action_labels']
-        next_scene_graphs = batch['post_scene_graphs']
-        
-        predicted_next_state, edge_logits_data = self(prev_images, prev_scene_graphs, action)
-        
-        # Apply sigmoid activation to convert logits to probabilities
-        if edge_logits_data['logits']:
-            sigmoid_logits = [torch.sigmoid(logits) for logits in edge_logits_data['logits']]
-            edge_logits_data = {
-                'logits': sigmoid_logits,
-                'pairs': edge_logits_data['pairs']
-            }
-        
-        # Apply effect constraints only (this is a dynamics model predicting post-state)
-        if self.constraint_mode != 'neural':
-            # Get effect truth values from batch (no precondition constraints for dynamics)
-            effect_truth_values = batch.get('pre_effects_truth_values')
-            
-            # Compute effect constraints only
-            effect_constraints = None
-            if effect_truth_values is not None:
-                effect_constraints = self.compute_effect_constraints(effect_truth_values)
-            
-            # Apply constraints to edge probabilities
-            edge_logits_data = self.apply_constraints(
-                edge_logits_data, None, effect_constraints,  # precond_constraints=None
-                weight=getattr(self, 'constraint_weight', 0.5)
-            )
-        
-        return ids, prev_images, prev_scene_graphs, action, next_scene_graphs, predicted_next_state, edge_logits_data
+    def on_test_epoch_end(self):
+        key = self.constraint_mode
+        if self.preds is not None:
+            self.preds[key] = torch.vstack(self.preds[key])
+            self.preds[key] = self.preds[key].cpu().numpy()
 
     def configure_optimizers(self):
         return Adam(self.parameters(), lr=self.lr)

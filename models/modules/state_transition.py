@@ -145,7 +145,7 @@ class SimpleStateTransitionModel(nn.Module):
         # Package edge logits with their corresponding pairs for loss computation
         edge_logits_data = {
             'logits': all_edge_logits,
-            'pairs': torch.tensor(all_edge_pairs)
+            'pairs': all_edge_pairs
         }
         
         return next_state, edge_logits_data 

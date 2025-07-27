@@ -266,7 +266,8 @@ def extract_edge_probs_and_pairs(graph_batch):
     graphs = graph_batch.to_data_list()
     edge_probs_list = []
     edge_pairs_list = []
-    for graph in graphs:
+    edge_batch_vec_list = []
+    for i, graph in enumerate(graphs):
         edge_probs = graph.edge_attr # should be one hot of types of edges between this pair of nodes
         edge_pairs_idx = graph.edge_index.T # (num_edges, 2) index is that of the node in the graph
 
@@ -280,8 +281,10 @@ def extract_edge_probs_and_pairs(graph_batch):
 
         edge_probs_list.append(edge_probs)
         edge_pairs_list.append(edge_pairs)
+        edge_batch_vec_list.append(torch.full((len(edge_pairs),), i, dtype=torch.long))
 
-    edge_probs = torch.stack(edge_probs_list)
-    edge_pairs = torch.stack(edge_pairs_list)
+    edge_probs = torch.cat(edge_probs_list, dim=0)
+    edge_pairs = torch.cat(edge_pairs_list, dim=0)
+    edge_batch_vec = torch.cat(edge_batch_vec_list, dim=0)
 
-    return edge_probs, edge_pairs
+    return edge_probs, edge_pairs, edge_batch_vec
