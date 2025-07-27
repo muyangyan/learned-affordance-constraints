@@ -43,8 +43,8 @@ def get_rule_precisions_recalls(rules_json, priors, classes):
         rules = {normalize_predicate_name(k): v for k, v in rules.items()}
     
     # Extract recall and precision for all rules into arrays
-    recalls = np.zeros(len(rules))
-    precisions = np.zeros(len(rules))
+    recalls = np.zeros(len(classes))
+    precisions = np.zeros(len(classes))
     
     for i, class_name in enumerate(classes):
         # Convert class name to lowercase predicate name for lookup

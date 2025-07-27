@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from torch_geometric.data import Data
+from torch_geometric.data import Data, Batch
 from models.modules.rgcn import RGCN
 from models.modules.mvit import MViT
 
@@ -66,16 +66,18 @@ class SimpleStateTransitionModel(nn.Module):
         # 3. Encode action
         action_features = self.action_encoder(action)  # [batch_size, hidden_dim]
         
-        # 4. Predict edges for all pairs of nodes
-        predicted_edges = []
-        predicted_edge_types = []
-        all_edge_logits = []  # Store logits for loss computation
-        all_edge_pairs = []   # Store corresponding object type pairs for loss computation
+        # 4. Create fully connected graphs with edge logits as edge_attr
+        all_edge_indices = []
+        all_edge_attrs = []
+        all_node_features = []
+        all_node_types = []
+        batch_assignments = []
         
         # Process each graph in the batch
         batch_indices = prev_scene_graphs.batch
         unique_batches = torch.unique(batch_indices)
         
+        node_offset = 0
         for batch_idx in unique_batches:
             # Get nodes for this graph
             node_mask = batch_indices == batch_idx
@@ -88,13 +90,20 @@ class SimpleStateTransitionModel(nn.Module):
             image_feat = image_features[batch_idx]  # [hidden_dim]
             action_feat = action_features[batch_idx]  # [hidden_dim]
             
-            # Global node indices for this graph (still needed for predicted graph construction)
-            global_node_indices = torch.where(node_mask)[0]
+            # Store node features and types
+            all_node_features.append(graph_nodes)
+            all_node_types.append(graph_node_types)
             
-            # Predict for all pairs (i, j) where i != j
+            # Create fully connected edges for this graph
+            graph_edge_indices = []
+            graph_edge_attrs = []
+            
             for i in range(num_nodes):
                 for j in range(num_nodes):
                     if i != j:  # No self-loops
+                        # Add edge indices (with offset for batching)
+                        graph_edge_indices.append([node_offset + i, node_offset + j])
+                        
                         # Concatenate features for this pair
                         pair_features = torch.cat([
                             graph_nodes[i],  # node_i features
@@ -104,48 +113,69 @@ class SimpleStateTransitionModel(nn.Module):
                             action_feat     # action context
                         ])
                         
-                        # Predict edge logits
+                        # Predict edge logits (no thresholding)
                         edge_logits = self.edge_classifier(pair_features)  # [num_relations]
-                        all_edge_logits.append(edge_logits)
-                        
-                        # Store object type pairs instead of node indices
-                        src_obj_type = graph_node_types[i].item()
-                        tgt_obj_type = graph_node_types[j].item()
-                        all_edge_pairs.append((src_obj_type, tgt_obj_type))
-                        
-                        # Use threshold-based prediction (multi-label)
-                        edge_probs = torch.sigmoid(edge_logits)
-                        threshold = 0.5
-                        predicted_relations = torch.where(edge_probs > threshold)[0]
-                        
-                        # Add edges for each predicted relationship type (still need node indices for graph construction)
-                        for rel_type in predicted_relations:
-                            global_i = global_node_indices[i].item()
-                            global_j = global_node_indices[j].item()
-                            predicted_edges.append([global_i, global_j])
-                            predicted_edge_types.append(rel_type.item())
+                        graph_edge_attrs.append(edge_logits)
+            
+            # Add to batch collections
+            if graph_edge_indices:
+                all_edge_indices.extend(graph_edge_indices)
+                all_edge_attrs.extend(graph_edge_attrs)
+            
+            # Update batch assignments
+            batch_assignments.extend([batch_idx] * num_nodes)
+            node_offset += num_nodes
         
-        # 5. Create new graph with predicted edges
-        if len(predicted_edges) > 0:
-            new_edge_index = torch.tensor(predicted_edges, device=prev_scene_graphs.x.device).t()
-            new_edge_type = torch.tensor(predicted_edge_types, device=prev_scene_graphs.x.device)
+        # 5. Create batched graph with fully connected edges
+        if all_edge_indices:
+            edge_index = torch.tensor(all_edge_indices, device=prev_scene_graphs.x.device).t()
+            edge_attr = torch.stack(all_edge_attrs)  # [num_edges, num_relations]
         else:
-            # No edges predicted
-            new_edge_index = torch.empty((2, 0), dtype=torch.long, device=prev_scene_graphs.x.device)
-            new_edge_type = torch.empty((0,), dtype=torch.long, device=prev_scene_graphs.x.device)
+            edge_index = torch.empty((2, 0), dtype=torch.long, device=prev_scene_graphs.x.device)
+            edge_attr = torch.empty((0, self.num_relations), device=prev_scene_graphs.x.device)
         
-        # 6. Return graph with same node features but predicted edges
-        next_state = Data(
-            x=prev_scene_graphs.x,  # Keep node features unchanged
-            edge_index=new_edge_index,
-            edge_type=new_edge_type,
-            batch=prev_scene_graphs.batch
-        )
+        # Combine all node features and types
+        all_x = torch.cat(all_node_features, dim=0)
+        all_node_type = torch.cat(all_node_types, dim=0)
+        batch_tensor = torch.tensor(batch_assignments, device=prev_scene_graphs.x.device)
         
-        # Package edge logits with their corresponding pairs for loss computation
-        edge_logits_data = {
-            'logits': all_edge_logits,
-            'pairs': all_edge_pairs
-        }
+        # Create individual Data objects for each graph
+        individual_graphs = []
+        node_offset = 0
+        edge_offset = 0
         
-        return next_state, edge_logits_data 
+        for batch_idx in unique_batches:
+            # Get nodes for this graph
+            node_mask = batch_indices == batch_idx
+            num_nodes = node_mask.sum().item()
+            
+            # Get edges for this graph
+            if all_edge_indices:
+                # Count edges for this graph (num_nodes * (num_nodes - 1))
+                num_edges = num_nodes * (num_nodes - 1) if num_nodes > 1 else 0
+                
+                if num_edges > 0:
+                    graph_edge_index = edge_index[:, edge_offset:edge_offset + num_edges] - node_offset
+                    graph_edge_attr = edge_attr[edge_offset:edge_offset + num_edges]
+                else:
+                    graph_edge_index = torch.empty((2, 0), dtype=torch.long, device=prev_scene_graphs.x.device)
+                    graph_edge_attr = torch.empty((0, self.num_relations), device=prev_scene_graphs.x.device)
+                
+                edge_offset += num_edges
+            else:
+                graph_edge_index = torch.empty((2, 0), dtype=torch.long, device=prev_scene_graphs.x.device)
+                graph_edge_attr = torch.empty((0, self.num_relations), device=prev_scene_graphs.x.device)
+            
+            # Create individual graph
+            individual_graph = Data(
+                x=all_x[node_offset:node_offset + num_nodes],
+                edge_index=graph_edge_index,
+                edge_attr=graph_edge_attr,
+                node_type=all_node_type[node_offset:node_offset + num_nodes]
+            )
+            
+            individual_graphs.append(individual_graph)
+            node_offset += num_nodes
+        
+        # Create DataBatch from individual graphs
+        return Batch.from_data_list(individual_graphs) 

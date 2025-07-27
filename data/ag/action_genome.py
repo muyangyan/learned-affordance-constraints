@@ -559,6 +559,7 @@ class SingleBothAG(ActionGenome):
                             _, obj_type = get_id_obj_from_sanitized_atom(atom)
                             groundings[frame_idx, i, j] = obj_type
                         break
+        return groundings
     
     def compute_effect_priors(self):
         """Compute prior probabilities for add/delete effects on relationships."""

@@ -14,6 +14,10 @@ import pytorch_lightning as L
 from torchmetrics import MetricCollection
 from torchmetrics import Accuracy, Precision, Recall, AveragePrecision, F1Score, MeanSquaredError, MeanAbsoluteError
 
+def make_key(batch_vec, edge_pairs, i):
+    return (int(batch_vec[i].cpu().item()), tuple(map(int, edge_pairs[i].cpu().tolist())))
+
+
 
 class StateLeaPR(L.LightningModule):
     """
@@ -161,25 +165,35 @@ class StateLeaPR(L.LightningModule):
         #node_grounding_dxs = None #TODO: ASSUMING ONLY REL EFFECTS FOR NOW
         #node_groundings = None 
         # [batch_size, num_effects]
-        edge_grounding_idxs = (groundings.min(dim=2).values >= 0).long() # same as truth values for rels
+        edge_grounding_mask = (groundings.min(dim=2).values >= 0).long() # same as truth values for rels
+        edge_grounding_idxs = torch.nonzero(edge_grounding_mask, as_tuple=True)
         edge_grounding_pairs = groundings[edge_grounding_idxs] #[total num edges affected by effects, max_arity]
-        edge_grounding_batch_vec = torch.nonzero(edge_grounding_idxs, as_tuple=True)[0]
+        edge_grounding_batch_vec = edge_grounding_idxs[0]
 
         add_mask = torch.arange(len(self.effect_precisions)) < len(self.effect_precisions)//2 # [num_effects/2]
         del_mask = torch.arange(len(self.effect_precisions)) >= len(self.effect_precisions)//2 # [num_effects/2]
 
         # again, this only works because the columns of effect_precisions are only relationships rn
-        #node_mask = torch.zeros_like(add_mask)
+        # node_mask = torch.zeros_like(add_mask)
         edge_mask = torch.ones_like(add_mask)
 
         # [batch_size, num_effects]
-        masked_precisions = edge_grounding_idxs * self.effect_precisions
+        expanded_edge_grounding_mask = torch.zeros((len(edge_grounding_pairs), len(self.effect_precisions))).cuda()
+        one_hot_idxs = (torch.arange(len(edge_grounding_idxs[1])).cuda(), edge_grounding_idxs[1])
+        expanded_edge_grounding_mask[one_hot_idxs] = 1
+
+        masked_precisions = expanded_edge_grounding_mask * self.effect_precisions.cuda()
         edge_add_precisions = masked_precisions[:, add_mask * edge_mask]
         edge_del_precisions = masked_precisions[:, del_mask * edge_mask]
 
         def get_relevant_probs(batch_vec, edge_pairs, edge_probs):
-            edge_mapper = {(batch_vec[i], edge_pairs[i]): i for i in range(len(edge_pairs))}
-            relevant_probs = [edge_probs[edge_mapper[(edge_grounding_batch_vec[i], edge_grounding_pairs[i])]] for i in range(len(edge_grounding_pairs))]
+            edge_mapper = {make_key(batch_vec, edge_pairs, i): i for i in range(len(edge_pairs))}
+            relevant_probs = []
+            for i in range(len(edge_grounding_pairs)):
+                try:
+                    relevant_probs.append(edge_probs[edge_mapper[make_key(edge_grounding_batch_vec, edge_grounding_pairs, i)]])
+                except:
+                    relevant_probs.append(torch.zeros_like(edge_probs[0]).cuda())
             relevant_probs = torch.stack(relevant_probs)
             return relevant_probs, edge_mapper
 
@@ -193,16 +207,22 @@ class StateLeaPR(L.LightningModule):
         if constraint_mode == 'rules':
             pred_edge_probs = prior_edge_probs
             final_probs = symbolic_probs
-        else:
+        elif constraint_mode == 'product':
             final_probs = relevant_pred_probs * (symbolic_probs**weight)
+        elif constraint_mode == 'weighted_sum':
+            final_probs = (1-weight) * relevant_pred_probs + weight * symbolic_probs
+        else:
+            raise ValueError(f"Invalid constraint mode: {constraint_mode}")
 
         # final probs is in the relevant subset of edges affected by effects
         # expand back to the full edge space, matching size of pred_edge_probs
 
         for i in range(len(final_probs)):
-            batch_idx = edge_grounding_batch_vec[i]
-            edge_pair = edge_grounding_pairs[i]
-            pred_edge_probs[pred_edge_mapper[(batch_idx, edge_pair)]] = final_probs[i]
+            key = make_key(edge_grounding_batch_vec, edge_grounding_pairs, i)
+            try:
+                pred_edge_probs[pred_edge_mapper[key]] = final_probs[i]
+            except:
+                continue
         return pred_edge_probs
 
 
@@ -259,6 +279,7 @@ class StateLeaPR(L.LightningModule):
             
             # Set target labels based on object type matching
             for pair_idx, obj_type_pair in enumerate(edge_pairs):
+                obj_type_pair = tuple(map(int, obj_type_pair))
                 if obj_type_pair in target_obj_type_edges:
                     for edge_type in target_obj_type_edges[obj_type_pair]:
                         if 0 <= edge_type < num_relations:
@@ -308,6 +329,7 @@ class StateLeaPR(L.LightningModule):
             
             # Set target labels based on object type matching
             for pair_idx, obj_type_pair in enumerate(edge_pairs):
+                obj_type_pair = tuple(map(int, obj_type_pair))
                 if obj_type_pair in target_obj_type_edges:
                     for edge_type in target_obj_type_edges[obj_type_pair]:
                         if 0 <= edge_type < num_relations:
@@ -381,7 +403,7 @@ class StateLeaPR(L.LightningModule):
             'prev_scene_graphs': prev_scene_graphs, 
             'action': action
         }
-        return self.nn_model(inputs)  # Returns (next_state, edge_logits)
+        return self.nn_model(inputs)  # Returns single PyG Data with edge_attr containing logits
         
     def training_step(self, batch, batch_idx):
         prev_images = batch['pre_images']
@@ -389,7 +411,17 @@ class StateLeaPR(L.LightningModule):
         action = batch['action_labels']
         next_scene_graphs = batch['post_scene_graphs']
         
-        predicted_next_state, edge_logits_data = self(prev_images, prev_scene_graphs, action)
+        predicted_next_state = self(prev_images, prev_scene_graphs, action)
+        
+        # Extract edge probabilities and pairs using existing function
+        pred_edge_probs, pred_edge_pairs, _ = extract_edge_probs_and_pairs(predicted_next_state)
+        
+        # Convert edge_attr (logits) to match expected format
+        edge_logits_data = {
+            'logits': [predicted_next_state.edge_attr[i] for i in range(predicted_next_state.edge_attr.shape[0])],
+            'pairs': pred_edge_pairs
+        }
+        
         loss = self.compute_edge_classification_loss(edge_logits_data, prev_scene_graphs, next_scene_graphs, self.nn_model.num_relations)
         
         # Compute meaningful metrics
@@ -413,7 +445,17 @@ class StateLeaPR(L.LightningModule):
         action = batch['action_labels']
         next_scene_graphs = batch['post_scene_graphs']
         
-        predicted_next_state, edge_logits_data = self(prev_images, prev_scene_graphs, action)
+        predicted_next_state = self(prev_images, prev_scene_graphs, action)
+        
+        # Extract edge probabilities and pairs using existing function  
+        pred_edge_probs, pred_edge_pairs, _ = extract_edge_probs_and_pairs(predicted_next_state)
+        
+        # Convert edge_attr (logits) to match expected format
+        edge_logits_data = {
+            'logits': [predicted_next_state.edge_attr[i] for i in range(predicted_next_state.edge_attr.shape[0])],
+            'pairs': pred_edge_pairs
+        }
+        
         loss = self.compute_edge_classification_loss(edge_logits_data, prev_scene_graphs, next_scene_graphs, self.nn_model.num_relations)
         
         # Compute meaningful metrics
@@ -436,14 +478,10 @@ class StateLeaPR(L.LightningModule):
         action = batch['action_labels']
         gt_scene_graphs = batch['post_scene_graphs']
         
-        pred_scene_graph, edge_logits_data = self(prev_images, prev_scene_graphs, action)
+        pred_scene_graph = self(prev_images, prev_scene_graphs, action)
         
-        # Separate edge_logits_data into preds and pairs
-        pred_edge_logits = torch.stack(edge_logits_data['logits']) # [total edges in whole batch, num_relations]
-        pred_edge_probs = torch.sigmoid(pred_edge_logits)
-        pred_edge_pairs = torch.tensor(edge_logits_data['pairs']) # [total edges in whole batch, 2]
-        pred_edge_batch_vec = torch.zeros(len(pred_edge_pairs), device=pred_edge_logits.device)
-        
+        # Extract edge probabilities and pairs using existing function
+        pred_edge_probs, pred_edge_pairs, pred_edge_batch_vec = extract_edge_probs_and_pairs(pred_scene_graph)
         
         # Get effect truth values from batch (no precondition constraints for dynamics)
         prior_edge_probs, prior_edge_pairs, prior_edge_batch_vec = extract_edge_probs_and_pairs(prev_scene_graphs)
@@ -458,27 +496,45 @@ class StateLeaPR(L.LightningModule):
             constraint_mode=self.constraint_mode
         )
         
-        # debug, metrics and logging
+        # Extract ground truth edge probabilities and pairs
+        gt_edge_probs, gt_edge_pairs, gt_edge_batch_vec = extract_edge_probs_and_pairs(gt_scene_graphs)
+        
+        # Store as pairs: ((pred_probs, pred_pairs), (gt_probs, gt_pairs))
         self.ids.extend(ids)
-        batch_size = len(ids)
-        key = self.constraint_mode
-        if self.preds is not None and pred_edge_probs is not None and gt_scene_graphs is not None:
-            batch_result = {
-                'pred_edge_probs': pred_edge_probs,
-                'pred_edge_pairs': pred_edge_pairs,
-                'pred_edge_batch_vec': pred_edge_batch_vec,
-                'gt_scene_graphs': gt_scene_graphs,
-                'pred_scene_graph': pred_scene_graph,
-            }
-            if key not in self.preds:
-                raise ValueError(f"Constraint mode {key} not found in preds")
-            self.preds[key].append(batch_result)
-
-    def on_test_epoch_end(self):
         key = self.constraint_mode
         if self.preds is not None:
-            self.preds[key] = torch.vstack(self.preds[key])
-            self.preds[key] = self.preds[key].cpu().numpy()
+            # Move to CPU for storage
+            pred_edge_probs = pred_edge_probs.cpu()
+            pred_edge_pairs = pred_edge_pairs.cpu()
+            pred_edge_batch_vec = pred_edge_batch_vec.cpu()
+            prior_edge_probs = prior_edge_probs.cpu()
+            prior_edge_pairs = prior_edge_pairs.cpu()
+            prior_edge_batch_vec = prior_edge_batch_vec.cpu()
+            gt_edge_probs = gt_edge_probs.cpu()
+            gt_edge_pairs = gt_edge_pairs.cpu()
+            gt_edge_batch_vec = gt_edge_batch_vec.cpu()
+            
+            # Split by batch index
+            unique_batches = torch.unique(pred_edge_batch_vec)
+            for batch_idx in unique_batches:
+                pred_mask = pred_edge_batch_vec == batch_idx
+                prior_mask = prior_edge_batch_vec == batch_idx
+                gt_mask = gt_edge_batch_vec == batch_idx
+
+                if self.constraint_mode == 'rules':
+                    pred_gt_pair = (
+                        (pred_edge_probs[prior_mask], prior_edge_pairs[prior_mask]), 
+                        (gt_edge_probs[gt_mask], gt_edge_pairs[gt_mask])
+                    )
+                else:
+                    pred_gt_pair = (
+                        (pred_edge_probs[pred_mask], pred_edge_pairs[pred_mask]), 
+                        (gt_edge_probs[gt_mask], gt_edge_pairs[gt_mask])
+                    )
+                
+                if key not in self.preds:
+                    self.preds[key] = []
+                self.preds[key].append(pred_gt_pair)
 
     def configure_optimizers(self):
         return Adam(self.parameters(), lr=self.lr)
