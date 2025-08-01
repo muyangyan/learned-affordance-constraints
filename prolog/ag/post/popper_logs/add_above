@@ -1,23 +1,29 @@
-22:22:07 Generating programs of size: 2
-22:22:07 ********************
-22:22:07 New best hypothesis:
-22:22:07 tp:10 fn:71 tn:32 fp:0 size:2 mdl:73
-22:22:07 add_above(A,B):- put(B,A).
-22:22:07 ********************
-22:22:07 Generating programs of size: 3
-22:22:10 ********************
-22:22:10 New best hypothesis:
-22:22:10 tp:19 fn:62 tn:29 fp:3 size:6 mdl:71
-22:22:10 add_above(A,B):- put(B,A).
-22:22:10 add_above(A,B):- watch(B,A).
-22:22:10 add_above(A,B):- take(B,A).
-22:22:10 ********************
-22:22:11 Generating programs of size: 4
-22:22:13 Generating programs of size: 5
-22:22:16 Generating programs of size: 6
+14:57:08 Generating programs of size: 2
+14:57:08 ********************
+14:57:08 New best hypothesis:
+14:57:08 tp:10 fn:71 tn:32 fp:0 size:2 mdl:73
+14:57:08 add_above(A,B):- put(B,A).
+14:57:08 ********************
+14:57:08 Generating programs of size: 3
+14:57:11 ********************
+14:57:11 New best hypothesis:
+14:57:11 tp:19 fn:62 tn:29 fp:3 size:6 mdl:71
+14:57:11 add_above(A,B):- put(B,A).
+14:57:11 add_above(A,B):- watch(B,A).
+14:57:11 add_above(A,B):- take(B,A).
+14:57:11 ********************
+14:57:12 Generating programs of size: 4
+14:57:13 Generating programs of size: 5
+14:57:17 Generating programs of size: 6
 ********** SOLUTION **********
 Precision:0.86 Recall:0.23 TP:19 FN:62 TN:29 FP:3 Size:6 MDL:71
 add_above(A,B):- put(B,A).
 add_above(A,B):- watch(B,A).
 add_above(A,B):- take(B,A).
 ******************************
+add_above(A,B):- put(B,A).
+precision: 1.00 recall: 0.12
+add_above(A,B):- watch(B,A).
+precision: 0.71 recall: 0.06
+add_above(A,B):- take(B,A).
+precision: 0.86 recall: 0.07

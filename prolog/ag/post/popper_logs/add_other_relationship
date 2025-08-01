@@ -1,22 +1,25 @@
-22:22:08 Generating programs of size: 2
-22:22:08 ********************
-22:22:08 New best hypothesis:
-22:22:08 tp:8 fn:135 tn:50 fp:0 size:2 mdl:137
-22:22:08 add_other_relationship(A,B):- sit(A,B).
-22:22:08 ********************
-22:22:08 Generating programs of size: 3
-22:22:12 ********************
-22:22:12 New best hypothesis:
-22:22:12 tp:13 fn:130 tn:50 fp:0 size:4 mdl:134
-22:22:12 add_other_relationship(A,B):- sit(A,B).
-22:22:12 add_other_relationship(A,B):- myopen(A,B).
-22:22:12 ********************
-22:22:19 Generating programs of size: 4
-22:22:27 Generating programs of size: 5
-22:22:30 Generating programs of size: 6
-22:22:31 Generating programs of size: 7
+14:57:09 Generating programs of size: 2
+14:57:09 ********************
+14:57:09 New best hypothesis:
+14:57:09 tp:8 fn:135 tn:50 fp:0 size:2 mdl:137
+14:57:09 add_other_relationship(A,B):- sit(A,B).
+14:57:09 ********************
+14:57:09 Generating programs of size: 3
+14:57:13 ********************
+14:57:13 New best hypothesis:
+14:57:13 tp:13 fn:130 tn:50 fp:0 size:4 mdl:134
+14:57:13 add_other_relationship(A,B):- sit(A,B).
+14:57:13 add_other_relationship(A,B):- myopen(A,B).
+14:57:13 ********************
+14:57:20 Generating programs of size: 4
+14:57:27 Generating programs of size: 5
+14:57:30 Generating programs of size: 6
 ********** SOLUTION **********
 Precision:1.00 Recall:0.09 TP:13 FN:130 TN:50 FP:0 Size:4 MDL:134
 add_other_relationship(A,B):- sit(A,B).
 add_other_relationship(A,B):- myopen(A,B).
 ******************************
+add_other_relationship(A,B):- sit(A,B).
+precision: 1.00 recall: 0.06
+add_other_relationship(A,B):- myopen(A,B).
+precision: 1.00 recall: 0.03

@@ -1,26 +1,27 @@
-22:22:07 Generating programs of size: 2
-22:22:07 ********************
-22:22:07 New best hypothesis:
-22:22:07 tp:8 fn:69 tn:6 fp:0 size:2 mdl:71
-22:22:07 add_drinking_from(A,B):- drink(A,B).
-22:22:07 ********************
-22:22:07 ********************
-22:22:07 New best hypothesis:
-22:22:07 tp:16 fn:61 tn:6 fp:0 size:2 mdl:63
-22:22:07 add_drinking_from(A,B):- take(A,B).
-22:22:07 ********************
-22:22:07 Generating programs of size: 3
-22:22:09 ********************
-22:22:09 New best hypothesis:
-22:22:09 tp:35 fn:42 tn:6 fp:0 size:8 mdl:50
-22:22:09 add_drinking_from(A,B):- drink(A,B).
-22:22:09 add_drinking_from(A,B):- hold(A,B).
-22:22:09 add_drinking_from(A,B):- pour(A,B).
-22:22:09 add_drinking_from(A,B):- take(A,B).
-22:22:09 ********************
-22:22:11 Generating programs of size: 4
-22:22:14 Generating programs of size: 5
-22:22:16 Generating programs of size: 6
+14:57:09 Generating programs of size: 2
+14:57:09 ********************
+14:57:09 New best hypothesis:
+14:57:09 tp:8 fn:69 tn:6 fp:0 size:2 mdl:71
+14:57:09 add_drinking_from(A,B):- drink(A,B).
+14:57:09 ********************
+14:57:09 ********************
+14:57:09 New best hypothesis:
+14:57:09 tp:16 fn:61 tn:6 fp:0 size:2 mdl:63
+14:57:09 add_drinking_from(A,B):- take(A,B).
+14:57:09 ********************
+14:57:09 Generating programs of size: 3
+14:57:10 ********************
+14:57:10 New best hypothesis:
+14:57:10 tp:35 fn:42 tn:6 fp:0 size:8 mdl:50
+14:57:10 add_drinking_from(A,B):- drink(A,B).
+14:57:10 add_drinking_from(A,B):- hold(A,B).
+14:57:10 add_drinking_from(A,B):- pour(A,B).
+14:57:10 add_drinking_from(A,B):- take(A,B).
+14:57:10 ********************
+14:57:13 Generating programs of size: 4
+14:57:16 Generating programs of size: 5
+14:57:18 Generating programs of size: 6
+14:57:18 Generating programs of size: 7
 ********** SOLUTION **********
 Precision:1.00 Recall:0.45 TP:35 FN:42 TN:6 FP:0 Size:8 MDL:50
 add_drinking_from(A,B):- drink(A,B).
@@ -28,3 +29,11 @@ add_drinking_from(A,B):- hold(A,B).
 add_drinking_from(A,B):- pour(A,B).
 add_drinking_from(A,B):- take(A,B).
 ******************************
+add_drinking_from(A,B):- drink(A,B).
+precision: 1.00 recall: 0.10
+add_drinking_from(A,B):- hold(A,B).
+precision: 1.00 recall: 0.06
+add_drinking_from(A,B):- pour(A,B).
+precision: 1.00 recall: 0.08
+add_drinking_from(A,B):- take(A,B).
+precision: 1.00 recall: 0.21

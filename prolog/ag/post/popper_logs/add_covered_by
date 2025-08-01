@@ -1,22 +1,26 @@
-22:22:07 Generating programs of size: 2
-22:22:07 ********************
-22:22:07 New best hypothesis:
-22:22:07 tp:10 fn:40 tn:75 fp:0 size:2 mdl:42
-22:22:07 add_covered_by(A,B):- put(A,B).
-22:22:07 ********************
-22:22:07 Generating programs of size: 3
-22:22:09 ********************
-22:22:09 New best hypothesis:
-22:22:09 tp:14 fn:36 tn:74 fp:1 size:4 mdl:41
-22:22:09 add_covered_by(A,B):- put(A,B).
-22:22:09 add_covered_by(A,B):- take(A,B).
-22:22:09 ********************
-22:22:11 Generating programs of size: 4
-22:22:24 Generating programs of size: 5
-22:22:33 Generating programs of size: 6
-22:22:34 Generating programs of size: 7
+14:57:09 Generating programs of size: 2
+14:57:09 ********************
+14:57:09 New best hypothesis:
+14:57:09 tp:10 fn:40 tn:75 fp:0 size:2 mdl:42
+14:57:09 add_covered_by(A,B):- put(A,B).
+14:57:09 ********************
+14:57:09 Generating programs of size: 3
+14:57:10 ********************
+14:57:10 New best hypothesis:
+14:57:10 tp:14 fn:36 tn:74 fp:1 size:4 mdl:41
+14:57:10 add_covered_by(A,B):- put(A,B).
+14:57:10 add_covered_by(A,B):- take(A,B).
+14:57:10 ********************
+14:57:12 Generating programs of size: 4
+14:57:27 Generating programs of size: 5
+14:57:38 Generating programs of size: 6
+14:57:38 Generating programs of size: 7
 ********** SOLUTION **********
 Precision:0.93 Recall:0.28 TP:14 FN:36 TN:74 FP:1 Size:4 MDL:41
 add_covered_by(A,B):- put(A,B).
 add_covered_by(A,B):- take(A,B).
 ******************************
+add_covered_by(A,B):- put(A,B).
+precision: 1.00 recall: 0.20
+add_covered_by(A,B):- take(A,B).
+precision: 0.80 recall: 0.08

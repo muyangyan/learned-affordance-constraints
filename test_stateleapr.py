@@ -9,6 +9,9 @@ import argparse
 import numpy as np
 import json
 import pickle
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 from sklearn.metrics import average_precision_score
 from torch.utils.data import DataLoader
 from pytorch_lightning import Trainer
@@ -23,7 +26,7 @@ def save_predictions_with_ids(cfg, run_name, test_run_name, constraint_mode, pre
     """Save predictions along with their corresponding IDs"""
     
     # Create output directory
-    output_dir = os.path.join(cfg.runs_folder, run_name, 'predictions', test_run_name)
+    output_dir = os.path.join(cfg.runs_folder, run_name, 'test_runs', test_run_name, 'predictions')
     os.makedirs(output_dir, exist_ok=True)
     
     # Prepare data to save
@@ -294,19 +297,175 @@ def analyze_preds(cfg, run_name, test_run_name, pred_name, preds, dataset):
     
     return comprehensive_metrics
 
+def save_relationship_histograms(cfg, run_name, test_run_name, constraint_mode, metrics, dataset):
+    """Save histograms of per-relationship class breakdowns sorted by prior"""
+    
+    # Create output directory
+    output_dir = os.path.join(cfg.runs_folder, run_name, 'test_runs', test_run_name, 'histograms')
+    os.makedirs(output_dir, exist_ok=True)
+    
+    # Get relationship classes and their priors
+    relationship_classes = dataset.relationship_classes
+    relationship_priors = getattr(dataset, 'relationship_priors', None)
+    
+    if relationship_priors is None:
+        print(f"Warning: No relationship priors found, using alphabetical order")
+        sorted_indices = list(range(len(relationship_classes)))
+    else:
+        # Sort by priors (descending order - most frequent first)
+        sorted_indices = np.argsort(relationship_priors)[::-1]
+    
+    # Extract metrics for active classes only
+    per_rel_precision = metrics['per_rel_precision']
+    per_rel_recall = metrics['per_rel_recall'] 
+    per_rel_f1 = metrics['per_rel_f1']
+    per_class_ap = metrics['per_class_ap']
+    
+    # Find classes that have activity (non-zero metrics)
+    active_classes = []
+    active_names = []
+    active_priors = []
+    active_precisions = []
+    active_recalls = []
+    active_f1s = []
+    active_aps = []
+    
+    for idx in sorted_indices:
+        if (per_rel_precision[idx] + per_rel_recall[idx] + per_rel_f1[idx]) > 0:
+            active_classes.append(idx)
+            active_names.append(relationship_classes[idx])
+            active_priors.append(relationship_priors[idx] if relationship_priors is not None else 0)
+            active_precisions.append(per_rel_precision[idx])
+            active_recalls.append(per_rel_recall[idx])
+            active_f1s.append(per_rel_f1[idx])
+            active_aps.append(per_class_ap[idx])
+    
+    if not active_classes:
+        print(f"No active relationship classes found for {constraint_mode}")
+        return
+    
+    # Create the histogram plot
+    fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(16, 12))
+    fig.suptitle(f'Per-Relationship Class Metrics - {constraint_mode.upper()} Mode\n(Sorted by Prior Frequency)', fontsize=16)
+    
+    x_pos = np.arange(len(active_names))
+    bar_width = 0.8
+    
+    # Colors for better visualization
+    colors = plt.cm.Set3(np.linspace(0, 1, len(active_names)))
+    
+    # Plot 1: Precision
+    bars1 = ax1.bar(x_pos, active_precisions, bar_width, color=colors, alpha=0.8)
+    ax1.set_title('Precision by Relationship Class')
+    ax1.set_ylabel('Precision')
+    ax1.set_ylim(0, 1.0)
+    ax1.set_xticks(x_pos)
+    ax1.set_xticklabels(active_names, rotation=45, ha='right')
+    ax1.grid(axis='y', alpha=0.3)
+    
+    # Add value labels on bars
+    for i, bar in enumerate(bars1):
+        height = bar.get_height()
+        ax1.text(bar.get_x() + bar.get_width()/2., height + 0.01,
+                f'{height:.3f}', ha='center', va='bottom', fontsize=8)
+    
+    # Plot 2: Recall
+    bars2 = ax2.bar(x_pos, active_recalls, bar_width, color=colors, alpha=0.8)
+    ax2.set_title('Recall by Relationship Class')
+    ax2.set_ylabel('Recall')
+    ax2.set_ylim(0, 1.0)
+    ax2.set_xticks(x_pos)
+    ax2.set_xticklabels(active_names, rotation=45, ha='right')
+    ax2.grid(axis='y', alpha=0.3)
+    
+    for i, bar in enumerate(bars2):
+        height = bar.get_height()
+        ax2.text(bar.get_x() + bar.get_width()/2., height + 0.01,
+                f'{height:.3f}', ha='center', va='bottom', fontsize=8)
+    
+    # Plot 3: F1 Score
+    bars3 = ax3.bar(x_pos, active_f1s, bar_width, color=colors, alpha=0.8)
+    ax3.set_title('F1 Score by Relationship Class')
+    ax3.set_ylabel('F1 Score')
+    ax3.set_ylim(0, 1.0)
+    ax3.set_xticks(x_pos)
+    ax3.set_xticklabels(active_names, rotation=45, ha='right')
+    ax3.grid(axis='y', alpha=0.3)
+    
+    for i, bar in enumerate(bars3):
+        height = bar.get_height()
+        ax3.text(bar.get_x() + bar.get_width()/2., height + 0.01,
+                f'{height:.3f}', ha='center', va='bottom', fontsize=8)
+    
+    # Plot 4: Average Precision (mAP)
+    bars4 = ax4.bar(x_pos, active_aps, bar_width, color=colors, alpha=0.8)
+    ax4.set_title('Average Precision (AP) by Relationship Class')
+    ax4.set_ylabel('Average Precision')
+    ax4.set_ylim(0, 1.0)
+    ax4.set_xticks(x_pos)
+    ax4.set_xticklabels(active_names, rotation=45, ha='right')
+    ax4.grid(axis='y', alpha=0.3)
+    
+    for i, bar in enumerate(bars4):
+        height = bar.get_height()
+        ax4.text(bar.get_x() + bar.get_width()/2., height + 0.01,
+                f'{height:.3f}', ha='center', va='bottom', fontsize=8)
+    
+    # Add prior information as secondary axis on the first plot
+    if relationship_priors is not None:
+        ax1_twin = ax1.twinx()
+        line = ax1_twin.plot(x_pos, active_priors, 'ro-', alpha=0.7, linewidth=2, markersize=4)
+        ax1_twin.set_ylabel('Prior Frequency', color='red')
+        ax1_twin.tick_params(axis='y', labelcolor='red')
+        ax1_twin.set_ylim(0, max(active_priors) * 1.1 if active_priors else 1)
+        
+        # Add legend
+        precision_patch = mpatches.Patch(color='lightblue', label='Precision')
+        prior_patch = mpatches.Patch(color='red', label='Prior Frequency')
+        ax1.legend(handles=[precision_patch, prior_patch], loc='upper right')
+    
+    plt.tight_layout()
+    
+    # Save the plot
+    output_path = os.path.join(output_dir, f'{constraint_mode}_relationship_breakdown.png')
+    plt.savefig(output_path, dpi=300, bbox_inches='tight')
+    plt.close()
+    
+    # Also save a summary CSV file
+    summary_data = {
+        'relationship_class': active_names,
+        'prior_frequency': active_priors,
+        'precision': active_precisions,
+        'recall': active_recalls,
+        'f1_score': active_f1s,
+        'average_precision': active_aps
+    }
+    
+    df = pd.DataFrame(summary_data)
+    csv_path = os.path.join(output_dir, f'{constraint_mode}_relationship_metrics.csv')
+    df.to_csv(csv_path, index=False)
+    
+    print(f"Saved relationship histogram: {output_path}")
+    print(f"Saved relationship metrics CSV: {csv_path}")
+
 def save_and_analyze_preds(cfg, run_name, test_run_name, pred_name, preds, dataset, ids):
     """Save and analyze predictions"""
     # Save predictions with IDs
     save_predictions_with_ids(cfg, run_name, test_run_name, pred_name, preds, ids)
     
     # Analyze predictions
-    return analyze_preds(cfg, run_name, test_run_name, pred_name, preds, dataset)
+    metrics = analyze_preds(cfg, run_name, test_run_name, pred_name, preds, dataset)
+    
+    # Save relationship class histograms
+    save_relationship_histograms(cfg, run_name, test_run_name, pred_name, metrics, dataset)
+    
+    return metrics
 
 def test_routine_stateleapr(cfg, run_name, test_run_name, trainer, model, dataset, loader):
     """Test StateLeaPR with different constraint modes"""
     
     # Test different constraint modes
-    constraint_modes = ['sum', 'average', 'product', 'mixed', 'neural', 'rules']  # Add more modes as needed
+    constraint_modes = ['logit_weighted_sum', 'or', 'weighted_sum', 'product', 'neural', 'rules']  # Add more modes as needed
     
     model.preds = {mode: [] for mode in constraint_modes}
     

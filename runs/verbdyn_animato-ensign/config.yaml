@@ -29,7 +29,7 @@ model:
 rules: # used in training time as well
   name: 'full_verb_rules'
   recall_threshold: 0.8
-  constraint_weight: 10 # can be changed at test time
+  constraint_weight: 0.8 # can be changed at test time
 
 train:
   epochs: 30

@@ -1,41 +1,37 @@
-22:22:07 Generating programs of size: 2
-22:22:07 ********************
-22:22:07 New best hypothesis:
-22:22:07 tp:147 fn:2271 tn:2398 fp:65 size:2 mdl:2338
-22:22:07 add_not_looking_at(A,B):- myclose(A,B).
-22:22:07 ********************
-22:22:07 Generating programs of size: 3
-22:22:17 ********************
-22:22:17 New best hypothesis:
-22:22:17 tp:381 fn:2037 tn:2278 fp:185 size:16 mdl:2238
-22:22:17 add_not_looking_at(A,B):- myclose(A,B).
-22:22:17 add_not_looking_at(A,B):- cook(A,B).
-22:22:17 add_not_looking_at(A,B):- watch(A,B).
-22:22:17 add_not_looking_at(A,B):- pour(A,B).
-22:22:17 add_not_looking_at(A,B):- dress(A,B).
-22:22:17 add_not_looking_at(A,B):- play(A,B).
-22:22:17 add_not_looking_at(A,B):- eat(A,B).
-22:22:17 add_not_looking_at(A,B):- myopen(A,B).
-22:22:17 ********************
-22:22:27 Generating programs of size: 4
-22:22:37 ********************
-22:22:37 New best hypothesis:
-22:22:37 tp:395 fn:2023 tn:2270 fp:193 size:19 mdl:2235
-22:22:37 add_not_looking_at(A,B):- myclose(A,B).
-22:22:37 add_not_looking_at(A,B):- cook(A,B).
-22:22:37 add_not_looking_at(A,B):- watch(A,B).
-22:22:37 add_not_looking_at(A,B):- pour(A,B).
-22:22:37 add_not_looking_at(A,B):- dress(A,B).
-22:22:37 add_not_looking_at(A,B):- play(A,B).
-22:22:37 add_not_looking_at(A,B):- eat(A,B).
-22:22:37 add_not_looking_at(A,B):- myopen(A,B).
-22:22:37 add_not_looking_at(A,B):- sit(C,B),sit(A,C).
-22:22:37 ********************
-22:23:04 Generating programs of size: 5
-22:23:32 Generating programs of size: 6
-22:24:07 Generating programs of size: 7
-22:24:41 Generating programs of size: 8
-22:25:43 Generating programs of size: 9
+14:57:08 Generating programs of size: 2
+14:57:08 ********************
+14:57:08 New best hypothesis:
+14:57:08 tp:147 fn:2271 tn:2398 fp:65 size:2 mdl:2338
+14:57:08 add_not_looking_at(A,B):- myclose(A,B).
+14:57:08 ********************
+14:57:08 Generating programs of size: 3
+14:57:18 ********************
+14:57:18 New best hypothesis:
+14:57:18 tp:381 fn:2037 tn:2278 fp:185 size:16 mdl:2238
+14:57:18 add_not_looking_at(A,B):- myclose(A,B).
+14:57:18 add_not_looking_at(A,B):- cook(A,B).
+14:57:18 add_not_looking_at(A,B):- watch(A,B).
+14:57:18 add_not_looking_at(A,B):- pour(A,B).
+14:57:18 add_not_looking_at(A,B):- dress(A,B).
+14:57:18 add_not_looking_at(A,B):- play(A,B).
+14:57:18 add_not_looking_at(A,B):- eat(A,B).
+14:57:18 add_not_looking_at(A,B):- myopen(A,B).
+14:57:18 ********************
+14:57:27 Generating programs of size: 4
+14:57:37 ********************
+14:57:37 New best hypothesis:
+14:57:37 tp:395 fn:2023 tn:2270 fp:193 size:19 mdl:2235
+14:57:37 add_not_looking_at(A,B):- myclose(A,B).
+14:57:37 add_not_looking_at(A,B):- cook(A,B).
+14:57:37 add_not_looking_at(A,B):- watch(A,B).
+14:57:37 add_not_looking_at(A,B):- pour(A,B).
+14:57:37 add_not_looking_at(A,B):- dress(A,B).
+14:57:37 add_not_looking_at(A,B):- play(A,B).
+14:57:37 add_not_looking_at(A,B):- eat(A,B).
+14:57:37 add_not_looking_at(A,B):- myopen(A,B).
+14:57:37 add_not_looking_at(A,B):- sit(A,C),sit(C,B).
+14:57:37 ********************
+14:58:07 TIMEOUT OF 60 SECONDS EXCEEDED
 ********** SOLUTION **********
 Precision:0.67 Recall:0.16 TP:395 FN:2023 TN:2270 FP:193 Size:19 MDL:2235
 add_not_looking_at(A,B):- myclose(A,B).
@@ -46,5 +42,23 @@ add_not_looking_at(A,B):- dress(A,B).
 add_not_looking_at(A,B):- play(A,B).
 add_not_looking_at(A,B):- eat(A,B).
 add_not_looking_at(A,B):- myopen(A,B).
-add_not_looking_at(A,B):- sit(C,B),sit(A,C).
+add_not_looking_at(A,B):- sit(A,C),sit(C,B).
 ******************************
+add_not_looking_at(A,B):- myclose(A,B).
+precision: 0.69 recall: 0.06
+add_not_looking_at(A,B):- cook(A,B).
+precision: 0.80 recall: 0.00
+add_not_looking_at(A,B):- watch(A,B).
+precision: 0.74 recall: 0.02
+add_not_looking_at(A,B):- pour(A,B).
+precision: 0.62 recall: 0.01
+add_not_looking_at(A,B):- dress(A,B).
+precision: 0.72 recall: 0.01
+add_not_looking_at(A,B):- play(A,B).
+precision: 0.70 recall: 0.01
+add_not_looking_at(A,B):- eat(A,B).
+precision: 0.68 recall: 0.02
+add_not_looking_at(A,B):- myopen(A,B).
+precision: 0.59 recall: 0.04
+add_not_looking_at(A,B):- sit(A,C),sit(C,B).
+precision: 0.64 recall: 0.01

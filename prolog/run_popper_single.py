@@ -5,10 +5,9 @@ from pathlib import Path
 from util.config_utils import load_yaml
 from util.rule_utils import normalize_predicate_name
 
-from popper.util import Settings, print_prog_score
+from popper.util import Settings, print_prog_score, format_rule
 from popper.loop import learn_solution
 from popper.tester import Tester
-
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -55,13 +54,18 @@ def run_popper_for_item(item, label_type, prolog_path, log_folder, fn_weight, il
         if separate_clauses:
             tester = Tester(settings)   
             for p in prog:
+                print(format_rule(p))
+
                 results = tester.test_single_rule_all([p])
-                # positives_covered, negatives_covered = len(results[0]), len(results[1])
-                # precision = positives_covered / num_positives if num_positives > 0 else 0
-                # recall = positives_covered / num_positives if num_positives > 0 else 0
-                # f1 = 2 * precision * recall / (precision + recall) if precision + recall > 0 else 0
-                # print(f'{p} precision: {precision:.2f} recall: {recall:.2f} f1: {f1:.2f}')
-                # print(f'{p} positives covered: {positives_covered} negatives covered: {negatives_covered}')
+                tp, fp = len(results[0]), len(results[1])
+                fn = num_positives - tp
+                tn = num_negatives - fp
+
+                precision = tp / (tp + fp) if tp + fp > 0 else 0
+                recall = tp / (tp + fn) if tp + fn > 0 else 0
+
+                #print(f'tp: {tp} fn: {fn} tn: {tn} fp: {fp} num_positives: {num_positives} num_negatives: {num_negatives}')
+                print(f'precision: {precision:.2f} recall: {recall:.2f}')
 
     else:
         print('NO SOLUTION')

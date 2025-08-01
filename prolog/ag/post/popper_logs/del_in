@@ -1,43 +1,42 @@
-22:22:07 Generating programs of size: 2
-22:22:07 ********************
-22:22:07 New best hypothesis:
-22:22:07 tp:16 fn:283 tn:99 fp:11 size:2 mdl:296
-22:22:07 del_in(A,B):- hold(B,A).
-22:22:07 ********************
-22:22:07 ********************
-22:22:07 New best hypothesis:
-22:22:07 tp:19 fn:280 tn:105 fp:5 size:2 mdl:287
-22:22:07 del_in(A,B):- put(B,A).
-22:22:07 ********************
-22:22:07 ********************
-22:22:07 New best hypothesis:
-22:22:07 tp:36 fn:263 tn:101 fp:9 size:2 mdl:274
-22:22:07 del_in(A,B):- walk(B,A).
-22:22:07 ********************
-22:22:07 ********************
-22:22:07 New best hypothesis:
-22:22:07 tp:46 fn:253 tn:108 fp:2 size:2 mdl:257
-22:22:07 del_in(A,B):- undress(B,A).
-22:22:07 ********************
-22:22:07 Generating programs of size: 3
-22:22:13 ********************
-22:22:13 New best hypothesis:
-22:22:13 tp:137 fn:162 tn:83 fp:27 size:16 mdl:205
-22:22:13 del_in(A,B):- hold(B,A).
-22:22:13 del_in(A,B):- put(B,A).
-22:22:13 del_in(A,B):- walk(B,A).
-22:22:13 del_in(A,B):- undress(B,A).
-22:22:13 del_in(A,B):- tidy(B,A).
-22:22:13 del_in(A,B):- throw(B,A).
-22:22:13 del_in(A,B):- myclose(B,A).
-22:22:13 del_in(A,B):- take(B,A).
-22:22:13 ********************
-22:22:16 Generating programs of size: 4
-22:22:40 Generating programs of size: 5
-22:22:53 Generating programs of size: 6
-22:23:00 Generating programs of size: 7
-22:23:07 Generating programs of size: 8
-22:23:12 Generating programs of size: 9
+14:57:09 Generating programs of size: 2
+14:57:09 ********************
+14:57:09 New best hypothesis:
+14:57:09 tp:16 fn:283 tn:99 fp:11 size:2 mdl:296
+14:57:09 del_in(A,B):- hold(B,A).
+14:57:09 ********************
+14:57:09 ********************
+14:57:09 New best hypothesis:
+14:57:09 tp:19 fn:280 tn:105 fp:5 size:2 mdl:287
+14:57:09 del_in(A,B):- put(B,A).
+14:57:09 ********************
+14:57:09 ********************
+14:57:09 New best hypothesis:
+14:57:09 tp:36 fn:263 tn:101 fp:9 size:2 mdl:274
+14:57:09 del_in(A,B):- walk(B,A).
+14:57:09 ********************
+14:57:09 ********************
+14:57:09 New best hypothesis:
+14:57:09 tp:46 fn:253 tn:108 fp:2 size:2 mdl:257
+14:57:09 del_in(A,B):- undress(B,A).
+14:57:09 ********************
+14:57:09 Generating programs of size: 3
+14:57:15 ********************
+14:57:15 New best hypothesis:
+14:57:15 tp:137 fn:162 tn:83 fp:27 size:16 mdl:205
+14:57:15 del_in(A,B):- hold(B,A).
+14:57:15 del_in(A,B):- put(B,A).
+14:57:15 del_in(A,B):- walk(B,A).
+14:57:15 del_in(A,B):- undress(B,A).
+14:57:15 del_in(A,B):- tidy(B,A).
+14:57:15 del_in(A,B):- throw(B,A).
+14:57:15 del_in(A,B):- myclose(B,A).
+14:57:15 del_in(A,B):- take(B,A).
+14:57:15 ********************
+14:57:18 Generating programs of size: 4
+14:57:43 Generating programs of size: 5
+14:57:58 Generating programs of size: 6
+14:58:05 Generating programs of size: 7
+14:58:07 TIMEOUT OF 60 SECONDS EXCEEDED
 ********** SOLUTION **********
 Precision:0.84 Recall:0.46 TP:137 FN:162 TN:83 FP:27 Size:16 MDL:205
 del_in(A,B):- hold(B,A).
@@ -49,3 +48,19 @@ del_in(A,B):- throw(B,A).
 del_in(A,B):- myclose(B,A).
 del_in(A,B):- take(B,A).
 ******************************
+del_in(A,B):- hold(B,A).
+precision: 0.59 recall: 0.05
+del_in(A,B):- put(B,A).
+precision: 0.79 recall: 0.06
+del_in(A,B):- walk(B,A).
+precision: 0.80 recall: 0.12
+del_in(A,B):- undress(B,A).
+precision: 0.96 recall: 0.15
+del_in(A,B):- tidy(B,A).
+precision: 0.83 recall: 0.02
+del_in(A,B):- throw(B,A).
+precision: 0.80 recall: 0.03
+del_in(A,B):- myclose(B,A).
+precision: 1.00 recall: 0.02
+del_in(A,B):- take(B,A).
+precision: 0.77 recall: 0.03

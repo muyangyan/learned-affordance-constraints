@@ -1,41 +1,37 @@
-22:22:08 Generating programs of size: 2
-22:22:08 ********************
-22:22:08 New best hypothesis:
-22:22:08 tp:14 fn:886 tn:262 fp:8 size:2 mdl:896
-22:22:08 add_touching(A,B):- drink(A,B).
-22:22:08 ********************
-22:22:08 ********************
-22:22:08 New best hypothesis:
-22:22:08 tp:40 fn:860 tn:267 fp:3 size:2 mdl:865
-22:22:08 add_touching(A,B):- hold(A,B).
-22:22:08 ********************
-22:22:08 ********************
-22:22:08 New best hypothesis:
-22:22:08 tp:80 fn:820 tn:250 fp:20 size:2 mdl:842
-22:22:08 add_touching(A,B):- put(A,B).
-22:22:08 ********************
-22:22:08 Generating programs of size: 3
-22:22:16 ********************
-22:22:16 New best hypothesis:
-22:22:16 tp:314 fn:586 tn:195 fp:75 size:22 mdl:683
-22:22:16 add_touching(A,B):- drink(A,B).
-22:22:16 add_touching(A,B):- hold(A,B).
-22:22:16 add_touching(A,B):- put(A,B).
-22:22:16 add_touching(A,B):- walk(A,B).
-22:22:16 add_touching(A,B):- dress(A,B).
-22:22:16 add_touching(A,B):- play(A,B).
-22:22:16 add_touching(A,B):- undress(A,B).
-22:22:16 add_touching(A,B):- tidy(A,B).
-22:22:16 add_touching(A,B):- throw(A,B).
-22:22:16 add_touching(A,B):- myopen(A,B).
-22:22:16 add_touching(A,B):- take(A,B).
-22:22:16 ********************
-22:22:23 Generating programs of size: 4
-22:23:17 Generating programs of size: 5
-22:23:40 Generating programs of size: 6
-22:24:00 Generating programs of size: 7
-22:24:17 Generating programs of size: 8
-22:24:30 Generating programs of size: 9
+14:57:10 Generating programs of size: 2
+14:57:10 ********************
+14:57:10 New best hypothesis:
+14:57:10 tp:14 fn:886 tn:262 fp:8 size:2 mdl:896
+14:57:10 add_touching(A,B):- drink(A,B).
+14:57:10 ********************
+14:57:10 ********************
+14:57:10 New best hypothesis:
+14:57:10 tp:40 fn:860 tn:267 fp:3 size:2 mdl:865
+14:57:10 add_touching(A,B):- hold(A,B).
+14:57:10 ********************
+14:57:10 ********************
+14:57:10 New best hypothesis:
+14:57:10 tp:80 fn:820 tn:250 fp:20 size:2 mdl:842
+14:57:10 add_touching(A,B):- put(A,B).
+14:57:10 ********************
+14:57:10 Generating programs of size: 3
+14:57:18 ********************
+14:57:18 New best hypothesis:
+14:57:18 tp:314 fn:586 tn:195 fp:75 size:22 mdl:683
+14:57:18 add_touching(A,B):- drink(A,B).
+14:57:18 add_touching(A,B):- hold(A,B).
+14:57:18 add_touching(A,B):- put(A,B).
+14:57:18 add_touching(A,B):- walk(A,B).
+14:57:18 add_touching(A,B):- dress(A,B).
+14:57:18 add_touching(A,B):- play(A,B).
+14:57:18 add_touching(A,B):- undress(A,B).
+14:57:18 add_touching(A,B):- tidy(A,B).
+14:57:18 add_touching(A,B):- throw(A,B).
+14:57:18 add_touching(A,B):- myopen(A,B).
+14:57:18 add_touching(A,B):- take(A,B).
+14:57:18 ********************
+14:57:24 Generating programs of size: 4
+14:58:09 TIMEOUT OF 60 SECONDS EXCEEDED
 ********** SOLUTION **********
 Precision:0.81 Recall:0.35 TP:314 FN:586 TN:195 FP:75 Size:22 MDL:683
 add_touching(A,B):- drink(A,B).
@@ -50,3 +46,25 @@ add_touching(A,B):- throw(A,B).
 add_touching(A,B):- myopen(A,B).
 add_touching(A,B):- take(A,B).
 ******************************
+add_touching(A,B):- drink(A,B).
+precision: 0.64 recall: 0.02
+add_touching(A,B):- hold(A,B).
+precision: 0.93 recall: 0.04
+add_touching(A,B):- put(A,B).
+precision: 0.80 recall: 0.09
+add_touching(A,B):- walk(A,B).
+precision: 0.91 recall: 0.01
+add_touching(A,B):- dress(A,B).
+precision: 1.00 recall: 0.00
+add_touching(A,B):- play(A,B).
+precision: 0.83 recall: 0.01
+add_touching(A,B):- undress(A,B).
+precision: 0.75 recall: 0.00
+add_touching(A,B):- tidy(A,B).
+precision: 0.87 recall: 0.01
+add_touching(A,B):- throw(A,B).
+precision: 0.92 recall: 0.01
+add_touching(A,B):- myopen(A,B).
+precision: 0.71 recall: 0.10
+add_touching(A,B):- take(A,B).
+precision: 0.93 recall: 0.07

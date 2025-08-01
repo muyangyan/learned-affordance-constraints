@@ -2,7 +2,7 @@ import os
 import json
 import numpy as np
 from pyswip import Prolog
-
+import torch
 import time
 
 def normalize_predicate_name(name):
@@ -75,3 +75,20 @@ def get_id_obj_from_sanitized_atom(atom):
     sanitized_frame_id = '_'.join(parts[1:-1])
     obj_type = int(parts[-1])
     return sanitized_frame_id, obj_type
+
+def logit_weighted_sum(nn_probs, symbolic_probs, alpha, beta, eps=1e-6):
+    # 1️⃣ clip to avoid logit infinities (log(0) or log(1))
+    symbolic_probs_clipped = symbolic_probs.clamp(min=eps, max=1 - eps)
+    nn_probs_clipped = nn_probs.clamp(min=eps, max=1 - eps)
+
+    # 2️⃣ convert to logits
+    logit_rule = torch.log(symbolic_probs_clipped) - torch.log(1 - symbolic_probs_clipped)
+    logit_nn = torch.log(nn_probs_clipped) - torch.log(1 - nn_probs_clipped)
+
+    # 3️⃣ weighted sum in logit space
+    logit_comb = alpha * logit_rule + beta * logit_nn
+
+    # 4️⃣ back to probability space
+    p_comb = torch.sigmoid(logit_comb) # this is the final probability
+
+    return p_comb

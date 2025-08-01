@@ -1,29 +1,25 @@
-22:22:07 Generating programs of size: 2
-22:22:07 ********************
-22:22:07 New best hypothesis:
-22:22:07 tp:39 fn:2197 tn:3390 fp:21 size:2 mdl:2220
-22:22:07 del_in_front_of(A,B):- sit(B,A).
-22:22:07 ********************
-22:22:07 ********************
-22:22:07 New best hypothesis:
-22:22:07 tp:48 fn:2188 tn:3402 fp:9 size:2 mdl:2199
-22:22:07 del_in_front_of(A,B):- walk(B,A).
-22:22:07 ********************
-22:22:07 Generating programs of size: 3
-22:22:17 ********************
-22:22:17 New best hypothesis:
-22:22:17 tp:118 fn:2118 tn:3371 fp:40 size:8 mdl:2166
-22:22:17 del_in_front_of(A,B):- sit(B,A).
-22:22:17 del_in_front_of(A,B):- dress(B,A).
-22:22:17 del_in_front_of(A,B):- walk(B,A).
-22:22:17 del_in_front_of(A,B):- turn(B,A).
-22:22:17 ********************
-22:22:26 Generating programs of size: 4
-22:23:22 Generating programs of size: 5
-22:23:44 Generating programs of size: 6
-22:24:01 Generating programs of size: 7
-22:24:17 Generating programs of size: 8
-22:24:30 Generating programs of size: 9
+14:57:09 Generating programs of size: 2
+14:57:09 ********************
+14:57:09 New best hypothesis:
+14:57:09 tp:39 fn:2197 tn:3390 fp:21 size:2 mdl:2220
+14:57:09 del_in_front_of(A,B):- sit(B,A).
+14:57:09 ********************
+14:57:09 ********************
+14:57:09 New best hypothesis:
+14:57:09 tp:48 fn:2188 tn:3402 fp:9 size:2 mdl:2199
+14:57:09 del_in_front_of(A,B):- walk(B,A).
+14:57:09 ********************
+14:57:09 Generating programs of size: 3
+14:57:19 ********************
+14:57:19 New best hypothesis:
+14:57:19 tp:118 fn:2118 tn:3371 fp:40 size:8 mdl:2166
+14:57:19 del_in_front_of(A,B):- sit(B,A).
+14:57:19 del_in_front_of(A,B):- dress(B,A).
+14:57:19 del_in_front_of(A,B):- walk(B,A).
+14:57:19 del_in_front_of(A,B):- turn(B,A).
+14:57:19 ********************
+14:57:27 Generating programs of size: 4
+14:58:08 TIMEOUT OF 60 SECONDS EXCEEDED
 ********** SOLUTION **********
 Precision:0.75 Recall:0.05 TP:118 FN:2118 TN:3371 FP:40 Size:8 MDL:2166
 del_in_front_of(A,B):- sit(B,A).
@@ -31,3 +27,11 @@ del_in_front_of(A,B):- dress(B,A).
 del_in_front_of(A,B):- walk(B,A).
 del_in_front_of(A,B):- turn(B,A).
 ******************************
+del_in_front_of(A,B):- sit(B,A).
+precision: 0.65 recall: 0.02
+del_in_front_of(A,B):- dress(B,A).
+precision: 0.80 recall: 0.01
+del_in_front_of(A,B):- walk(B,A).
+precision: 0.84 recall: 0.02
+del_in_front_of(A,B):- turn(B,A).
+precision: 0.69 recall: 0.00

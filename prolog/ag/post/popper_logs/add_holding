@@ -1,43 +1,49 @@
-22:22:08 Generating programs of size: 2
-22:22:08 ********************
-22:22:08 New best hypothesis:
-22:22:08 tp:86 fn:1635 tn:1230 fp:6 size:2 mdl:1643
-22:22:08 add_holding(A,B):- hold(A,B).
-22:22:08 ********************
-22:22:08 ********************
-22:22:08 New best hypothesis:
-22:22:08 tp:273 fn:1448 tn:1231 fp:5 size:2 mdl:1455
-22:22:08 add_holding(A,B):- take(A,B).
-22:22:08 ********************
-22:22:08 Generating programs of size: 3
-22:22:18 ********************
-22:22:18 New best hypothesis:
-22:22:18 tp:395 fn:1326 tn:1214 fp:22 size:8 mdl:1356
-22:22:18 add_holding(A,B):- hold(A,B).
-22:22:18 add_holding(A,B):- undress(A,B).
-22:22:18 add_holding(A,B):- tidy(A,B).
-22:22:18 add_holding(A,B):- take(A,B).
-22:22:18 ********************
-22:22:24 Generating programs of size: 4
-22:22:34 ********************
-22:22:34 New best hypothesis:
-22:22:34 tp:399 fn:1322 tn:1214 fp:22 size:11 mdl:1355
-22:22:34 add_holding(A,B):- hold(A,B).
-22:22:34 add_holding(A,B):- undress(A,B).
-22:22:34 add_holding(A,B):- tidy(A,B).
-22:22:34 add_holding(A,B):- take(A,B).
-22:22:34 add_holding(A,B):- watch(A,B),put(A,B).
-22:22:34 ********************
-22:23:19 Generating programs of size: 5
-22:23:48 Generating programs of size: 6
-22:24:09 Generating programs of size: 7
-22:24:27 Generating programs of size: 8
-22:24:40 Generating programs of size: 9
+14:57:09 Generating programs of size: 2
+14:57:09 ********************
+14:57:09 New best hypothesis:
+14:57:09 tp:86 fn:1635 tn:1230 fp:6 size:2 mdl:1643
+14:57:09 add_holding(A,B):- hold(A,B).
+14:57:09 ********************
+14:57:09 ********************
+14:57:09 New best hypothesis:
+14:57:09 tp:273 fn:1448 tn:1231 fp:5 size:2 mdl:1455
+14:57:09 add_holding(A,B):- take(A,B).
+14:57:09 ********************
+14:57:09 Generating programs of size: 3
+14:57:19 ********************
+14:57:19 New best hypothesis:
+14:57:19 tp:395 fn:1326 tn:1214 fp:22 size:8 mdl:1356
+14:57:19 add_holding(A,B):- hold(A,B).
+14:57:19 add_holding(A,B):- undress(A,B).
+14:57:19 add_holding(A,B):- tidy(A,B).
+14:57:19 add_holding(A,B):- take(A,B).
+14:57:19 ********************
+14:57:25 Generating programs of size: 4
+14:57:35 ********************
+14:57:35 New best hypothesis:
+14:57:35 tp:399 fn:1322 tn:1214 fp:22 size:11 mdl:1355
+14:57:35 add_holding(A,B):- hold(A,B).
+14:57:35 add_holding(A,B):- undress(A,B).
+14:57:35 add_holding(A,B):- tidy(A,B).
+14:57:35 add_holding(A,B):- take(A,B).
+14:57:35 add_holding(A,B):- put(A,B),watch(A,B).
+14:57:35 ********************
+14:58:08 TIMEOUT OF 60 SECONDS EXCEEDED
 ********** SOLUTION **********
 Precision:0.95 Recall:0.23 TP:399 FN:1322 TN:1214 FP:22 Size:11 MDL:1355
 add_holding(A,B):- hold(A,B).
 add_holding(A,B):- undress(A,B).
 add_holding(A,B):- tidy(A,B).
 add_holding(A,B):- take(A,B).
-add_holding(A,B):- watch(A,B),put(A,B).
+add_holding(A,B):- put(A,B),watch(A,B).
 ******************************
+add_holding(A,B):- hold(A,B).
+precision: 0.93 recall: 0.05
+add_holding(A,B):- undress(A,B).
+precision: 0.85 recall: 0.02
+add_holding(A,B):- tidy(A,B).
+precision: 0.71 recall: 0.01
+add_holding(A,B):- take(A,B).
+precision: 0.98 recall: 0.16
+add_holding(A,B):- put(A,B),watch(A,B).
+precision: 1.00 recall: 0.00

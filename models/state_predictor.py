@@ -7,7 +7,7 @@ import torch.nn as nn
 import os
 import json
 from models.modules import get_model
-from util.rule_utils import get_rule_precisions_recalls
+from util.rule_utils import get_rule_precisions_recalls, logit_weighted_sum
 from util.data_utils import extract_edge_probs_and_pairs
 import pytorch_lightning as L 
 
@@ -211,6 +211,10 @@ class StateLeaPR(L.LightningModule):
             final_probs = relevant_pred_probs * (symbolic_probs**weight)
         elif constraint_mode == 'weighted_sum':
             final_probs = (1-weight) * relevant_pred_probs + weight * symbolic_probs
+        elif constraint_mode == 'logit_weighted_sum':
+            final_probs = logit_weighted_sum(relevant_pred_probs, symbolic_probs, 20, 10)
+        elif constraint_mode == 'or':
+            final_probs = 1 - (1-relevant_pred_probs)*(1-symbolic_probs)
         else:
             raise ValueError(f"Invalid constraint mode: {constraint_mode}")
 

@@ -1,27 +1,31 @@
-22:22:07 Generating programs of size: 2
-22:22:07 ********************
-22:22:07 New best hypothesis:
-22:22:07 tp:12 fn:51 tn:71 fp:4 size:2 mdl:57
-22:22:07 del_covered_by(A,B):- hold(A,B).
-22:22:07 ********************
-22:22:07 ********************
-22:22:07 New best hypothesis:
-22:22:07 tp:11 fn:52 tn:75 fp:0 size:2 mdl:54
-22:22:07 del_covered_by(A,B):- put(A,B).
-22:22:07 ********************
-22:22:07 Generating programs of size: 3
-22:22:09 ********************
-22:22:09 New best hypothesis:
-22:22:09 tp:21 fn:42 tn:71 fp:4 size:4 mdl:50
-22:22:09 del_covered_by(A,B):- hold(A,B).
-22:22:09 del_covered_by(A,B):- put(A,B).
-22:22:09 ********************
-22:22:14 Generating programs of size: 4
-22:22:22 Generating programs of size: 5
-22:22:26 Generating programs of size: 6
-22:22:27 Generating programs of size: 7
+14:57:09 Generating programs of size: 2
+14:57:09 ********************
+14:57:09 New best hypothesis:
+14:57:09 tp:12 fn:51 tn:71 fp:4 size:2 mdl:57
+14:57:09 del_covered_by(A,B):- hold(A,B).
+14:57:09 ********************
+14:57:09 ********************
+14:57:09 New best hypothesis:
+14:57:09 tp:11 fn:52 tn:75 fp:0 size:2 mdl:54
+14:57:09 del_covered_by(A,B):- put(A,B).
+14:57:09 ********************
+14:57:09 Generating programs of size: 3
+14:57:10 ********************
+14:57:10 New best hypothesis:
+14:57:10 tp:21 fn:42 tn:71 fp:4 size:4 mdl:50
+14:57:10 del_covered_by(A,B):- hold(A,B).
+14:57:10 del_covered_by(A,B):- put(A,B).
+14:57:10 ********************
+14:57:15 Generating programs of size: 4
+14:57:21 Generating programs of size: 5
+14:57:23 Generating programs of size: 6
+14:57:25 Generating programs of size: 7
 ********** SOLUTION **********
 Precision:0.84 Recall:0.33 TP:21 FN:42 TN:71 FP:4 Size:4 MDL:50
 del_covered_by(A,B):- hold(A,B).
 del_covered_by(A,B):- put(A,B).
 ******************************
+del_covered_by(A,B):- hold(A,B).
+precision: 0.75 recall: 0.19
+del_covered_by(A,B):- put(A,B).
+precision: 1.00 recall: 0.17

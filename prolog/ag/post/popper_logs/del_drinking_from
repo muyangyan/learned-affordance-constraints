@@ -1,26 +1,30 @@
-22:22:07 Generating programs of size: 2
-22:22:07 ********************
-22:22:07 New best hypothesis:
-22:22:07 tp:3 fn:57 tn:6 fp:0 size:2 mdl:59
-22:22:07 del_drinking_from(A,B):- drink(A,B).
-22:22:07 ********************
-22:22:07 ********************
-22:22:07 New best hypothesis:
-22:22:07 tp:21 fn:39 tn:4 fp:2 size:2 mdl:43
-22:22:07 del_drinking_from(A,B):- put(A,B).
-22:22:07 ********************
-22:22:07 Generating programs of size: 3
-22:22:09 ********************
-22:22:09 New best hypothesis:
-22:22:09 tp:24 fn:36 tn:4 fp:2 size:4 mdl:42
-22:22:09 del_drinking_from(A,B):- drink(A,B).
-22:22:09 del_drinking_from(A,B):- put(A,B).
-22:22:09 ********************
-22:22:10 Generating programs of size: 4
-22:22:11 Generating programs of size: 5
-22:22:13 Generating programs of size: 6
+14:57:08 Generating programs of size: 2
+14:57:08 ********************
+14:57:08 New best hypothesis:
+14:57:08 tp:3 fn:57 tn:6 fp:0 size:2 mdl:59
+14:57:08 del_drinking_from(A,B):- drink(A,B).
+14:57:08 ********************
+14:57:08 ********************
+14:57:08 New best hypothesis:
+14:57:08 tp:21 fn:39 tn:4 fp:2 size:2 mdl:43
+14:57:08 del_drinking_from(A,B):- put(A,B).
+14:57:08 ********************
+14:57:09 Generating programs of size: 3
+14:57:10 ********************
+14:57:10 New best hypothesis:
+14:57:10 tp:24 fn:36 tn:4 fp:2 size:4 mdl:42
+14:57:10 del_drinking_from(A,B):- drink(A,B).
+14:57:10 del_drinking_from(A,B):- put(A,B).
+14:57:10 ********************
+14:57:11 Generating programs of size: 4
+14:57:12 Generating programs of size: 5
+14:57:14 Generating programs of size: 6
 ********** SOLUTION **********
 Precision:0.92 Recall:0.40 TP:24 FN:36 TN:4 FP:2 Size:4 MDL:42
 del_drinking_from(A,B):- drink(A,B).
 del_drinking_from(A,B):- put(A,B).
 ******************************
+del_drinking_from(A,B):- drink(A,B).
+precision: 1.00 recall: 0.05
+del_drinking_from(A,B):- put(A,B).
+precision: 0.91 recall: 0.35

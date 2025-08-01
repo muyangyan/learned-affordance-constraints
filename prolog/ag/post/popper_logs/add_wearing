@@ -1,24 +1,28 @@
-22:22:08 Generating programs of size: 2
-22:22:08 ********************
-22:22:08 New best hypothesis:
-22:22:08 tp:29 fn:83 tn:43 fp:2 size:2 mdl:87
-22:22:08 add_wearing(A,B):- dress(A,B).
-22:22:08 ********************
-22:22:09 Generating programs of size: 3
-22:22:12 ********************
-22:22:12 New best hypothesis:
-22:22:12 tp:36 fn:76 tn:40 fp:5 size:4 mdl:85
-22:22:12 add_wearing(A,B):- dress(A,B).
-22:22:12 add_wearing(A,B):- take(A,B).
-22:22:12 ********************
-22:22:14 Generating programs of size: 4
-22:22:30 Generating programs of size: 5
-22:22:44 Generating programs of size: 6
-22:22:45 Generating programs of size: 7
-22:22:48 Generating programs of size: 8
-22:22:48 Generating programs of size: 9
+14:57:09 Generating programs of size: 2
+14:57:09 ********************
+14:57:09 New best hypothesis:
+14:57:09 tp:29 fn:83 tn:43 fp:2 size:2 mdl:87
+14:57:09 add_wearing(A,B):- dress(A,B).
+14:57:09 ********************
+14:57:10 Generating programs of size: 3
+14:57:13 ********************
+14:57:13 New best hypothesis:
+14:57:13 tp:36 fn:76 tn:40 fp:5 size:4 mdl:85
+14:57:13 add_wearing(A,B):- dress(A,B).
+14:57:13 add_wearing(A,B):- take(A,B).
+14:57:13 ********************
+14:57:14 Generating programs of size: 4
+14:57:31 Generating programs of size: 5
+14:57:38 Generating programs of size: 6
+14:57:39 Generating programs of size: 7
+14:57:42 Generating programs of size: 8
+14:57:42 Generating programs of size: 9
 ********** SOLUTION **********
 Precision:0.88 Recall:0.32 TP:36 FN:76 TN:40 FP:5 Size:4 MDL:85
 add_wearing(A,B):- dress(A,B).
 add_wearing(A,B):- take(A,B).
 ******************************
+add_wearing(A,B):- dress(A,B).
+precision: 0.94 recall: 0.26
+add_wearing(A,B):- take(A,B).
+precision: 0.70 recall: 0.06
