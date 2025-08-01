@@ -41,6 +41,11 @@ def parse_logs(folder):
                 print(file, 'no solution')
                 rules[file] = None
                 continue
+            elif lines[-1].strip('\n') == "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~": #rule is split
+                #ADDRESS
+                continue
+
+
             elif lines[-1].strip('\n') != "******************************":
                 print(file, 'stuck, fixing')
                 for line in reversed(lines[:-1]):

@@ -357,10 +357,12 @@ class PrologData:
             
 
 
-    def init_general_bias(self, forbidden_nodes, forbidden_edges, write_verbs=False, write_actions=False, skip_preds=False):
+    def init_general_bias(self, forbidden_nodes, forbidden_edges, write_verbs=False, write_actions=False, skip_preds=False, enforce_verb=False):
         # Build general bias as a string instead of writing to file
         bias_lines = []
         manual_blacklist = ['make'] # currently just never appears in the SingleBothAG train dataset
+        if enforce_verb:
+            bias_lines.append(':- clause(C), #count{P : body_literal(C,P,_,_), verb_pred(P)} < 1.')
         if not skip_preds:
             for node in self.node_vocab:
                 if node not in forbidden_nodes:
@@ -374,6 +376,7 @@ class PrologData:
                 if verb in manual_blacklist:
                     continue
                 bias_lines.append(f'body_pred({handle_prolog_keywords(verb)}, 2).')
+                bias_lines.append(f'verb_pred({handle_prolog_keywords(verb)}).')
         if write_actions:
             for action in self.dataset.action_classes:
                 bias_lines.append(f'body_pred({action}, 1).')
@@ -394,7 +397,9 @@ def main(config):
         print("Generating examples for effect learning...")
         post_ag = SingleBothAG(config, no_img=True, split='train', subset=True, no_rules=True)
         post_pd = PrologData(prolog_folder, 'post', post_ag, model=None)
-        post_pd.init_general_bias(config.data.forbidden_nodes, config.data.forbidden_edges, write_verbs=True, skip_preds=True)
+
+        #post_pd.init_general_bias(config.data.forbidden_nodes, config.data.forbidden_edges, write_verbs=True, skip_preds=True, enforce_verb=False) #only verb preds
+        post_pd.init_general_bias(config.data.forbidden_nodes, config.data.forbidden_edges, write_verbs=True, skip_preds=False, enforce_verb=True) #allow non-verb preds, enforce atleast 1 verb per clause
         post_pd.write_effects_bk_and_examples()
 
     if args.preconds:

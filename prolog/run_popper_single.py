@@ -54,7 +54,6 @@ def run_popper_for_item(item, label_type, prolog_path, log_folder, fn_weight, il
         if separate_clauses:
             tester = Tester(settings)   
             for p in prog:
-                print(format_rule(p))
 
                 results = tester.test_single_rule_all([p])
                 tp, fp = len(results[0]), len(results[1])
@@ -65,7 +64,9 @@ def run_popper_for_item(item, label_type, prolog_path, log_folder, fn_weight, il
                 recall = tp / (tp + fn) if tp + fn > 0 else 0
 
                 #print(f'tp: {tp} fn: {fn} tn: {tn} fp: {fp} num_positives: {num_positives} num_negatives: {num_negatives}')
-                print(f'precision: {precision:.2f} recall: {recall:.2f}')
+                print(f'Precision:{precision:.2f} Recall:{recall:.2f} TP:{tp} FN:{fn} TN:{tn} FP:{fp}')
+                print(format_rule(p))
+                print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
     else:
         print('NO SOLUTION')
