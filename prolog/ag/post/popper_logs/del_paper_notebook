@@ -10,3 +10,11 @@
 02:08:36 tp:13 fn:40 tn:119 fp:4 size:4 mdl:48
 02:08:36 del_paper_notebook(A):- looking_at(C,A),looking_at(B,A),stand(C,B).
 02:08:36 ********************
+04:09:12 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.76 Recall:0.25 TP:13 FN:40 TN:119 FP:4 Size:4 MDL:48
+del_paper_notebook(A):- looking_at(C,A),looking_at(B,A),stand(C,B).
+******************************
+Precision:0.76 Recall:0.25 TP:13 FN:40 TN:119 FP:4
+del_paper_notebook(A):- looking_at(C,A),looking_at(B,A),stand(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

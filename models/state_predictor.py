@@ -505,10 +505,8 @@ class StateLeaPR(L.LightningModule):
         
         # Extract edge probabilities and pairs using existing function
         pred_edge_probs, pred_edge_pairs, pred_edge_batch_vec = extract_edge_probs_and_pairs(pred_scene_graph)
-        plt.imsave('analysis/pred_edge_probs.png', pred_edge_probs.cpu().numpy())
         
         prior_edge_probs, prior_edge_pairs, prior_edge_batch_vec = extract_edge_probs_and_pairs(prev_scene_graphs)
-        plt.imsave('analysis/prior_edge_probs.png', prior_edge_probs.cpu().numpy())
 
         # Get effect truth values from batch (no precondition constraints for dynamics)
         effect_groundings = batch.get('effects_groundings')
@@ -522,11 +520,11 @@ class StateLeaPR(L.LightningModule):
             constraint_mode=self.constraint_mode,
             tgt_cls_map=self.effect_tgt_cls_map 
         )
-        plt.imsave(f'analysis/pred_edge_probs_constrained_{self.constraint_mode}.png', pred_edge_probs.cpu().numpy())
         
         # Extract ground truth edge probabilities and pairs
         gt_edge_probs, gt_edge_pairs, gt_edge_batch_vec = extract_edge_probs_and_pairs(gt_scene_graphs)
-        plt.imsave('analysis/gt_edge_probs.png', gt_edge_probs.cpu().numpy())
+
+
         
         # Store as pairs: ((pred_probs, pred_pairs), (gt_probs, gt_pairs))
         self.ids.extend(ids)

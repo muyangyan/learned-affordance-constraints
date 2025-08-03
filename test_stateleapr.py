@@ -73,10 +73,45 @@ def analyze_preds(cfg, run_name, test_run_name, pred_name, preds, dataset):
     
     # Per-edge metrics (track unique object pairs)
     edge_metrics = {}  # {obj_pair: {'tp': 0, 'fp': 0, 'fn': 0}}
-    
+
     # For mAP computation - collect all predictions and labels per class
     all_pred_scores = [[] for _ in range(num_relations)]  # Raw prediction scores
     all_gt_labels = [[] for _ in range(num_relations)]    # Binary ground truth labels
+
+    full_indexed_pred_probs = []
+    full_indexed_gt_probs = []
+    for (pred_probs, pred_pairs), (gt_probs, gt_pairs) in preds:
+        # Collect the union of pred_pairs and gt_pairs
+        all_pairs = set(map(tuple, pred_pairs.tolist())) | set(map(tuple, gt_pairs.tolist()))
+        
+        # Create dictionaries to index probabilities by object pairs
+        pred_probs_dict = {tuple(pair): pred_probs[i] for i, pair in enumerate(pred_pairs.tolist())}
+        gt_probs_dict = {tuple(pair): gt_probs[i] for i, pair in enumerate(gt_pairs.tolist())}
+        
+        # Initialize indexed probabilities
+        indexed_pred_probs = []
+        indexed_gt_probs = []
+        
+        # Use the union of pairs to index both pred_probs and gt_probs
+        for pair in all_pairs:
+            indexed_pred_probs.append(pred_probs_dict.get(pair, torch.zeros(num_relations, device=pred_probs.device)))
+            indexed_gt_probs.append(gt_probs_dict.get(pair, torch.zeros(num_relations, device=gt_probs.device)))
+        
+        # Convert lists to tensors
+        full_indexed_pred_probs.append(torch.stack(indexed_pred_probs))
+        full_indexed_gt_probs.append(torch.stack(indexed_gt_probs))
+
+    full_indexed_pred_probs = torch.cat(full_indexed_pred_probs)
+    full_indexed_gt_probs = torch.cat(full_indexed_gt_probs)
+
+    error = full_indexed_pred_probs - full_indexed_gt_probs
+    product = full_indexed_pred_probs * full_indexed_gt_probs
+
+    plt.imsave(f'analysis/{pred_name}_pred.png', full_indexed_pred_probs.cpu().numpy(), cmap='viridis', vmin=0, vmax=1)
+    plt.imsave(f'analysis/{pred_name}_error.png', error.cpu().numpy(), cmap='viridis', vmin=-1, vmax=1)
+    plt.imsave(f'analysis/{pred_name}_product.png', product.cpu().numpy(), cmap='viridis', vmin=0, vmax=1)
+    plt.imsave(f'analysis/gt.png', full_indexed_gt_probs.cpu().numpy(), cmap='viridis', vmin=0, vmax=1)
+
     
     for (pred_probs, pred_pairs), (gt_probs, gt_pairs) in preds:
         # Convert predictions to binary using threshold

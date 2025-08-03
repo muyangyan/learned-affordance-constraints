@@ -1,4 +1,4 @@
-%%new_rules weight: 1 timeout: 60
+%%new_rules weight: 1 timeout: 600
 %%pour
 %%PRECISION: 0.64 RECALL: 0.96 TP: 72 FN: 3 TN: 259 FP: 41
 pour_target(A):- cup_glass_bottle(B),not_contacting(A,B).
