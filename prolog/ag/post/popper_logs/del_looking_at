@@ -1,90 +1,171 @@
-14:57:08 Generating programs of size: 2
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:11 fn:1944 tn:1131 fp:1 size:2 mdl:1947
-14:57:08 del_looking_at(A,B):- snuggle(A,B).
-14:57:08 ********************
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:134 fn:1821 tn:1071 fp:61 size:2 mdl:1884
-14:57:08 del_looking_at(A,B):- myclose(A,B).
-14:57:08 ********************
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:200 fn:1755 tn:1008 fp:124 size:2 mdl:1881
-14:57:08 del_looking_at(A,B):- put(A,B).
-14:57:08 ********************
-14:57:08 Generating programs of size: 3
-14:57:18 ********************
-14:57:18 New best hypothesis:
-14:57:18 tp:619 fn:1336 tn:770 fp:362 size:32 mdl:1730
-14:57:18 del_looking_at(A,B):- snuggle(A,B).
-14:57:18 del_looking_at(A,B):- myclose(A,B).
-14:57:18 del_looking_at(A,B):- cook(A,B).
-14:57:18 del_looking_at(A,B):- drink(A,B).
-14:57:18 del_looking_at(A,B):- hold(A,B).
-14:57:18 del_looking_at(A,B):- sit(A,B).
-14:57:18 del_looking_at(A,B):- grasp(A,B).
-14:57:18 del_looking_at(A,B):- put(A,B).
-14:57:18 del_looking_at(A,B):- work(A,B).
-14:57:18 del_looking_at(A,B):- watch(A,B).
-14:57:18 del_looking_at(A,B):- wash(A,B).
-14:57:18 del_looking_at(A,B):- walk(A,B).
-14:57:18 del_looking_at(A,B):- dress(A,B).
-14:57:18 del_looking_at(A,B):- turn(A,B).
-14:57:18 del_looking_at(A,B):- tidy(A,B).
-14:57:18 del_looking_at(A,B):- eat(A,B).
-14:57:18 ********************
-14:57:27 Generating programs of size: 4
-14:58:06 TIMEOUT OF 60 SECONDS EXCEEDED
+02:01:08 Generating programs of size: 2
+02:01:08 ********************
+02:01:08 New best hypothesis:
+02:01:08 tp:60 fn:1895 tn:1086 fp:46 size:2 mdl:1943
+02:01:08 del_looking_at(A,B):- hold(A,B).
+02:01:08 ********************
+02:01:19 ********************
+02:01:19 New best hypothesis:
+02:01:19 tp:134 fn:1821 tn:1071 fp:61 size:2 mdl:1884
+02:01:19 del_looking_at(A,B):- myclose(A,B).
+02:01:19 ********************
+02:01:19 ********************
+02:01:19 New best hypothesis:
+02:01:19 tp:200 fn:1755 tn:1008 fp:124 size:2 mdl:1881
+02:01:19 del_looking_at(A,B):- put(A,B).
+02:01:19 ********************
+02:01:19 Generating programs of size: 3
+02:01:29 ********************
+02:01:29 New best hypothesis:
+02:01:29 tp:619 fn:1336 tn:770 fp:362 size:32 mdl:1730
+02:01:29 del_looking_at(A,B):- hold(A,B).
+02:01:29 del_looking_at(A,B):- cook(A,B).
+02:01:29 del_looking_at(A,B):- eat(A,B).
+02:01:29 del_looking_at(A,B):- dress(A,B).
+02:01:29 del_looking_at(A,B):- drink(A,B).
+02:01:29 del_looking_at(A,B):- grasp(A,B).
+02:01:29 del_looking_at(A,B):- myclose(A,B).
+02:01:29 del_looking_at(A,B):- put(A,B).
+02:01:29 del_looking_at(A,B):- sit(A,B).
+02:01:29 del_looking_at(A,B):- tidy(A,B).
+02:01:29 del_looking_at(A,B):- turn(A,B).
+02:01:29 del_looking_at(A,B):- snuggle(A,B).
+02:01:29 del_looking_at(A,B):- walk(A,B).
+02:01:29 del_looking_at(A,B):- wash(A,B).
+02:01:29 del_looking_at(A,B):- watch(A,B).
+02:01:29 del_looking_at(A,B):- work(A,B).
+02:01:29 ********************
+02:04:58 Generating programs of size: 4
+02:05:08 ********************
+02:05:08 New best hypothesis:
+02:05:08 tp:913 fn:1042 tn:728 fp:404 size:62 mdl:1508
+02:05:08 del_looking_at(A,B):- cook(A,B).
+02:05:08 del_looking_at(A,B):- eat(A,B).
+02:05:08 del_looking_at(A,B):- dress(A,B).
+02:05:08 del_looking_at(A,B):- grasp(A,B).
+02:05:08 del_looking_at(A,B):- myclose(A,B).
+02:05:08 del_looking_at(A,B):- put(A,B).
+02:05:08 del_looking_at(A,B):- sit(A,B).
+02:05:08 del_looking_at(A,B):- tidy(A,B).
+02:05:08 del_looking_at(A,B):- turn(A,B).
+02:05:08 del_looking_at(A,B):- snuggle(A,B).
+02:05:08 del_looking_at(A,B):- walk(A,B).
+02:05:08 del_looking_at(A,B):- wash(A,B).
+02:05:08 del_looking_at(A,B):- work(A,B).
+02:05:08 del_looking_at(A,B):- myopen(A,B),door(B).
+02:05:08 del_looking_at(A,B):- drink(A,B),holding(A,B).
+02:05:08 del_looking_at(A,B):- not_contacting(A,B),pour(A,B).
+02:05:08 del_looking_at(A,B):- watch(A,B),not_contacting(A,B).
+02:05:08 del_looking_at(A,B):- throw(A,B),touching(A,B).
+02:05:08 del_looking_at(A,B):- in_front_of(B,A),hold(A,B).
+02:05:08 del_looking_at(A,B):- drink(A,B),on_the_side_of(B,A).
+02:05:08 del_looking_at(A,B):- play(A,B),watch(A,B).
+02:05:08 del_looking_at(A,B):- mirror(B),watch(A,B).
+02:05:08 del_looking_at(A,B):- looking_at(C,B),sit(A,C).
+02:05:08 del_looking_at(A,B):- looking_at(C,B),stand(C,A).
+02:05:08 del_looking_at(A,B):- run(C,A),looking_at(C,B).
+02:05:08 ********************
+02:11:07 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.63 Recall:0.32 TP:619 FN:1336 TN:770 FP:362 Size:32 MDL:1730
-del_looking_at(A,B):- snuggle(A,B).
-del_looking_at(A,B):- myclose(A,B).
+Precision:0.69 Recall:0.47 TP:913 FN:1042 TN:728 FP:404 Size:62 MDL:1508
 del_looking_at(A,B):- cook(A,B).
-del_looking_at(A,B):- drink(A,B).
-del_looking_at(A,B):- hold(A,B).
-del_looking_at(A,B):- sit(A,B).
-del_looking_at(A,B):- grasp(A,B).
-del_looking_at(A,B):- put(A,B).
-del_looking_at(A,B):- work(A,B).
-del_looking_at(A,B):- watch(A,B).
-del_looking_at(A,B):- wash(A,B).
-del_looking_at(A,B):- walk(A,B).
-del_looking_at(A,B):- dress(A,B).
-del_looking_at(A,B):- turn(A,B).
-del_looking_at(A,B):- tidy(A,B).
 del_looking_at(A,B):- eat(A,B).
+del_looking_at(A,B):- dress(A,B).
+del_looking_at(A,B):- grasp(A,B).
+del_looking_at(A,B):- myclose(A,B).
+del_looking_at(A,B):- put(A,B).
+del_looking_at(A,B):- sit(A,B).
+del_looking_at(A,B):- tidy(A,B).
+del_looking_at(A,B):- turn(A,B).
+del_looking_at(A,B):- snuggle(A,B).
+del_looking_at(A,B):- walk(A,B).
+del_looking_at(A,B):- wash(A,B).
+del_looking_at(A,B):- work(A,B).
+del_looking_at(A,B):- myopen(A,B),door(B).
+del_looking_at(A,B):- drink(A,B),holding(A,B).
+del_looking_at(A,B):- not_contacting(A,B),pour(A,B).
+del_looking_at(A,B):- watch(A,B),not_contacting(A,B).
+del_looking_at(A,B):- throw(A,B),touching(A,B).
+del_looking_at(A,B):- in_front_of(B,A),hold(A,B).
+del_looking_at(A,B):- drink(A,B),on_the_side_of(B,A).
+del_looking_at(A,B):- play(A,B),watch(A,B).
+del_looking_at(A,B):- mirror(B),watch(A,B).
+del_looking_at(A,B):- looking_at(C,B),sit(A,C).
+del_looking_at(A,B):- looking_at(C,B),stand(C,A).
+del_looking_at(A,B):- run(C,A),looking_at(C,B).
 ******************************
-del_looking_at(A,B):- snuggle(A,B).
-precision: 0.92 recall: 0.01
-del_looking_at(A,B):- myclose(A,B).
-precision: 0.69 recall: 0.07
+Precision:0.64 Recall:0.00 TP:7 FN:1948 TN:1128 FP:4
 del_looking_at(A,B):- cook(A,B).
-precision: 0.64 recall: 0.00
-del_looking_at(A,B):- drink(A,B).
-precision: 0.57 recall: 0.02
-del_looking_at(A,B):- hold(A,B).
-precision: 0.57 recall: 0.03
-del_looking_at(A,B):- sit(A,B).
-precision: 1.00 recall: 0.01
-del_looking_at(A,B):- grasp(A,B).
-precision: 1.00 recall: 0.00
-del_looking_at(A,B):- put(A,B).
-precision: 0.62 recall: 0.10
-del_looking_at(A,B):- work(A,B).
-precision: 0.67 recall: 0.00
-del_looking_at(A,B):- watch(A,B).
-precision: 0.53 recall: 0.03
-del_looking_at(A,B):- wash(A,B).
-precision: 0.58 recall: 0.00
-del_looking_at(A,B):- walk(A,B).
-precision: 1.00 recall: 0.00
-del_looking_at(A,B):- dress(A,B).
-precision: 0.87 recall: 0.01
-del_looking_at(A,B):- turn(A,B).
-precision: 0.60 recall: 0.00
-del_looking_at(A,B):- tidy(A,B).
-precision: 0.58 recall: 0.01
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.61 Recall:0.02 TP:38 FN:1917 TN:1108 FP:24
 del_looking_at(A,B):- eat(A,B).
-precision: 0.61 recall: 0.02
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.87 Recall:0.01 TP:13 FN:1942 TN:1130 FP:2
+del_looking_at(A,B):- dress(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:3 FN:1952 TN:1132 FP:0
+del_looking_at(A,B):- grasp(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.69 Recall:0.07 TP:134 FN:1821 TN:1071 FP:61
+del_looking_at(A,B):- myclose(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.62 Recall:0.10 TP:200 FN:1755 TN:1008 FP:124
+del_looking_at(A,B):- put(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:17 FN:1938 TN:1132 FP:0
+del_looking_at(A,B):- sit(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.58 Recall:0.01 TP:26 FN:1929 TN:1113 FP:19
+del_looking_at(A,B):- tidy(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.60 Recall:0.00 TP:6 FN:1949 TN:1128 FP:4
+del_looking_at(A,B):- turn(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.92 Recall:0.01 TP:11 FN:1944 TN:1131 FP:1
+del_looking_at(A,B):- snuggle(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:7 FN:1948 TN:1132 FP:0
+del_looking_at(A,B):- walk(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.58 Recall:0.00 TP:7 FN:1948 TN:1127 FP:5
+del_looking_at(A,B):- wash(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.67 Recall:0.00 TP:4 FN:1951 TN:1130 FP:2
+del_looking_at(A,B):- work(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.83 Recall:0.01 TP:25 FN:1930 TN:1127 FP:5
+del_looking_at(A,B):- myopen(A,B),door(B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.62 Recall:0.01 TP:28 FN:1927 TN:1115 FP:17
+del_looking_at(A,B):- drink(A,B),holding(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.67 Recall:0.00 TP:6 FN:1949 TN:1129 FP:3
+del_looking_at(A,B):- not_contacting(A,B),pour(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.69 Recall:0.01 TP:29 FN:1926 TN:1119 FP:13
+del_looking_at(A,B):- watch(A,B),not_contacting(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.64 Recall:0.00 TP:9 FN:1946 TN:1127 FP:5
+del_looking_at(A,B):- throw(A,B),touching(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.57 Recall:0.03 TP:54 FN:1901 TN:1091 FP:41
+del_looking_at(A,B):- in_front_of(B,A),hold(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.64 Recall:0.00 TP:9 FN:1946 TN:1127 FP:5
+del_looking_at(A,B):- drink(A,B),on_the_side_of(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:4 FN:1951 TN:1132 FP:0
+del_looking_at(A,B):- play(A,B),watch(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.75 Recall:0.01 TP:12 FN:1943 TN:1128 FP:4
+del_looking_at(A,B):- mirror(B),watch(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.76 Recall:0.06 TP:111 FN:1844 TN:1096 FP:36
+del_looking_at(A,B):- looking_at(C,B),sit(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.83 Recall:0.08 TP:162 FN:1793 TN:1098 FP:34
+del_looking_at(A,B):- looking_at(C,B),stand(C,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.70 Recall:0.01 TP:14 FN:1941 TN:1126 FP:6
+del_looking_at(A,B):- run(C,A),looking_at(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

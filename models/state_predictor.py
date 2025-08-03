@@ -13,6 +13,8 @@ import pytorch_lightning as L
 
 from torchmetrics import MetricCollection
 from torchmetrics import Accuracy, Precision, Recall, AveragePrecision, F1Score, MeanSquaredError, MeanAbsoluteError
+import matplotlib.pyplot as plt
+
 
 def make_key(batch_vec, edge_pairs, i):
     return (int(batch_vec[i].cpu().item()), tuple(map(int, edge_pairs[i].cpu().tolist())))
@@ -77,7 +79,7 @@ class StateLeaPR(L.LightningModule):
             precond_rules_json = os.path.join(cfg.prolog_folder, 'pre', 'learned_rules', f'{cfg.rules.name}.json')
             if os.path.exists(precond_rules_json):
                 print(f"Loading precondition rules from: {precond_rules_json}")
-                precond_precisions, precond_recalls = get_rule_precisions_recalls(
+                precond_precisions, precond_recalls, _ = get_rule_precisions_recalls(
                     precond_rules_json, verb_priors, verb_classes
                 )
                 self.register_buffer('precond_precisions', torch.tensor(precond_precisions))
@@ -93,12 +95,13 @@ class StateLeaPR(L.LightningModule):
             effect_rules_json = os.path.join(cfg.prolog_folder, 'post', 'learned_rules', f'{cfg.rules.name}.json')
             if os.path.exists(effect_rules_json):
                 print(f"Loading effect rules from: {effect_rules_json}")
-                effect_precisions, effect_recalls = get_rule_precisions_recalls(
-                    effect_rules_json, effect_priors, effect_classes
+                effect_precisions, effect_recalls, tgt_cls_map = get_rule_precisions_recalls(
+                    effect_rules_json, effect_priors, effect_classes, split_clauses=True
                 )
                 self.register_buffer('effect_precisions', torch.tensor(effect_precisions))
                 self.register_buffer('effect_recalls', torch.tensor(effect_recalls))
                 self.register_buffer('effect_priors', torch.tensor(effect_priors))
+                self.register_buffer('effect_tgt_cls_map', torch.tensor(tgt_cls_map))
             else:
                 print(f"Effect rules file not found: {effect_rules_json}")
                 self.effect_precisions = None
@@ -147,7 +150,8 @@ class StateLeaPR(L.LightningModule):
     # prior_edge_probs: (total num edges in gt batch(not fully connected), num_classes)
     # prior_edge_pairs: (total num edges in gt batch, 2)
     # groundings: (num_frames, num_effects, max_arity)
-    def apply_constraints(self, pred_input, prior_input, groundings, weight=0.5, constraint_mode='neural'):
+    def apply_constraints(self, pred_input, prior_input, groundings, 
+                    weight=0.5, constraint_mode='neural', tgt_cls_map=None):
         #self.effect_precisions
         # we will search through to get the truth value for each effect and the grounding
         # i.e. types of objects. 
@@ -170,8 +174,10 @@ class StateLeaPR(L.LightningModule):
         edge_grounding_pairs = groundings[edge_grounding_idxs] #[total num edges affected by effects, max_arity]
         edge_grounding_batch_vec = edge_grounding_idxs[0]
 
-        add_mask = torch.arange(len(self.effect_precisions)) < len(self.effect_precisions)//2 # [num_effects/2]
-        del_mask = torch.arange(len(self.effect_precisions)) >= len(self.effect_precisions)//2 # [num_effects/2]
+        # needs to use map, add and del may not have the same number of effects
+
+        add_mask = torch.arange(len(self.effect_priors)) < len(self.effect_priors)//2 # [num_effects/2]
+        del_mask = torch.arange(len(self.effect_priors)) >= len(self.effect_priors)//2 # [num_effects/2]
 
         # again, this only works because the columns of effect_precisions are only relationships rn
         # node_mask = torch.zeros_like(add_mask)
@@ -181,10 +187,6 @@ class StateLeaPR(L.LightningModule):
         expanded_edge_grounding_mask = torch.zeros((len(edge_grounding_pairs), len(self.effect_precisions))).cuda()
         one_hot_idxs = (torch.arange(len(edge_grounding_idxs[1])).cuda(), edge_grounding_idxs[1])
         expanded_edge_grounding_mask[one_hot_idxs] = 1
-
-        masked_precisions = expanded_edge_grounding_mask * self.effect_precisions.cuda()
-        edge_add_precisions = masked_precisions[:, add_mask * edge_mask]
-        edge_del_precisions = masked_precisions[:, del_mask * edge_mask]
 
         def get_relevant_probs(batch_vec, edge_pairs, edge_probs):
             edge_mapper = {make_key(batch_vec, edge_pairs, i): i for i in range(len(edge_pairs))}
@@ -200,8 +202,25 @@ class StateLeaPR(L.LightningModule):
         relevant_prior_probs, prior_edge_mapper = get_relevant_probs(prior_edge_batch_vec, prior_edge_pairs, prior_edge_probs)
         relevant_pred_probs, pred_edge_mapper = get_relevant_probs(pred_edge_batch_vec, pred_edge_pairs, pred_edge_probs)
 
+        # shrink edge_add_precisions and edge_del_precisions back to the number of relationships
+        # [num_relations, num_effects/2]
+        # the choice is how to select a clause to represent each effect.
+        # could do a max over the precisions for each effect, or an average?
+        # start with max
+        masked_precisions = expanded_edge_grounding_mask * self.effect_precisions.cuda()
+        maxes = masked_precisions.max(dim=1).values.float()
+        max_indices = tgt_cls_map[masked_precisions.argmax(dim=1)]
+        masked_precisions = torch.zeros((len(maxes), len(self.effect_priors)), device='cuda')
+        masked_precisions[np.arange(len(maxes)), max_indices] = maxes
+
+        edge_add_precisions = masked_precisions[:, add_mask * edge_mask]
+        edge_del_precisions = masked_precisions[:, del_mask * edge_mask]
+
         def fuse_probs(prior, add, del_):
             return prior * (1-del_) + (1 - prior) * add
+
+
+
         symbolic_probs = fuse_probs(relevant_prior_probs, edge_add_precisions, edge_del_precisions)
 
         if constraint_mode == 'rules':
@@ -486,9 +505,12 @@ class StateLeaPR(L.LightningModule):
         
         # Extract edge probabilities and pairs using existing function
         pred_edge_probs, pred_edge_pairs, pred_edge_batch_vec = extract_edge_probs_and_pairs(pred_scene_graph)
+        plt.imsave('analysis/pred_edge_probs.png', pred_edge_probs.cpu().numpy())
         
-        # Get effect truth values from batch (no precondition constraints for dynamics)
         prior_edge_probs, prior_edge_pairs, prior_edge_batch_vec = extract_edge_probs_and_pairs(prev_scene_graphs)
+        plt.imsave('analysis/prior_edge_probs.png', prior_edge_probs.cpu().numpy())
+
+        # Get effect truth values from batch (no precondition constraints for dynamics)
         effect_groundings = batch.get('effects_groundings')
 
         # Apply constraints to edge probabilities
@@ -497,11 +519,14 @@ class StateLeaPR(L.LightningModule):
             (prior_edge_probs, prior_edge_pairs, prior_edge_batch_vec),
             effect_groundings, 
             weight=getattr(self, 'constraint_weight', 0.5),
-            constraint_mode=self.constraint_mode
+            constraint_mode=self.constraint_mode,
+            tgt_cls_map=self.effect_tgt_cls_map 
         )
+        plt.imsave(f'analysis/pred_edge_probs_constrained_{self.constraint_mode}.png', pred_edge_probs.cpu().numpy())
         
         # Extract ground truth edge probabilities and pairs
         gt_edge_probs, gt_edge_pairs, gt_edge_batch_vec = extract_edge_probs_and_pairs(gt_scene_graphs)
+        plt.imsave('analysis/gt_edge_probs.png', gt_edge_probs.cpu().numpy())
         
         # Store as pairs: ((pred_probs, pred_pairs), (gt_probs, gt_pairs))
         self.ids.extend(ids)

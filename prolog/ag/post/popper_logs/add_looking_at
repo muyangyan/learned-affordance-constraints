@@ -1,64 +1,178 @@
-14:57:08 Generating programs of size: 2
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:5 fn:1853 tn:1131 fp:1 size:2 mdl:1856
-14:57:08 add_looking_at(A,B):- snuggle(A,B).
-14:57:08 ********************
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:57 fn:1801 tn:1086 fp:46 size:2 mdl:1849
-14:57:08 add_looking_at(A,B):- hold(A,B).
-14:57:08 ********************
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:17 fn:1841 tn:1127 fp:5 size:2 mdl:1848
-14:57:08 add_looking_at(A,B):- undress(A,B).
-14:57:08 ********************
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:131 fn:1727 tn:1057 fp:75 size:2 mdl:1804
-14:57:08 add_looking_at(A,B):- take(A,B).
-14:57:08 ********************
-14:57:08 Generating programs of size: 3
-14:57:18 ********************
-14:57:18 New best hypothesis:
-14:57:18 tp:234 fn:1624 tn:1002 fp:130 size:16 mdl:1770
-14:57:18 add_looking_at(A,B):- snuggle(A,B).
-14:57:18 add_looking_at(A,B):- hold(A,B).
-14:57:18 add_looking_at(A,B):- pour(A,B).
-14:57:18 add_looking_at(A,B):- walk(A,B).
-14:57:18 add_looking_at(A,B):- undress(A,B).
-14:57:18 add_looking_at(A,B):- talk(A,B).
-14:57:18 add_looking_at(A,B):- take(A,B).
-14:57:18 add_looking_at(A,B):- lie(A,B).
-14:57:18 ********************
-14:57:26 Generating programs of size: 4
-14:58:04 Generating programs of size: 5
-14:58:06 TIMEOUT OF 60 SECONDS EXCEEDED
+02:01:08 Generating programs of size: 2
+02:01:08 ********************
+02:01:08 New best hypothesis:
+02:01:08 tp:57 fn:1801 tn:1086 fp:46 size:2 mdl:1849
+02:01:08 add_looking_at(A,B):- hold(A,B).
+02:01:08 ********************
+02:01:18 ********************
+02:01:18 New best hypothesis:
+02:01:18 tp:131 fn:1727 tn:1057 fp:75 size:2 mdl:1804
+02:01:18 add_looking_at(A,B):- take(A,B).
+02:01:18 ********************
+02:01:19 Generating programs of size: 3
+02:01:29 ********************
+02:01:29 New best hypothesis:
+02:01:29 tp:234 fn:1624 tn:1002 fp:130 size:16 mdl:1770
+02:01:29 add_looking_at(A,B):- hold(A,B).
+02:01:29 add_looking_at(A,B):- lie(A,B).
+02:01:29 add_looking_at(A,B):- pour(A,B).
+02:01:29 add_looking_at(A,B):- take(A,B).
+02:01:29 add_looking_at(A,B):- snuggle(A,B).
+02:01:29 add_looking_at(A,B):- talk(A,B).
+02:01:29 add_looking_at(A,B):- undress(A,B).
+02:01:29 add_looking_at(A,B):- walk(A,B).
+02:01:29 ********************
+02:01:32 ********************
+02:01:32 New best hypothesis:
+02:01:32 tp:106 fn:1752 tn:1132 fp:0 size:3 mdl:1755
+02:01:32 add_looking_at(A,B):- take(A,B),not_looking_at(A,B).
+02:01:32 ********************
+02:02:17 Generating programs of size: 4
+02:02:27 ********************
+02:02:27 New best hypothesis:
+02:02:27 tp:614 fn:1244 tn:1129 fp:3 size:80 mdl:1327
+02:02:27 add_looking_at(A,B):- lie(A,B).
+02:02:27 add_looking_at(A,B):- snuggle(A,B).
+02:02:27 add_looking_at(A,B):- talk(A,B).
+02:02:27 add_looking_at(A,B):- walk(A,B).
+02:02:27 add_looking_at(A,B):- hold(A,B),unsure(A,B).
+02:02:27 add_looking_at(A,B):- hold(A,B),not_looking_at(A,B).
+02:02:27 add_looking_at(A,B):- drink(A,B),not_looking_at(A,B).
+02:02:27 add_looking_at(A,B):- tidy(A,B),unsure(A,B).
+02:02:27 add_looking_at(A,B):- throw(A,B),unsure(A,B).
+02:02:27 add_looking_at(A,B):- take(A,B),unsure(A,B).
+02:02:27 add_looking_at(A,B):- put(A,B),unsure(A,B).
+02:02:27 add_looking_at(A,B):- myclose(A,B),unsure(A,B).
+02:02:27 add_looking_at(A,B):- myopen(A,B),unsure(A,B).
+02:02:27 add_looking_at(A,B):- watch(A,B),not_looking_at(A,B).
+02:02:27 add_looking_at(A,B):- tidy(A,B),not_looking_at(A,B).
+02:02:27 add_looking_at(A,B):- throw(A,B),not_looking_at(A,B).
+02:02:27 add_looking_at(A,B):- take(A,B),not_looking_at(A,B).
+02:02:27 add_looking_at(A,B):- put(A,B),not_looking_at(A,B).
+02:02:27 add_looking_at(A,B):- pour(A,B),not_looking_at(A,B).
+02:02:27 add_looking_at(A,B):- play(A,B),not_looking_at(A,B).
+02:02:27 add_looking_at(A,B):- myopen(A,B),not_looking_at(A,B).
+02:02:27 add_looking_at(A,B):- eat(A,B),not_looking_at(A,B).
+02:02:27 add_looking_at(A,B):- myclose(A,B),not_looking_at(A,B).
+02:02:27 add_looking_at(A,B):- sit(A,C),unsure(C,B).
+02:02:27 add_looking_at(A,B):- not_looking_at(C,B),stand(A,C).
+02:02:27 add_looking_at(A,B):- fix(C,A),not_looking_at(C,B).
+02:02:27 add_looking_at(A,B):- sit(A,C),not_looking_at(C,B).
+02:02:27 add_looking_at(A,B):- undress(A,B),wearing(A,B).
+02:02:27 ********************
+02:11:13 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.64 Recall:0.13 TP:234 FN:1624 TN:1002 FP:130 Size:16 MDL:1770
-add_looking_at(A,B):- snuggle(A,B).
-add_looking_at(A,B):- hold(A,B).
-add_looking_at(A,B):- pour(A,B).
-add_looking_at(A,B):- walk(A,B).
-add_looking_at(A,B):- undress(A,B).
-add_looking_at(A,B):- talk(A,B).
-add_looking_at(A,B):- take(A,B).
+Precision:1.00 Recall:0.33 TP:614 FN:1244 TN:1129 FP:3 Size:80 MDL:1327
 add_looking_at(A,B):- lie(A,B).
+add_looking_at(A,B):- snuggle(A,B).
+add_looking_at(A,B):- talk(A,B).
+add_looking_at(A,B):- walk(A,B).
+add_looking_at(A,B):- hold(A,B),unsure(A,B).
+add_looking_at(A,B):- hold(A,B),not_looking_at(A,B).
+add_looking_at(A,B):- drink(A,B),not_looking_at(A,B).
+add_looking_at(A,B):- tidy(A,B),unsure(A,B).
+add_looking_at(A,B):- throw(A,B),unsure(A,B).
+add_looking_at(A,B):- take(A,B),unsure(A,B).
+add_looking_at(A,B):- put(A,B),unsure(A,B).
+add_looking_at(A,B):- myclose(A,B),unsure(A,B).
+add_looking_at(A,B):- myopen(A,B),unsure(A,B).
+add_looking_at(A,B):- watch(A,B),not_looking_at(A,B).
+add_looking_at(A,B):- tidy(A,B),not_looking_at(A,B).
+add_looking_at(A,B):- throw(A,B),not_looking_at(A,B).
+add_looking_at(A,B):- take(A,B),not_looking_at(A,B).
+add_looking_at(A,B):- put(A,B),not_looking_at(A,B).
+add_looking_at(A,B):- pour(A,B),not_looking_at(A,B).
+add_looking_at(A,B):- play(A,B),not_looking_at(A,B).
+add_looking_at(A,B):- myopen(A,B),not_looking_at(A,B).
+add_looking_at(A,B):- eat(A,B),not_looking_at(A,B).
+add_looking_at(A,B):- myclose(A,B),not_looking_at(A,B).
+add_looking_at(A,B):- sit(A,C),unsure(C,B).
+add_looking_at(A,B):- not_looking_at(C,B),stand(A,C).
+add_looking_at(A,B):- fix(C,A),not_looking_at(C,B).
+add_looking_at(A,B):- sit(A,C),not_looking_at(C,B).
+add_looking_at(A,B):- undress(A,B),wearing(A,B).
 ******************************
-add_looking_at(A,B):- snuggle(A,B).
-precision: 0.83 recall: 0.00
-add_looking_at(A,B):- hold(A,B).
-precision: 0.55 recall: 0.03
-add_looking_at(A,B):- pour(A,B).
-precision: 0.55 recall: 0.01
-add_looking_at(A,B):- walk(A,B).
-precision: 1.00 recall: 0.00
-add_looking_at(A,B):- undress(A,B).
-precision: 0.77 recall: 0.01
-add_looking_at(A,B):- talk(A,B).
-precision: 1.00 recall: 0.00
-add_looking_at(A,B):- take(A,B).
-precision: 0.64 recall: 0.07
+Precision:1.00 Recall:0.00 TP:3 FN:1855 TN:1132 FP:0
 add_looking_at(A,B):- lie(A,B).
-precision: 1.00 recall: 0.00
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.83 Recall:0.00 TP:5 FN:1853 TN:1131 FP:1
+add_looking_at(A,B):- snuggle(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:3 FN:1855 TN:1132 FP:0
+add_looking_at(A,B):- talk(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:6 FN:1852 TN:1132 FP:0
+add_looking_at(A,B):- walk(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:15 FN:1843 TN:1132 FP:0
+add_looking_at(A,B):- hold(A,B),unsure(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.02 TP:42 FN:1816 TN:1132 FP:0
+add_looking_at(A,B):- hold(A,B),not_looking_at(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:20 FN:1838 TN:1132 FP:0
+add_looking_at(A,B):- drink(A,B),not_looking_at(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:7 FN:1851 TN:1132 FP:0
+add_looking_at(A,B):- tidy(A,B),unsure(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:6 FN:1852 TN:1132 FP:0
+add_looking_at(A,B):- throw(A,B),unsure(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:25 FN:1833 TN:1132 FP:0
+add_looking_at(A,B):- take(A,B),unsure(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:22 FN:1836 TN:1132 FP:0
+add_looking_at(A,B):- put(A,B),unsure(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:6 FN:1852 TN:1132 FP:0
+add_looking_at(A,B):- myclose(A,B),unsure(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:18 FN:1840 TN:1132 FP:0
+add_looking_at(A,B):- myopen(A,B),unsure(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:13 FN:1845 TN:1132 FP:0
+add_looking_at(A,B):- watch(A,B),not_looking_at(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:12 FN:1846 TN:1132 FP:0
+add_looking_at(A,B):- tidy(A,B),not_looking_at(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.02 TP:28 FN:1830 TN:1132 FP:0
+add_looking_at(A,B):- throw(A,B),not_looking_at(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.06 TP:106 FN:1752 TN:1132 FP:0
+add_looking_at(A,B):- take(A,B),not_looking_at(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.05 TP:93 FN:1765 TN:1132 FP:0
+add_looking_at(A,B):- put(A,B),not_looking_at(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:13 FN:1845 TN:1132 FP:0
+add_looking_at(A,B):- pour(A,B),not_looking_at(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:4 FN:1854 TN:1132 FP:0
+add_looking_at(A,B):- play(A,B),not_looking_at(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.05 TP:87 FN:1771 TN:1132 FP:0
+add_looking_at(A,B):- myopen(A,B),not_looking_at(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:6 FN:1852 TN:1132 FP:0
+add_looking_at(A,B):- eat(A,B),not_looking_at(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:11 FN:1847 TN:1132 FP:0
+add_looking_at(A,B):- myclose(A,B),not_looking_at(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:13 FN:1845 TN:1132 FP:0
+add_looking_at(A,B):- sit(A,C),unsure(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:21 FN:1837 TN:1132 FP:0
+add_looking_at(A,B):- not_looking_at(C,B),stand(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:4 FN:1854 TN:1132 FP:0
+add_looking_at(A,B):- fix(C,A),not_looking_at(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.02 TP:28 FN:1830 TN:1132 FP:0
+add_looking_at(A,B):- sit(A,C),not_looking_at(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.89 Recall:0.01 TP:17 FN:1841 TN:1130 FP:2
+add_looking_at(A,B):- undress(A,B),wearing(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1,28 +1,47 @@
-14:57:09 Generating programs of size: 2
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:29 fn:83 tn:43 fp:2 size:2 mdl:87
-14:57:09 add_wearing(A,B):- dress(A,B).
-14:57:09 ********************
-14:57:10 Generating programs of size: 3
-14:57:13 ********************
-14:57:13 New best hypothesis:
-14:57:13 tp:36 fn:76 tn:40 fp:5 size:4 mdl:85
-14:57:13 add_wearing(A,B):- dress(A,B).
-14:57:13 add_wearing(A,B):- take(A,B).
-14:57:13 ********************
-14:57:14 Generating programs of size: 4
-14:57:31 Generating programs of size: 5
-14:57:38 Generating programs of size: 6
-14:57:39 Generating programs of size: 7
-14:57:42 Generating programs of size: 8
-14:57:42 Generating programs of size: 9
+02:01:11 Generating programs of size: 2
+02:01:11 ********************
+02:01:11 New best hypothesis:
+02:01:11 tp:29 fn:83 tn:43 fp:2 size:2 mdl:87
+02:01:11 add_wearing(A,B):- dress(A,B).
+02:01:11 ********************
+02:01:11 Generating programs of size: 3
+02:01:14 ********************
+02:01:14 New best hypothesis:
+02:01:14 tp:36 fn:76 tn:40 fp:5 size:4 mdl:85
+02:01:14 add_wearing(A,B):- dress(A,B).
+02:01:14 add_wearing(A,B):- take(A,B).
+02:01:14 ********************
+02:02:56 Generating programs of size: 4
+02:02:58 ********************
+02:02:58 New best hypothesis:
+02:02:58 tp:55 fn:57 tn:42 fp:3 size:14 mdl:74
+02:02:58 add_wearing(A,B):- dress(A,B).
+02:02:58 add_wearing(A,B):- put(A,B),holding(A,B).
+02:02:58 add_wearing(A,B):- not_contacting(A,B),take(A,B).
+02:02:58 add_wearing(A,B):- not_contacting(A,B),hold(A,B).
+02:02:58 add_wearing(A,B):- in_front_of(B,C),sit(A,C).
+02:02:58 ********************
+02:11:28 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.88 Recall:0.32 TP:36 FN:76 TN:40 FP:5 Size:4 MDL:85
+Precision:0.95 Recall:0.49 TP:55 FN:57 TN:42 FP:3 Size:14 MDL:74
 add_wearing(A,B):- dress(A,B).
-add_wearing(A,B):- take(A,B).
+add_wearing(A,B):- put(A,B),holding(A,B).
+add_wearing(A,B):- not_contacting(A,B),take(A,B).
+add_wearing(A,B):- not_contacting(A,B),hold(A,B).
+add_wearing(A,B):- in_front_of(B,C),sit(A,C).
 ******************************
+Precision:0.94 Recall:0.26 TP:29 FN:83 TN:43 FP:2
 add_wearing(A,B):- dress(A,B).
-precision: 0.94 recall: 0.26
-add_wearing(A,B):- take(A,B).
-precision: 0.70 recall: 0.06
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.91 Recall:0.09 TP:10 FN:102 TN:44 FP:1
+add_wearing(A,B):- put(A,B),holding(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.05 TP:6 FN:106 TN:45 FP:0
+add_wearing(A,B):- not_contacting(A,B),take(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.05 TP:6 FN:106 TN:45 FP:0
+add_wearing(A,B):- not_contacting(A,B),hold(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.04 TP:4 FN:108 TN:45 FP:0
+add_wearing(A,B):- in_front_of(B,C),sit(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

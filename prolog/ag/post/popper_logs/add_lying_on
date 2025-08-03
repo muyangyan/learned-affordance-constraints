@@ -1,6 +1,16 @@
-14:57:09 Generating programs of size: 2
-14:57:09 Generating programs of size: 3
-14:57:11 Generating programs of size: 4
-14:57:12 Generating programs of size: 5
-14:57:12 Generating programs of size: 6
-NO SOLUTION
+02:01:10 Generating programs of size: 2
+02:01:11 Generating programs of size: 3
+02:02:04 Generating programs of size: 4
+02:02:12 ********************
+02:02:12 New best hypothesis:
+02:02:12 tp:6 fn:41 tn:36 fp:1 size:4 mdl:46
+02:02:12 add_lying_on(A,B):- not_contacting(D,C),not_looking_at(D,B),hold(A,C).
+02:02:12 ********************
+02:11:12 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.86 Recall:0.13 TP:6 FN:41 TN:36 FP:1 Size:4 MDL:46
+add_lying_on(A,B):- not_contacting(D,C),not_looking_at(D,B),hold(A,C).
+******************************
+Precision:0.86 Recall:0.13 TP:6 FN:41 TN:36 FP:1
+add_lying_on(A,B):- not_contacting(D,C),not_looking_at(D,B),hold(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

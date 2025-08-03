@@ -25,7 +25,7 @@ class BaseLeaPR(L.LightningModule):
         self.classes = classes
 
         rules_json = os.path.join(cfg.prolog_folder, cfg.data.position, 'learned_rules', f'{cfg.rules.name}.json')
-        precisions, recalls = get_rule_precisions_recalls(rules_json, priors, classes)
+        precisions, recalls, _ = get_rule_precisions_recalls(rules_json, priors, classes)
 
         self.nn_model = get_model(self.model_type, model_params)
 
@@ -77,7 +77,7 @@ class BaseLeaPR(L.LightningModule):
         '''
         self.constraint_weight = rule_params.constraint_weight
         if rules_json_path is not None:
-            precisions, recalls = get_rule_precisions_recalls(rules_json_path, self.priors, self.classes)
+            precisions, recalls, _ = get_rule_precisions_recalls(rules_json_path, self.priors, self.classes)
             self.precisions = torch.tensor(precisions)
             self.recalls = torch.tensor(recalls)
         

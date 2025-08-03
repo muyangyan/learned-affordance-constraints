@@ -1,50 +1,43 @@
-14:57:09 Generating programs of size: 2
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:115 fn:1711 tn:1401 fp:97 size:2 mdl:1810
-14:57:09 del_not_contacting(A,B):- hold(A,B).
-14:57:09 ********************
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:306 fn:1520 tn:1444 fp:54 size:2 mdl:1576
-14:57:09 del_not_contacting(A,B):- take(A,B).
-14:57:09 ********************
-14:57:09 Generating programs of size: 3
-14:57:19 ********************
-14:57:19 New best hypothesis:
-14:57:19 tp:465 fn:1361 tn:1316 fp:182 size:10 mdl:1553
-14:57:19 del_not_contacting(A,B):- hold(A,B).
-14:57:19 del_not_contacting(A,B):- sit(A,B).
-14:57:19 del_not_contacting(A,B):- pour(A,B).
-14:57:19 del_not_contacting(A,B):- dress(A,B).
-14:57:19 del_not_contacting(A,B):- take(A,B).
-14:57:19 ********************
-14:57:26 Generating programs of size: 4
-14:57:36 ********************
-14:57:36 New best hypothesis:
-14:57:36 tp:448 fn:1378 tn:1344 fp:154 size:11 mdl:1543
-14:57:36 del_not_contacting(A,B):- hold(A,B).
-14:57:36 del_not_contacting(A,B):- pour(A,B).
-14:57:36 del_not_contacting(A,B):- dress(A,B).
-14:57:36 del_not_contacting(A,B):- take(A,B).
-14:57:36 del_not_contacting(A,B):- sit(A,C),sit(C,B).
-14:57:36 ********************
-14:58:08 TIMEOUT OF 60 SECONDS EXCEEDED
+02:01:10 Generating programs of size: 2
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:115 fn:1711 tn:1401 fp:97 size:2 mdl:1810
+02:01:10 del_not_contacting(A,B):- hold(A,B).
+02:01:10 ********************
+02:01:20 ********************
+02:01:20 New best hypothesis:
+02:01:20 tp:306 fn:1520 tn:1444 fp:54 size:2 mdl:1576
+02:01:20 del_not_contacting(A,B):- take(A,B).
+02:01:20 ********************
+02:01:21 Generating programs of size: 3
+02:01:31 ********************
+02:01:31 New best hypothesis:
+02:01:31 tp:465 fn:1361 tn:1316 fp:182 size:10 mdl:1553
+02:01:31 del_not_contacting(A,B):- hold(A,B).
+02:01:31 del_not_contacting(A,B):- dress(A,B).
+02:01:31 del_not_contacting(A,B):- pour(A,B).
+02:01:31 del_not_contacting(A,B):- sit(A,B).
+02:01:31 del_not_contacting(A,B):- take(A,B).
+02:01:31 ********************
+02:02:21 Generating programs of size: 4
+Fatal glibc error: malloc.c:2599 (sysmalloc): assertion failed: (old_top == initial_top (av) && old_size == 0) || ((unsigned long) (old_size) >= MINSIZE && prev_inuse (old_top) && ((unsigned long) old_end & (pagesize - 1)) == 0)
+timeout: the monitored command dumped core
+02:04:32 ********************
+02:04:32 New best hypothesis:
+02:04:32 tp:421 fn:1405 tn:1374 fp:124 size:4 mdl:1533
+02:04:32 del_not_contacting(A,B):- take(A,C),not_contacting(A,B),not_contacting(A,C).
+02:04:32 ********************
+02:04:36 ********************
+02:04:36 New best hypothesis:
+02:04:36 tp:437 fn:1389 tn:1368 fp:130 size:4 mdl:1523
+02:04:36 del_not_contacting(A,B):- take(A,C),not_contacting(D,B),take(D,C).
+02:04:36 ********************
+02:11:08 TIMEOUT OF 600 SECONDS EXCEEDED
+WARNING: No solution found, exit combiner.
 ********** SOLUTION **********
-Precision:0.74 Recall:0.25 TP:448 FN:1378 TN:1344 FP:154 Size:11 MDL:1543
-del_not_contacting(A,B):- hold(A,B).
-del_not_contacting(A,B):- pour(A,B).
-del_not_contacting(A,B):- dress(A,B).
-del_not_contacting(A,B):- take(A,B).
-del_not_contacting(A,B):- sit(A,C),sit(C,B).
+Precision:0.77 Recall:0.24 TP:437 FN:1389 TN:1368 FP:130 Size:4 MDL:1523
+del_not_contacting(A,B):- take(A,C),not_contacting(D,B),take(D,C).
 ******************************
-del_not_contacting(A,B):- hold(A,B).
-precision: 0.54 recall: 0.06
-del_not_contacting(A,B):- pour(A,B).
-precision: 0.58 recall: 0.01
-del_not_contacting(A,B):- dress(A,B).
-precision: 1.00 recall: 0.01
-del_not_contacting(A,B):- take(A,B).
-precision: 0.85 recall: 0.17
-del_not_contacting(A,B):- sit(A,C),sit(C,B).
-precision: 0.89 recall: 0.01
+Precision:0.77 Recall:0.24 TP:437 FN:1389 TN:1368 FP:130
+del_not_contacting(A,B):- take(A,C),not_contacting(D,B),take(D,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

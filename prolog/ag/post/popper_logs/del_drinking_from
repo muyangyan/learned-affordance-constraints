@@ -1,30 +1,49 @@
-14:57:08 Generating programs of size: 2
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:3 fn:57 tn:6 fp:0 size:2 mdl:59
-14:57:08 del_drinking_from(A,B):- drink(A,B).
-14:57:08 ********************
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:21 fn:39 tn:4 fp:2 size:2 mdl:43
-14:57:08 del_drinking_from(A,B):- put(A,B).
-14:57:08 ********************
-14:57:09 Generating programs of size: 3
-14:57:10 ********************
-14:57:10 New best hypothesis:
-14:57:10 tp:24 fn:36 tn:4 fp:2 size:4 mdl:42
-14:57:10 del_drinking_from(A,B):- drink(A,B).
-14:57:10 del_drinking_from(A,B):- put(A,B).
-14:57:10 ********************
-14:57:11 Generating programs of size: 4
-14:57:12 Generating programs of size: 5
-14:57:14 Generating programs of size: 6
+02:01:09 Generating programs of size: 2
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:3 fn:57 tn:6 fp:0 size:2 mdl:59
+02:01:10 del_drinking_from(A,B):- drink(A,B).
+02:01:10 ********************
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:21 fn:39 tn:4 fp:2 size:2 mdl:43
+02:01:10 del_drinking_from(A,B):- put(A,B).
+02:01:10 ********************
+02:01:11 Generating programs of size: 3
+02:01:12 ********************
+02:01:12 New best hypothesis:
+02:01:12 tp:24 fn:36 tn:4 fp:2 size:4 mdl:42
+02:01:12 del_drinking_from(A,B):- drink(A,B).
+02:01:12 del_drinking_from(A,B):- put(A,B).
+02:01:12 ********************
+02:01:19 Generating programs of size: 4
+02:01:20 ********************
+02:01:20 New best hypothesis:
+02:01:20 tp:31 fn:29 tn:4 fp:2 size:7 mdl:38
+02:01:20 del_drinking_from(A,B):- drink(A,B).
+02:01:20 del_drinking_from(A,B):- put(A,B).
+02:01:20 del_drinking_from(A,B):- holding(C,B),stand(C,A).
+02:01:20 ********************
+02:02:29 ********************
+02:02:29 New best hypothesis:
+02:02:29 tp:32 fn:28 tn:4 fp:2 size:4 mdl:34
+02:02:29 del_drinking_from(A,B):- put(A,C),cup_glass_bottle(B),in_front_of(C,A).
+02:02:29 ********************
+02:02:45 ********************
+02:02:45 New best hypothesis:
+02:02:45 tp:36 fn:24 tn:4 fp:2 size:4 mdl:30
+02:02:45 del_drinking_from(A,B):- put(A,C),holding(D,B),put(D,C).
+02:02:45 ********************
+02:02:45 ********************
+02:02:45 New best hypothesis:
+02:02:45 tp:37 fn:23 tn:4 fp:2 size:4 mdl:29
+02:02:45 del_drinking_from(A,B):- put(A,C),put(D,C),drinking_from(D,B).
+02:02:45 ********************
+02:12:26 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.92 Recall:0.40 TP:24 FN:36 TN:4 FP:2 Size:4 MDL:42
-del_drinking_from(A,B):- drink(A,B).
-del_drinking_from(A,B):- put(A,B).
+Precision:0.95 Recall:0.62 TP:37 FN:23 TN:4 FP:2 Size:4 MDL:29
+del_drinking_from(A,B):- put(A,C),put(D,C),drinking_from(D,B).
 ******************************
-del_drinking_from(A,B):- drink(A,B).
-precision: 1.00 recall: 0.05
-del_drinking_from(A,B):- put(A,B).
-precision: 0.91 recall: 0.35
+Precision:0.95 Recall:0.62 TP:37 FN:23 TN:4 FP:2
+del_drinking_from(A,B):- put(A,C),put(D,C),drinking_from(D,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

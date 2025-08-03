@@ -1,4 +1,17 @@
-14:57:10 Generating programs of size: 2
-14:57:10 Generating programs of size: 3
-14:57:10 Generating programs of size: 4
-NO SOLUTION
+02:01:11 Generating programs of size: 2
+02:01:12 Generating programs of size: 3
+02:02:22 Generating programs of size: 4
+02:02:54 ********************
+02:02:54 New best hypothesis:
+02:02:54 tp:5 fn:18 tn:4 fp:0 size:4 mdl:22
+02:02:54 del_writing_on(A,B):- not_contacting(A,C),paper_notebook(B),take(A,C).
+02:02:54 ********************
+02:09:20 Generating programs of size: 5
+02:11:09 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:1.00 Recall:0.22 TP:5 FN:18 TN:4 FP:0 Size:4 MDL:22
+del_writing_on(A,B):- not_contacting(A,C),paper_notebook(B),take(A,C).
+******************************
+Precision:1.00 Recall:0.22 TP:5 FN:18 TN:4 FP:0
+del_writing_on(A,B):- not_contacting(A,C),paper_notebook(B),take(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

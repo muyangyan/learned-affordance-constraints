@@ -1,81 +1,160 @@
-14:57:09 Generating programs of size: 2
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:3 fn:828 tn:270 fp:0 size:2 mdl:830
-14:57:09 del_touching(A,B):- awaken(A,B).
-14:57:09 ********************
-14:57:15 ********************
-14:57:15 New best hypothesis:
-14:57:15 tp:91 fn:740 tn:247 fp:23 size:2 mdl:765
-14:57:15 del_touching(A,B):- myclose(A,B).
-14:57:15 ********************
-14:57:15 Generating programs of size: 3
-14:57:23 ********************
-14:57:23 New best hypothesis:
-14:57:23 tp:291 fn:540 tn:190 fp:80 size:30 mdl:650
-14:57:23 del_touching(A,B):- awaken(A,B).
-14:57:23 del_touching(A,B):- myclose(A,B).
-14:57:23 del_touching(A,B):- cook(A,B).
-14:57:23 del_touching(A,B):- drink(A,B).
-14:57:23 del_touching(A,B):- sit(A,B).
-14:57:23 del_touching(A,B):- put(A,B).
-14:57:23 del_touching(A,B):- watch(A,B).
-14:57:23 del_touching(A,B):- pour(A,B).
-14:57:23 del_touching(A,B):- walk(A,B).
-14:57:23 del_touching(A,B):- play(A,B).
-14:57:23 del_touching(A,B):- undress(A,B).
-14:57:23 del_touching(A,B):- tidy(A,B).
-14:57:23 del_touching(A,B):- throw(A,B).
-14:57:23 del_touching(A,B):- eat(A,B).
-14:57:23 del_touching(A,B):- lie(A,B).
-14:57:23 ********************
-14:57:27 Generating programs of size: 4
-14:58:09 TIMEOUT OF 60 SECONDS EXCEEDED
+02:01:10 Generating programs of size: 2
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:3 fn:828 tn:270 fp:0 size:2 mdl:830
+02:01:10 del_touching(A,B):- lie(A,B).
+02:01:10 ********************
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:4 fn:827 tn:270 fp:0 size:2 mdl:829
+02:01:10 del_touching(A,B):- cook(A,B).
+02:01:10 ********************
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:6 fn:825 tn:270 fp:0 size:2 mdl:827
+02:01:10 del_touching(A,B):- eat(A,B).
+02:01:10 ********************
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:16 fn:815 tn:262 fp:8 size:2 mdl:825
+02:01:10 del_touching(A,B):- drink(A,B).
+02:01:10 ********************
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:91 fn:740 tn:247 fp:23 size:2 mdl:765
+02:01:10 del_touching(A,B):- myclose(A,B).
+02:01:10 ********************
+02:01:11 Generating programs of size: 3
+02:01:18 ********************
+02:01:18 New best hypothesis:
+02:01:18 tp:291 fn:540 tn:190 fp:80 size:30 mdl:650
+02:01:18 del_touching(A,B):- lie(A,B).
+02:01:18 del_touching(A,B):- cook(A,B).
+02:01:18 del_touching(A,B):- eat(A,B).
+02:01:18 del_touching(A,B):- drink(A,B).
+02:01:18 del_touching(A,B):- awaken(A,B).
+02:01:18 del_touching(A,B):- myclose(A,B).
+02:01:18 del_touching(A,B):- play(A,B).
+02:01:18 del_touching(A,B):- pour(A,B).
+02:01:18 del_touching(A,B):- put(A,B).
+02:01:18 del_touching(A,B):- sit(A,B).
+02:01:18 del_touching(A,B):- throw(A,B).
+02:01:18 del_touching(A,B):- tidy(A,B).
+02:01:18 del_touching(A,B):- undress(A,B).
+02:01:18 del_touching(A,B):- walk(A,B).
+02:01:18 del_touching(A,B):- watch(A,B).
+02:01:18 ********************
+02:02:02 Generating programs of size: 4
+02:02:12 ********************
+02:02:12 New best hypothesis:
+02:02:12 tp:454 fn:377 tn:172 fp:98 size:50 mdl:525
+02:02:12 del_touching(A,B):- lie(A,B).
+02:02:12 del_touching(A,B):- cook(A,B).
+02:02:12 del_touching(A,B):- eat(A,B).
+02:02:12 del_touching(A,B):- drink(A,B).
+02:02:12 del_touching(A,B):- myclose(A,B).
+02:02:12 del_touching(A,B):- play(A,B).
+02:02:12 del_touching(A,B):- pour(A,B).
+02:02:12 del_touching(A,B):- put(A,B).
+02:02:12 del_touching(A,B):- throw(A,B).
+02:02:12 del_touching(A,B):- tidy(A,B).
+02:02:12 del_touching(A,B):- undress(A,B).
+02:02:12 del_touching(A,B):- walk(A,B).
+02:02:12 del_touching(A,B):- watch(A,B).
+02:02:12 del_touching(A,B):- myopen(A,B),bag(B).
+02:02:12 del_touching(A,B):- myopen(A,B),door(B).
+02:02:12 del_touching(A,B):- myopen(A,B),closet_cabinet(B).
+02:02:12 del_touching(A,B):- awaken(C,A),touching(C,B).
+02:02:12 del_touching(A,B):- touching(C,B),fix(C,A).
+02:02:12 del_touching(A,B):- touching(C,B),run(C,A).
+02:02:12 del_touching(A,B):- stand(C,A),touching(C,B).
+02:02:12 del_touching(A,B):- touching(C,B),sit(A,C).
+02:02:12 ********************
+02:11:15 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.78 Recall:0.35 TP:291 FN:540 TN:190 FP:80 Size:30 MDL:650
-del_touching(A,B):- awaken(A,B).
-del_touching(A,B):- myclose(A,B).
-del_touching(A,B):- cook(A,B).
-del_touching(A,B):- drink(A,B).
-del_touching(A,B):- sit(A,B).
-del_touching(A,B):- put(A,B).
-del_touching(A,B):- watch(A,B).
-del_touching(A,B):- pour(A,B).
-del_touching(A,B):- walk(A,B).
-del_touching(A,B):- play(A,B).
-del_touching(A,B):- undress(A,B).
-del_touching(A,B):- tidy(A,B).
-del_touching(A,B):- throw(A,B).
-del_touching(A,B):- eat(A,B).
+Precision:0.82 Recall:0.55 TP:454 FN:377 TN:172 FP:98 Size:50 MDL:525
 del_touching(A,B):- lie(A,B).
+del_touching(A,B):- cook(A,B).
+del_touching(A,B):- eat(A,B).
+del_touching(A,B):- drink(A,B).
+del_touching(A,B):- myclose(A,B).
+del_touching(A,B):- play(A,B).
+del_touching(A,B):- pour(A,B).
+del_touching(A,B):- put(A,B).
+del_touching(A,B):- throw(A,B).
+del_touching(A,B):- tidy(A,B).
+del_touching(A,B):- undress(A,B).
+del_touching(A,B):- walk(A,B).
+del_touching(A,B):- watch(A,B).
+del_touching(A,B):- myopen(A,B),bag(B).
+del_touching(A,B):- myopen(A,B),door(B).
+del_touching(A,B):- myopen(A,B),closet_cabinet(B).
+del_touching(A,B):- awaken(C,A),touching(C,B).
+del_touching(A,B):- touching(C,B),fix(C,A).
+del_touching(A,B):- touching(C,B),run(C,A).
+del_touching(A,B):- stand(C,A),touching(C,B).
+del_touching(A,B):- touching(C,B),sit(A,C).
 ******************************
-del_touching(A,B):- awaken(A,B).
-precision: 1.00 recall: 0.00
-del_touching(A,B):- myclose(A,B).
-precision: 0.80 recall: 0.11
-del_touching(A,B):- cook(A,B).
-precision: 1.00 recall: 0.00
-del_touching(A,B):- drink(A,B).
-precision: 0.67 recall: 0.02
-del_touching(A,B):- sit(A,B).
-precision: 0.61 recall: 0.02
-del_touching(A,B):- put(A,B).
-precision: 0.79 recall: 0.09
-del_touching(A,B):- watch(A,B).
-precision: 0.65 recall: 0.03
-del_touching(A,B):- pour(A,B).
-precision: 0.83 recall: 0.01
-del_touching(A,B):- walk(A,B).
-precision: 0.88 recall: 0.01
-del_touching(A,B):- play(A,B).
-precision: 0.89 recall: 0.01
-del_touching(A,B):- undress(A,B).
-precision: 0.89 recall: 0.01
-del_touching(A,B):- tidy(A,B).
-precision: 0.82 recall: 0.01
-del_touching(A,B):- throw(A,B).
-precision: 0.96 recall: 0.03
-del_touching(A,B):- eat(A,B).
-precision: 1.00 recall: 0.01
+Precision:1.00 Recall:0.00 TP:3 FN:828 TN:270 FP:0
 del_touching(A,B):- lie(A,B).
-precision: 1.00 recall: 0.00
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:4 FN:827 TN:270 FP:0
+del_touching(A,B):- cook(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:6 FN:825 TN:270 FP:0
+del_touching(A,B):- eat(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.67 Recall:0.02 TP:16 FN:815 TN:262 FP:8
+del_touching(A,B):- drink(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.80 Recall:0.11 TP:91 FN:740 TN:247 FP:23
+del_touching(A,B):- myclose(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.89 Recall:0.01 TP:8 FN:823 TN:269 FP:1
+del_touching(A,B):- play(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.83 Recall:0.01 TP:10 FN:821 TN:268 FP:2
+del_touching(A,B):- pour(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.79 Recall:0.09 TP:74 FN:757 TN:250 FP:20
+del_touching(A,B):- put(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.96 Recall:0.03 TP:22 FN:809 TN:269 FP:1
+del_touching(A,B):- throw(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.82 Recall:0.01 TP:9 FN:822 TN:268 FP:2
+del_touching(A,B):- tidy(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.89 Recall:0.01 TP:8 FN:823 TN:269 FP:1
+del_touching(A,B):- undress(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.88 Recall:0.01 TP:7 FN:824 TN:269 FP:1
+del_touching(A,B):- walk(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.65 Recall:0.03 TP:22 FN:809 TN:258 FP:12
+del_touching(A,B):- watch(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.82 Recall:0.01 TP:9 FN:822 TN:268 FP:2
+del_touching(A,B):- myopen(A,B),bag(B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.86 Recall:0.01 TP:6 FN:825 TN:269 FP:1
+del_touching(A,B):- myopen(A,B),door(B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.89 Recall:0.01 TP:8 FN:823 TN:269 FP:1
+del_touching(A,B):- myopen(A,B),closet_cabinet(B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.71 Recall:0.01 TP:10 FN:821 TN:266 FP:4
+del_touching(A,B):- awaken(C,A),touching(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.75 Recall:0.01 TP:6 FN:825 TN:268 FP:2
+del_touching(A,B):- touching(C,B),fix(C,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:5 FN:826 TN:270 FP:0
+del_touching(A,B):- touching(C,B),run(C,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.89 Recall:0.10 TP:87 FN:744 TN:259 FP:11
+del_touching(A,B):- stand(C,A),touching(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.89 Recall:0.06 TP:51 FN:780 TN:264 FP:6
+del_touching(A,B):- touching(C,B),sit(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

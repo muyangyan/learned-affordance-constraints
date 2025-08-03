@@ -1,88 +1,203 @@
-14:57:09 Generating programs of size: 2
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:186 fn:1241 tn:536 fp:72 size:2 mdl:1315
-14:57:09 add_on_the_side_of(A,B):- put(B,A).
-14:57:09 ********************
-14:57:09 Generating programs of size: 3
-14:57:19 ********************
-14:57:19 New best hypothesis:
-14:57:19 tp:552 fn:875 tn:358 fp:250 size:36 mdl:1161
-14:57:19 add_on_the_side_of(A,B):- awaken(B,A).
-14:57:19 add_on_the_side_of(A,B):- put(B,A).
-14:57:19 add_on_the_side_of(A,B):- work(B,A).
-14:57:19 add_on_the_side_of(A,B):- watch(B,A).
-14:57:19 add_on_the_side_of(A,B):- pour(B,A).
-14:57:19 add_on_the_side_of(A,B):- wash(B,A).
-14:57:19 add_on_the_side_of(A,B):- dress(B,A).
-14:57:19 add_on_the_side_of(A,B):- walk(B,A).
-14:57:19 add_on_the_side_of(A,B):- undress(B,A).
-14:57:19 add_on_the_side_of(A,B):- turn(B,A).
-14:57:19 add_on_the_side_of(A,B):- throw(B,A).
-14:57:19 add_on_the_side_of(A,B):- eat(B,A).
-14:57:19 add_on_the_side_of(A,B):- myopen(B,A).
-14:57:19 add_on_the_side_of(A,B):- myclose(B,A).
-14:57:19 add_on_the_side_of(A,B):- take(B,A).
-14:57:19 add_on_the_side_of(A,B):- lie(B,A).
-14:57:19 add_on_the_side_of(A,B):- cook(B,A).
-14:57:19 add_on_the_side_of(A,B):- snuggle(B,A).
-14:57:19 ********************
-14:57:27 Generating programs of size: 4
-14:58:08 TIMEOUT OF 60 SECONDS EXCEEDED
+02:01:09 Generating programs of size: 2
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:11 fn:1416 tn:605 fp:3 size:2 mdl:1421
+02:01:10 add_on_the_side_of(A,B):- eat(B,A).
+02:01:10 ********************
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:91 fn:1336 tn:550 fp:58 size:2 mdl:1396
+02:01:10 add_on_the_side_of(A,B):- myopen(B,A).
+02:01:10 ********************
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:186 fn:1241 tn:536 fp:72 size:2 mdl:1315
+02:01:10 add_on_the_side_of(A,B):- put(B,A).
+02:01:10 ********************
+02:01:11 Generating programs of size: 3
+02:01:21 ********************
+02:01:21 New best hypothesis:
+02:01:21 tp:552 fn:875 tn:358 fp:250 size:36 mdl:1161
+02:01:21 add_on_the_side_of(A,B):- eat(B,A).
+02:01:21 add_on_the_side_of(A,B):- myopen(B,A).
+02:01:21 add_on_the_side_of(A,B):- lie(B,A).
+02:01:21 add_on_the_side_of(A,B):- put(B,A).
+02:01:21 add_on_the_side_of(A,B):- pour(B,A).
+02:01:21 add_on_the_side_of(A,B):- snuggle(B,A).
+02:01:21 add_on_the_side_of(A,B):- take(B,A).
+02:01:21 add_on_the_side_of(A,B):- throw(B,A).
+02:01:21 add_on_the_side_of(A,B):- undress(B,A).
+02:01:21 add_on_the_side_of(A,B):- turn(B,A).
+02:01:21 add_on_the_side_of(A,B):- wash(B,A).
+02:01:21 add_on_the_side_of(A,B):- walk(B,A).
+02:01:21 add_on_the_side_of(A,B):- work(B,A).
+02:01:21 add_on_the_side_of(A,B):- watch(B,A).
+02:01:21 add_on_the_side_of(A,B):- dress(B,A).
+02:01:21 add_on_the_side_of(A,B):- myclose(B,A).
+02:01:21 add_on_the_side_of(A,B):- awaken(B,A).
+02:01:21 add_on_the_side_of(A,B):- cook(B,A).
+02:01:21 ********************
+02:03:29 Generating programs of size: 4
+02:03:39 ********************
+02:03:39 New best hypothesis:
+02:03:39 tp:621 fn:806 tn:478 fp:130 size:85 mdl:1021
+02:03:39 add_on_the_side_of(A,B):- pour(B,A).
+02:03:39 add_on_the_side_of(A,B):- snuggle(B,A).
+02:03:39 add_on_the_side_of(A,B):- throw(B,A).
+02:03:39 add_on_the_side_of(A,B):- undress(B,A).
+02:03:39 add_on_the_side_of(A,B):- wash(B,A).
+02:03:39 add_on_the_side_of(A,B):- work(B,A).
+02:03:39 add_on_the_side_of(A,B):- dress(B,A).
+02:03:39 add_on_the_side_of(A,B):- cook(B,A).
+02:03:39 add_on_the_side_of(A,B):- in_front_of(A,B),myopen(B,A).
+02:03:39 add_on_the_side_of(A,B):- behind(A,B),myopen(B,A).
+02:03:39 add_on_the_side_of(A,B):- myclose(B,A),behind(A,B).
+02:03:39 add_on_the_side_of(A,B):- myclose(B,A),in_front_of(A,B).
+02:03:39 add_on_the_side_of(A,B):- watch(B,A),in_front_of(A,B).
+02:03:39 add_on_the_side_of(A,B):- walk(B,A),in_front_of(A,B).
+02:03:39 add_on_the_side_of(A,B):- turn(B,A),in_front_of(A,B).
+02:03:39 add_on_the_side_of(A,B):- take(B,A),in_front_of(A,B).
+02:03:39 add_on_the_side_of(A,B):- put(B,A),in_front_of(A,B).
+02:03:39 add_on_the_side_of(A,B):- hold(B,A),in_front_of(A,B).
+02:03:39 add_on_the_side_of(A,B):- eat(B,A),in_front_of(A,B).
+02:03:39 add_on_the_side_of(A,B):- lie(B,A),beneath(A,B).
+02:03:39 add_on_the_side_of(A,B):- walk(B,A),in(A,B).
+02:03:39 add_on_the_side_of(A,B):- hold(B,A),in(A,B).
+02:03:39 add_on_the_side_of(A,B):- put(B,A),in(A,B).
+02:03:39 add_on_the_side_of(A,B):- unsure(B,A),walk(B,A).
+02:03:39 add_on_the_side_of(A,B):- looking_at(B,A),tidy(B,A).
+02:03:39 add_on_the_side_of(A,B):- holding(B,A),drink(B,A).
+02:03:39 add_on_the_side_of(A,B):- take(B,A),wearing(B,A).
+02:03:39 add_on_the_side_of(A,B):- stand(C,B),sitting_on(C,A).
+02:03:39 add_on_the_side_of(A,B):- in_front_of(A,C),stand(C,B).
+02:03:39 add_on_the_side_of(A,B):- in_front_of(A,C),sit(C,B).
+02:03:39 add_on_the_side_of(A,B):- in_front_of(A,C),fix(B,C).
+02:03:39 ********************
+02:11:08 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.69 Recall:0.39 TP:552 FN:875 TN:358 FP:250 Size:36 MDL:1161
-add_on_the_side_of(A,B):- awaken(B,A).
-add_on_the_side_of(A,B):- put(B,A).
-add_on_the_side_of(A,B):- work(B,A).
-add_on_the_side_of(A,B):- watch(B,A).
+Precision:0.83 Recall:0.44 TP:621 FN:806 TN:478 FP:130 Size:85 MDL:1021
 add_on_the_side_of(A,B):- pour(B,A).
-add_on_the_side_of(A,B):- wash(B,A).
-add_on_the_side_of(A,B):- dress(B,A).
-add_on_the_side_of(A,B):- walk(B,A).
-add_on_the_side_of(A,B):- undress(B,A).
-add_on_the_side_of(A,B):- turn(B,A).
-add_on_the_side_of(A,B):- throw(B,A).
-add_on_the_side_of(A,B):- eat(B,A).
-add_on_the_side_of(A,B):- myopen(B,A).
-add_on_the_side_of(A,B):- myclose(B,A).
-add_on_the_side_of(A,B):- take(B,A).
-add_on_the_side_of(A,B):- lie(B,A).
-add_on_the_side_of(A,B):- cook(B,A).
 add_on_the_side_of(A,B):- snuggle(B,A).
+add_on_the_side_of(A,B):- throw(B,A).
+add_on_the_side_of(A,B):- undress(B,A).
+add_on_the_side_of(A,B):- wash(B,A).
+add_on_the_side_of(A,B):- work(B,A).
+add_on_the_side_of(A,B):- dress(B,A).
+add_on_the_side_of(A,B):- cook(B,A).
+add_on_the_side_of(A,B):- in_front_of(A,B),myopen(B,A).
+add_on_the_side_of(A,B):- behind(A,B),myopen(B,A).
+add_on_the_side_of(A,B):- myclose(B,A),behind(A,B).
+add_on_the_side_of(A,B):- myclose(B,A),in_front_of(A,B).
+add_on_the_side_of(A,B):- watch(B,A),in_front_of(A,B).
+add_on_the_side_of(A,B):- walk(B,A),in_front_of(A,B).
+add_on_the_side_of(A,B):- turn(B,A),in_front_of(A,B).
+add_on_the_side_of(A,B):- take(B,A),in_front_of(A,B).
+add_on_the_side_of(A,B):- put(B,A),in_front_of(A,B).
+add_on_the_side_of(A,B):- hold(B,A),in_front_of(A,B).
+add_on_the_side_of(A,B):- eat(B,A),in_front_of(A,B).
+add_on_the_side_of(A,B):- lie(B,A),beneath(A,B).
+add_on_the_side_of(A,B):- walk(B,A),in(A,B).
+add_on_the_side_of(A,B):- hold(B,A),in(A,B).
+add_on_the_side_of(A,B):- put(B,A),in(A,B).
+add_on_the_side_of(A,B):- unsure(B,A),walk(B,A).
+add_on_the_side_of(A,B):- looking_at(B,A),tidy(B,A).
+add_on_the_side_of(A,B):- holding(B,A),drink(B,A).
+add_on_the_side_of(A,B):- take(B,A),wearing(B,A).
+add_on_the_side_of(A,B):- stand(C,B),sitting_on(C,A).
+add_on_the_side_of(A,B):- in_front_of(A,C),stand(C,B).
+add_on_the_side_of(A,B):- in_front_of(A,C),sit(C,B).
+add_on_the_side_of(A,B):- in_front_of(A,C),fix(B,C).
 ******************************
-add_on_the_side_of(A,B):- awaken(B,A).
-precision: 0.58 recall: 0.00
-add_on_the_side_of(A,B):- put(B,A).
-precision: 0.72 recall: 0.13
-add_on_the_side_of(A,B):- work(B,A).
-precision: 1.00 recall: 0.00
-add_on_the_side_of(A,B):- watch(B,A).
-precision: 0.58 recall: 0.01
+Precision:1.00 Recall:0.00 TP:5 FN:1422 TN:608 FP:0
 add_on_the_side_of(A,B):- pour(B,A).
-precision: 1.00 recall: 0.00
-add_on_the_side_of(A,B):- wash(B,A).
-precision: 0.86 recall: 0.00
-add_on_the_side_of(A,B):- dress(B,A).
-precision: 1.00 recall: 0.00
-add_on_the_side_of(A,B):- walk(B,A).
-precision: 0.70 recall: 0.02
-add_on_the_side_of(A,B):- undress(B,A).
-precision: 1.00 recall: 0.02
-add_on_the_side_of(A,B):- turn(B,A).
-precision: 0.69 recall: 0.01
-add_on_the_side_of(A,B):- throw(B,A).
-precision: 0.83 recall: 0.03
-add_on_the_side_of(A,B):- eat(B,A).
-precision: 0.79 recall: 0.01
-add_on_the_side_of(A,B):- myopen(B,A).
-precision: 0.61 recall: 0.06
-add_on_the_side_of(A,B):- myclose(B,A).
-precision: 0.59 recall: 0.05
-add_on_the_side_of(A,B):- take(B,A).
-precision: 0.59 recall: 0.03
-add_on_the_side_of(A,B):- lie(B,A).
-precision: 0.78 recall: 0.00
-add_on_the_side_of(A,B):- cook(B,A).
-precision: 1.00 recall: 0.00
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.78 Recall:0.00 TP:7 FN:1420 TN:606 FP:2
 add_on_the_side_of(A,B):- snuggle(B,A).
-precision: 0.78 recall: 0.00
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.83 Recall:0.03 TP:38 FN:1389 TN:600 FP:8
+add_on_the_side_of(A,B):- throw(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.02 TP:27 FN:1400 TN:608 FP:0
+add_on_the_side_of(A,B):- undress(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.86 Recall:0.00 TP:6 FN:1421 TN:607 FP:1
+add_on_the_side_of(A,B):- wash(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:3 FN:1424 TN:608 FP:0
+add_on_the_side_of(A,B):- work(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:3 FN:1424 TN:608 FP:0
+add_on_the_side_of(A,B):- dress(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:3 FN:1424 TN:608 FP:0
+add_on_the_side_of(A,B):- cook(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.83 Recall:0.06 TP:83 FN:1344 TN:591 FP:17
+add_on_the_side_of(A,B):- in_front_of(A,B),myopen(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.73 Recall:0.01 TP:8 FN:1419 TN:605 FP:3
+add_on_the_side_of(A,B):- behind(A,B),myopen(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.86 Recall:0.00 TP:6 FN:1421 TN:607 FP:1
+add_on_the_side_of(A,B):- myclose(B,A),behind(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.67 Recall:0.04 TP:61 FN:1366 TN:578 FP:30
+add_on_the_side_of(A,B):- myclose(B,A),in_front_of(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.76 Recall:0.01 TP:19 FN:1408 TN:602 FP:6
+add_on_the_side_of(A,B):- watch(B,A),in_front_of(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.69 Recall:0.01 TP:9 FN:1418 TN:604 FP:4
+add_on_the_side_of(A,B):- walk(B,A),in_front_of(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:8 FN:1419 TN:608 FP:0
+add_on_the_side_of(A,B):- turn(B,A),in_front_of(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.71 Recall:0.02 TP:29 FN:1398 TN:596 FP:12
+add_on_the_side_of(A,B):- take(B,A),in_front_of(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.89 Recall:0.11 TP:162 FN:1265 TN:588 FP:20
+add_on_the_side_of(A,B):- put(B,A),in_front_of(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.70 Recall:0.02 TP:23 FN:1404 TN:598 FP:10
+add_on_the_side_of(A,B):- hold(B,A),in_front_of(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:11 FN:1416 TN:608 FP:0
+add_on_the_side_of(A,B):- eat(B,A),in_front_of(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.88 Recall:0.00 TP:7 FN:1420 TN:607 FP:1
+add_on_the_side_of(A,B):- lie(B,A),beneath(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:15 FN:1412 TN:608 FP:0
+add_on_the_side_of(A,B):- walk(B,A),in(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:11 FN:1416 TN:608 FP:0
+add_on_the_side_of(A,B):- hold(B,A),in(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:15 FN:1412 TN:608 FP:0
+add_on_the_side_of(A,B):- put(B,A),in(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.92 Recall:0.01 TP:12 FN:1415 TN:607 FP:1
+add_on_the_side_of(A,B):- unsure(B,A),walk(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.81 Recall:0.01 TP:13 FN:1414 TN:605 FP:3
+add_on_the_side_of(A,B):- looking_at(B,A),tidy(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.79 Recall:0.01 TP:15 FN:1412 TN:604 FP:4
+add_on_the_side_of(A,B):- holding(B,A),drink(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:7 FN:1420 TN:608 FP:0
+add_on_the_side_of(A,B):- take(B,A),wearing(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.75 Recall:0.01 TP:9 FN:1418 TN:605 FP:3
+add_on_the_side_of(A,B):- stand(C,B),sitting_on(C,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.83 Recall:0.01 TP:19 FN:1408 TN:604 FP:4
+add_on_the_side_of(A,B):- in_front_of(A,C),stand(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.70 Recall:0.00 TP:7 FN:1420 TN:605 FP:3
+add_on_the_side_of(A,B):- in_front_of(A,C),sit(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:4 FN:1423 TN:608 FP:0
+add_on_the_side_of(A,B):- in_front_of(A,C),fix(B,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

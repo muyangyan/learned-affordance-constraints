@@ -1,2 +1,15 @@
-14:57:07 Generating programs of size: 3
-NO SOLUTION
+02:01:14 Generating programs of size: 3
+02:08:54 Generating programs of size: 4
+02:09:48 ********************
+02:09:48 New best hypothesis:
+02:09:48 tp:11 fn:160 tn:604 fp:5 size:4 mdl:169
+02:09:48 del_table(A):- stand(C,B),on_the_side_of(A,C),stand(B,C).
+02:09:48 ********************
+02:11:50 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.69 Recall:0.06 TP:11 FN:160 TN:604 FP:5 Size:4 MDL:169
+del_table(A):- stand(C,B),on_the_side_of(A,C),stand(B,C).
+******************************
+Precision:0.69 Recall:0.06 TP:11 FN:160 TN:604 FP:5
+del_table(A):- stand(C,B),on_the_side_of(A,C),stand(B,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

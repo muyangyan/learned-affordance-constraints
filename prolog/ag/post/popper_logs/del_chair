@@ -1,2 +1,17 @@
-14:57:05 Generating programs of size: 3
-NO SOLUTION
+02:01:12 Generating programs of size: 3
+02:05:56 Generating programs of size: 4
+02:06:52 ********************
+02:06:52 New best hypothesis:
+02:06:52 tp:20 fn:117 tn:374 fp:8 size:4 mdl:129
+02:06:52 del_chair(A):- stand(C,B),stand(B,C),leaning_on(B,A).
+02:06:52 ********************
+02:06:52 ********************
+02:06:52 New best hypothesis:
+02:06:52 tp:73 fn:64 tn:369 fp:13 size:4 mdl:81
+02:06:52 del_chair(A):- stand(C,B),stand(B,C),sitting_on(B,A).
+02:06:52 ********************
+02:06:52 ********************
+02:06:52 New best hypothesis:
+02:06:52 tp:75 fn:62 tn:368 fp:14 size:4 mdl:80
+02:06:52 del_chair(A):- not_looking_at(B,A),stand(C,B),stand(B,C).
+02:06:52 ********************

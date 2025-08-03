@@ -1,4 +1,21 @@
-14:57:09 Generating programs of size: 2
-14:57:09 Generating programs of size: 3
-14:57:11 Generating programs of size: 4
-NO SOLUTION
+02:01:10 Generating programs of size: 2
+02:01:11 Generating programs of size: 3
+02:01:21 ********************
+02:01:21 New best hypothesis:
+02:01:21 tp:43 fn:92 tn:76 fp:2 size:3 mdl:97
+02:01:21 del_leaning_on(A,B):- stand(A,C),not_looking_at(C,B).
+02:01:21 ********************
+02:01:21 ********************
+02:01:21 New best hypothesis:
+02:01:21 tp:44 fn:91 tn:76 fp:2 size:3 mdl:96
+02:01:21 del_leaning_on(A,B):- stand(A,C),leaning_on(C,B).
+02:01:21 ********************
+02:01:33 Generating programs of size: 4
+02:11:12 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.96 Recall:0.33 TP:44 FN:91 TN:76 FP:2 Size:3 MDL:96
+del_leaning_on(A,B):- stand(A,C),leaning_on(C,B).
+******************************
+Precision:0.96 Recall:0.33 TP:44 FN:91 TN:76 FP:2
+del_leaning_on(A,B):- stand(A,C),leaning_on(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1,37 +1,94 @@
-14:57:09 Generating programs of size: 2
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:39 fn:2197 tn:3390 fp:21 size:2 mdl:2220
-14:57:09 del_in_front_of(A,B):- sit(B,A).
-14:57:09 ********************
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:48 fn:2188 tn:3402 fp:9 size:2 mdl:2199
-14:57:09 del_in_front_of(A,B):- walk(B,A).
-14:57:09 ********************
-14:57:09 Generating programs of size: 3
-14:57:19 ********************
-14:57:19 New best hypothesis:
-14:57:19 tp:118 fn:2118 tn:3371 fp:40 size:8 mdl:2166
-14:57:19 del_in_front_of(A,B):- sit(B,A).
-14:57:19 del_in_front_of(A,B):- dress(B,A).
-14:57:19 del_in_front_of(A,B):- walk(B,A).
-14:57:19 del_in_front_of(A,B):- turn(B,A).
-14:57:19 ********************
-14:57:27 Generating programs of size: 4
-14:58:08 TIMEOUT OF 60 SECONDS EXCEEDED
+02:01:09 Generating programs of size: 2
+02:01:09 ********************
+02:01:09 New best hypothesis:
+02:01:09 tp:39 fn:2197 tn:3390 fp:21 size:2 mdl:2220
+02:01:09 del_in_front_of(A,B):- sit(B,A).
+02:01:09 ********************
+02:01:09 ********************
+02:01:09 New best hypothesis:
+02:01:09 tp:48 fn:2188 tn:3402 fp:9 size:2 mdl:2199
+02:01:09 del_in_front_of(A,B):- walk(B,A).
+02:01:09 ********************
+02:01:10 Generating programs of size: 3
+02:01:20 ********************
+02:01:20 New best hypothesis:
+02:01:20 tp:118 fn:2118 tn:3371 fp:40 size:8 mdl:2166
+02:01:20 del_in_front_of(A,B):- sit(B,A).
+02:01:20 del_in_front_of(A,B):- turn(B,A).
+02:01:20 del_in_front_of(A,B):- walk(B,A).
+02:01:20 del_in_front_of(A,B):- dress(B,A).
+02:01:20 ********************
+02:01:25 ********************
+02:01:25 New best hypothesis:
+02:01:25 tp:134 fn:2102 tn:3362 fp:49 size:3 mdl:2154
+02:01:25 del_in_front_of(A,B):- stand(B,C),looking_at(C,A).
+02:01:25 ********************
+02:01:25 ********************
+02:01:25 New best hypothesis:
+02:01:25 tp:266 fn:1970 tn:3329 fp:82 size:3 mdl:2055
+02:01:25 del_in_front_of(A,B):- stand(B,C),in_front_of(A,C).
+02:01:25 ********************
+02:02:20 Generating programs of size: 4
+02:02:30 ********************
+02:02:30 New best hypothesis:
+02:02:30 tp:624 fn:1612 tn:3153 fp:258 size:30 mdl:1900
+02:02:30 del_in_front_of(A,B):- turn(B,A).
+02:02:30 del_in_front_of(A,B):- walk(B,A).
+02:02:30 del_in_front_of(A,B):- dress(B,A).
+02:02:30 del_in_front_of(A,B):- stand(B,C),in_front_of(A,C).
+02:02:30 del_in_front_of(A,B):- sit(B,C),in_front_of(A,C).
+02:02:30 del_in_front_of(A,B):- myclose(B,A),door(A).
+02:02:30 del_in_front_of(A,B):- myclose(B,A),refrigerator(A).
+02:02:30 del_in_front_of(A,B):- sit(B,A),chair(A).
+02:02:30 del_in_front_of(A,B):- sit(B,A),sofa_couch(A).
+02:02:30 del_in_front_of(A,B):- door(A),myopen(B,A).
+02:02:30 del_in_front_of(A,B):- throw(B,A),pillow(A).
+02:02:30 ********************
+02:11:08 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.75 Recall:0.05 TP:118 FN:2118 TN:3371 FP:40 Size:8 MDL:2166
-del_in_front_of(A,B):- sit(B,A).
-del_in_front_of(A,B):- dress(B,A).
-del_in_front_of(A,B):- walk(B,A).
+Precision:0.71 Recall:0.28 TP:624 FN:1612 TN:3153 FP:258 Size:30 MDL:1900
 del_in_front_of(A,B):- turn(B,A).
+del_in_front_of(A,B):- walk(B,A).
+del_in_front_of(A,B):- dress(B,A).
+del_in_front_of(A,B):- stand(B,C),in_front_of(A,C).
+del_in_front_of(A,B):- sit(B,C),in_front_of(A,C).
+del_in_front_of(A,B):- myclose(B,A),door(A).
+del_in_front_of(A,B):- myclose(B,A),refrigerator(A).
+del_in_front_of(A,B):- sit(B,A),chair(A).
+del_in_front_of(A,B):- sit(B,A),sofa_couch(A).
+del_in_front_of(A,B):- door(A),myopen(B,A).
+del_in_front_of(A,B):- throw(B,A),pillow(A).
 ******************************
-del_in_front_of(A,B):- sit(B,A).
-precision: 0.65 recall: 0.02
-del_in_front_of(A,B):- dress(B,A).
-precision: 0.80 recall: 0.01
-del_in_front_of(A,B):- walk(B,A).
-precision: 0.84 recall: 0.02
+Precision:0.69 Recall:0.00 TP:11 FN:2225 TN:3406 FP:5
 del_in_front_of(A,B):- turn(B,A).
-precision: 0.69 recall: 0.00
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.84 Recall:0.02 TP:48 FN:2188 TN:3402 FP:9
+del_in_front_of(A,B):- walk(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.80 Recall:0.01 TP:20 FN:2216 TN:3406 FP:5
+del_in_front_of(A,B):- dress(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.76 Recall:0.12 TP:266 FN:1970 TN:3329 FP:82
+del_in_front_of(A,B):- stand(B,C),in_front_of(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.59 Recall:0.08 TP:170 FN:2066 TN:3291 FP:120
+del_in_front_of(A,B):- sit(B,C),in_front_of(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.82 Recall:0.01 TP:28 FN:2208 TN:3405 FP:6
+del_in_front_of(A,B):- myclose(B,A),door(A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.70 Recall:0.01 TP:28 FN:2208 TN:3399 FP:12
+del_in_front_of(A,B):- myclose(B,A),refrigerator(A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:23 FN:2213 TN:3411 FP:0
+del_in_front_of(A,B):- sit(B,A),chair(A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:5 FN:2231 TN:3411 FP:0
+del_in_front_of(A,B):- sit(B,A),sofa_couch(A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.66 Recall:0.01 TP:29 FN:2207 TN:3396 FP:15
+del_in_front_of(A,B):- door(A),myopen(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.67 Recall:0.00 TP:8 FN:2228 TN:3407 FP:4
+del_in_front_of(A,B):- throw(B,A),pillow(A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

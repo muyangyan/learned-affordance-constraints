@@ -18,6 +18,10 @@ from test_stateleapr import test_stateleapr
 from train_stateleapr import train_stateleapr
 
 import subprocess
+import matplotlib
+#matplotlib.use('TkAgg')
+matplotlib.use("module://matplotlib_inline.backend_inline")
+
 
 
 def create_run_directories(cfg, args):

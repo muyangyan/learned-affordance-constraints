@@ -1,2 +1,15 @@
-14:57:05 Generating programs of size: 3
-NO SOLUTION
+02:01:12 Generating programs of size: 3
+02:06:41 Generating programs of size: 4
+02:08:23 ********************
+02:08:23 New best hypothesis:
+02:08:23 tp:5 fn:83 tn:197 fp:0 size:4 mdl:87
+02:08:23 del_door(A):- looking_at(C,B),myopen(C,B),not_looking_at(C,A).
+02:08:23 ********************
+02:11:19 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:1.00 Recall:0.06 TP:5 FN:83 TN:197 FP:0 Size:4 MDL:87
+del_door(A):- looking_at(C,B),myopen(C,B),not_looking_at(C,A).
+******************************
+Precision:1.00 Recall:0.06 TP:5 FN:83 TN:197 FP:0
+del_door(A):- looking_at(C,B),myopen(C,B),not_looking_at(C,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

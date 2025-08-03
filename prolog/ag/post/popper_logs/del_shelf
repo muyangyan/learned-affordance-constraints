@@ -1,2 +1,15 @@
-14:57:07 Generating programs of size: 3
-NO SOLUTION
+02:01:14 Generating programs of size: 3
+02:06:31 Generating programs of size: 4
+02:08:39 ********************
+02:08:39 New best hypothesis:
+02:08:39 tp:5 fn:42 tn:147 fp:0 size:4 mdl:46
+02:08:39 del_shelf(A):- person(C),not_contacting(B,A),stand(B,C).
+02:08:39 ********************
+02:11:08 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:1.00 Recall:0.11 TP:5 FN:42 TN:147 FP:0 Size:4 MDL:46
+del_shelf(A):- person(C),not_contacting(B,A),stand(B,C).
+******************************
+Precision:1.00 Recall:0.11 TP:5 FN:42 TN:147 FP:0
+del_shelf(A):- person(C),not_contacting(B,A),stand(B,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

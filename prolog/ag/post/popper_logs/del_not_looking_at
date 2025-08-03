@@ -1,54 +1,135 @@
-14:57:08 Generating programs of size: 2
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:13 fn:2144 tn:2455 fp:8 size:2 mdl:2154
-14:57:08 del_not_looking_at(A,B):- pour(A,B).
-14:57:08 ********************
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:105 fn:2052 tn:2403 fp:60 size:2 mdl:2114
-14:57:08 del_not_looking_at(A,B):- myopen(A,B).
-14:57:08 ********************
-14:57:08 Generating programs of size: 3
-14:57:18 ********************
-14:57:18 New best hypothesis:
-14:57:18 tp:249 fn:1908 tn:2315 fp:148 size:10 mdl:2066
-14:57:18 del_not_looking_at(A,B):- pour(A,B).
-14:57:18 del_not_looking_at(A,B):- photograph(A,B).
-14:57:18 del_not_looking_at(A,B):- myopen(A,B).
-14:57:18 del_not_looking_at(A,B):- talk(A,B).
-14:57:18 del_not_looking_at(A,B):- take(A,B).
-14:57:18 ********************
-14:57:27 Generating programs of size: 4
-14:57:37 ********************
-14:57:37 New best hypothesis:
-14:57:37 tp:253 fn:1904 tn:2315 fp:148 size:13 mdl:2065
-14:57:37 del_not_looking_at(A,B):- pour(A,B).
-14:57:37 del_not_looking_at(A,B):- photograph(A,B).
-14:57:37 del_not_looking_at(A,B):- myopen(A,B).
-14:57:37 del_not_looking_at(A,B):- talk(A,B).
-14:57:37 del_not_looking_at(A,B):- take(A,B).
-14:57:37 del_not_looking_at(A,B):- work(A,B),sit(A,B).
-14:57:37 ********************
-14:58:10 TIMEOUT OF 60 SECONDS EXCEEDED
+02:01:09 Generating programs of size: 2
+02:01:09 ********************
+02:01:09 New best hypothesis:
+02:01:09 tp:105 fn:2052 tn:2403 fp:60 size:2 mdl:2114
+02:01:09 del_not_looking_at(A,B):- myopen(A,B).
+02:01:09 ********************
+02:01:10 Generating programs of size: 3
+02:01:20 ********************
+02:01:20 New best hypothesis:
+02:01:20 tp:249 fn:1908 tn:2315 fp:148 size:10 mdl:2066
+02:01:20 del_not_looking_at(A,B):- myopen(A,B).
+02:01:20 del_not_looking_at(A,B):- photograph(A,B).
+02:01:20 del_not_looking_at(A,B):- pour(A,B).
+02:01:20 del_not_looking_at(A,B):- take(A,B).
+02:01:20 del_not_looking_at(A,B):- talk(A,B).
+02:01:20 ********************
+02:01:31 ********************
+02:01:31 New best hypothesis:
+02:01:31 tp:149 fn:2008 tn:2436 fp:27 size:3 mdl:2038
+02:01:31 del_not_looking_at(A,B):- beneath(B,C),stand(A,C).
+02:01:31 ********************
+02:01:31 ********************
+02:01:31 New best hypothesis:
+02:01:31 tp:315 fn:1842 tn:2386 fp:77 size:3 mdl:1922
+02:01:31 del_not_looking_at(A,B):- not_looking_at(C,B),stand(A,C).
+02:01:31 ********************
+02:02:17 Generating programs of size: 4
+02:02:27 ********************
+02:02:27 New best hypothesis:
+02:02:27 tp:782 fn:1375 tn:2134 fp:329 size:56 mdl:1760
+02:02:27 del_not_looking_at(A,B):- myopen(A,B).
+02:02:27 del_not_looking_at(A,B):- photograph(A,B).
+02:02:27 del_not_looking_at(A,B):- take(A,B).
+02:02:27 del_not_looking_at(A,B):- talk(A,B).
+02:02:27 del_not_looking_at(A,B):- sit(A,B),work(A,B).
+02:02:27 del_not_looking_at(A,B):- drink(A,B),touching(A,B).
+02:02:27 del_not_looking_at(A,B):- not_contacting(C,B),fix(C,A).
+02:02:27 del_not_looking_at(A,B):- in_front_of(B,C),awaken(A,C).
+02:02:27 del_not_looking_at(A,B):- not_looking_at(C,B),stand(A,C).
+02:02:27 del_not_looking_at(A,B):- wearing(C,B),sit(C,A).
+02:02:27 del_not_looking_at(A,B):- holding(C,B),sit(C,A).
+02:02:27 del_not_looking_at(A,B):- sit(A,C),not_contacting(C,B).
+02:02:27 del_not_looking_at(A,B):- on_the_side_of(B,C),run(C,A).
+02:02:27 del_not_looking_at(A,B):- eat(A,B),not_contacting(A,B).
+02:02:27 del_not_looking_at(A,B):- throw(A,B),not_contacting(A,B).
+02:02:27 del_not_looking_at(A,B):- clothes(B),hold(A,B).
+02:02:27 del_not_looking_at(A,B):- hold(A,B),food(B).
+02:02:27 del_not_looking_at(A,B):- put(A,B),laptop(B).
+02:02:27 del_not_looking_at(A,B):- put(A,B),food(B).
+02:02:27 del_not_looking_at(A,B):- pour(A,B),in_front_of(B,A).
+02:02:27 ********************
+02:11:11 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.63 Recall:0.12 TP:253 FN:1904 TN:2315 FP:148 Size:13 MDL:2065
-del_not_looking_at(A,B):- pour(A,B).
-del_not_looking_at(A,B):- photograph(A,B).
+Precision:0.70 Recall:0.36 TP:782 FN:1375 TN:2134 FP:329 Size:56 MDL:1760
 del_not_looking_at(A,B):- myopen(A,B).
-del_not_looking_at(A,B):- talk(A,B).
+del_not_looking_at(A,B):- photograph(A,B).
 del_not_looking_at(A,B):- take(A,B).
-del_not_looking_at(A,B):- work(A,B),sit(A,B).
+del_not_looking_at(A,B):- talk(A,B).
+del_not_looking_at(A,B):- sit(A,B),work(A,B).
+del_not_looking_at(A,B):- drink(A,B),touching(A,B).
+del_not_looking_at(A,B):- not_contacting(C,B),fix(C,A).
+del_not_looking_at(A,B):- in_front_of(B,C),awaken(A,C).
+del_not_looking_at(A,B):- not_looking_at(C,B),stand(A,C).
+del_not_looking_at(A,B):- wearing(C,B),sit(C,A).
+del_not_looking_at(A,B):- holding(C,B),sit(C,A).
+del_not_looking_at(A,B):- sit(A,C),not_contacting(C,B).
+del_not_looking_at(A,B):- on_the_side_of(B,C),run(C,A).
+del_not_looking_at(A,B):- eat(A,B),not_contacting(A,B).
+del_not_looking_at(A,B):- throw(A,B),not_contacting(A,B).
+del_not_looking_at(A,B):- clothes(B),hold(A,B).
+del_not_looking_at(A,B):- hold(A,B),food(B).
+del_not_looking_at(A,B):- put(A,B),laptop(B).
+del_not_looking_at(A,B):- put(A,B),food(B).
+del_not_looking_at(A,B):- pour(A,B),in_front_of(B,A).
 ******************************
-del_not_looking_at(A,B):- pour(A,B).
-precision: 0.62 recall: 0.01
-del_not_looking_at(A,B):- photograph(A,B).
-precision: 1.00 recall: 0.00
+Precision:0.64 Recall:0.05 TP:105 FN:2052 TN:2403 FP:60
 del_not_looking_at(A,B):- myopen(A,B).
-precision: 0.64 recall: 0.05
-del_not_looking_at(A,B):- talk(A,B).
-precision: 0.75 recall: 0.00
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:3 FN:2154 TN:2463 FP:0
+del_not_looking_at(A,B):- photograph(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.61 Recall:0.06 TP:125 FN:2032 TN:2382 FP:81
 del_not_looking_at(A,B):- take(A,B).
-precision: 0.61 recall: 0.06
-del_not_looking_at(A,B):- work(A,B),sit(A,B).
-precision: 1.00 recall: 0.00
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.75 Recall:0.00 TP:3 FN:2154 TN:2462 FP:1
+del_not_looking_at(A,B):- talk(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:4 FN:2153 TN:2463 FP:0
+del_not_looking_at(A,B):- sit(A,B),work(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.64 Recall:0.00 TP:7 FN:2150 TN:2459 FP:4
+del_not_looking_at(A,B):- drink(A,B),touching(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.86 Recall:0.00 TP:6 FN:2151 TN:2462 FP:1
+del_not_looking_at(A,B):- not_contacting(C,B),fix(C,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.69 Recall:0.00 TP:9 FN:2148 TN:2459 FP:4
+del_not_looking_at(A,B):- in_front_of(B,C),awaken(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.80 Recall:0.15 TP:315 FN:1842 TN:2386 FP:77
+del_not_looking_at(A,B):- not_looking_at(C,B),stand(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:9 FN:2148 TN:2463 FP:0
+del_not_looking_at(A,B):- wearing(C,B),sit(C,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.80 Recall:0.02 TP:44 FN:2113 TN:2452 FP:11
+del_not_looking_at(A,B):- holding(C,B),sit(C,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.58 Recall:0.03 TP:71 FN:2086 TN:2412 FP:51
+del_not_looking_at(A,B):- sit(A,C),not_contacting(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.75 Recall:0.00 TP:9 FN:2148 TN:2460 FP:3
+del_not_looking_at(A,B):- on_the_side_of(B,C),run(C,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.64 Recall:0.00 TP:7 FN:2150 TN:2459 FP:4
+del_not_looking_at(A,B):- eat(A,B),not_contacting(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.73 Recall:0.00 TP:8 FN:2149 TN:2460 FP:3
+del_not_looking_at(A,B):- throw(A,B),not_contacting(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.63 Recall:0.01 TP:12 FN:2145 TN:2456 FP:7
+del_not_looking_at(A,B):- clothes(B),hold(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.73 Recall:0.01 TP:11 FN:2146 TN:2459 FP:4
+del_not_looking_at(A,B):- hold(A,B),food(B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.71 Recall:0.00 TP:5 FN:2152 TN:2461 FP:2
+del_not_looking_at(A,B):- put(A,B),laptop(B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.56 Recall:0.01 TP:20 FN:2137 TN:2447 FP:16
+del_not_looking_at(A,B):- put(A,B),food(B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.67 Recall:0.01 TP:12 FN:2145 TN:2457 FP:6
+del_not_looking_at(A,B):- pour(A,B),in_front_of(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

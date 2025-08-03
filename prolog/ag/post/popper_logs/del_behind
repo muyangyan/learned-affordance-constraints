@@ -1,63 +1,94 @@
-14:57:08 Generating programs of size: 2
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:9 fn:531 tn:573 fp:3 size:2 mdl:536
-14:57:08 del_behind(A,B):- awaken(B,A).
-14:57:08 ********************
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:13 fn:527 tn:575 fp:1 size:2 mdl:530
-14:57:08 del_behind(A,B):- hold(B,A).
-14:57:08 ********************
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:26 fn:514 tn:574 fp:2 size:2 mdl:518
-14:57:08 del_behind(A,B):- take(B,A).
-14:57:08 ********************
-14:57:08 Generating programs of size: 3
-14:57:15 ********************
-14:57:15 New best hypothesis:
-14:57:15 tp:90 fn:450 tn:549 fp:27 size:18 mdl:495
-14:57:15 del_behind(A,B):- awaken(B,A).
-14:57:15 del_behind(A,B):- hold(B,A).
-14:57:15 del_behind(A,B):- walk(B,A).
-14:57:15 del_behind(A,B):- undress(B,A).
-14:57:15 del_behind(A,B):- tidy(B,A).
-14:57:15 del_behind(A,B):- throw(B,A).
-14:57:15 del_behind(A,B):- myopen(B,A).
-14:57:15 del_behind(A,B):- take(B,A).
-14:57:15 del_behind(A,B):- lie(B,A).
-14:57:15 ********************
-14:57:22 Generating programs of size: 4
-14:58:00 Generating programs of size: 5
-14:58:07 TIMEOUT OF 60 SECONDS EXCEEDED
+02:01:09 Generating programs of size: 2
+02:01:09 ********************
+02:01:09 New best hypothesis:
+02:01:09 tp:14 fn:526 tn:570 fp:6 size:2 mdl:534
+02:01:09 del_behind(A,B):- myopen(B,A).
+02:01:09 ********************
+02:01:09 ********************
+02:01:09 New best hypothesis:
+02:01:09 tp:26 fn:514 tn:574 fp:2 size:2 mdl:518
+02:01:09 del_behind(A,B):- take(B,A).
+02:01:09 ********************
+02:01:09 Generating programs of size: 3
+02:01:16 ********************
+02:01:16 New best hypothesis:
+02:01:16 tp:90 fn:450 tn:549 fp:27 size:18 mdl:495
+02:01:16 del_behind(A,B):- myopen(B,A).
+02:01:16 del_behind(A,B):- lie(B,A).
+02:01:16 del_behind(A,B):- take(B,A).
+02:01:16 del_behind(A,B):- tidy(B,A).
+02:01:16 del_behind(A,B):- throw(B,A).
+02:01:16 del_behind(A,B):- undress(B,A).
+02:01:16 del_behind(A,B):- walk(B,A).
+02:01:16 del_behind(A,B):- hold(B,A).
+02:01:16 del_behind(A,B):- awaken(B,A).
+02:01:16 ********************
+02:01:35 ********************
+02:01:35 New best hypothesis:
+02:01:35 tp:119 fn:421 tn:553 fp:23 size:3 mdl:447
+02:01:35 del_behind(A,B):- stand(B,C),not_looking_at(C,A).
+02:01:35 ********************
+02:02:33 Generating programs of size: 4
+02:02:43 ********************
+02:02:43 New best hypothesis:
+02:02:43 tp:227 fn:313 tn:523 fp:53 size:26 mdl:392
+02:02:43 del_behind(A,B):- myopen(B,A).
+02:02:43 del_behind(A,B):- take(B,A).
+02:02:43 del_behind(A,B):- tidy(B,A).
+02:02:43 del_behind(A,B):- undress(B,A).
+02:02:43 del_behind(A,B):- walk(B,A).
+02:02:43 del_behind(A,B):- hold(B,A).
+02:02:43 del_behind(A,B):- awaken(B,A).
+02:02:43 del_behind(A,B):- not_looking_at(B,A),throw(B,A).
+02:02:43 del_behind(A,B):- lie(B,A),bed(A).
+02:02:43 del_behind(A,B):- stand(B,C),behind(A,C).
+02:02:43 del_behind(A,B):- not_contacting(C,A),sit(C,B).
+02:02:43 ********************
+02:11:14 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.77 Recall:0.17 TP:90 FN:450 TN:549 FP:27 Size:18 MDL:495
-del_behind(A,B):- awaken(B,A).
-del_behind(A,B):- hold(B,A).
-del_behind(A,B):- walk(B,A).
-del_behind(A,B):- undress(B,A).
-del_behind(A,B):- tidy(B,A).
-del_behind(A,B):- throw(B,A).
+Precision:0.81 Recall:0.42 TP:227 FN:313 TN:523 FP:53 Size:26 MDL:392
 del_behind(A,B):- myopen(B,A).
 del_behind(A,B):- take(B,A).
-del_behind(A,B):- lie(B,A).
+del_behind(A,B):- tidy(B,A).
+del_behind(A,B):- undress(B,A).
+del_behind(A,B):- walk(B,A).
+del_behind(A,B):- hold(B,A).
+del_behind(A,B):- awaken(B,A).
+del_behind(A,B):- not_looking_at(B,A),throw(B,A).
+del_behind(A,B):- lie(B,A),bed(A).
+del_behind(A,B):- stand(B,C),behind(A,C).
+del_behind(A,B):- not_contacting(C,A),sit(C,B).
 ******************************
-del_behind(A,B):- awaken(B,A).
-precision: 0.75 recall: 0.02
-del_behind(A,B):- hold(B,A).
-precision: 0.93 recall: 0.02
-del_behind(A,B):- walk(B,A).
-precision: 0.64 recall: 0.02
-del_behind(A,B):- undress(B,A).
-precision: 0.83 recall: 0.01
-del_behind(A,B):- tidy(B,A).
-precision: 0.90 recall: 0.02
-del_behind(A,B):- throw(B,A).
-precision: 0.60 recall: 0.01
+Precision:0.70 Recall:0.03 TP:14 FN:526 TN:570 FP:6
 del_behind(A,B):- myopen(B,A).
-precision: 0.70 recall: 0.03
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.93 Recall:0.05 TP:26 FN:514 TN:574 FP:2
 del_behind(A,B):- take(B,A).
-precision: 0.93 recall: 0.05
-del_behind(A,B):- lie(B,A).
-precision: 0.60 recall: 0.01
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.90 Recall:0.02 TP:9 FN:531 TN:575 FP:1
+del_behind(A,B):- tidy(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.83 Recall:0.01 TP:5 FN:535 TN:575 FP:1
+del_behind(A,B):- undress(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.64 Recall:0.02 TP:9 FN:531 TN:571 FP:5
+del_behind(A,B):- walk(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.93 Recall:0.02 TP:13 FN:527 TN:575 FP:1
+del_behind(A,B):- hold(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.75 Recall:0.02 TP:9 FN:531 TN:573 FP:3
+del_behind(A,B):- awaken(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.71 Recall:0.01 TP:5 FN:535 TN:574 FP:2
+del_behind(A,B):- not_looking_at(B,A),throw(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.83 Recall:0.01 TP:5 FN:535 TN:575 FP:1
+del_behind(A,B):- lie(B,A),bed(A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.83 Recall:0.22 TP:120 FN:420 TN:552 FP:24
+del_behind(A,B):- stand(B,C),behind(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.75 Recall:0.04 TP:21 FN:519 TN:569 FP:7
+del_behind(A,B):- not_contacting(C,A),sit(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

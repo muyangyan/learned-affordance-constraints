@@ -1,2 +1,25 @@
-14:57:05 Generating programs of size: 3
-NO SOLUTION
+02:01:13 Generating programs of size: 3
+02:05:52 Generating programs of size: 4
+02:07:16 ********************
+02:07:16 New best hypothesis:
+02:07:16 tp:9 fn:87 tn:254 fp:3 size:4 mdl:94
+02:07:16 del_floor(A):- unsure(C,A),person(B),stand(B,C).
+02:07:16 ********************
+02:07:16 ********************
+02:07:16 New best hypothesis:
+02:07:16 tp:9 fn:87 tn:255 fp:2 size:4 mdl:93
+02:07:16 del_floor(A):- unsure(C,A),beneath(A,B),stand(B,C).
+02:07:16 ********************
+02:09:41 ********************
+02:09:41 New best hypothesis:
+02:09:41 tp:16 fn:80 tn:254 fp:3 size:4 mdl:87
+02:09:41 del_floor(A):- person(C),other_relationship(B,A),stand(C,B).
+02:09:41 ********************
+02:12:30 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.84 Recall:0.17 TP:16 FN:80 TN:254 FP:3 Size:4 MDL:87
+del_floor(A):- person(C),other_relationship(B,A),stand(C,B).
+******************************
+Precision:0.84 Recall:0.17 TP:16 FN:80 TN:254 FP:3
+del_floor(A):- person(C),other_relationship(B,A),stand(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

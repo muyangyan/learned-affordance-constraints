@@ -1,79 +1,203 @@
-14:57:09 Generating programs of size: 2
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:3 fn:1825 tn:1498 fp:0 size:2 mdl:1827
-14:57:09 add_not_contacting(A,B):- awaken(A,B).
-14:57:09 ********************
-14:57:19 ********************
-14:57:19 New best hypothesis:
-14:57:19 tp:5 fn:1823 tn:1497 fp:1 size:2 mdl:1826
-14:57:19 add_not_contacting(A,B):- snuggle(A,B).
-14:57:19 ********************
-14:57:19 ********************
-14:57:19 New best hypothesis:
-14:57:19 tp:106 fn:1722 tn:1402 fp:96 size:2 mdl:1820
-14:57:19 add_not_contacting(A,B):- myclose(A,B).
-14:57:19 ********************
-14:57:19 ********************
-14:57:19 New best hypothesis:
-14:57:19 tp:346 fn:1482 tn:1283 fp:215 size:2 mdl:1699
-14:57:19 add_not_contacting(A,B):- put(A,B).
-14:57:19 ********************
-14:57:20 Generating programs of size: 3
-14:57:30 ********************
-14:57:30 New best hypothesis:
-14:57:30 tp:582 fn:1246 tn:1157 fp:341 size:16 mdl:1603
-14:57:30 add_not_contacting(A,B):- awaken(A,B).
-14:57:30 add_not_contacting(A,B):- snuggle(A,B).
-14:57:30 add_not_contacting(A,B):- myclose(A,B).
-14:57:30 add_not_contacting(A,B):- put(A,B).
-14:57:30 add_not_contacting(A,B):- wash(A,B).
-14:57:30 add_not_contacting(A,B):- undress(A,B).
-14:57:30 add_not_contacting(A,B):- throw(A,B).
-14:57:30 add_not_contacting(A,B):- eat(A,B).
-14:57:30 ********************
-14:57:35 Generating programs of size: 4
-14:57:45 ********************
-14:57:45 New best hypothesis:
-14:57:45 tp:586 fn:1242 tn:1157 fp:341 size:19 mdl:1602
-14:57:45 add_not_contacting(A,B):- awaken(A,B).
-14:57:45 add_not_contacting(A,B):- snuggle(A,B).
-14:57:45 add_not_contacting(A,B):- myclose(A,B).
-14:57:45 add_not_contacting(A,B):- put(A,B).
-14:57:45 add_not_contacting(A,B):- wash(A,B).
-14:57:45 add_not_contacting(A,B):- undress(A,B).
-14:57:45 add_not_contacting(A,B):- throw(A,B).
-14:57:45 add_not_contacting(A,B):- eat(A,B).
-14:57:45 add_not_contacting(A,B):- watch(A,B),play(A,B).
-14:57:45 ********************
-14:58:09 TIMEOUT OF 60 SECONDS EXCEEDED
+02:01:10 Generating programs of size: 2
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:30 fn:1798 tn:1486 fp:12 size:2 mdl:1812
+02:01:10 add_not_contacting(A,B):- eat(A,B).
+02:01:10 ********************
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:346 fn:1482 tn:1283 fp:215 size:2 mdl:1699
+02:01:10 add_not_contacting(A,B):- put(A,B).
+02:01:10 ********************
+02:01:11 Generating programs of size: 3
+02:01:21 ********************
+02:01:21 New best hypothesis:
+02:01:21 tp:582 fn:1246 tn:1157 fp:341 size:16 mdl:1603
+02:01:21 add_not_contacting(A,B):- eat(A,B).
+02:01:21 add_not_contacting(A,B):- awaken(A,B).
+02:01:21 add_not_contacting(A,B):- myclose(A,B).
+02:01:21 add_not_contacting(A,B):- put(A,B).
+02:01:21 add_not_contacting(A,B):- throw(A,B).
+02:01:21 add_not_contacting(A,B):- snuggle(A,B).
+02:01:21 add_not_contacting(A,B):- undress(A,B).
+02:01:21 add_not_contacting(A,B):- wash(A,B).
+02:01:21 ********************
+02:01:41 ********************
+02:01:41 New best hypothesis:
+02:01:41 tp:277 fn:1551 tn:1498 fp:0 size:3 mdl:1554
+02:01:41 add_not_contacting(A,B):- put(A,B),holding(A,B).
+02:01:41 ********************
+02:02:07 Generating programs of size: 4
+02:02:17 ********************
+02:02:17 New best hypothesis:
+02:02:17 tp:764 fn:1064 tn:1482 fp:16 size:96 mdl:1176
+02:02:17 add_not_contacting(A,B):- throw(A,B).
+02:02:17 add_not_contacting(A,B):- snuggle(A,B).
+02:02:17 add_not_contacting(A,B):- undress(A,B).
+02:02:17 add_not_contacting(A,B):- watch(A,B),holding(A,B).
+02:02:17 add_not_contacting(A,B):- watch(A,B),touching(A,B).
+02:02:17 add_not_contacting(A,B):- pour(A,B),holding(A,B).
+02:02:17 add_not_contacting(A,B):- sitting_on(C,B),stand(A,C).
+02:02:17 add_not_contacting(A,B):- touching(C,B),stand(A,C).
+02:02:17 add_not_contacting(A,B):- awaken(A,C),not_looking_at(C,B).
+02:02:17 add_not_contacting(A,B):- touching(C,B),sit(A,C).
+02:02:17 add_not_contacting(A,B):- holding(C,B),sit(C,A).
+02:02:17 add_not_contacting(A,B):- stand(C,A),holding(C,B).
+02:02:17 add_not_contacting(A,B):- sit(A,B),sitting_on(A,B).
+02:02:17 add_not_contacting(A,B):- sit(A,B),touching(A,B).
+02:02:17 add_not_contacting(A,B):- put(A,B),carrying(A,B).
+02:02:17 add_not_contacting(A,B):- tidy(A,B),holding(A,B).
+02:02:17 add_not_contacting(A,B):- put(A,B),holding(A,B).
+02:02:17 add_not_contacting(A,B):- play(A,B),holding(A,B).
+02:02:17 add_not_contacting(A,B):- myopen(A,B),holding(A,B).
+02:02:17 add_not_contacting(A,B):- hold(A,B),holding(A,B).
+02:02:17 add_not_contacting(A,B):- eat(A,B),holding(A,B).
+02:02:17 add_not_contacting(A,B):- drink(A,B),holding(A,B).
+02:02:17 add_not_contacting(A,B):- holding(A,B),myclose(A,B).
+02:02:17 add_not_contacting(A,B):- wash(A,B),holding(A,B).
+02:02:17 add_not_contacting(A,B):- eat(A,B),touching(A,B).
+02:02:17 add_not_contacting(A,B):- play(A,B),touching(A,B).
+02:02:17 add_not_contacting(A,B):- touching(A,B),walk(A,B).
+02:02:17 add_not_contacting(A,B):- touching(A,B),tidy(A,B).
+02:02:17 add_not_contacting(A,B):- put(A,B),touching(A,B).
+02:02:17 add_not_contacting(A,B):- touching(A,B),myclose(A,B).
+02:02:17 add_not_contacting(A,B):- touching(A,B),myopen(A,B).
+02:02:17 add_not_contacting(A,B):- hold(A,B),in(B,A).
+02:02:17 add_not_contacting(A,B):- put(A,B),in(B,A).
+02:02:17 ********************
+02:11:15 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.63 Recall:0.32 TP:586 FN:1242 TN:1157 FP:341 Size:19 MDL:1602
-add_not_contacting(A,B):- awaken(A,B).
-add_not_contacting(A,B):- snuggle(A,B).
-add_not_contacting(A,B):- myclose(A,B).
-add_not_contacting(A,B):- put(A,B).
-add_not_contacting(A,B):- wash(A,B).
-add_not_contacting(A,B):- undress(A,B).
+Precision:0.98 Recall:0.42 TP:764 FN:1064 TN:1482 FP:16 Size:96 MDL:1176
 add_not_contacting(A,B):- throw(A,B).
-add_not_contacting(A,B):- eat(A,B).
-add_not_contacting(A,B):- watch(A,B),play(A,B).
+add_not_contacting(A,B):- snuggle(A,B).
+add_not_contacting(A,B):- undress(A,B).
+add_not_contacting(A,B):- watch(A,B),holding(A,B).
+add_not_contacting(A,B):- watch(A,B),touching(A,B).
+add_not_contacting(A,B):- pour(A,B),holding(A,B).
+add_not_contacting(A,B):- sitting_on(C,B),stand(A,C).
+add_not_contacting(A,B):- touching(C,B),stand(A,C).
+add_not_contacting(A,B):- awaken(A,C),not_looking_at(C,B).
+add_not_contacting(A,B):- touching(C,B),sit(A,C).
+add_not_contacting(A,B):- holding(C,B),sit(C,A).
+add_not_contacting(A,B):- stand(C,A),holding(C,B).
+add_not_contacting(A,B):- sit(A,B),sitting_on(A,B).
+add_not_contacting(A,B):- sit(A,B),touching(A,B).
+add_not_contacting(A,B):- put(A,B),carrying(A,B).
+add_not_contacting(A,B):- tidy(A,B),holding(A,B).
+add_not_contacting(A,B):- put(A,B),holding(A,B).
+add_not_contacting(A,B):- play(A,B),holding(A,B).
+add_not_contacting(A,B):- myopen(A,B),holding(A,B).
+add_not_contacting(A,B):- hold(A,B),holding(A,B).
+add_not_contacting(A,B):- eat(A,B),holding(A,B).
+add_not_contacting(A,B):- drink(A,B),holding(A,B).
+add_not_contacting(A,B):- holding(A,B),myclose(A,B).
+add_not_contacting(A,B):- wash(A,B),holding(A,B).
+add_not_contacting(A,B):- eat(A,B),touching(A,B).
+add_not_contacting(A,B):- play(A,B),touching(A,B).
+add_not_contacting(A,B):- touching(A,B),walk(A,B).
+add_not_contacting(A,B):- touching(A,B),tidy(A,B).
+add_not_contacting(A,B):- put(A,B),touching(A,B).
+add_not_contacting(A,B):- touching(A,B),myclose(A,B).
+add_not_contacting(A,B):- touching(A,B),myopen(A,B).
+add_not_contacting(A,B):- hold(A,B),in(B,A).
+add_not_contacting(A,B):- put(A,B),in(B,A).
 ******************************
-add_not_contacting(A,B):- awaken(A,B).
-precision: 1.00 recall: 0.00
-add_not_contacting(A,B):- snuggle(A,B).
-precision: 0.83 recall: 0.00
-add_not_contacting(A,B):- myclose(A,B).
-precision: 0.52 recall: 0.06
-add_not_contacting(A,B):- put(A,B).
-precision: 0.62 recall: 0.19
-add_not_contacting(A,B):- wash(A,B).
-precision: 0.67 recall: 0.00
-add_not_contacting(A,B):- undress(A,B).
-precision: 0.96 recall: 0.01
+Precision:0.86 Recall:0.04 TP:78 FN:1750 TN:1485 FP:13
 add_not_contacting(A,B):- throw(A,B).
-precision: 0.86 recall: 0.04
-add_not_contacting(A,B):- eat(A,B).
-precision: 0.71 recall: 0.02
-add_not_contacting(A,B):- watch(A,B),play(A,B).
-precision: 1.00 recall: 0.00
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.83 Recall:0.00 TP:5 FN:1823 TN:1497 FP:1
+add_not_contacting(A,B):- snuggle(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.96 Recall:0.01 TP:26 FN:1802 TN:1497 FP:1
+add_not_contacting(A,B):- undress(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:8 FN:1820 TN:1498 FP:0
+add_not_contacting(A,B):- watch(A,B),holding(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:16 FN:1812 TN:1498 FP:0
+add_not_contacting(A,B):- watch(A,B),touching(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:6 FN:1822 TN:1498 FP:0
+add_not_contacting(A,B):- pour(A,B),holding(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:16 FN:1812 TN:1498 FP:0
+add_not_contacting(A,B):- sitting_on(C,B),stand(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:18 FN:1810 TN:1498 FP:0
+add_not_contacting(A,B):- touching(C,B),stand(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:5 FN:1823 TN:1498 FP:0
+add_not_contacting(A,B):- awaken(A,C),not_looking_at(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:6 FN:1822 TN:1498 FP:0
+add_not_contacting(A,B):- touching(C,B),sit(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:7 FN:1821 TN:1498 FP:0
+add_not_contacting(A,B):- holding(C,B),sit(C,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:15 FN:1813 TN:1498 FP:0
+add_not_contacting(A,B):- stand(C,A),holding(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:5 FN:1823 TN:1498 FP:0
+add_not_contacting(A,B):- sit(A,B),sitting_on(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:9 FN:1819 TN:1498 FP:0
+add_not_contacting(A,B):- sit(A,B),touching(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:7 FN:1821 TN:1498 FP:0
+add_not_contacting(A,B):- put(A,B),carrying(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:6 FN:1822 TN:1498 FP:0
+add_not_contacting(A,B):- tidy(A,B),holding(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.15 TP:277 FN:1551 TN:1498 FP:0
+add_not_contacting(A,B):- put(A,B),holding(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:4 FN:1824 TN:1498 FP:0
+add_not_contacting(A,B):- play(A,B),holding(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:25 FN:1803 TN:1498 FP:0
+add_not_contacting(A,B):- myopen(A,B),holding(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:12 FN:1816 TN:1498 FP:0
+add_not_contacting(A,B):- hold(A,B),holding(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:25 FN:1803 TN:1498 FP:0
+add_not_contacting(A,B):- eat(A,B),holding(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:16 FN:1812 TN:1498 FP:0
+add_not_contacting(A,B):- drink(A,B),holding(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.02 TP:38 FN:1790 TN:1498 FP:0
+add_not_contacting(A,B):- holding(A,B),myclose(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:5 FN:1823 TN:1498 FP:0
+add_not_contacting(A,B):- wash(A,B),holding(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:5 FN:1823 TN:1498 FP:0
+add_not_contacting(A,B):- eat(A,B),touching(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:8 FN:1820 TN:1498 FP:0
+add_not_contacting(A,B):- play(A,B),touching(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:7 FN:1821 TN:1498 FP:0
+add_not_contacting(A,B):- touching(A,B),walk(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:8 FN:1820 TN:1498 FP:0
+add_not_contacting(A,B):- touching(A,B),tidy(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.98 Recall:0.03 TP:55 FN:1773 TN:1497 FP:1
+add_not_contacting(A,B):- put(A,B),touching(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.04 TP:72 FN:1756 TN:1498 FP:0
+add_not_contacting(A,B):- touching(A,B),myclose(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:17 FN:1811 TN:1498 FP:0
+add_not_contacting(A,B):- touching(A,B),myopen(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:8 FN:1820 TN:1498 FP:0
+add_not_contacting(A,B):- hold(A,B),in(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:16 FN:1812 TN:1498 FP:0
+add_not_contacting(A,B):- put(A,B),in(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

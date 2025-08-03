@@ -1,47 +1,81 @@
-14:57:09 Generating programs of size: 2
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:3 fn:169 tn:50 fp:0 size:2 mdl:171
-14:57:09 del_other_relationship(A,B):- myclose(A,B).
-14:57:09 ********************
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:9 fn:163 tn:50 fp:0 size:2 mdl:165
-14:57:09 del_other_relationship(A,B):- sit(A,B).
-14:57:09 ********************
-14:57:09 Generating programs of size: 3
-14:57:14 ********************
-14:57:14 New best hypothesis:
-14:57:14 tp:38 fn:134 tn:40 fp:10 size:12 mdl:156
-14:57:14 del_other_relationship(A,B):- myclose(A,B).
-14:57:14 del_other_relationship(A,B):- hold(A,B).
-14:57:14 del_other_relationship(A,B):- sit(A,B).
-14:57:14 del_other_relationship(A,B):- put(A,B).
-14:57:14 del_other_relationship(A,B):- throw(A,B).
-14:57:14 del_other_relationship(A,B):- take(A,B).
-14:57:14 ********************
-14:57:18 Generating programs of size: 4
-14:57:33 Generating programs of size: 5
-14:57:39 Generating programs of size: 6
-14:57:40 Generating programs of size: 7
+02:01:10 Generating programs of size: 2
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:4 fn:168 tn:49 fp:1 size:2 mdl:171
+02:01:10 del_other_relationship(A,B):- hold(A,B).
+02:01:10 ********************
+02:01:15 ********************
+02:01:15 New best hypothesis:
+02:01:15 tp:10 fn:162 tn:48 fp:2 size:2 mdl:166
+02:01:15 del_other_relationship(A,B):- put(A,B).
+02:01:15 ********************
+02:01:15 ********************
+02:01:15 New best hypothesis:
+02:01:15 tp:9 fn:163 tn:50 fp:0 size:2 mdl:165
+02:01:15 del_other_relationship(A,B):- sit(A,B).
+02:01:15 ********************
+02:01:15 Generating programs of size: 3
+02:01:20 ********************
+02:01:20 New best hypothesis:
+02:01:20 tp:38 fn:134 tn:40 fp:10 size:12 mdl:156
+02:01:20 del_other_relationship(A,B):- hold(A,B).
+02:01:20 del_other_relationship(A,B):- myclose(A,B).
+02:01:20 del_other_relationship(A,B):- put(A,B).
+02:01:20 del_other_relationship(A,B):- sit(A,B).
+02:01:20 del_other_relationship(A,B):- throw(A,B).
+02:01:20 del_other_relationship(A,B):- take(A,B).
+02:01:20 ********************
+02:01:27 ********************
+02:01:27 New best hypothesis:
+02:01:27 tp:36 fn:136 tn:50 fp:0 size:3 mdl:139
+02:01:27 del_other_relationship(A,B):- other_relationship(C,B),stand(A,C).
+02:01:27 ********************
+02:01:36 Generating programs of size: 4
+02:01:40 ********************
+02:01:40 New best hypothesis:
+02:01:40 tp:88 fn:84 tn:40 fp:10 size:18 mdl:112
+02:01:40 del_other_relationship(A,B):- hold(A,B).
+02:01:40 del_other_relationship(A,B):- myclose(A,B).
+02:01:40 del_other_relationship(A,B):- put(A,B).
+02:01:40 del_other_relationship(A,B):- sit(A,B).
+02:01:40 del_other_relationship(A,B):- throw(A,B).
+02:01:40 del_other_relationship(A,B):- take(A,B).
+02:01:40 del_other_relationship(A,B):- stand(C,A),other_relationship(C,B).
+02:01:40 del_other_relationship(A,B):- sit(A,C),other_relationship(C,B).
+02:01:40 ********************
+02:11:10 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.79 Recall:0.22 TP:38 FN:134 TN:40 FP:10 Size:12 MDL:156
-del_other_relationship(A,B):- myclose(A,B).
+Precision:0.90 Recall:0.51 TP:88 FN:84 TN:40 FP:10 Size:18 MDL:112
 del_other_relationship(A,B):- hold(A,B).
-del_other_relationship(A,B):- sit(A,B).
+del_other_relationship(A,B):- myclose(A,B).
 del_other_relationship(A,B):- put(A,B).
+del_other_relationship(A,B):- sit(A,B).
 del_other_relationship(A,B):- throw(A,B).
 del_other_relationship(A,B):- take(A,B).
+del_other_relationship(A,B):- stand(C,A),other_relationship(C,B).
+del_other_relationship(A,B):- sit(A,C),other_relationship(C,B).
 ******************************
-del_other_relationship(A,B):- myclose(A,B).
-precision: 1.00 recall: 0.02
+Precision:0.80 Recall:0.02 TP:4 FN:168 TN:49 FP:1
 del_other_relationship(A,B):- hold(A,B).
-precision: 0.80 recall: 0.02
-del_other_relationship(A,B):- sit(A,B).
-precision: 1.00 recall: 0.05
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.02 TP:3 FN:169 TN:50 FP:0
+del_other_relationship(A,B):- myclose(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.83 Recall:0.06 TP:10 FN:162 TN:48 FP:2
 del_other_relationship(A,B):- put(A,B).
-precision: 0.83 recall: 0.06
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.05 TP:9 FN:163 TN:50 FP:0
+del_other_relationship(A,B):- sit(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.57 Recall:0.05 TP:8 FN:164 TN:44 FP:6
 del_other_relationship(A,B):- throw(A,B).
-precision: 0.57 recall: 0.05
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.80 Recall:0.02 TP:4 FN:168 TN:49 FP:1
 del_other_relationship(A,B):- take(A,B).
-precision: 0.80 recall: 0.02
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.21 TP:36 FN:136 TN:50 FP:0
+del_other_relationship(A,B):- stand(C,A),other_relationship(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.08 TP:14 FN:158 TN:50 FP:0
+del_other_relationship(A,B):- sit(A,C),other_relationship(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

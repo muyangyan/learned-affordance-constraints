@@ -1,30 +1,48 @@
-14:57:09 Generating programs of size: 2
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:8 fn:131 tn:78 fp:0 size:2 mdl:133
-14:57:09 add_leaning_on(A,B):- sit(A,B).
-14:57:09 ********************
-14:57:09 Generating programs of size: 3
-14:57:14 ********************
-14:57:14 New best hypothesis:
-14:57:14 tp:15 fn:124 tn:77 fp:1 size:6 mdl:131
-14:57:14 add_leaning_on(A,B):- sit(A,B).
-14:57:14 add_leaning_on(A,B):- put(A,B).
-14:57:14 add_leaning_on(A,B):- lie(A,B).
-14:57:14 ********************
-14:57:15 Generating programs of size: 4
-14:57:22 Generating programs of size: 5
-14:57:26 Generating programs of size: 6
-14:57:26 Generating programs of size: 7
+02:01:10 Generating programs of size: 2
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:3 fn:136 tn:78 fp:0 size:2 mdl:138
+02:01:10 add_leaning_on(A,B):- lie(A,B).
+02:01:10 ********************
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:8 fn:131 tn:78 fp:0 size:2 mdl:133
+02:01:10 add_leaning_on(A,B):- sit(A,B).
+02:01:10 ********************
+02:01:13 Generating programs of size: 3
+02:01:17 ********************
+02:01:17 New best hypothesis:
+02:01:17 tp:15 fn:124 tn:77 fp:1 size:6 mdl:131
+02:01:17 add_leaning_on(A,B):- lie(A,B).
+02:01:17 add_leaning_on(A,B):- put(A,B).
+02:01:17 add_leaning_on(A,B):- sit(A,B).
+02:01:17 ********************
+02:01:41 Generating programs of size: 4
+02:01:45 ********************
+02:01:45 New best hypothesis:
+02:01:45 tp:21 fn:118 tn:77 fp:1 size:9 mdl:128
+02:01:45 add_leaning_on(A,B):- lie(A,B).
+02:01:45 add_leaning_on(A,B):- put(A,B).
+02:01:45 add_leaning_on(A,B):- sit(A,B).
+02:01:45 add_leaning_on(A,B):- sit(A,C),not_contacting(C,B).
+02:01:45 ********************
+02:11:19 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.94 Recall:0.11 TP:15 FN:124 TN:77 FP:1 Size:6 MDL:131
-add_leaning_on(A,B):- sit(A,B).
-add_leaning_on(A,B):- put(A,B).
+Precision:0.95 Recall:0.15 TP:21 FN:118 TN:77 FP:1 Size:9 MDL:128
 add_leaning_on(A,B):- lie(A,B).
+add_leaning_on(A,B):- put(A,B).
+add_leaning_on(A,B):- sit(A,B).
+add_leaning_on(A,B):- sit(A,C),not_contacting(C,B).
 ******************************
-add_leaning_on(A,B):- sit(A,B).
-precision: 1.00 recall: 0.06
-add_leaning_on(A,B):- put(A,B).
-precision: 0.80 recall: 0.03
+Precision:1.00 Recall:0.02 TP:3 FN:136 TN:78 FP:0
 add_leaning_on(A,B):- lie(A,B).
-precision: 1.00 recall: 0.02
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.80 Recall:0.03 TP:4 FN:135 TN:77 FP:1
+add_leaning_on(A,B):- put(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.06 TP:8 FN:131 TN:78 FP:0
+add_leaning_on(A,B):- sit(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.06 TP:8 FN:131 TN:78 FP:0
+add_leaning_on(A,B):- sit(A,C),not_contacting(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

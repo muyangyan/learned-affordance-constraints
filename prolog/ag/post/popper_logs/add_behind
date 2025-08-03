@@ -1,86 +1,150 @@
-14:57:08 Generating programs of size: 2
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:6 fn:734 tn:576 fp:0 size:2 mdl:736
-14:57:08 add_behind(A,B):- drink(B,A).
-14:57:08 ********************
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:30 fn:710 tn:575 fp:1 size:2 mdl:713
-14:57:08 add_behind(A,B):- hold(B,A).
-14:57:08 ********************
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:84 fn:656 tn:560 fp:16 size:2 mdl:674
-14:57:08 add_behind(A,B):- put(B,A).
-14:57:08 ********************
-14:57:08 Generating programs of size: 3
-14:57:17 ********************
-14:57:17 New best hypothesis:
-14:57:17 tp:355 fn:385 tn:504 fp:72 size:30 mdl:487
-14:57:17 add_behind(A,B):- drink(B,A).
-14:57:17 add_behind(A,B):- hold(B,A).
-14:57:17 add_behind(A,B):- sit(B,A).
-14:57:17 add_behind(A,B):- put(B,A).
-14:57:17 add_behind(A,B):- watch(B,A).
-14:57:17 add_behind(A,B):- wash(B,A).
-14:57:17 add_behind(A,B):- walk(B,A).
-14:57:17 add_behind(A,B):- undress(B,A).
-14:57:17 add_behind(A,B):- turn(B,A).
-14:57:17 add_behind(A,B):- tidy(B,A).
-14:57:17 add_behind(A,B):- throw(B,A).
-14:57:17 add_behind(A,B):- myopen(B,A).
-14:57:17 add_behind(A,B):- myclose(B,A).
-14:57:17 add_behind(A,B):- take(B,A).
-14:57:17 add_behind(A,B):- snuggle(B,A).
-14:57:17 ********************
-14:57:26 Generating programs of size: 4
-14:58:07 TIMEOUT OF 60 SECONDS EXCEEDED
+02:01:09 Generating programs of size: 2
+02:01:09 ********************
+02:01:09 New best hypothesis:
+02:01:09 tp:6 fn:734 tn:576 fp:0 size:2 mdl:736
+02:01:09 add_behind(A,B):- drink(B,A).
+02:01:09 ********************
+02:01:09 ********************
+02:01:09 New best hypothesis:
+02:01:09 tp:16 fn:724 tn:570 fp:6 size:2 mdl:732
+02:01:09 add_behind(A,B):- myopen(B,A).
+02:01:09 ********************
+02:01:09 ********************
+02:01:09 New best hypothesis:
+02:01:09 tp:84 fn:656 tn:560 fp:16 size:2 mdl:674
+02:01:09 add_behind(A,B):- put(B,A).
+02:01:09 ********************
+02:01:10 Generating programs of size: 3
+02:01:18 ********************
+02:01:18 New best hypothesis:
+02:01:18 tp:355 fn:385 tn:504 fp:72 size:30 mdl:487
+02:01:18 add_behind(A,B):- drink(B,A).
+02:01:18 add_behind(A,B):- myopen(B,A).
+02:01:18 add_behind(A,B):- put(B,A).
+02:01:18 add_behind(A,B):- sit(B,A).
+02:01:18 add_behind(A,B):- snuggle(B,A).
+02:01:18 add_behind(A,B):- take(B,A).
+02:01:18 add_behind(A,B):- tidy(B,A).
+02:01:18 add_behind(A,B):- throw(B,A).
+02:01:18 add_behind(A,B):- undress(B,A).
+02:01:18 add_behind(A,B):- turn(B,A).
+02:01:18 add_behind(A,B):- wash(B,A).
+02:01:18 add_behind(A,B):- walk(B,A).
+02:01:18 add_behind(A,B):- watch(B,A).
+02:01:18 add_behind(A,B):- hold(B,A).
+02:01:18 add_behind(A,B):- myclose(B,A).
+02:01:18 ********************
+02:02:03 Generating programs of size: 4
+02:02:13 ********************
+02:02:13 New best hypothesis:
+02:02:13 tp:381 fn:359 tn:547 fp:29 size:51 mdl:439
+02:02:13 add_behind(A,B):- drink(B,A).
+02:02:13 add_behind(A,B):- snuggle(B,A).
+02:02:13 add_behind(A,B):- take(B,A).
+02:02:13 add_behind(A,B):- tidy(B,A).
+02:02:13 add_behind(A,B):- throw(B,A).
+02:02:13 add_behind(A,B):- undress(B,A).
+02:02:13 add_behind(A,B):- turn(B,A).
+02:02:13 add_behind(A,B):- wash(B,A).
+02:02:13 add_behind(A,B):- walk(B,A).
+02:02:13 add_behind(A,B):- watch(B,A).
+02:02:13 add_behind(A,B):- hold(B,A).
+02:02:13 add_behind(A,B):- myclose(B,A).
+02:02:13 add_behind(A,B):- in_front_of(A,B),myopen(B,A).
+02:02:13 add_behind(A,B):- myopen(B,A),on_the_side_of(A,B).
+02:02:13 add_behind(A,B):- on_the_side_of(A,C),sit(C,B).
+02:02:13 add_behind(A,B):- stand(C,B),in_front_of(A,C).
+02:02:13 add_behind(A,B):- sit(C,B),in_front_of(A,C).
+02:02:13 add_behind(A,B):- put(B,A),in_front_of(A,B).
+02:02:13 add_behind(A,B):- sit(B,A),in_front_of(A,B).
+02:02:13 add_behind(A,B):- put(B,A),in(A,B).
+02:02:13 add_behind(A,B):- put(B,A),on_the_side_of(A,B).
+02:02:13 ********************
+02:11:08 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.83 Recall:0.48 TP:355 FN:385 TN:504 FP:72 Size:30 MDL:487
+Precision:0.93 Recall:0.51 TP:381 FN:359 TN:547 FP:29 Size:51 MDL:439
 add_behind(A,B):- drink(B,A).
-add_behind(A,B):- hold(B,A).
-add_behind(A,B):- sit(B,A).
-add_behind(A,B):- put(B,A).
-add_behind(A,B):- watch(B,A).
-add_behind(A,B):- wash(B,A).
-add_behind(A,B):- walk(B,A).
-add_behind(A,B):- undress(B,A).
-add_behind(A,B):- turn(B,A).
+add_behind(A,B):- snuggle(B,A).
+add_behind(A,B):- take(B,A).
 add_behind(A,B):- tidy(B,A).
 add_behind(A,B):- throw(B,A).
-add_behind(A,B):- myopen(B,A).
+add_behind(A,B):- undress(B,A).
+add_behind(A,B):- turn(B,A).
+add_behind(A,B):- wash(B,A).
+add_behind(A,B):- walk(B,A).
+add_behind(A,B):- watch(B,A).
+add_behind(A,B):- hold(B,A).
 add_behind(A,B):- myclose(B,A).
-add_behind(A,B):- take(B,A).
-add_behind(A,B):- snuggle(B,A).
+add_behind(A,B):- in_front_of(A,B),myopen(B,A).
+add_behind(A,B):- myopen(B,A),on_the_side_of(A,B).
+add_behind(A,B):- on_the_side_of(A,C),sit(C,B).
+add_behind(A,B):- stand(C,B),in_front_of(A,C).
+add_behind(A,B):- sit(C,B),in_front_of(A,C).
+add_behind(A,B):- put(B,A),in_front_of(A,B).
+add_behind(A,B):- sit(B,A),in_front_of(A,B).
+add_behind(A,B):- put(B,A),in(A,B).
+add_behind(A,B):- put(B,A),on_the_side_of(A,B).
 ******************************
+Precision:1.00 Recall:0.01 TP:6 FN:734 TN:576 FP:0
 add_behind(A,B):- drink(B,A).
-precision: 1.00 recall: 0.01
-add_behind(A,B):- hold(B,A).
-precision: 0.97 recall: 0.04
-add_behind(A,B):- sit(B,A).
-precision: 0.62 recall: 0.06
-add_behind(A,B):- put(B,A).
-precision: 0.84 recall: 0.11
-add_behind(A,B):- watch(B,A).
-precision: 1.00 recall: 0.01
-add_behind(A,B):- wash(B,A).
-precision: 1.00 recall: 0.00
-add_behind(A,B):- walk(B,A).
-precision: 0.91 recall: 0.07
-add_behind(A,B):- undress(B,A).
-precision: 0.86 recall: 0.01
-add_behind(A,B):- turn(B,A).
-precision: 0.86 recall: 0.01
-add_behind(A,B):- tidy(B,A).
-precision: 0.89 recall: 0.01
-add_behind(A,B):- throw(B,A).
-precision: 0.78 recall: 0.02
-add_behind(A,B):- myopen(B,A).
-precision: 0.73 recall: 0.02
-add_behind(A,B):- myclose(B,A).
-precision: 0.90 recall: 0.10
-add_behind(A,B):- take(B,A).
-precision: 0.82 recall: 0.01
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.80 Recall:0.01 TP:8 FN:732 TN:574 FP:2
 add_behind(A,B):- snuggle(B,A).
-precision: 0.80 recall: 0.01
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.82 Recall:0.01 TP:9 FN:731 TN:574 FP:2
+add_behind(A,B):- take(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.89 Recall:0.01 TP:8 FN:732 TN:575 FP:1
+add_behind(A,B):- tidy(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.78 Recall:0.02 TP:14 FN:726 TN:572 FP:4
+add_behind(A,B):- throw(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.86 Recall:0.01 TP:6 FN:734 TN:575 FP:1
+add_behind(A,B):- undress(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.86 Recall:0.01 TP:6 FN:734 TN:575 FP:1
+add_behind(A,B):- turn(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:3 FN:737 TN:576 FP:0
+add_behind(A,B):- wash(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.91 Recall:0.07 TP:50 FN:690 TN:571 FP:5
+add_behind(A,B):- walk(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:6 FN:734 TN:576 FP:0
+add_behind(A,B):- watch(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.97 Recall:0.04 TP:30 FN:710 TN:575 FP:1
+add_behind(A,B):- hold(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.90 Recall:0.10 TP:73 FN:667 TN:568 FP:8
+add_behind(A,B):- myclose(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:11 FN:729 TN:576 FP:0
+add_behind(A,B):- in_front_of(A,B),myopen(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:5 FN:735 TN:576 FP:0
+add_behind(A,B):- myopen(B,A),on_the_side_of(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.89 Recall:0.03 TP:24 FN:716 TN:573 FP:3
+add_behind(A,B):- on_the_side_of(A,C),sit(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.02 TP:13 FN:727 TN:576 FP:0
+add_behind(A,B):- stand(C,B),in_front_of(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.05 TP:34 FN:706 TN:576 FP:0
+add_behind(A,B):- sit(C,B),in_front_of(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.09 TP:67 FN:673 TN:576 FP:0
+add_behind(A,B):- put(B,A),in_front_of(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.04 TP:33 FN:707 TN:576 FP:0
+add_behind(A,B):- sit(B,A),in_front_of(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:4 FN:736 TN:576 FP:0
+add_behind(A,B):- put(B,A),in(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.94 Recall:0.02 TP:17 FN:723 TN:575 FP:1
+add_behind(A,B):- put(B,A),on_the_side_of(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

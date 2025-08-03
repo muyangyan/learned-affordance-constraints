@@ -1,82 +1,159 @@
-14:57:09 Generating programs of size: 2
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:58 fn:1213 tn:576 fp:32 size:2 mdl:1247
-14:57:09 del_on_the_side_of(A,B):- hold(B,A).
-14:57:09 ********************
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:106 fn:1165 tn:536 fp:72 size:2 mdl:1239
-14:57:09 del_on_the_side_of(A,B):- put(B,A).
-14:57:09 ********************
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:130 fn:1141 tn:580 fp:28 size:2 mdl:1171
-14:57:09 del_on_the_side_of(A,B):- take(B,A).
-14:57:09 ********************
-14:57:09 Generating programs of size: 3
-14:57:19 ********************
-14:57:19 New best hypothesis:
-14:57:19 tp:464 fn:807 tn:385 fp:223 size:28 mdl:1058
-14:57:19 del_on_the_side_of(A,B):- hold(B,A).
-14:57:19 del_on_the_side_of(A,B):- sit(B,A).
-14:57:19 del_on_the_side_of(A,B):- put(B,A).
-14:57:19 del_on_the_side_of(A,B):- pour(B,A).
-14:57:19 del_on_the_side_of(A,B):- wash(B,A).
-14:57:19 del_on_the_side_of(A,B):- dress(B,A).
-14:57:19 del_on_the_side_of(A,B):- walk(B,A).
-14:57:19 del_on_the_side_of(A,B):- play(B,A).
-14:57:19 del_on_the_side_of(A,B):- undress(B,A).
-14:57:19 del_on_the_side_of(A,B):- throw(B,A).
-14:57:19 del_on_the_side_of(A,B):- eat(B,A).
-14:57:19 del_on_the_side_of(A,B):- myopen(B,A).
-14:57:19 del_on_the_side_of(A,B):- take(B,A).
-14:57:19 del_on_the_side_of(A,B):- snuggle(B,A).
-14:57:19 ********************
-14:57:26 Generating programs of size: 4
-14:58:08 TIMEOUT OF 60 SECONDS EXCEEDED
+02:01:09 Generating programs of size: 2
+02:01:09 ********************
+02:01:09 New best hypothesis:
+02:01:09 tp:8 fn:1263 tn:605 fp:3 size:2 mdl:1268
+02:01:09 del_on_the_side_of(A,B):- eat(B,A).
+02:01:09 ********************
+02:01:09 ********************
+02:01:09 New best hypothesis:
+02:01:09 tp:79 fn:1192 tn:550 fp:58 size:2 mdl:1252
+02:01:09 del_on_the_side_of(A,B):- myopen(B,A).
+02:01:09 ********************
+02:01:09 ********************
+02:01:09 New best hypothesis:
+02:01:09 tp:106 fn:1165 tn:536 fp:72 size:2 mdl:1239
+02:01:09 del_on_the_side_of(A,B):- put(B,A).
+02:01:09 ********************
+02:01:09 ********************
+02:01:09 New best hypothesis:
+02:01:09 tp:130 fn:1141 tn:580 fp:28 size:2 mdl:1171
+02:01:09 del_on_the_side_of(A,B):- take(B,A).
+02:01:09 ********************
+02:01:10 Generating programs of size: 3
+02:01:20 ********************
+02:01:20 New best hypothesis:
+02:01:20 tp:464 fn:807 tn:385 fp:223 size:28 mdl:1058
+02:01:20 del_on_the_side_of(A,B):- eat(B,A).
+02:01:20 del_on_the_side_of(A,B):- myopen(B,A).
+02:01:20 del_on_the_side_of(A,B):- play(B,A).
+02:01:20 del_on_the_side_of(A,B):- put(B,A).
+02:01:20 del_on_the_side_of(A,B):- pour(B,A).
+02:01:20 del_on_the_side_of(A,B):- sit(B,A).
+02:01:20 del_on_the_side_of(A,B):- snuggle(B,A).
+02:01:20 del_on_the_side_of(A,B):- take(B,A).
+02:01:20 del_on_the_side_of(A,B):- throw(B,A).
+02:01:20 del_on_the_side_of(A,B):- undress(B,A).
+02:01:20 del_on_the_side_of(A,B):- wash(B,A).
+02:01:20 del_on_the_side_of(A,B):- walk(B,A).
+02:01:20 del_on_the_side_of(A,B):- hold(B,A).
+02:01:20 del_on_the_side_of(A,B):- dress(B,A).
+02:01:20 ********************
+02:02:57 Generating programs of size: 4
+02:03:07 ********************
+02:03:07 New best hypothesis:
+02:03:07 tp:660 fn:611 tn:421 fp:187 size:55 mdl:853
+02:03:07 del_on_the_side_of(A,B):- eat(B,A).
+02:03:07 del_on_the_side_of(A,B):- play(B,A).
+02:03:07 del_on_the_side_of(A,B):- put(B,A).
+02:03:07 del_on_the_side_of(A,B):- pour(B,A).
+02:03:07 del_on_the_side_of(A,B):- snuggle(B,A).
+02:03:07 del_on_the_side_of(A,B):- take(B,A).
+02:03:07 del_on_the_side_of(A,B):- throw(B,A).
+02:03:07 del_on_the_side_of(A,B):- undress(B,A).
+02:03:07 del_on_the_side_of(A,B):- wash(B,A).
+02:03:07 del_on_the_side_of(A,B):- walk(B,A).
+02:03:07 del_on_the_side_of(A,B):- dress(B,A).
+02:03:07 del_on_the_side_of(A,B):- unsure(B,A),myclose(B,A).
+02:03:07 del_on_the_side_of(A,B):- myopen(B,A),looking_at(B,A).
+02:03:07 del_on_the_side_of(A,B):- hold(B,A),not_looking_at(B,A).
+02:03:07 del_on_the_side_of(A,B):- myopen(B,A),unsure(B,A).
+02:03:07 del_on_the_side_of(A,B):- chair(A),sit(B,A).
+02:03:07 del_on_the_side_of(A,B):- myopen(B,A),book(A).
+02:03:07 del_on_the_side_of(A,B):- bag(A),myopen(B,A).
+02:03:07 del_on_the_side_of(A,B):- stand(C,B),on_the_side_of(A,C).
+02:03:07 del_on_the_side_of(A,B):- run(C,B),not_looking_at(C,A).
+02:03:07 del_on_the_side_of(A,B):- awaken(C,B),beneath(A,C).
+02:03:07 del_on_the_side_of(A,B):- sit(C,B),on_the_side_of(A,C).
+02:03:07 ********************
+02:11:11 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.68 Recall:0.37 TP:464 FN:807 TN:385 FP:223 Size:28 MDL:1058
-del_on_the_side_of(A,B):- hold(B,A).
-del_on_the_side_of(A,B):- sit(B,A).
+Precision:0.78 Recall:0.52 TP:660 FN:611 TN:421 FP:187 Size:55 MDL:853
+del_on_the_side_of(A,B):- eat(B,A).
+del_on_the_side_of(A,B):- play(B,A).
 del_on_the_side_of(A,B):- put(B,A).
 del_on_the_side_of(A,B):- pour(B,A).
-del_on_the_side_of(A,B):- wash(B,A).
-del_on_the_side_of(A,B):- dress(B,A).
-del_on_the_side_of(A,B):- walk(B,A).
-del_on_the_side_of(A,B):- play(B,A).
-del_on_the_side_of(A,B):- undress(B,A).
-del_on_the_side_of(A,B):- throw(B,A).
-del_on_the_side_of(A,B):- eat(B,A).
-del_on_the_side_of(A,B):- myopen(B,A).
-del_on_the_side_of(A,B):- take(B,A).
 del_on_the_side_of(A,B):- snuggle(B,A).
+del_on_the_side_of(A,B):- take(B,A).
+del_on_the_side_of(A,B):- throw(B,A).
+del_on_the_side_of(A,B):- undress(B,A).
+del_on_the_side_of(A,B):- wash(B,A).
+del_on_the_side_of(A,B):- walk(B,A).
+del_on_the_side_of(A,B):- dress(B,A).
+del_on_the_side_of(A,B):- unsure(B,A),myclose(B,A).
+del_on_the_side_of(A,B):- myopen(B,A),looking_at(B,A).
+del_on_the_side_of(A,B):- hold(B,A),not_looking_at(B,A).
+del_on_the_side_of(A,B):- myopen(B,A),unsure(B,A).
+del_on_the_side_of(A,B):- chair(A),sit(B,A).
+del_on_the_side_of(A,B):- myopen(B,A),book(A).
+del_on_the_side_of(A,B):- bag(A),myopen(B,A).
+del_on_the_side_of(A,B):- stand(C,B),on_the_side_of(A,C).
+del_on_the_side_of(A,B):- run(C,B),not_looking_at(C,A).
+del_on_the_side_of(A,B):- awaken(C,B),beneath(A,C).
+del_on_the_side_of(A,B):- sit(C,B),on_the_side_of(A,C).
 ******************************
-del_on_the_side_of(A,B):- hold(B,A).
-precision: 0.64 recall: 0.05
-del_on_the_side_of(A,B):- sit(B,A).
-precision: 0.61 recall: 0.02
-del_on_the_side_of(A,B):- put(B,A).
-precision: 0.60 recall: 0.08
-del_on_the_side_of(A,B):- pour(B,A).
-precision: 1.00 recall: 0.01
-del_on_the_side_of(A,B):- wash(B,A).
-precision: 0.75 recall: 0.00
-del_on_the_side_of(A,B):- dress(B,A).
-precision: 1.00 recall: 0.00
-del_on_the_side_of(A,B):- walk(B,A).
-precision: 0.69 recall: 0.02
-del_on_the_side_of(A,B):- play(B,A).
-precision: 0.83 recall: 0.00
-del_on_the_side_of(A,B):- undress(B,A).
-precision: 1.00 recall: 0.00
-del_on_the_side_of(A,B):- throw(B,A).
-precision: 0.78 recall: 0.02
+Precision:0.73 Recall:0.01 TP:8 FN:1263 TN:605 FP:3
 del_on_the_side_of(A,B):- eat(B,A).
-precision: 0.73 recall: 0.01
-del_on_the_side_of(A,B):- myopen(B,A).
-precision: 0.58 recall: 0.06
-del_on_the_side_of(A,B):- take(B,A).
-precision: 0.82 recall: 0.10
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.83 Recall:0.00 TP:5 FN:1266 TN:607 FP:1
+del_on_the_side_of(A,B):- play(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.60 Recall:0.08 TP:106 FN:1165 TN:536 FP:72
+del_on_the_side_of(A,B):- put(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:10 FN:1261 TN:608 FP:0
+del_on_the_side_of(A,B):- pour(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.75 Recall:0.00 TP:6 FN:1265 TN:606 FP:2
 del_on_the_side_of(A,B):- snuggle(B,A).
-precision: 0.75 recall: 0.00
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.82 Recall:0.10 TP:130 FN:1141 TN:580 FP:28
+del_on_the_side_of(A,B):- take(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.78 Recall:0.02 TP:29 FN:1242 TN:600 FP:8
+del_on_the_side_of(A,B):- throw(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:3 FN:1268 TN:608 FP:0
+del_on_the_side_of(A,B):- undress(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.75 Recall:0.00 TP:3 FN:1268 TN:607 FP:1
+del_on_the_side_of(A,B):- wash(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.69 Recall:0.02 TP:27 FN:1244 TN:596 FP:12
+del_on_the_side_of(A,B):- walk(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:5 FN:1266 TN:608 FP:0
+del_on_the_side_of(A,B):- dress(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.92 Recall:0.01 TP:11 FN:1260 TN:607 FP:1
+del_on_the_side_of(A,B):- unsure(B,A),myclose(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.73 Recall:0.03 TP:32 FN:1239 TN:596 FP:12
+del_on_the_side_of(A,B):- myopen(B,A),looking_at(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.68 Recall:0.04 TP:45 FN:1226 TN:587 FP:21
+del_on_the_side_of(A,B):- hold(B,A),not_looking_at(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.80 Recall:0.01 TP:8 FN:1263 TN:606 FP:2
+del_on_the_side_of(A,B):- myopen(B,A),unsure(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.94 Recall:0.01 TP:15 FN:1256 TN:607 FP:1
+del_on_the_side_of(A,B):- chair(A),sit(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.88 Recall:0.01 TP:15 FN:1256 TN:606 FP:2
+del_on_the_side_of(A,B):- myopen(B,A),book(A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.84 Recall:0.01 TP:16 FN:1255 TN:605 FP:3
+del_on_the_side_of(A,B):- bag(A),myopen(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.87 Recall:0.08 TP:103 FN:1168 TN:593 FP:15
+del_on_the_side_of(A,B):- stand(C,B),on_the_side_of(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:12 FN:1259 TN:608 FP:0
+del_on_the_side_of(A,B):- run(C,B),not_looking_at(C,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.75 Recall:0.01 TP:9 FN:1262 TN:605 FP:3
+del_on_the_side_of(A,B):- awaken(C,B),beneath(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.91 Recall:0.09 TP:114 FN:1157 TN:597 FP:11
+del_on_the_side_of(A,B):- sit(C,B),on_the_side_of(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

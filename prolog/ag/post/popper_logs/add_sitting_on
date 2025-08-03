@@ -1,39 +1,74 @@
-14:57:09 Generating programs of size: 2
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:7 fn:352 tn:516 fp:0 size:2 mdl:354
-14:57:09 add_sitting_on(A,B):- awaken(A,B).
-14:57:09 ********************
-14:57:15 ********************
-14:57:15 New best hypothesis:
-14:57:15 tp:38 fn:321 tn:512 fp:4 size:2 mdl:327
-14:57:15 add_sitting_on(A,B):- sit(A,B).
-14:57:15 ********************
-14:57:15 Generating programs of size: 3
-14:57:21 ********************
-14:57:21 New best hypothesis:
-14:57:21 tp:56 fn:303 tn:510 fp:6 size:8 mdl:317
-14:57:21 add_sitting_on(A,B):- awaken(A,B).
-14:57:21 add_sitting_on(A,B):- sit(A,B).
-14:57:21 add_sitting_on(A,B):- throw(A,B).
-14:57:21 add_sitting_on(A,B):- lie(A,B).
-14:57:21 ********************
-14:57:22 Generating programs of size: 4
-14:57:35 Generating programs of size: 5
-14:57:53 Generating programs of size: 6
-14:57:58 Generating programs of size: 7
+02:01:11 Generating programs of size: 2
+02:01:11 ********************
+02:01:11 New best hypothesis:
+02:01:11 tp:6 fn:353 tn:514 fp:2 size:2 mdl:357
+02:01:11 add_sitting_on(A,B):- lie(A,B).
+02:01:11 ********************
+02:01:11 ********************
+02:01:11 New best hypothesis:
+02:01:11 tp:7 fn:352 tn:516 fp:0 size:2 mdl:354
+02:01:11 add_sitting_on(A,B):- awaken(A,B).
+02:01:11 ********************
+02:01:11 ********************
+02:01:11 New best hypothesis:
+02:01:11 tp:38 fn:321 tn:512 fp:4 size:2 mdl:327
+02:01:11 add_sitting_on(A,B):- sit(A,B).
+02:01:11 ********************
+02:01:11 Generating programs of size: 3
+02:01:17 ********************
+02:01:17 New best hypothesis:
+02:01:17 tp:56 fn:303 tn:510 fp:6 size:8 mdl:317
+02:01:17 add_sitting_on(A,B):- lie(A,B).
+02:01:17 add_sitting_on(A,B):- awaken(A,B).
+02:01:17 add_sitting_on(A,B):- sit(A,B).
+02:01:17 add_sitting_on(A,B):- throw(A,B).
+02:01:17 ********************
+02:01:34 Generating programs of size: 4
+02:01:41 ********************
+02:01:41 New best hypothesis:
+02:01:41 tp:118 fn:241 tn:509 fp:7 size:20 mdl:268
+02:01:41 add_sitting_on(A,B):- lie(A,B).
+02:01:41 add_sitting_on(A,B):- awaken(A,B).
+02:01:41 add_sitting_on(A,B):- sit(A,B).
+02:01:41 add_sitting_on(A,B):- throw(A,B).
+02:01:41 add_sitting_on(A,B):- looking_at(C,B),sit(A,C).
+02:01:41 add_sitting_on(A,B):- unsure(C,B),sit(A,C).
+02:01:41 add_sitting_on(A,B):- sit(C,A),not_looking_at(C,B).
+02:01:41 add_sitting_on(A,B):- lying_on(C,B),awaken(A,C).
+02:01:41 ********************
+02:11:09 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.90 Recall:0.16 TP:56 FN:303 TN:510 FP:6 Size:8 MDL:317
+Precision:0.94 Recall:0.33 TP:118 FN:241 TN:509 FP:7 Size:20 MDL:268
+add_sitting_on(A,B):- lie(A,B).
 add_sitting_on(A,B):- awaken(A,B).
 add_sitting_on(A,B):- sit(A,B).
 add_sitting_on(A,B):- throw(A,B).
-add_sitting_on(A,B):- lie(A,B).
+add_sitting_on(A,B):- looking_at(C,B),sit(A,C).
+add_sitting_on(A,B):- unsure(C,B),sit(A,C).
+add_sitting_on(A,B):- sit(C,A),not_looking_at(C,B).
+add_sitting_on(A,B):- lying_on(C,B),awaken(A,C).
 ******************************
-add_sitting_on(A,B):- awaken(A,B).
-precision: 1.00 recall: 0.02
-add_sitting_on(A,B):- sit(A,B).
-precision: 0.90 recall: 0.11
-add_sitting_on(A,B):- throw(A,B).
-precision: 1.00 recall: 0.01
+Precision:0.75 Recall:0.02 TP:6 FN:353 TN:514 FP:2
 add_sitting_on(A,B):- lie(A,B).
-precision: 0.75 recall: 0.02
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.02 TP:7 FN:352 TN:516 FP:0
+add_sitting_on(A,B):- awaken(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.90 Recall:0.11 TP:38 FN:321 TN:512 FP:4
+add_sitting_on(A,B):- sit(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:5 FN:354 TN:516 FP:0
+add_sitting_on(A,B):- throw(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.06 TP:20 FN:339 TN:516 FP:0
+add_sitting_on(A,B):- looking_at(C,B),sit(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.04 TP:15 FN:344 TN:516 FP:0
+add_sitting_on(A,B):- unsure(C,B),sit(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.97 Recall:0.09 TP:33 FN:326 TN:515 FP:1
+add_sitting_on(A,B):- sit(C,A),not_looking_at(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.04 TP:14 FN:345 TN:516 FP:0
+add_sitting_on(A,B):- lying_on(C,B),awaken(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

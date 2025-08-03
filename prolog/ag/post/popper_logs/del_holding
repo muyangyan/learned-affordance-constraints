@@ -1,58 +1,118 @@
-14:57:09 Generating programs of size: 2
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:9 fn:1541 tn:1233 fp:3 size:2 mdl:1546
-14:57:09 del_holding(A,B):- snuggle(A,B).
-14:57:09 ********************
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:48 fn:1502 tn:1199 fp:37 size:2 mdl:1541
-14:57:09 del_holding(A,B):- myclose(A,B).
-14:57:09 ********************
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:325 fn:1225 tn:1095 fp:141 size:2 mdl:1368
-14:57:09 del_holding(A,B):- put(A,B).
-14:57:09 ********************
-14:57:09 Generating programs of size: 3
-14:57:19 ********************
-14:57:19 New best hypothesis:
-14:57:19 tp:479 fn:1071 tn:1028 fp:208 size:16 mdl:1295
-14:57:19 del_holding(A,B):- snuggle(A,B).
-14:57:19 del_holding(A,B):- myclose(A,B).
-14:57:19 del_holding(A,B):- hold(A,B).
-14:57:19 del_holding(A,B):- put(A,B).
-14:57:19 del_holding(A,B):- walk(A,B).
-14:57:19 del_holding(A,B):- dress(A,B).
-14:57:19 del_holding(A,B):- tidy(A,B).
-14:57:19 del_holding(A,B):- throw(A,B).
-14:57:19 ********************
-14:57:26 Generating programs of size: 4
-14:58:08 TIMEOUT OF 60 SECONDS EXCEEDED
+02:01:10 Generating programs of size: 2
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:15 fn:1535 tn:1230 fp:6 size:2 mdl:1543
+02:01:10 del_holding(A,B):- hold(A,B).
+02:01:10 ********************
+02:01:20 ********************
+02:01:20 New best hypothesis:
+02:01:20 tp:17 fn:1533 tn:1234 fp:2 size:2 mdl:1537
+02:01:20 del_holding(A,B):- dress(A,B).
+02:01:20 ********************
+02:01:20 ********************
+02:01:20 New best hypothesis:
+02:01:20 tp:325 fn:1225 tn:1095 fp:141 size:2 mdl:1368
+02:01:20 del_holding(A,B):- put(A,B).
+02:01:20 ********************
+02:01:20 Generating programs of size: 3
+02:01:31 ********************
+02:01:31 New best hypothesis:
+02:01:31 tp:479 fn:1071 tn:1028 fp:208 size:16 mdl:1295
+02:01:31 del_holding(A,B):- hold(A,B).
+02:01:31 del_holding(A,B):- dress(A,B).
+02:01:31 del_holding(A,B):- myclose(A,B).
+02:01:31 del_holding(A,B):- put(A,B).
+02:01:31 del_holding(A,B):- throw(A,B).
+02:01:31 del_holding(A,B):- tidy(A,B).
+02:01:31 del_holding(A,B):- snuggle(A,B).
+02:01:31 del_holding(A,B):- walk(A,B).
+02:01:31 ********************
+02:02:04 Generating programs of size: 4
+02:02:14 ********************
+02:02:14 New best hypothesis:
+02:02:14 tp:652 fn:898 tn:982 fp:254 size:43 mdl:1195
+02:02:14 del_holding(A,B):- hold(A,B).
+02:02:14 del_holding(A,B):- dress(A,B).
+02:02:14 del_holding(A,B):- put(A,B).
+02:02:14 del_holding(A,B):- throw(A,B).
+02:02:14 del_holding(A,B):- walk(A,B).
+02:02:14 del_holding(A,B):- watch(A,B),laptop(B).
+02:02:14 del_holding(A,B):- holding(C,B),run(A,C).
+02:02:14 del_holding(A,B):- holding(C,B),stand(C,A).
+02:02:14 del_holding(A,B):- sit(C,A),looking_at(C,B).
+02:02:14 del_holding(A,B):- myclose(A,B),closet_cabinet(B).
+02:02:14 del_holding(A,B):- myclose(A,B),door(B).
+02:02:14 del_holding(A,B):- myopen(A,B),refrigerator(B).
+02:02:14 del_holding(A,B):- myopen(A,B),door(B).
+02:02:14 del_holding(A,B):- blanket(B),snuggle(A,B).
+02:02:14 del_holding(A,B):- blanket(B),tidy(A,B).
+02:02:14 del_holding(A,B):- tidy(A,B),closet_cabinet(B).
+02:02:14 ********************
+02:11:08 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.70 Recall:0.31 TP:479 FN:1071 TN:1028 FP:208 Size:16 MDL:1295
-del_holding(A,B):- snuggle(A,B).
-del_holding(A,B):- myclose(A,B).
+Precision:0.72 Recall:0.42 TP:652 FN:898 TN:982 FP:254 Size:43 MDL:1195
 del_holding(A,B):- hold(A,B).
-del_holding(A,B):- put(A,B).
-del_holding(A,B):- walk(A,B).
 del_holding(A,B):- dress(A,B).
-del_holding(A,B):- tidy(A,B).
+del_holding(A,B):- put(A,B).
 del_holding(A,B):- throw(A,B).
+del_holding(A,B):- walk(A,B).
+del_holding(A,B):- watch(A,B),laptop(B).
+del_holding(A,B):- holding(C,B),run(A,C).
+del_holding(A,B):- holding(C,B),stand(C,A).
+del_holding(A,B):- sit(C,A),looking_at(C,B).
+del_holding(A,B):- myclose(A,B),closet_cabinet(B).
+del_holding(A,B):- myclose(A,B),door(B).
+del_holding(A,B):- myopen(A,B),refrigerator(B).
+del_holding(A,B):- myopen(A,B),door(B).
+del_holding(A,B):- blanket(B),snuggle(A,B).
+del_holding(A,B):- blanket(B),tidy(A,B).
+del_holding(A,B):- tidy(A,B),closet_cabinet(B).
 ******************************
-del_holding(A,B):- snuggle(A,B).
-precision: 0.75 recall: 0.01
-del_holding(A,B):- myclose(A,B).
-precision: 0.56 recall: 0.03
+Precision:0.71 Recall:0.01 TP:15 FN:1535 TN:1230 FP:6
 del_holding(A,B):- hold(A,B).
-precision: 0.71 recall: 0.01
-del_holding(A,B):- put(A,B).
-precision: 0.70 recall: 0.21
-del_holding(A,B):- walk(A,B).
-precision: 1.00 recall: 0.00
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.89 Recall:0.01 TP:17 FN:1533 TN:1234 FP:2
 del_holding(A,B):- dress(A,B).
-precision: 0.89 recall: 0.01
-del_holding(A,B):- tidy(A,B).
-precision: 0.65 recall: 0.01
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.70 Recall:0.21 TP:325 FN:1225 TN:1095 FP:141
+del_holding(A,B):- put(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.77 Recall:0.04 TP:64 FN:1486 TN:1217 FP:19
 del_holding(A,B):- throw(A,B).
-precision: 0.77 recall: 0.04
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:4 FN:1546 TN:1236 FP:0
+del_holding(A,B):- walk(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.71 Recall:0.00 TP:5 FN:1545 TN:1234 FP:2
+del_holding(A,B):- watch(A,B),laptop(B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.80 Recall:0.01 TP:16 FN:1534 TN:1232 FP:4
+del_holding(A,B):- holding(C,B),run(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.71 Recall:0.08 TP:120 FN:1430 TN:1188 FP:48
+del_holding(A,B):- holding(C,B),stand(C,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.60 Recall:0.03 TP:45 FN:1505 TN:1206 FP:30
+del_holding(A,B):- sit(C,A),looking_at(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.83 Recall:0.01 TP:19 FN:1531 TN:1232 FP:4
+del_holding(A,B):- myclose(A,B),closet_cabinet(B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.82 Recall:0.01 TP:9 FN:1541 TN:1234 FP:2
+del_holding(A,B):- myclose(A,B),door(B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:5 FN:1545 TN:1236 FP:0
+del_holding(A,B):- myopen(A,B),refrigerator(B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:8 FN:1542 TN:1236 FP:0
+del_holding(A,B):- myopen(A,B),door(B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.89 Recall:0.01 TP:8 FN:1542 TN:1235 FP:1
+del_holding(A,B):- blanket(B),snuggle(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.86 Recall:0.00 TP:6 FN:1544 TN:1235 FP:1
+del_holding(A,B):- blanket(B),tidy(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:4 FN:1546 TN:1236 FP:0
+del_holding(A,B):- tidy(A,B),closet_cabinet(B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

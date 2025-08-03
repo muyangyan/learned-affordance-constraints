@@ -3,7 +3,7 @@ import json
 import argparse
 
 from util.config_utils import load_yaml
-from util.rule_utils import normalize_predicate_name
+from util.rule_utils import normalize_predicate_name, number_predicate_head
 
 def parse_metrics(line):
     metrics = {}
@@ -42,10 +42,16 @@ def parse_logs(folder):
                 rules[file] = None
                 continue
             elif lines[-1].strip('\n') == "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~": #rule is split
-                #ADDRESS
-                continue
-
-
+                metrics = []
+                for line in reversed(lines[:-1]):
+                    line = line.strip('\n')
+                    if line[-1] == '.':
+                        rule.append(line)
+                    else:
+                        if line.startswith('Precision:'):
+                            metrics.append(parse_metrics(line))
+                        elif line == "******************************":
+                            break
             elif lines[-1].strip('\n') != "******************************":
                 print(file, 'stuck, fixing')
                 for line in reversed(lines[:-1]):
@@ -112,11 +118,19 @@ def write_rules(rules_folder, logs_folder, rules_name, weight, timeout, label_ty
             if metrics is None:
                 print(f'rule {predicate} no metrics')
                 continue
-            f.write(f'%%PRECISION: {metrics["precision"]:.2f} RECALL: {metrics["recall"]:.2f} TP: {metrics["tp"]} FN: {metrics["fn"]} TN: {metrics["tn"]} FP: {metrics["fp"]}\n')
+            if type(metrics) == list:
+                assert len(metrics) == len(rule), f'rule {predicate} has {len(rule)} lines but {len(metrics)} metrics'
+                for i, (metric, line) in enumerate(zip(metrics, rule)):
+                    f.write(f'%%PRECISION: {metric["precision"]:.2f} RECALL: {metric["recall"]:.2f} TP: {metric["tp"]} FN: {metric["fn"]} TN: {metric["tn"]} FP: {metric["fp"]}\n')
+                    f.write(f'{number_predicate_head(line, i)}\n')
+                f.write('\n')
 
-            for line in rule:
-                f.write(line + '\n')
-            f.write('\n')
+            else:
+                f.write(f'%%PRECISION: {metrics["precision"]:.2f} RECALL: {metrics["recall"]:.2f} TP: {metrics["tp"]} FN: {metrics["fn"]} TN: {metrics["tn"]} FP: {metrics["fp"]}\n')
+
+                for line in rule:
+                    f.write(line + '\n')
+                f.write('\n')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

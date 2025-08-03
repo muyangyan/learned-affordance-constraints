@@ -1,43 +1,137 @@
-14:57:08 Generating programs of size: 2
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:13 fn:2109 tn:3402 fp:9 size:2 mdl:2120
-14:57:08 add_in_front_of(A,B):- walk(B,A).
-14:57:08 ********************
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:34 fn:2088 tn:3405 fp:6 size:2 mdl:2096
-14:57:08 add_in_front_of(A,B):- undress(B,A).
-14:57:08 ********************
-14:57:09 Generating programs of size: 3
-14:57:19 ********************
-14:57:19 New best hypothesis:
-14:57:19 tp:47 fn:2075 tn:3396 fp:15 size:4 mdl:2094
-14:57:19 add_in_front_of(A,B):- walk(B,A).
-14:57:19 add_in_front_of(A,B):- undress(B,A).
-14:57:19 ********************
-14:57:25 Generating programs of size: 4
-14:57:35 ********************
-14:57:35 New best hypothesis:
-14:57:35 tp:58 fn:2064 tn:3396 fp:15 size:10 mdl:2089
-14:57:35 add_in_front_of(A,B):- walk(B,A).
-14:57:35 add_in_front_of(A,B):- undress(B,A).
-14:57:35 add_in_front_of(A,B):- take(C,A),stand(C,B).
-14:57:35 add_in_front_of(A,B):- hold(B,A),tidy(B,A).
-14:57:35 ********************
-14:58:07 TIMEOUT OF 60 SECONDS EXCEEDED
+02:01:09 Generating programs of size: 2
+02:01:09 ********************
+02:01:09 New best hypothesis:
+02:01:09 tp:34 fn:2088 tn:3405 fp:6 size:2 mdl:2096
+02:01:09 add_in_front_of(A,B):- undress(B,A).
+02:01:09 ********************
+02:01:10 Generating programs of size: 3
+02:01:20 ********************
+02:01:20 New best hypothesis:
+02:01:20 tp:47 fn:2075 tn:3396 fp:15 size:4 mdl:2094
+02:01:20 add_in_front_of(A,B):- undress(B,A).
+02:01:20 add_in_front_of(A,B):- walk(B,A).
+02:01:20 ********************
+02:01:36 ********************
+02:01:36 New best hypothesis:
+02:01:36 tp:34 fn:2088 tn:3409 fp:2 size:3 mdl:2093
+02:01:36 add_in_front_of(A,B):- undress(B,A),wearing(B,A).
+02:01:36 ********************
+02:01:59 Generating programs of size: 4
+02:02:09 ********************
+02:02:09 New best hypothesis:
+02:02:09 tp:345 fn:1777 tn:3278 fp:133 size:66 mdl:1976
+02:02:09 add_in_front_of(A,B):- eat(B,A),on_the_side_of(A,B).
+02:02:09 add_in_front_of(A,B):- stand(B,C),behind(A,C).
+02:02:09 add_in_front_of(A,B):- on_the_side_of(A,C),sit(B,C).
+02:02:09 add_in_front_of(A,B):- stand(C,B),take(C,A).
+02:02:09 add_in_front_of(A,B):- take(B,A),above(A,B).
+02:02:09 add_in_front_of(A,B):- undress(B,A),wearing(B,A).
+02:02:09 add_in_front_of(A,B):- myopen(B,A),on_the_side_of(A,B).
+02:02:09 add_in_front_of(A,B):- behind(A,B),myopen(B,A).
+02:02:09 add_in_front_of(A,B):- play(B,A),on_the_side_of(A,B).
+02:02:09 add_in_front_of(A,B):- on_the_side_of(A,B),hold(B,A).
+02:02:09 add_in_front_of(A,B):- throw(B,A),on_the_side_of(A,B).
+02:02:09 add_in_front_of(A,B):- walk(B,A),on_the_side_of(A,B).
+02:02:09 add_in_front_of(A,B):- watch(B,A),on_the_side_of(A,B).
+02:02:09 add_in_front_of(A,B):- put(B,A),on_the_side_of(A,B).
+02:02:09 add_in_front_of(A,B):- put(B,A),behind(A,B).
+02:02:09 add_in_front_of(A,B):- take(B,A),behind(A,B).
+02:02:09 add_in_front_of(A,B):- in(A,B),hold(B,A).
+02:02:09 add_in_front_of(A,B):- tidy(B,A),in(A,B).
+02:02:09 add_in_front_of(A,B):- walk(B,A),in(A,B).
+02:02:09 add_in_front_of(A,B):- wearing(B,A),hold(B,A).
+02:02:09 add_in_front_of(A,B):- take(B,A),wearing(B,A).
+02:02:09 add_in_front_of(A,B):- throw(B,A),wearing(B,A).
+02:02:09 ********************
+02:11:09 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.79 Recall:0.03 TP:58 FN:2064 TN:3396 FP:15 Size:10 MDL:2089
-add_in_front_of(A,B):- walk(B,A).
-add_in_front_of(A,B):- undress(B,A).
-add_in_front_of(A,B):- take(C,A),stand(C,B).
-add_in_front_of(A,B):- hold(B,A),tidy(B,A).
+Precision:0.72 Recall:0.16 TP:345 FN:1777 TN:3278 FP:133 Size:66 MDL:1976
+add_in_front_of(A,B):- eat(B,A),on_the_side_of(A,B).
+add_in_front_of(A,B):- stand(B,C),behind(A,C).
+add_in_front_of(A,B):- on_the_side_of(A,C),sit(B,C).
+add_in_front_of(A,B):- stand(C,B),take(C,A).
+add_in_front_of(A,B):- take(B,A),above(A,B).
+add_in_front_of(A,B):- undress(B,A),wearing(B,A).
+add_in_front_of(A,B):- myopen(B,A),on_the_side_of(A,B).
+add_in_front_of(A,B):- behind(A,B),myopen(B,A).
+add_in_front_of(A,B):- play(B,A),on_the_side_of(A,B).
+add_in_front_of(A,B):- on_the_side_of(A,B),hold(B,A).
+add_in_front_of(A,B):- throw(B,A),on_the_side_of(A,B).
+add_in_front_of(A,B):- walk(B,A),on_the_side_of(A,B).
+add_in_front_of(A,B):- watch(B,A),on_the_side_of(A,B).
+add_in_front_of(A,B):- put(B,A),on_the_side_of(A,B).
+add_in_front_of(A,B):- put(B,A),behind(A,B).
+add_in_front_of(A,B):- take(B,A),behind(A,B).
+add_in_front_of(A,B):- in(A,B),hold(B,A).
+add_in_front_of(A,B):- tidy(B,A),in(A,B).
+add_in_front_of(A,B):- walk(B,A),in(A,B).
+add_in_front_of(A,B):- wearing(B,A),hold(B,A).
+add_in_front_of(A,B):- take(B,A),wearing(B,A).
+add_in_front_of(A,B):- throw(B,A),wearing(B,A).
 ******************************
-add_in_front_of(A,B):- walk(B,A).
-precision: 0.59 recall: 0.01
-add_in_front_of(A,B):- undress(B,A).
-precision: 0.85 recall: 0.02
-add_in_front_of(A,B):- take(C,A),stand(C,B).
-precision: 1.00 recall: 0.00
-add_in_front_of(A,B):- hold(B,A),tidy(B,A).
-precision: 1.00 recall: 0.00
+Precision:1.00 Recall:0.00 TP:8 FN:2114 TN:3411 FP:0
+add_in_front_of(A,B):- eat(B,A),on_the_side_of(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:5 FN:2117 TN:3411 FP:0
+add_in_front_of(A,B):- stand(B,C),behind(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.65 Recall:0.01 TP:26 FN:2096 TN:3397 FP:14
+add_in_front_of(A,B):- on_the_side_of(A,C),sit(B,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:4 FN:2118 TN:3411 FP:0
+add_in_front_of(A,B):- stand(C,B),take(C,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.80 Recall:0.00 TP:8 FN:2114 TN:3409 FP:2
+add_in_front_of(A,B):- take(B,A),above(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.94 Recall:0.02 TP:34 FN:2088 TN:3409 FP:2
+add_in_front_of(A,B):- undress(B,A),wearing(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.56 Recall:0.03 TP:59 FN:2063 TN:3365 FP:46
+add_in_front_of(A,B):- myopen(B,A),on_the_side_of(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.88 Recall:0.00 TP:7 FN:2115 TN:3410 FP:1
+add_in_front_of(A,B):- behind(A,B),myopen(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.80 Recall:0.00 TP:4 FN:2118 TN:3410 FP:1
+add_in_front_of(A,B):- play(B,A),on_the_side_of(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.57 Recall:0.02 TP:35 FN:2087 TN:3385 FP:26
+add_in_front_of(A,B):- on_the_side_of(A,B),hold(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.65 Recall:0.01 TP:15 FN:2107 TN:3403 FP:8
+add_in_front_of(A,B):- throw(B,A),on_the_side_of(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:4 FN:2118 TN:3411 FP:0
+add_in_front_of(A,B):- walk(B,A),on_the_side_of(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.69 Recall:0.00 TP:9 FN:2113 TN:3407 FP:4
+add_in_front_of(A,B):- watch(B,A),on_the_side_of(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.63 Recall:0.03 TP:68 FN:2054 TN:3371 FP:40
+add_in_front_of(A,B):- put(B,A),on_the_side_of(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:13 FN:2109 TN:3411 FP:0
+add_in_front_of(A,B):- put(B,A),behind(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:20 FN:2102 TN:3411 FP:0
+add_in_front_of(A,B):- take(B,A),behind(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:10 FN:2112 TN:3411 FP:0
+add_in_front_of(A,B):- in(A,B),hold(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:4 FN:2118 TN:3411 FP:0
+add_in_front_of(A,B):- tidy(B,A),in(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:8 FN:2114 TN:3411 FP:0
+add_in_front_of(A,B):- walk(B,A),in(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:8 FN:2114 TN:3411 FP:0
+add_in_front_of(A,B):- wearing(B,A),hold(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:8 FN:2114 TN:3411 FP:0
+add_in_front_of(A,B):- take(B,A),wearing(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:8 FN:2114 TN:3411 FP:0
+add_in_front_of(A,B):- throw(B,A),wearing(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

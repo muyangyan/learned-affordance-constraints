@@ -1,26 +1,37 @@
-14:57:09 Generating programs of size: 2
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:11 fn:41 tn:17 fp:1 size:2 mdl:44
-14:57:09 del_carrying(A,B):- put(A,B).
-14:57:09 ********************
-14:57:09 Generating programs of size: 3
-14:57:10 ********************
-14:57:10 New best hypothesis:
-14:57:10 tp:19 fn:33 tn:16 fp:2 size:4 mdl:39
-14:57:10 del_carrying(A,B):- put(A,B).
-14:57:10 del_carrying(A,B):- throw(A,B).
-14:57:10 ********************
-14:57:11 Generating programs of size: 4
-14:57:13 Generating programs of size: 5
-14:57:14 Generating programs of size: 6
-14:57:16 Generating programs of size: 7
+02:01:09 Generating programs of size: 2
+02:01:09 ********************
+02:01:09 New best hypothesis:
+02:01:09 tp:11 fn:41 tn:17 fp:1 size:2 mdl:44
+02:01:09 del_carrying(A,B):- put(A,B).
+02:01:09 ********************
+02:01:13 Generating programs of size: 3
+02:01:14 ********************
+02:01:14 New best hypothesis:
+02:01:14 tp:19 fn:33 tn:16 fp:2 size:4 mdl:39
+02:01:14 del_carrying(A,B):- put(A,B).
+02:01:14 del_carrying(A,B):- throw(A,B).
+02:01:14 ********************
+02:02:02 Generating programs of size: 4
+02:02:03 ********************
+02:02:03 New best hypothesis:
+02:02:03 tp:24 fn:28 tn:16 fp:2 size:7 mdl:37
+02:02:03 del_carrying(A,B):- put(A,B).
+02:02:03 del_carrying(A,B):- throw(A,B).
+02:02:03 del_carrying(A,B):- carrying(C,B),stand(C,A).
+02:02:03 ********************
+02:11:11 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.90 Recall:0.37 TP:19 FN:33 TN:16 FP:2 Size:4 MDL:39
+Precision:0.92 Recall:0.46 TP:24 FN:28 TN:16 FP:2 Size:7 MDL:37
 del_carrying(A,B):- put(A,B).
 del_carrying(A,B):- throw(A,B).
+del_carrying(A,B):- carrying(C,B),stand(C,A).
 ******************************
+Precision:0.92 Recall:0.21 TP:11 FN:41 TN:17 FP:1
 del_carrying(A,B):- put(A,B).
-precision: 0.92 recall: 0.21
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.89 Recall:0.15 TP:8 FN:44 TN:17 FP:1
 del_carrying(A,B):- throw(A,B).
-precision: 0.89 recall: 0.15
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.13 TP:7 FN:45 TN:18 FP:0
+del_carrying(A,B):- carrying(C,B),stand(C,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1,2 +1,15 @@
-14:57:06 Generating programs of size: 3
-NO SOLUTION
+02:01:13 Generating programs of size: 3
+02:06:22 Generating programs of size: 4
+02:06:57 ********************
+02:06:57 New best hypothesis:
+02:06:57 tp:15 fn:51 tn:237 fp:7 size:4 mdl:62
+02:06:57 del_laptop(A):- in_front_of(A,B),looking_at(C,A),stand(B,C).
+02:06:57 ********************
+03:07:15 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.68 Recall:0.23 TP:15 FN:51 TN:237 FP:7 Size:4 MDL:62
+del_laptop(A):- in_front_of(A,B),looking_at(C,A),stand(B,C).
+******************************
+Precision:0.68 Recall:0.23 TP:15 FN:51 TN:237 FP:7
+del_laptop(A):- in_front_of(A,B),looking_at(C,A),stand(B,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1,70 +1,151 @@
-14:57:08 Generating programs of size: 2
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:9 fn:724 tn:228 fp:2 size:2 mdl:728
-14:57:08 add_unsure(A,B):- drink(A,B).
-14:57:08 ********************
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:27 fn:706 tn:225 fp:5 size:2 mdl:713
-14:57:08 add_unsure(A,B):- hold(A,B).
-14:57:08 ********************
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:70 fn:663 tn:190 fp:40 size:2 mdl:705
-14:57:08 add_unsure(A,B):- put(A,B).
-14:57:08 ********************
-14:57:08 Generating programs of size: 3
-14:57:16 ********************
-14:57:16 New best hypothesis:
-14:57:16 tp:226 fn:507 tn:128 fp:102 size:22 mdl:631
-14:57:16 add_unsure(A,B):- drink(A,B).
-14:57:16 add_unsure(A,B):- hold(A,B).
-14:57:16 add_unsure(A,B):- sit(A,B).
-14:57:16 add_unsure(A,B):- put(A,B).
-14:57:16 add_unsure(A,B):- walk(A,B).
-14:57:16 add_unsure(A,B):- play(A,B).
-14:57:16 add_unsure(A,B):- undress(A,B).
-14:57:16 add_unsure(A,B):- throw(A,B).
-14:57:16 add_unsure(A,B):- eat(A,B).
-14:57:16 add_unsure(A,B):- myopen(A,B).
-14:57:16 add_unsure(A,B):- take(A,B).
-14:57:16 ********************
-14:57:22 Generating programs of size: 4
-14:58:12 TIMEOUT OF 60 SECONDS EXCEEDED
+02:01:08 Generating programs of size: 2
+02:01:08 ********************
+02:01:08 New best hypothesis:
+02:01:08 tp:27 fn:706 tn:225 fp:5 size:2 mdl:713
+02:01:08 add_unsure(A,B):- hold(A,B).
+02:01:08 ********************
+02:01:15 ********************
+02:01:15 New best hypothesis:
+02:01:15 tp:70 fn:663 tn:190 fp:40 size:2 mdl:705
+02:01:15 add_unsure(A,B):- put(A,B).
+02:01:15 ********************
+02:01:16 Generating programs of size: 3
+02:01:24 ********************
+02:01:24 New best hypothesis:
+02:01:24 tp:226 fn:507 tn:128 fp:102 size:22 mdl:631
+02:01:24 add_unsure(A,B):- hold(A,B).
+02:01:24 add_unsure(A,B):- myopen(A,B).
+02:01:24 add_unsure(A,B):- eat(A,B).
+02:01:24 add_unsure(A,B):- drink(A,B).
+02:01:24 add_unsure(A,B):- play(A,B).
+02:01:24 add_unsure(A,B):- put(A,B).
+02:01:24 add_unsure(A,B):- sit(A,B).
+02:01:24 add_unsure(A,B):- throw(A,B).
+02:01:24 add_unsure(A,B):- take(A,B).
+02:01:24 add_unsure(A,B):- undress(A,B).
+02:01:24 add_unsure(A,B):- walk(A,B).
+02:01:24 ********************
+02:02:45 Generating programs of size: 4
+02:02:55 ********************
+02:02:55 New best hypothesis:
+02:02:55 tp:258 fn:475 tn:226 fp:4 size:66 mdl:545
+02:02:55 add_unsure(A,B):- drink(A,B).
+02:02:55 add_unsure(A,B):- play(A,B).
+02:02:55 add_unsure(A,B):- sit(A,B).
+02:02:55 add_unsure(A,B):- tidy(A,B),looking_at(A,B).
+02:02:55 add_unsure(A,B):- throw(A,B),looking_at(A,B).
+02:02:55 add_unsure(A,B):- take(A,B),looking_at(A,B).
+02:02:55 add_unsure(A,B):- eat(A,B),looking_at(A,B).
+02:02:55 add_unsure(A,B):- put(A,B),looking_at(A,B).
+02:02:55 add_unsure(A,B):- myopen(A,B),looking_at(A,B).
+02:02:55 add_unsure(A,B):- looking_at(A,B),hold(A,B).
+02:02:55 add_unsure(A,B):- dress(A,B),looking_at(A,B).
+02:02:55 add_unsure(A,B):- myclose(A,B),looking_at(A,B).
+02:02:55 add_unsure(A,B):- not_looking_at(A,B),walk(A,B).
+02:02:55 add_unsure(A,B):- not_looking_at(A,B),undress(A,B).
+02:02:55 add_unsure(A,B):- not_looking_at(A,B),throw(A,B).
+02:02:55 add_unsure(A,B):- not_looking_at(A,B),take(A,B).
+02:02:55 add_unsure(A,B):- not_looking_at(A,B),put(A,B).
+02:02:55 add_unsure(A,B):- not_looking_at(A,B),myopen(A,B).
+02:02:55 add_unsure(A,B):- not_looking_at(A,B),hold(A,B).
+02:02:55 add_unsure(A,B):- not_looking_at(A,B),eat(A,B).
+02:02:55 add_unsure(A,B):- stand(A,C),looking_at(C,B).
+02:02:55 add_unsure(A,B):- stand(A,C),not_looking_at(C,B).
+02:02:55 add_unsure(A,B):- not_looking_at(C,B),sit(A,C).
+02:02:55 ********************
+02:11:08 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.69 Recall:0.31 TP:226 FN:507 TN:128 FP:102 Size:22 MDL:631
+Precision:0.98 Recall:0.35 TP:258 FN:475 TN:226 FP:4 Size:66 MDL:545
 add_unsure(A,B):- drink(A,B).
-add_unsure(A,B):- hold(A,B).
-add_unsure(A,B):- sit(A,B).
-add_unsure(A,B):- put(A,B).
-add_unsure(A,B):- walk(A,B).
 add_unsure(A,B):- play(A,B).
-add_unsure(A,B):- undress(A,B).
-add_unsure(A,B):- throw(A,B).
-add_unsure(A,B):- eat(A,B).
-add_unsure(A,B):- myopen(A,B).
-add_unsure(A,B):- take(A,B).
+add_unsure(A,B):- sit(A,B).
+add_unsure(A,B):- tidy(A,B),looking_at(A,B).
+add_unsure(A,B):- throw(A,B),looking_at(A,B).
+add_unsure(A,B):- take(A,B),looking_at(A,B).
+add_unsure(A,B):- eat(A,B),looking_at(A,B).
+add_unsure(A,B):- put(A,B),looking_at(A,B).
+add_unsure(A,B):- myopen(A,B),looking_at(A,B).
+add_unsure(A,B):- looking_at(A,B),hold(A,B).
+add_unsure(A,B):- dress(A,B),looking_at(A,B).
+add_unsure(A,B):- myclose(A,B),looking_at(A,B).
+add_unsure(A,B):- not_looking_at(A,B),walk(A,B).
+add_unsure(A,B):- not_looking_at(A,B),undress(A,B).
+add_unsure(A,B):- not_looking_at(A,B),throw(A,B).
+add_unsure(A,B):- not_looking_at(A,B),take(A,B).
+add_unsure(A,B):- not_looking_at(A,B),put(A,B).
+add_unsure(A,B):- not_looking_at(A,B),myopen(A,B).
+add_unsure(A,B):- not_looking_at(A,B),hold(A,B).
+add_unsure(A,B):- not_looking_at(A,B),eat(A,B).
+add_unsure(A,B):- stand(A,C),looking_at(C,B).
+add_unsure(A,B):- stand(A,C),not_looking_at(C,B).
+add_unsure(A,B):- not_looking_at(C,B),sit(A,C).
 ******************************
+Precision:0.82 Recall:0.01 TP:9 FN:724 TN:228 FP:2
 add_unsure(A,B):- drink(A,B).
-precision: 0.82 recall: 0.01
-add_unsure(A,B):- hold(A,B).
-precision: 0.84 recall: 0.04
-add_unsure(A,B):- sit(A,B).
-precision: 0.82 recall: 0.01
-add_unsure(A,B):- put(A,B).
-precision: 0.64 recall: 0.10
-add_unsure(A,B):- walk(A,B).
-precision: 0.78 recall: 0.02
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:3 FN:730 TN:230 FP:0
 add_unsure(A,B):- play(A,B).
-precision: 1.00 recall: 0.00
-add_unsure(A,B):- undress(A,B).
-precision: 0.70 recall: 0.01
-add_unsure(A,B):- throw(A,B).
-precision: 0.64 recall: 0.03
-add_unsure(A,B):- eat(A,B).
-precision: 0.70 recall: 0.02
-add_unsure(A,B):- myopen(A,B).
-precision: 0.71 recall: 0.03
-add_unsure(A,B):- take(A,B).
-precision: 0.61 recall: 0.04
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.82 Recall:0.01 TP:9 FN:724 TN:228 FP:2
+add_unsure(A,B):- sit(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:4 FN:729 TN:230 FP:0
+add_unsure(A,B):- tidy(A,B),looking_at(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:7 FN:726 TN:230 FP:0
+add_unsure(A,B):- throw(A,B),looking_at(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.02 TP:12 FN:721 TN:230 FP:0
+add_unsure(A,B):- take(A,B),looking_at(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:8 FN:725 TN:230 FP:0
+add_unsure(A,B):- eat(A,B),looking_at(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.04 TP:27 FN:706 TN:230 FP:0
+add_unsure(A,B):- put(A,B),looking_at(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:7 FN:726 TN:230 FP:0
+add_unsure(A,B):- myopen(A,B),looking_at(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:10 FN:723 TN:230 FP:0
+add_unsure(A,B):- looking_at(A,B),hold(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:4 FN:729 TN:230 FP:0
+add_unsure(A,B):- dress(A,B),looking_at(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:7 FN:726 TN:230 FP:0
+add_unsure(A,B):- myclose(A,B),looking_at(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.02 TP:17 FN:716 TN:230 FP:0
+add_unsure(A,B):- not_looking_at(A,B),walk(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:7 FN:726 TN:230 FP:0
+add_unsure(A,B):- not_looking_at(A,B),undress(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.02 TP:14 FN:719 TN:230 FP:0
+add_unsure(A,B):- not_looking_at(A,B),throw(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.03 TP:19 FN:714 TN:230 FP:0
+add_unsure(A,B):- not_looking_at(A,B),take(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.06 TP:43 FN:690 TN:230 FP:0
+add_unsure(A,B):- not_looking_at(A,B),put(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.02 TP:18 FN:715 TN:230 FP:0
+add_unsure(A,B):- not_looking_at(A,B),myopen(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.02 TP:17 FN:716 TN:230 FP:0
+add_unsure(A,B):- not_looking_at(A,B),hold(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:8 FN:725 TN:230 FP:0
+add_unsure(A,B):- not_looking_at(A,B),eat(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:4 FN:729 TN:230 FP:0
+add_unsure(A,B):- stand(A,C),looking_at(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.02 TP:12 FN:721 TN:230 FP:0
+add_unsure(A,B):- stand(A,C),not_looking_at(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:4 FN:729 TN:230 FP:0
+add_unsure(A,B):- not_looking_at(C,B),sit(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

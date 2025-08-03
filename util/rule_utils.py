@@ -5,6 +5,18 @@ from pyswip import Prolog
 import torch
 import time
 
+def number_predicate_head(line, i):
+    '''
+    line is the whole rule
+    '''
+    head, body = line.split(':-')
+    pred_name = head.split('(')[0]
+    pred_args = head.split('(')[1].split(')')[0]
+
+    numbered_pred_name = f'{pred_name}_{i}'
+    return f'{numbered_pred_name}({pred_args}):-{body}'
+
+
 def normalize_predicate_name(name):
     """
     Convert a class name to a Prolog-compatible predicate name.
@@ -32,7 +44,7 @@ def handle_prolog_keywords(name):
         return 'myopen'
     return name
 
-def get_rule_precisions_recalls(rules_json, priors, classes):
+def get_rule_precisions_recalls(rules_json, priors, classes, split_clauses=False):
     '''
     Get the precisions and recalls for all rules for converting rule binary truth values to predictions
     classes should be the same as targets in apply_rules. list of strings, for ordering
@@ -41,12 +53,33 @@ def get_rule_precisions_recalls(rules_json, priors, classes):
     with open(rules_json, 'r') as f:
         rules = json.load(f)
         rules = {normalize_predicate_name(k): v for k, v in rules.items()}
-    
+        if split_clauses:
+            split_rules = {}
+            tgt_cls_map = []
+            for k, v in rules.items():
+                if k not in classes:
+                    continue
+                i = classes.index(k)
+                if v is not None:
+                    clauses, metrics = v[0], v[1]
+                    for j, clause in enumerate(clauses):
+                        split_rules[f'{k}_{j}'] = [[number_predicate_head(clause, j)], metrics[j]]
+                        tgt_cls_map.append(i)
+                else:
+                    split_rules[k] = None
+                    tgt_cls_map.append(i)
+            rules = split_rules
+            target_classes = rules.keys()
+        else:
+            target_classes = classes
+            #tgt_cls_map = {k: i for i, k in enumerate(classes)}
+            tgt_cls_map = np.arange(len(classes))
+
     # Extract recall and precision for all rules into arrays
-    recalls = np.zeros(len(classes))
-    precisions = np.zeros(len(classes))
+    recalls = np.zeros(len(target_classes))
+    precisions = np.zeros(len(target_classes))
     
-    for i, class_name in enumerate(classes):
+    for i, class_name in enumerate(target_classes):
         # Convert class name to lowercase predicate name for lookup
         predicate_name = normalize_predicate_name(class_name)
         
@@ -56,9 +89,9 @@ def get_rule_precisions_recalls(rules_json, priors, classes):
         else:
             # If rule doesn't exist: recall=1, precision=prior
             recalls[i] = 1.0
-            precisions[i] = priors[i]
+            precisions[i] = priors[tgt_cls_map[i]]
             #precisions[i] = 0.0
-    return precisions, recalls
+    return precisions, recalls, tgt_cls_map
 
 
 # meant to be used as a lambda function for creating a pandas column

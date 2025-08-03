@@ -17,7 +17,7 @@ data:
   forbidden_edges: []
 
 ilp:
-  timeout: 60
+  timeout: 600
   fn_weight: 1
 
 model:

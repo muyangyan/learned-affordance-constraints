@@ -1,16 +1,26 @@
-14:57:09 Generating programs of size: 2
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:3 fn:27 tn:2 fp:0 size:2 mdl:29
-14:57:09 add_eating(A,B):- take(A,B).
-14:57:09 ********************
-14:57:09 Generating programs of size: 3
-14:57:12 Generating programs of size: 4
-14:57:13 Generating programs of size: 5
-14:57:13 Generating programs of size: 6
+02:01:10 Generating programs of size: 2
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:3 fn:27 tn:2 fp:0 size:2 mdl:29
+02:01:10 add_eating(A,B):- take(A,B).
+02:01:10 ********************
+02:01:10 Generating programs of size: 3
+02:02:16 Generating programs of size: 4
+02:02:17 ********************
+02:02:17 New best hypothesis:
+02:02:17 tp:7 fn:23 tn:2 fp:0 size:5 mdl:28
+02:02:17 add_eating(A,B):- take(A,B).
+02:02:17 add_eating(A,B):- in_front_of(B,C),sit(C,A).
+02:02:17 ********************
+02:11:50 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:1.00 Recall:0.10 TP:3 FN:27 TN:2 FP:0 Size:2 MDL:29
+Precision:1.00 Recall:0.23 TP:7 FN:23 TN:2 FP:0 Size:5 MDL:28
 add_eating(A,B):- take(A,B).
+add_eating(A,B):- in_front_of(B,C),sit(C,A).
 ******************************
+Precision:1.00 Recall:0.10 TP:3 FN:27 TN:2 FP:0
 add_eating(A,B):- take(A,B).
-precision: 1.00 recall: 0.10
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.13 TP:4 FN:26 TN:2 FP:0
+add_eating(A,B):- in_front_of(B,C),sit(C,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

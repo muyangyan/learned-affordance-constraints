@@ -1,6 +1,16 @@
-14:57:09 Generating programs of size: 2
-14:57:09 Generating programs of size: 3
-14:57:10 Generating programs of size: 4
-14:57:12 Generating programs of size: 5
-14:57:12 Generating programs of size: 6
-NO SOLUTION
+02:01:11 Generating programs of size: 2
+02:01:13 Generating programs of size: 3
+02:01:15 ********************
+02:01:15 New best hypothesis:
+02:01:15 tp:6 fn:88 tn:88 fp:0 size:3 mdl:91
+02:01:15 add_standing_on(A,B):- beneath(B,C),stand(C,A).
+02:01:15 ********************
+02:01:40 Generating programs of size: 4
+02:11:31 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:1.00 Recall:0.06 TP:6 FN:88 TN:88 FP:0 Size:3 MDL:91
+add_standing_on(A,B):- beneath(B,C),stand(C,A).
+******************************
+Precision:1.00 Recall:0.06 TP:6 FN:88 TN:88 FP:0
+add_standing_on(A,B):- beneath(B,C),stand(C,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

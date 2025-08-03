@@ -1,49 +1,75 @@
-14:57:08 Generating programs of size: 2
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:17 fn:152 tn:105 fp:5 size:2 mdl:159
-14:57:08 add_in(A,B):- put(B,A).
-14:57:08 ********************
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:16 fn:153 tn:108 fp:2 size:2 mdl:157
-14:57:08 add_in(A,B):- dress(B,A).
-14:57:08 ********************
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:28 fn:141 tn:101 fp:9 size:2 mdl:152
-14:57:08 add_in(A,B):- walk(B,A).
-14:57:08 ********************
-14:57:08 Generating programs of size: 3
-14:57:13 ********************
-14:57:13 New best hypothesis:
-14:57:13 tp:71 fn:98 tn:91 fp:19 size:10 mdl:127
-14:57:13 add_in(A,B):- put(B,A).
-14:57:13 add_in(A,B):- dress(B,A).
-14:57:13 add_in(A,B):- walk(B,A).
-14:57:13 add_in(A,B):- myopen(B,A).
-14:57:13 add_in(A,B):- take(B,A).
-14:57:13 ********************
-14:57:16 Generating programs of size: 4
-14:57:44 Generating programs of size: 5
-14:57:58 Generating programs of size: 6
-14:58:04 Generating programs of size: 7
-14:58:07 TIMEOUT OF 60 SECONDS EXCEEDED
+02:01:09 Generating programs of size: 2
+02:01:09 ********************
+02:01:09 New best hypothesis:
+02:01:09 tp:4 fn:165 tn:110 fp:0 size:2 mdl:167
+02:01:09 add_in(A,B):- myopen(B,A).
+02:01:09 ********************
+02:01:09 ********************
+02:01:09 New best hypothesis:
+02:01:09 tp:17 fn:152 tn:105 fp:5 size:2 mdl:159
+02:01:09 add_in(A,B):- put(B,A).
+02:01:09 ********************
+02:01:09 ********************
+02:01:09 New best hypothesis:
+02:01:09 tp:28 fn:141 tn:101 fp:9 size:2 mdl:152
+02:01:09 add_in(A,B):- walk(B,A).
+02:01:09 ********************
+02:01:10 Generating programs of size: 3
+02:01:14 ********************
+02:01:14 New best hypothesis:
+02:01:14 tp:71 fn:98 tn:91 fp:19 size:10 mdl:127
+02:01:14 add_in(A,B):- myopen(B,A).
+02:01:14 add_in(A,B):- put(B,A).
+02:01:14 add_in(A,B):- take(B,A).
+02:01:14 add_in(A,B):- walk(B,A).
+02:01:14 add_in(A,B):- dress(B,A).
+02:01:14 ********************
+02:01:28 Generating programs of size: 4
+02:01:32 ********************
+02:01:32 New best hypothesis:
+02:01:32 tp:75 fn:94 tn:103 fp:7 size:21 mdl:122
+02:01:32 add_in(A,B):- myopen(B,A).
+02:01:32 add_in(A,B):- put(B,A).
+02:01:32 add_in(A,B):- dress(B,A).
+02:01:32 add_in(A,B):- take(B,A),not_contacting(B,A).
+02:01:32 add_in(A,B):- not_contacting(B,A),hold(B,A).
+02:01:32 add_in(A,B):- walk(B,A),on_the_side_of(A,B).
+02:01:32 add_in(A,B):- walk(B,A),behind(A,B).
+02:01:32 add_in(A,B):- walk(B,A),in_front_of(A,B).
+02:01:32 ********************
+02:11:08 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.79 Recall:0.42 TP:71 FN:98 TN:91 FP:19 Size:10 MDL:127
+Precision:0.91 Recall:0.44 TP:75 FN:94 TN:103 FP:7 Size:21 MDL:122
+add_in(A,B):- myopen(B,A).
 add_in(A,B):- put(B,A).
 add_in(A,B):- dress(B,A).
-add_in(A,B):- walk(B,A).
-add_in(A,B):- myopen(B,A).
-add_in(A,B):- take(B,A).
+add_in(A,B):- take(B,A),not_contacting(B,A).
+add_in(A,B):- not_contacting(B,A),hold(B,A).
+add_in(A,B):- walk(B,A),on_the_side_of(A,B).
+add_in(A,B):- walk(B,A),behind(A,B).
+add_in(A,B):- walk(B,A),in_front_of(A,B).
 ******************************
-add_in(A,B):- put(B,A).
-precision: 0.77 recall: 0.10
-add_in(A,B):- dress(B,A).
-precision: 0.89 recall: 0.09
-add_in(A,B):- walk(B,A).
-precision: 0.76 recall: 0.17
+Precision:1.00 Recall:0.02 TP:4 FN:165 TN:110 FP:0
 add_in(A,B):- myopen(B,A).
-precision: 1.00 recall: 0.02
-add_in(A,B):- take(B,A).
-precision: 0.67 recall: 0.04
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.77 Recall:0.10 TP:17 FN:152 TN:105 FP:5
+add_in(A,B):- put(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.89 Recall:0.09 TP:16 FN:153 TN:108 FP:2
+add_in(A,B):- dress(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.03 TP:5 FN:164 TN:110 FP:0
+add_in(A,B):- take(B,A),not_contacting(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.05 TP:8 FN:161 TN:110 FP:0
+add_in(A,B):- not_contacting(B,A),hold(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.08 TP:13 FN:156 TN:110 FP:0
+add_in(A,B):- walk(B,A),on_the_side_of(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.02 TP:4 FN:165 TN:110 FP:0
+add_in(A,B):- walk(B,A),behind(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.11 TP:19 FN:150 TN:110 FP:0
+add_in(A,B):- walk(B,A),in_front_of(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

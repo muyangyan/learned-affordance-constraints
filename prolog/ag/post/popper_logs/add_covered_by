@@ -1,26 +1,42 @@
-14:57:09 Generating programs of size: 2
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:10 fn:40 tn:75 fp:0 size:2 mdl:42
-14:57:09 add_covered_by(A,B):- put(A,B).
-14:57:09 ********************
-14:57:09 Generating programs of size: 3
-14:57:10 ********************
-14:57:10 New best hypothesis:
-14:57:10 tp:14 fn:36 tn:74 fp:1 size:4 mdl:41
-14:57:10 add_covered_by(A,B):- put(A,B).
-14:57:10 add_covered_by(A,B):- take(A,B).
-14:57:10 ********************
-14:57:12 Generating programs of size: 4
-14:57:27 Generating programs of size: 5
-14:57:38 Generating programs of size: 6
-14:57:38 Generating programs of size: 7
+02:01:09 Generating programs of size: 2
+02:01:11 ********************
+02:01:11 New best hypothesis:
+02:01:11 tp:10 fn:40 tn:75 fp:0 size:2 mdl:42
+02:01:11 add_covered_by(A,B):- put(A,B).
+02:01:11 ********************
+02:01:11 Generating programs of size: 3
+02:01:13 ********************
+02:01:13 New best hypothesis:
+02:01:13 tp:14 fn:36 tn:74 fp:1 size:4 mdl:41
+02:01:13 add_covered_by(A,B):- put(A,B).
+02:01:13 add_covered_by(A,B):- take(A,B).
+02:01:13 ********************
+02:03:32 Generating programs of size: 4
+02:03:34 ********************
+02:03:34 New best hypothesis:
+02:03:34 tp:22 fn:28 tn:74 fp:1 size:10 mdl:39
+02:03:34 add_covered_by(A,B):- put(A,B).
+02:03:34 add_covered_by(A,B):- take(A,B).
+02:03:34 add_covered_by(A,B):- in_front_of(B,A),snuggle(A,B).
+02:03:34 add_covered_by(A,B):- sit(C,A),on_the_side_of(B,C).
+02:03:34 ********************
+02:11:14 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.93 Recall:0.28 TP:14 FN:36 TN:74 FP:1 Size:4 MDL:41
+Precision:0.96 Recall:0.44 TP:22 FN:28 TN:74 FP:1 Size:10 MDL:39
 add_covered_by(A,B):- put(A,B).
 add_covered_by(A,B):- take(A,B).
+add_covered_by(A,B):- in_front_of(B,A),snuggle(A,B).
+add_covered_by(A,B):- sit(C,A),on_the_side_of(B,C).
 ******************************
+Precision:1.00 Recall:0.20 TP:10 FN:40 TN:75 FP:0
 add_covered_by(A,B):- put(A,B).
-precision: 1.00 recall: 0.20
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.80 Recall:0.08 TP:4 FN:46 TN:74 FP:1
 add_covered_by(A,B):- take(A,B).
-precision: 0.80 recall: 0.08
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.08 TP:4 FN:46 TN:75 FP:0
+add_covered_by(A,B):- in_front_of(B,A),snuggle(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.08 TP:4 FN:46 TN:75 FP:0
+add_covered_by(A,B):- sit(C,A),on_the_side_of(B,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1,33 +1,52 @@
-14:57:08 Generating programs of size: 2
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:14 fn:500 tn:749 fp:4 size:2 mdl:506
-14:57:08 del_beneath(A,B):- put(B,A).
-14:57:08 ********************
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:19 fn:495 tn:751 fp:2 size:2 mdl:499
-14:57:08 del_beneath(A,B):- take(B,A).
-14:57:08 ********************
-14:57:08 Generating programs of size: 3
-14:57:14 ********************
-14:57:14 New best hypothesis:
-14:57:14 tp:33 fn:481 tn:747 fp:6 size:4 mdl:491
-14:57:14 del_beneath(A,B):- put(B,A).
-14:57:14 del_beneath(A,B):- take(B,A).
-14:57:14 ********************
-14:57:18 Generating programs of size: 4
-14:57:43 Generating programs of size: 5
-14:57:51 Generating programs of size: 6
-14:57:58 Generating programs of size: 7
-14:58:03 Generating programs of size: 8
-14:58:07 TIMEOUT OF 60 SECONDS EXCEEDED
+02:01:09 Generating programs of size: 2
+02:01:09 ********************
+02:01:09 New best hypothesis:
+02:01:09 tp:14 fn:500 tn:749 fp:4 size:2 mdl:506
+02:01:09 del_beneath(A,B):- put(B,A).
+02:01:09 ********************
+02:01:09 ********************
+02:01:09 New best hypothesis:
+02:01:09 tp:19 fn:495 tn:751 fp:2 size:2 mdl:499
+02:01:09 del_beneath(A,B):- take(B,A).
+02:01:09 ********************
+02:01:09 Generating programs of size: 3
+02:01:16 ********************
+02:01:16 New best hypothesis:
+02:01:16 tp:33 fn:481 tn:747 fp:6 size:4 mdl:491
+02:01:16 del_beneath(A,B):- put(B,A).
+02:01:16 del_beneath(A,B):- take(B,A).
+02:01:16 ********************
+02:01:20 ********************
+02:01:20 New best hypothesis:
+02:01:20 tp:194 fn:320 tn:734 fp:19 size:3 mdl:342
+02:01:20 del_beneath(A,B):- stand(B,C),beneath(A,C).
+02:01:20 ********************
+02:01:38 Generating programs of size: 4
+02:01:46 ********************
+02:01:46 New best hypothesis:
+02:01:46 tp:232 fn:282 tn:727 fp:26 size:10 mdl:318
+02:01:46 del_beneath(A,B):- put(B,A).
+02:01:46 del_beneath(A,B):- take(B,A).
+02:01:46 del_beneath(A,B):- stand(C,B),beneath(A,C).
+02:01:46 del_beneath(A,B):- sit(B,A),bed(A).
+02:01:46 ********************
+02:11:13 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.85 Recall:0.06 TP:33 FN:481 TN:747 FP:6 Size:4 MDL:491
+Precision:0.90 Recall:0.45 TP:232 FN:282 TN:727 FP:26 Size:10 MDL:318
 del_beneath(A,B):- put(B,A).
 del_beneath(A,B):- take(B,A).
+del_beneath(A,B):- stand(C,B),beneath(A,C).
+del_beneath(A,B):- sit(B,A),bed(A).
 ******************************
+Precision:0.78 Recall:0.03 TP:14 FN:500 TN:749 FP:4
 del_beneath(A,B):- put(B,A).
-precision: 0.78 recall: 0.03
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.90 Recall:0.04 TP:19 FN:495 TN:751 FP:2
 del_beneath(A,B):- take(B,A).
-precision: 0.90 recall: 0.04
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.91 Recall:0.38 TP:194 FN:320 TN:734 FP:19
+del_beneath(A,B):- stand(C,B),beneath(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.83 Recall:0.01 TP:5 FN:509 TN:752 FP:1
+del_beneath(A,B):- sit(B,A),bed(A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1,28 +1,67 @@
-14:57:10 Generating programs of size: 2
-14:57:10 ********************
-14:57:10 New best hypothesis:
-14:57:10 tp:9 fn:125 tn:36 fp:1 size:2 mdl:128
-14:57:10 del_lying_on(A,B):- sit(A,B).
-14:57:10 ********************
-14:57:10 Generating programs of size: 3
-14:57:14 ********************
-14:57:14 New best hypothesis:
-14:57:14 tp:13 fn:121 tn:35 fp:2 size:4 mdl:127
-14:57:14 del_lying_on(A,B):- sit(A,B).
-14:57:14 del_lying_on(A,B):- lie(A,B).
-14:57:14 ********************
-14:57:16 Generating programs of size: 4
-14:57:23 Generating programs of size: 5
-14:57:38 Generating programs of size: 6
-14:57:38 Generating programs of size: 7
-14:57:42 Generating programs of size: 8
-14:57:42 Generating programs of size: 9
+02:01:10 Generating programs of size: 2
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:4 fn:130 tn:36 fp:1 size:2 mdl:133
+02:01:10 del_lying_on(A,B):- lie(A,B).
+02:01:10 ********************
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:9 fn:125 tn:36 fp:1 size:2 mdl:128
+02:01:10 del_lying_on(A,B):- sit(A,B).
+02:01:10 ********************
+02:01:11 Generating programs of size: 3
+02:01:15 ********************
+02:01:15 New best hypothesis:
+02:01:15 tp:13 fn:121 tn:35 fp:2 size:4 mdl:127
+02:01:15 del_lying_on(A,B):- lie(A,B).
+02:01:15 del_lying_on(A,B):- sit(A,B).
+02:01:15 ********************
+02:01:16 ********************
+02:01:16 New best hypothesis:
+02:01:16 tp:35 fn:99 tn:25 fp:12 size:3 mdl:114
+02:01:16 del_lying_on(A,B):- awaken(C,A),lying_on(C,B).
+02:01:16 ********************
+02:01:17 ********************
+02:01:17 New best hypothesis:
+02:01:17 tp:24 fn:110 tn:37 fp:0 size:3 mdl:113
+02:01:17 del_lying_on(A,B):- stand(A,C),not_looking_at(C,B).
+02:01:17 ********************
+02:01:18 ********************
+02:01:18 New best hypothesis:
+02:01:18 tp:27 fn:107 tn:37 fp:0 size:3 mdl:110
+02:01:18 del_lying_on(A,B):- stand(A,C),lying_on(C,B).
+02:01:18 ********************
+02:01:25 Generating programs of size: 4
+02:01:29 ********************
+02:01:29 New best hypothesis:
+02:01:29 tp:79 fn:55 tn:23 fp:14 size:13 mdl:82
+02:01:29 del_lying_on(A,B):- lie(A,B).
+02:01:29 del_lying_on(A,B):- sit(A,B).
+02:01:29 del_lying_on(A,B):- awaken(A,B),above(B,A).
+02:01:29 del_lying_on(A,B):- lying_on(C,B),awaken(A,C).
+02:01:29 del_lying_on(A,B):- stand(A,C),lying_on(C,B).
+02:01:29 ********************
+02:11:40 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.87 Recall:0.10 TP:13 FN:121 TN:35 FP:2 Size:4 MDL:127
-del_lying_on(A,B):- sit(A,B).
+Precision:0.85 Recall:0.59 TP:79 FN:55 TN:23 FP:14 Size:13 MDL:82
 del_lying_on(A,B):- lie(A,B).
+del_lying_on(A,B):- sit(A,B).
+del_lying_on(A,B):- awaken(A,B),above(B,A).
+del_lying_on(A,B):- lying_on(C,B),awaken(A,C).
+del_lying_on(A,B):- stand(A,C),lying_on(C,B).
 ******************************
-del_lying_on(A,B):- sit(A,B).
-precision: 0.90 recall: 0.07
+Precision:0.80 Recall:0.03 TP:4 FN:130 TN:36 FP:1
 del_lying_on(A,B):- lie(A,B).
-precision: 0.80 recall: 0.03
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.90 Recall:0.07 TP:9 FN:125 TN:36 FP:1
+del_lying_on(A,B):- sit(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.03 TP:4 FN:130 TN:37 FP:0
+del_lying_on(A,B):- awaken(A,B),above(B,A).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.74 Recall:0.26 TP:35 FN:99 TN:25 FP:12
+del_lying_on(A,B):- lying_on(C,B),awaken(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.20 TP:27 FN:107 TN:37 FP:0
+del_lying_on(A,B):- stand(A,C),lying_on(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

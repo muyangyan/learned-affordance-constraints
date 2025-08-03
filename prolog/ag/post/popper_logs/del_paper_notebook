@@ -1,2 +1,12 @@
-14:57:06 Generating programs of size: 3
-NO SOLUTION
+02:01:14 Generating programs of size: 3
+02:05:51 Generating programs of size: 4
+02:08:36 ********************
+02:08:36 New best hypothesis:
+02:08:36 tp:12 fn:41 tn:119 fp:4 size:4 mdl:49
+02:08:36 del_paper_notebook(A):- looking_at(C,A),stand(C,B),in_front_of(A,B).
+02:08:36 ********************
+02:08:36 ********************
+02:08:36 New best hypothesis:
+02:08:36 tp:13 fn:40 tn:119 fp:4 size:4 mdl:48
+02:08:36 del_paper_notebook(A):- looking_at(C,A),looking_at(B,A),stand(C,B).
+02:08:36 ********************

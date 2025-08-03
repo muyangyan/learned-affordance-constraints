@@ -1,29 +1,38 @@
-14:57:08 Generating programs of size: 2
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:10 fn:71 tn:32 fp:0 size:2 mdl:73
-14:57:08 add_above(A,B):- put(B,A).
-14:57:08 ********************
-14:57:08 Generating programs of size: 3
-14:57:11 ********************
-14:57:11 New best hypothesis:
-14:57:11 tp:19 fn:62 tn:29 fp:3 size:6 mdl:71
-14:57:11 add_above(A,B):- put(B,A).
-14:57:11 add_above(A,B):- watch(B,A).
-14:57:11 add_above(A,B):- take(B,A).
-14:57:11 ********************
-14:57:12 Generating programs of size: 4
-14:57:13 Generating programs of size: 5
-14:57:17 Generating programs of size: 6
+02:01:09 Generating programs of size: 2
+02:01:09 ********************
+02:01:09 New best hypothesis:
+02:01:09 tp:10 fn:71 tn:32 fp:0 size:2 mdl:73
+02:01:09 add_above(A,B):- put(B,A).
+02:01:09 ********************
+02:01:09 Generating programs of size: 3
+02:01:12 ********************
+02:01:12 New best hypothesis:
+02:01:12 tp:19 fn:62 tn:29 fp:3 size:6 mdl:71
+02:01:12 add_above(A,B):- put(B,A).
+02:01:12 add_above(A,B):- take(B,A).
+02:01:12 add_above(A,B):- watch(B,A).
+02:01:12 ********************
+02:01:37 Generating programs of size: 4
+02:01:40 ********************
+02:01:40 New best hypothesis:
+02:01:40 tp:19 fn:62 tn:31 fp:1 size:7 mdl:70
+02:01:40 add_above(A,B):- put(B,A).
+02:01:40 add_above(A,B):- take(B,A).
+02:01:40 add_above(A,B):- watch(B,A),in_front_of(A,B).
+02:01:40 ********************
+02:12:12 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.86 Recall:0.23 TP:19 FN:62 TN:29 FP:3 Size:6 MDL:71
+Precision:0.95 Recall:0.23 TP:19 FN:62 TN:31 FP:1 Size:7 MDL:70
 add_above(A,B):- put(B,A).
-add_above(A,B):- watch(B,A).
 add_above(A,B):- take(B,A).
+add_above(A,B):- watch(B,A),in_front_of(A,B).
 ******************************
+Precision:1.00 Recall:0.12 TP:10 FN:71 TN:32 FP:0
 add_above(A,B):- put(B,A).
-precision: 1.00 recall: 0.12
-add_above(A,B):- watch(B,A).
-precision: 0.71 recall: 0.06
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.86 Recall:0.07 TP:6 FN:75 TN:31 FP:1
 add_above(A,B):- take(B,A).
-precision: 0.86 recall: 0.07
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.06 TP:5 FN:76 TN:32 FP:0
+add_above(A,B):- watch(B,A),in_front_of(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

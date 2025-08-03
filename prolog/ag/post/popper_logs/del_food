@@ -1,2 +1,20 @@
-14:57:06 Generating programs of size: 3
-NO SOLUTION
+02:01:13 Generating programs of size: 3
+02:05:34 Generating programs of size: 4
+02:08:17 ********************
+02:08:17 New best hypothesis:
+02:08:17 tp:18 fn:117 tn:462 fp:6 size:4 mdl:127
+02:08:17 del_food(A):- in_front_of(A,C),stand(C,B),stand(B,C).
+02:08:17 ********************
+02:08:25 ********************
+02:08:25 New best hypothesis:
+02:08:25 tp:18 fn:117 tn:465 fp:3 size:4 mdl:124
+02:08:25 del_food(A):- holding(C,A),stand(C,B),stand(B,C).
+02:08:25 ********************
+02:11:05 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.86 Recall:0.13 TP:18 FN:117 TN:465 FP:3 Size:4 MDL:124
+del_food(A):- holding(C,A),stand(C,B),stand(B,C).
+******************************
+Precision:0.86 Recall:0.13 TP:18 FN:117 TN:465 FP:3
+del_food(A):- holding(C,A),stand(C,B),stand(B,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

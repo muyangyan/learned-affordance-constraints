@@ -1,94 +1,147 @@
-14:57:08 Generating programs of size: 2
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:26 fn:783 tn:222 fp:8 size:2 mdl:793
-14:57:08 del_unsure(A,B):- myclose(A,B).
-14:57:08 ********************
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:29 fn:780 tn:225 fp:5 size:2 mdl:787
-14:57:08 del_unsure(A,B):- hold(A,B).
-14:57:08 ********************
-14:57:08 ********************
-14:57:08 New best hypothesis:
-14:57:08 tp:85 fn:724 tn:190 fp:40 size:2 mdl:766
-14:57:08 del_unsure(A,B):- put(A,B).
-14:57:08 ********************
-14:57:08 Generating programs of size: 3
-14:57:17 ********************
-14:57:17 New best hypothesis:
-14:57:17 tp:347 fn:462 tn:113 fp:117 size:34 mdl:613
-14:57:17 del_unsure(A,B):- myclose(A,B).
-14:57:17 del_unsure(A,B):- cook(A,B).
-14:57:17 del_unsure(A,B):- drink(A,B).
-14:57:17 del_unsure(A,B):- hold(A,B).
-14:57:17 del_unsure(A,B):- sit(A,B).
-14:57:17 del_unsure(A,B):- put(A,B).
-14:57:17 del_unsure(A,B):- watch(A,B).
-14:57:17 del_unsure(A,B):- walk(A,B).
-14:57:17 del_unsure(A,B):- play(A,B).
-14:57:17 del_unsure(A,B):- undress(A,B).
-14:57:17 del_unsure(A,B):- turn(A,B).
-14:57:17 del_unsure(A,B):- tidy(A,B).
-14:57:17 del_unsure(A,B):- throw(A,B).
-14:57:17 del_unsure(A,B):- eat(A,B).
-14:57:17 del_unsure(A,B):- myopen(A,B).
-14:57:17 del_unsure(A,B):- take(A,B).
-14:57:17 del_unsure(A,B):- lie(A,B).
-14:57:17 ********************
-14:57:25 Generating programs of size: 4
-14:58:07 TIMEOUT OF 60 SECONDS EXCEEDED
+02:01:09 Generating programs of size: 2
+02:01:09 ********************
+02:01:09 New best hypothesis:
+02:01:09 tp:29 fn:780 tn:225 fp:5 size:2 mdl:787
+02:01:09 del_unsure(A,B):- hold(A,B).
+02:01:09 ********************
+02:01:15 ********************
+02:01:15 New best hypothesis:
+02:01:15 tp:85 fn:724 tn:190 fp:40 size:2 mdl:766
+02:01:15 del_unsure(A,B):- put(A,B).
+02:01:15 ********************
+02:01:16 Generating programs of size: 3
+02:01:25 ********************
+02:01:25 New best hypothesis:
+02:01:25 tp:347 fn:462 tn:113 fp:117 size:34 mdl:613
+02:01:25 del_unsure(A,B):- hold(A,B).
+02:01:25 del_unsure(A,B):- lie(A,B).
+02:01:25 del_unsure(A,B):- myopen(A,B).
+02:01:25 del_unsure(A,B):- cook(A,B).
+02:01:25 del_unsure(A,B):- eat(A,B).
+02:01:25 del_unsure(A,B):- drink(A,B).
+02:01:25 del_unsure(A,B):- myclose(A,B).
+02:01:25 del_unsure(A,B):- play(A,B).
+02:01:25 del_unsure(A,B):- put(A,B).
+02:01:25 del_unsure(A,B):- sit(A,B).
+02:01:25 del_unsure(A,B):- throw(A,B).
+02:01:25 del_unsure(A,B):- tidy(A,B).
+02:01:25 del_unsure(A,B):- turn(A,B).
+02:01:25 del_unsure(A,B):- take(A,B).
+02:01:25 del_unsure(A,B):- undress(A,B).
+02:01:25 del_unsure(A,B):- walk(A,B).
+02:01:25 del_unsure(A,B):- watch(A,B).
+02:01:25 ********************
+02:02:07 Generating programs of size: 4
+02:02:17 ********************
+02:02:17 New best hypothesis:
+02:02:17 tp:460 fn:349 tn:97 fp:133 size:46 mdl:528
+02:02:17 del_unsure(A,B):- hold(A,B).
+02:02:17 del_unsure(A,B):- lie(A,B).
+02:02:17 del_unsure(A,B):- myopen(A,B).
+02:02:17 del_unsure(A,B):- cook(A,B).
+02:02:17 del_unsure(A,B):- eat(A,B).
+02:02:17 del_unsure(A,B):- drink(A,B).
+02:02:17 del_unsure(A,B):- myclose(A,B).
+02:02:17 del_unsure(A,B):- play(A,B).
+02:02:17 del_unsure(A,B):- put(A,B).
+02:02:17 del_unsure(A,B):- sit(A,B).
+02:02:17 del_unsure(A,B):- throw(A,B).
+02:02:17 del_unsure(A,B):- tidy(A,B).
+02:02:17 del_unsure(A,B):- turn(A,B).
+02:02:17 del_unsure(A,B):- take(A,B).
+02:02:17 del_unsure(A,B):- undress(A,B).
+02:02:17 del_unsure(A,B):- walk(A,B).
+02:02:17 del_unsure(A,B):- watch(A,B).
+02:02:17 del_unsure(A,B):- unsure(C,B),fix(A,C).
+02:02:17 del_unsure(A,B):- unsure(C,B),stand(A,C).
+02:02:17 del_unsure(A,B):- unsure(C,B),awaken(A,C).
+02:02:17 del_unsure(A,B):- unsure(C,B),sit(A,C).
+02:02:17 ********************
+02:11:08 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.75 Recall:0.43 TP:347 FN:462 TN:113 FP:117 Size:34 MDL:613
-del_unsure(A,B):- myclose(A,B).
-del_unsure(A,B):- cook(A,B).
-del_unsure(A,B):- drink(A,B).
+Precision:0.78 Recall:0.57 TP:460 FN:349 TN:97 FP:133 Size:46 MDL:528
 del_unsure(A,B):- hold(A,B).
-del_unsure(A,B):- sit(A,B).
-del_unsure(A,B):- put(A,B).
-del_unsure(A,B):- watch(A,B).
-del_unsure(A,B):- walk(A,B).
-del_unsure(A,B):- play(A,B).
-del_unsure(A,B):- undress(A,B).
-del_unsure(A,B):- turn(A,B).
-del_unsure(A,B):- tidy(A,B).
-del_unsure(A,B):- throw(A,B).
-del_unsure(A,B):- eat(A,B).
-del_unsure(A,B):- myopen(A,B).
-del_unsure(A,B):- take(A,B).
 del_unsure(A,B):- lie(A,B).
+del_unsure(A,B):- myopen(A,B).
+del_unsure(A,B):- cook(A,B).
+del_unsure(A,B):- eat(A,B).
+del_unsure(A,B):- drink(A,B).
+del_unsure(A,B):- myclose(A,B).
+del_unsure(A,B):- play(A,B).
+del_unsure(A,B):- put(A,B).
+del_unsure(A,B):- sit(A,B).
+del_unsure(A,B):- throw(A,B).
+del_unsure(A,B):- tidy(A,B).
+del_unsure(A,B):- turn(A,B).
+del_unsure(A,B):- take(A,B).
+del_unsure(A,B):- undress(A,B).
+del_unsure(A,B):- walk(A,B).
+del_unsure(A,B):- watch(A,B).
+del_unsure(A,B):- unsure(C,B),fix(A,C).
+del_unsure(A,B):- unsure(C,B),stand(A,C).
+del_unsure(A,B):- unsure(C,B),awaken(A,C).
+del_unsure(A,B):- unsure(C,B),sit(A,C).
 ******************************
-del_unsure(A,B):- myclose(A,B).
-precision: 0.76 recall: 0.03
-del_unsure(A,B):- cook(A,B).
-precision: 1.00 recall: 0.01
-del_unsure(A,B):- drink(A,B).
-precision: 0.75 recall: 0.01
+Precision:0.85 Recall:0.04 TP:29 FN:780 TN:225 FP:5
 del_unsure(A,B):- hold(A,B).
-precision: 0.85 recall: 0.04
-del_unsure(A,B):- sit(A,B).
-precision: 0.91 recall: 0.03
-del_unsure(A,B):- put(A,B).
-precision: 0.68 recall: 0.11
-del_unsure(A,B):- watch(A,B).
-precision: 1.00 recall: 0.00
-del_unsure(A,B):- walk(A,B).
-precision: 0.85 recall: 0.04
-del_unsure(A,B):- play(A,B).
-precision: 1.00 recall: 0.01
-del_unsure(A,B):- undress(A,B).
-precision: 0.82 recall: 0.02
-del_unsure(A,B):- turn(A,B).
-precision: 0.75 recall: 0.00
-del_unsure(A,B):- tidy(A,B).
-precision: 0.72 recall: 0.02
-del_unsure(A,B):- throw(A,B).
-precision: 0.67 recall: 0.03
-del_unsure(A,B):- eat(A,B).
-precision: 0.71 recall: 0.02
-del_unsure(A,B):- myopen(A,B).
-precision: 0.75 recall: 0.04
-del_unsure(A,B):- take(A,B).
-precision: 0.68 recall: 0.05
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.75 Recall:0.00 TP:3 FN:806 TN:229 FP:1
 del_unsure(A,B):- lie(A,B).
-precision: 0.75 recall: 0.00
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.75 Recall:0.04 TP:30 FN:779 TN:220 FP:10
+del_unsure(A,B):- myopen(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:5 FN:804 TN:230 FP:0
+del_unsure(A,B):- cook(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.71 Recall:0.02 TP:17 FN:792 TN:223 FP:7
+del_unsure(A,B):- eat(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.75 Recall:0.01 TP:6 FN:803 TN:228 FP:2
+del_unsure(A,B):- drink(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.76 Recall:0.03 TP:26 FN:783 TN:222 FP:8
+del_unsure(A,B):- myclose(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:6 FN:803 TN:230 FP:0
+del_unsure(A,B):- play(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.68 Recall:0.11 TP:85 FN:724 TN:190 FP:40
+del_unsure(A,B):- put(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.91 Recall:0.03 TP:21 FN:788 TN:228 FP:2
+del_unsure(A,B):- sit(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.67 Recall:0.03 TP:24 FN:785 TN:218 FP:12
+del_unsure(A,B):- throw(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.72 Recall:0.02 TP:13 FN:796 TN:225 FP:5
+del_unsure(A,B):- tidy(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.75 Recall:0.00 TP:3 FN:806 TN:229 FP:1
+del_unsure(A,B):- turn(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.68 Recall:0.05 TP:42 FN:767 TN:210 FP:20
+del_unsure(A,B):- take(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.82 Recall:0.02 TP:14 FN:795 TN:227 FP:3
+del_unsure(A,B):- undress(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.85 Recall:0.04 TP:29 FN:780 TN:225 FP:5
+del_unsure(A,B):- walk(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:4 FN:805 TN:230 FP:0
+del_unsure(A,B):- watch(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.80 Recall:0.00 TP:4 FN:805 TN:229 FP:1
+del_unsure(A,B):- unsure(C,B),fix(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.86 Recall:0.05 TP:43 FN:766 TN:223 FP:7
+del_unsure(A,B):- unsure(C,B),stand(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:7 FN:802 TN:230 FP:0
+del_unsure(A,B):- unsure(C,B),awaken(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.89 Recall:0.08 TP:67 FN:742 TN:222 FP:8
+del_unsure(A,B):- unsure(C,B),sit(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

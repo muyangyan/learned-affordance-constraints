@@ -1,25 +1,47 @@
-14:57:09 Generating programs of size: 2
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:8 fn:135 tn:50 fp:0 size:2 mdl:137
-14:57:09 add_other_relationship(A,B):- sit(A,B).
-14:57:09 ********************
-14:57:09 Generating programs of size: 3
-14:57:13 ********************
-14:57:13 New best hypothesis:
-14:57:13 tp:13 fn:130 tn:50 fp:0 size:4 mdl:134
-14:57:13 add_other_relationship(A,B):- sit(A,B).
-14:57:13 add_other_relationship(A,B):- myopen(A,B).
-14:57:13 ********************
-14:57:20 Generating programs of size: 4
-14:57:27 Generating programs of size: 5
-14:57:30 Generating programs of size: 6
+02:01:10 Generating programs of size: 2
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:5 fn:138 tn:50 fp:0 size:2 mdl:140
+02:01:10 add_other_relationship(A,B):- myopen(A,B).
+02:01:10 ********************
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:8 fn:135 tn:50 fp:0 size:2 mdl:137
+02:01:10 add_other_relationship(A,B):- sit(A,B).
+02:01:10 ********************
+02:01:12 Generating programs of size: 3
+02:01:16 ********************
+02:01:16 New best hypothesis:
+02:01:16 tp:13 fn:130 tn:50 fp:0 size:4 mdl:134
+02:01:16 add_other_relationship(A,B):- myopen(A,B).
+02:01:16 add_other_relationship(A,B):- sit(A,B).
+02:01:16 ********************
+02:02:26 Generating programs of size: 4
+02:02:30 ********************
+02:02:30 New best hypothesis:
+02:02:30 tp:22 fn:121 tn:50 fp:0 size:10 mdl:131
+02:02:30 add_other_relationship(A,B):- myopen(A,B).
+02:02:30 add_other_relationship(A,B):- sit(A,B).
+02:02:30 add_other_relationship(A,B):- awaken(C,A),not_looking_at(C,B).
+02:02:30 add_other_relationship(A,B):- in_front_of(B,C),sit(A,C).
+02:02:30 ********************
+02:11:13 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:1.00 Recall:0.09 TP:13 FN:130 TN:50 FP:0 Size:4 MDL:134
-add_other_relationship(A,B):- sit(A,B).
+Precision:1.00 Recall:0.15 TP:22 FN:121 TN:50 FP:0 Size:10 MDL:131
 add_other_relationship(A,B):- myopen(A,B).
+add_other_relationship(A,B):- sit(A,B).
+add_other_relationship(A,B):- awaken(C,A),not_looking_at(C,B).
+add_other_relationship(A,B):- in_front_of(B,C),sit(A,C).
 ******************************
-add_other_relationship(A,B):- sit(A,B).
-precision: 1.00 recall: 0.06
+Precision:1.00 Recall:0.03 TP:5 FN:138 TN:50 FP:0
 add_other_relationship(A,B):- myopen(A,B).
-precision: 1.00 recall: 0.03
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.06 TP:8 FN:135 TN:50 FP:0
+add_other_relationship(A,B):- sit(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.03 TP:5 FN:138 TN:50 FP:0
+add_other_relationship(A,B):- awaken(C,A),not_looking_at(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.04 TP:6 FN:137 TN:50 FP:0
+add_other_relationship(A,B):- in_front_of(B,C),sit(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

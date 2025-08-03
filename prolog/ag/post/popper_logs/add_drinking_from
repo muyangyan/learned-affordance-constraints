@@ -1,39 +1,59 @@
-14:57:09 Generating programs of size: 2
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:8 fn:69 tn:6 fp:0 size:2 mdl:71
-14:57:09 add_drinking_from(A,B):- drink(A,B).
-14:57:09 ********************
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:16 fn:61 tn:6 fp:0 size:2 mdl:63
-14:57:09 add_drinking_from(A,B):- take(A,B).
-14:57:09 ********************
-14:57:09 Generating programs of size: 3
-14:57:10 ********************
-14:57:10 New best hypothesis:
-14:57:10 tp:35 fn:42 tn:6 fp:0 size:8 mdl:50
-14:57:10 add_drinking_from(A,B):- drink(A,B).
-14:57:10 add_drinking_from(A,B):- hold(A,B).
-14:57:10 add_drinking_from(A,B):- pour(A,B).
-14:57:10 add_drinking_from(A,B):- take(A,B).
-14:57:10 ********************
-14:57:13 Generating programs of size: 4
-14:57:16 Generating programs of size: 5
-14:57:18 Generating programs of size: 6
-14:57:18 Generating programs of size: 7
+02:01:09 Generating programs of size: 2
+02:01:09 ********************
+02:01:09 New best hypothesis:
+02:01:09 tp:5 fn:72 tn:6 fp:0 size:2 mdl:74
+02:01:09 add_drinking_from(A,B):- hold(A,B).
+02:01:09 ********************
+02:01:12 ********************
+02:01:12 New best hypothesis:
+02:01:12 tp:8 fn:69 tn:6 fp:0 size:2 mdl:71
+02:01:12 add_drinking_from(A,B):- drink(A,B).
+02:01:12 ********************
+02:01:12 ********************
+02:01:12 New best hypothesis:
+02:01:12 tp:16 fn:61 tn:6 fp:0 size:2 mdl:63
+02:01:12 add_drinking_from(A,B):- take(A,B).
+02:01:12 ********************
+02:01:15 Generating programs of size: 3
+02:01:17 ********************
+02:01:17 New best hypothesis:
+02:01:17 tp:35 fn:42 tn:6 fp:0 size:8 mdl:50
+02:01:17 add_drinking_from(A,B):- hold(A,B).
+02:01:17 add_drinking_from(A,B):- drink(A,B).
+02:01:17 add_drinking_from(A,B):- pour(A,B).
+02:01:17 add_drinking_from(A,B):- take(A,B).
+02:01:17 ********************
+02:01:33 Generating programs of size: 4
+02:01:34 ********************
+02:01:34 New best hypothesis:
+02:01:34 tp:40 fn:37 tn:6 fp:0 size:11 mdl:48
+02:01:34 add_drinking_from(A,B):- hold(A,B).
+02:01:34 add_drinking_from(A,B):- drink(A,B).
+02:01:34 add_drinking_from(A,B):- pour(A,B).
+02:01:34 add_drinking_from(A,B):- take(A,B).
+02:01:34 add_drinking_from(A,B):- in_front_of(B,C),sit(A,C).
+02:01:34 ********************
+02:11:22 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:1.00 Recall:0.45 TP:35 FN:42 TN:6 FP:0 Size:8 MDL:50
-add_drinking_from(A,B):- drink(A,B).
+Precision:1.00 Recall:0.52 TP:40 FN:37 TN:6 FP:0 Size:11 MDL:48
 add_drinking_from(A,B):- hold(A,B).
+add_drinking_from(A,B):- drink(A,B).
 add_drinking_from(A,B):- pour(A,B).
 add_drinking_from(A,B):- take(A,B).
+add_drinking_from(A,B):- in_front_of(B,C),sit(A,C).
 ******************************
-add_drinking_from(A,B):- drink(A,B).
-precision: 1.00 recall: 0.10
+Precision:1.00 Recall:0.06 TP:5 FN:72 TN:6 FP:0
 add_drinking_from(A,B):- hold(A,B).
-precision: 1.00 recall: 0.06
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.10 TP:8 FN:69 TN:6 FP:0
+add_drinking_from(A,B):- drink(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.08 TP:6 FN:71 TN:6 FP:0
 add_drinking_from(A,B):- pour(A,B).
-precision: 1.00 recall: 0.08
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.21 TP:16 FN:61 TN:6 FP:0
 add_drinking_from(A,B):- take(A,B).
-precision: 1.00 recall: 0.21
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.06 TP:5 FN:72 TN:6 FP:0
+add_drinking_from(A,B):- in_front_of(B,C),sit(A,C).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

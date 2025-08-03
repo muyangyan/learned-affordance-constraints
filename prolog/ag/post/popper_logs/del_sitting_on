@@ -1,17 +1,36 @@
-14:57:10 Generating programs of size: 2
-14:57:10 ********************
-14:57:10 New best hypothesis:
-14:57:10 tp:10 fn:287 tn:512 fp:4 size:2 mdl:293
-14:57:10 del_sitting_on(A,B):- sit(A,B).
-14:57:10 ********************
-14:57:10 Generating programs of size: 3
-14:57:20 Generating programs of size: 4
-14:57:24 Generating programs of size: 5
-14:57:46 Generating programs of size: 6
-14:57:50 Generating programs of size: 7
+02:01:10 Generating programs of size: 2
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:10 fn:287 tn:512 fp:4 size:2 mdl:293
+02:01:10 del_sitting_on(A,B):- sit(A,B).
+02:01:10 ********************
+02:01:11 Generating programs of size: 3
+02:01:18 ********************
+02:01:18 New best hypothesis:
+02:01:18 tp:153 fn:144 tn:506 fp:10 size:3 mdl:157
+02:01:18 del_sitting_on(A,B):- beneath(B,C),stand(C,A).
+02:01:18 ********************
+02:01:19 ********************
+02:01:19 New best hypothesis:
+02:01:19 tp:155 fn:142 tn:505 fp:11 size:3 mdl:156
+02:01:19 del_sitting_on(A,B):- stand(A,C),sitting_on(C,B).
+02:01:19 ********************
+02:01:25 Generating programs of size: 4
+02:01:31 ********************
+02:01:31 New best hypothesis:
+02:01:31 tp:165 fn:132 tn:501 fp:15 size:5 mdl:152
+02:01:31 del_sitting_on(A,B):- sit(A,B).
+02:01:31 del_sitting_on(A,B):- stand(C,A),sitting_on(C,B).
+02:01:31 ********************
+02:11:11 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.71 Recall:0.03 TP:10 FN:287 TN:512 FP:4 Size:2 MDL:293
+Precision:0.92 Recall:0.56 TP:165 FN:132 TN:501 FP:15 Size:5 MDL:152
 del_sitting_on(A,B):- sit(A,B).
+del_sitting_on(A,B):- stand(C,A),sitting_on(C,B).
 ******************************
+Precision:0.71 Recall:0.03 TP:10 FN:287 TN:512 FP:4
 del_sitting_on(A,B):- sit(A,B).
-precision: 0.71 recall: 0.03
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.93 Recall:0.52 TP:155 FN:142 TN:505 FP:11
+del_sitting_on(A,B):- stand(C,A),sitting_on(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

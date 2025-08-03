@@ -526,7 +526,7 @@ class SingleBothAG(ActionGenome):
 
     def get_groundings(self):
         # TODO: currently assuming relationships are the only effects 
-        arities = [2] * len(self.effect_classes)
+        arities = [2] * len(self.normalized_effect_targets)
 
         # get the id column
 
@@ -535,7 +535,7 @@ class SingleBothAG(ActionGenome):
         ids_to_frame_idx = {sanitize_frame_id(row['id']): idx for idx, row in self.df.iterrows()}
         self.df.drop(columns=['id'], inplace=True)
 
-        groundings = torch.full((len(self.df), len(self.effect_classes), max(arities)), -1, dtype=torch.long) #frame, head, arg
+        groundings = torch.full((len(self.df), len(self.normalized_effect_targets), max(arities)), -1, dtype=torch.long) #frame, head, arg
         for i, head in enumerate(self.normalized_effect_targets):
             args = [f"X_{j}" for j in range(arities[i])]
             head_str = f'{head}({",".join(args)})'
@@ -561,7 +561,7 @@ class SingleBothAG(ActionGenome):
                         break
         return groundings
     
-    def compute_effect_priors(self):
+    def compute_effect_priors(self): #TODO: bug where all priors are 0
         """Compute prior probabilities for add/delete effects on relationships."""
         # Initialize counters for each effect type
         effect_counts = {effect_class: 0 for effect_class in self.effect_classes}
@@ -614,10 +614,6 @@ class SingleBothAG(ActionGenome):
         
         # Create relationships between nodes (excluding person nodes for consistency)
         for i, (src, tgt) in enumerate(edge_index.T):
-            # Skip relationships involving person (node type 0)
-            if node_types[src] == 0 or node_types[tgt] == 0:
-                continue
-                
             edge_type = edge_types[i]
             relationship_name = self.relationship_classes[edge_type]
             src_node_type = self.object_classes[node_types[src]]
@@ -839,12 +835,25 @@ class SingleBothAG(ActionGenome):
         '''
         bk_filename = f'bk.pl' if self.split is None else f'{self.split}_bk.pl'
         bk_file = os.path.join(self.prolog_folder, bk_filename)
-        precond_rule_file = os.path.join(self.prolog_folder, 'pre', 'learned_rules', f'{self.rules_name}.pl')
-        effect_rule_file = os.path.join(self.prolog_folder, 'post', 'learned_rules', f'{self.rules_name}.pl')
+        precond_pl_file = os.path.join(self.prolog_folder, 'pre', 'learned_rules', f'{self.rules_name}.pl')
+        effect_pl_file = os.path.join(self.prolog_folder, 'post', 'learned_rules', f'{self.rules_name}.pl')
+        precond_json_file = os.path.join(self.prolog_folder, 'pre', 'learned_rules', f'{self.rules_name}.json')
+        effect_json_file = os.path.join(self.prolog_folder, 'post', 'learned_rules', f'{self.rules_name}.json')
+        
+        #for now just do conditional effects
+        effect_json = json.load(open(effect_json_file))
 
         self.prolog = Prolog()
         self.normalized_precond_targets = [normalize_predicate_name(pred) for pred in self.verb_classes]
-        self.normalized_effect_targets = [normalize_predicate_name(pred) for pred in self.effect_classes]
+
+        self.normalized_effect_targets = []
+        for pred in self.effect_classes:
+            if effect_json[pred] is not None:
+                for i, _ in enumerate(effect_json[pred][0]):
+                    self.normalized_effect_targets.append(normalize_predicate_name(f'{pred}_{i}'))
+            else:
+                self.normalized_effect_targets.append(normalize_predicate_name(pred))
+
         # Create a helper predicate that checks all targets for a given frame
         for i, predicate_name in enumerate(self.normalized_precond_targets):
             clause = f"check_all_targets_precond(FrameId, {i}) :- {predicate_name}_target(FrameId)"
@@ -853,8 +862,8 @@ class SingleBothAG(ActionGenome):
             clause = f"check_all_targets_effect(FrameId, {i}) :- {predicate_name}_target(FrameId)"
             self.prolog.assertz(clause)
 
-        self.prolog.consult(precond_rule_file)
-        self.prolog.consult(effect_rule_file)
+        self.prolog.consult(precond_pl_file)
+        self.prolog.consult(effect_pl_file)
         self.prolog.consult(bk_file)
 
     def get_target_classes(self):
@@ -1073,31 +1082,3 @@ class MultiAG(ActionAG):
             'timesteps': torch.tensor(timesteps, dtype=torch.float)
         }
 
-
-# ✅ COMPLETED UPDATES FOR DUAL LABEL TYPE SUPPORT:
-#
-# 1. ✅ models/action_anticipator.py:
-#    - Updated to use get_labels_from_batch() method that selects appropriate labels based on cfg.data.label_type
-#    - Supports both 'verb' and 'verbnoun' label types automatically
-#
-# 2. ✅ data/ag/action_genome.py:
-#    - Added helper methods: get_target_classes(), get_num_target_classes(), get_target_priors()
-#    - Updated apply_rules() to use appropriate classes based on label_type
-#    - Added pred_collate() alias for clearer naming
-#    - All collate functions return verb_labels, object_labels, and action_labels
-#
-# 3. ✅ train.py & test.py:
-#    - Updated to use dataset helper methods for cleaner code
-#    - Automatically handles both verb and action anticipation based on config
-#
-# 4. ✅ util/rule_utils.py:
-#    - Added normalize_predicate_name() utility function for consistent predicate naming
-#    - Updated all rule processing to use lowercase, Prolog-compatible predicate names
-#
-# 5. ✅ prolog/prolog_generation.py & run_popper.py:
-#    - Generate rules for verbs or actions based on cfg.data.label_type
-#    - Proper file organization: examples/verbs/, examples/actions/, biases/verbs/, biases/actions/
-#
-# 🎉 SUMMARY: Full dual label type support completed!
-# The system now seamlessly handles both verb-only and full action (verb+noun) anticipation
-# with learned logical rules, all controlled by cfg.data.label_type setting.

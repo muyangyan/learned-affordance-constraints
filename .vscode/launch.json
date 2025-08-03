@@ -5,6 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "test verbdyn_intense-sandcrab",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "args": ["--run", "verbdyn_intense-sandcrab"],
+            "env": {
+                "MPLBACKEND": "TkAgg"
+            }
+        },
+        {
             "name": "Python: Current File",
             "type": "debugpy",
             "request": "launch",
@@ -19,7 +30,6 @@
             "host": "localhost",
             "justMyCode": false
         },
-
         {
             "name": "Python Debugger: Current File",
             "type": "debugpy",

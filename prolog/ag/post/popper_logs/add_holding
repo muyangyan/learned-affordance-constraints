@@ -1,49 +1,134 @@
-14:57:09 Generating programs of size: 2
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:86 fn:1635 tn:1230 fp:6 size:2 mdl:1643
-14:57:09 add_holding(A,B):- hold(A,B).
-14:57:09 ********************
-14:57:09 ********************
-14:57:09 New best hypothesis:
-14:57:09 tp:273 fn:1448 tn:1231 fp:5 size:2 mdl:1455
-14:57:09 add_holding(A,B):- take(A,B).
-14:57:09 ********************
-14:57:09 Generating programs of size: 3
-14:57:19 ********************
-14:57:19 New best hypothesis:
-14:57:19 tp:395 fn:1326 tn:1214 fp:22 size:8 mdl:1356
-14:57:19 add_holding(A,B):- hold(A,B).
-14:57:19 add_holding(A,B):- undress(A,B).
-14:57:19 add_holding(A,B):- tidy(A,B).
-14:57:19 add_holding(A,B):- take(A,B).
-14:57:19 ********************
-14:57:25 Generating programs of size: 4
-14:57:35 ********************
-14:57:35 New best hypothesis:
-14:57:35 tp:399 fn:1322 tn:1214 fp:22 size:11 mdl:1355
-14:57:35 add_holding(A,B):- hold(A,B).
-14:57:35 add_holding(A,B):- undress(A,B).
-14:57:35 add_holding(A,B):- tidy(A,B).
-14:57:35 add_holding(A,B):- take(A,B).
-14:57:35 add_holding(A,B):- put(A,B),watch(A,B).
-14:57:35 ********************
-14:58:08 TIMEOUT OF 60 SECONDS EXCEEDED
+02:01:10 Generating programs of size: 2
+02:01:10 ********************
+02:01:10 New best hypothesis:
+02:01:10 tp:86 fn:1635 tn:1230 fp:6 size:2 mdl:1643
+02:01:10 add_holding(A,B):- hold(A,B).
+02:01:10 ********************
+02:01:20 ********************
+02:01:20 New best hypothesis:
+02:01:20 tp:273 fn:1448 tn:1231 fp:5 size:2 mdl:1455
+02:01:20 add_holding(A,B):- take(A,B).
+02:01:20 ********************
+02:01:20 Generating programs of size: 3
+02:01:30 ********************
+02:01:30 New best hypothesis:
+02:01:30 tp:395 fn:1326 tn:1214 fp:22 size:8 mdl:1356
+02:01:30 add_holding(A,B):- hold(A,B).
+02:01:30 add_holding(A,B):- tidy(A,B).
+02:01:30 add_holding(A,B):- take(A,B).
+02:01:30 add_holding(A,B):- undress(A,B).
+02:01:30 ********************
+02:02:07 Generating programs of size: 4
+02:02:17 ********************
+02:02:17 New best hypothesis:
+02:02:17 tp:613 fn:1108 tn:1207 fp:29 size:61 mdl:1198
+02:02:17 add_holding(A,B):- hold(A,B).
+02:02:17 add_holding(A,B):- take(A,B).
+02:02:17 add_holding(A,B):- sit(C,A),not_contacting(C,B).
+02:02:17 add_holding(A,B):- stand(A,C),touching(C,B).
+02:02:17 add_holding(A,B):- stand(C,A),not_contacting(C,B).
+02:02:17 add_holding(A,B):- wash(A,B),not_contacting(A,B).
+02:02:17 add_holding(A,B):- put(A,B),wearing(A,B).
+02:02:17 add_holding(A,B):- wearing(A,B),undress(A,B).
+02:02:17 add_holding(A,B):- not_contacting(A,B),pour(A,B).
+02:02:17 add_holding(A,B):- put(A,B),not_contacting(A,B).
+02:02:17 add_holding(A,B):- myclose(A,B),not_contacting(A,B).
+02:02:17 add_holding(A,B):- drink(A,B),not_contacting(A,B).
+02:02:17 add_holding(A,B):- eat(A,B),not_contacting(A,B).
+02:02:17 add_holding(A,B):- tidy(A,B),not_contacting(A,B).
+02:02:17 add_holding(A,B):- watch(A,B),not_contacting(A,B).
+02:02:17 add_holding(A,B):- myopen(A,B),not_contacting(A,B).
+02:02:17 add_holding(A,B):- throw(A,B),not_contacting(A,B).
+02:02:17 add_holding(A,B):- put(A,B),other_relationship(A,B).
+02:02:17 add_holding(A,B):- put(A,B),touching(A,B).
+02:02:17 add_holding(A,B):- throw(A,B),touching(A,B).
+02:02:17 add_holding(A,B):- myopen(A,B),touching(A,B).
+02:02:17 ********************
+02:11:08 TIMEOUT OF 600 SECONDS EXCEEDED
 ********** SOLUTION **********
-Precision:0.95 Recall:0.23 TP:399 FN:1322 TN:1214 FP:22 Size:11 MDL:1355
+Precision:0.95 Recall:0.36 TP:613 FN:1108 TN:1207 FP:29 Size:61 MDL:1198
 add_holding(A,B):- hold(A,B).
-add_holding(A,B):- undress(A,B).
-add_holding(A,B):- tidy(A,B).
 add_holding(A,B):- take(A,B).
-add_holding(A,B):- put(A,B),watch(A,B).
+add_holding(A,B):- sit(C,A),not_contacting(C,B).
+add_holding(A,B):- stand(A,C),touching(C,B).
+add_holding(A,B):- stand(C,A),not_contacting(C,B).
+add_holding(A,B):- wash(A,B),not_contacting(A,B).
+add_holding(A,B):- put(A,B),wearing(A,B).
+add_holding(A,B):- wearing(A,B),undress(A,B).
+add_holding(A,B):- not_contacting(A,B),pour(A,B).
+add_holding(A,B):- put(A,B),not_contacting(A,B).
+add_holding(A,B):- myclose(A,B),not_contacting(A,B).
+add_holding(A,B):- drink(A,B),not_contacting(A,B).
+add_holding(A,B):- eat(A,B),not_contacting(A,B).
+add_holding(A,B):- tidy(A,B),not_contacting(A,B).
+add_holding(A,B):- watch(A,B),not_contacting(A,B).
+add_holding(A,B):- myopen(A,B),not_contacting(A,B).
+add_holding(A,B):- throw(A,B),not_contacting(A,B).
+add_holding(A,B):- put(A,B),other_relationship(A,B).
+add_holding(A,B):- put(A,B),touching(A,B).
+add_holding(A,B):- throw(A,B),touching(A,B).
+add_holding(A,B):- myopen(A,B),touching(A,B).
 ******************************
+Precision:0.93 Recall:0.05 TP:86 FN:1635 TN:1230 FP:6
 add_holding(A,B):- hold(A,B).
-precision: 0.93 recall: 0.05
-add_holding(A,B):- undress(A,B).
-precision: 0.85 recall: 0.02
-add_holding(A,B):- tidy(A,B).
-precision: 0.71 recall: 0.01
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.98 Recall:0.16 TP:273 FN:1448 TN:1231 FP:5
 add_holding(A,B):- take(A,B).
-precision: 0.98 recall: 0.16
-add_holding(A,B):- put(A,B),watch(A,B).
-precision: 1.00 recall: 0.00
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:12 FN:1709 TN:1236 FP:0
+add_holding(A,B):- sit(C,A),not_contacting(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.86 Recall:0.00 TP:6 FN:1715 TN:1235 FP:1
+add_holding(A,B):- stand(A,C),touching(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:10 FN:1711 TN:1236 FP:0
+add_holding(A,B):- stand(C,A),not_contacting(C,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:4 FN:1717 TN:1236 FP:0
+add_holding(A,B):- wash(A,B),not_contacting(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:5 FN:1716 TN:1236 FP:0
+add_holding(A,B):- put(A,B),wearing(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.94 Recall:0.02 TP:29 FN:1692 TN:1234 FP:2
+add_holding(A,B):- wearing(A,B),undress(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:11 FN:1710 TN:1236 FP:0
+add_holding(A,B):- not_contacting(A,B),pour(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.02 TP:30 FN:1691 TN:1236 FP:0
+add_holding(A,B):- put(A,B),not_contacting(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:15 FN:1706 TN:1236 FP:0
+add_holding(A,B):- myclose(A,B),not_contacting(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:15 FN:1706 TN:1236 FP:0
+add_holding(A,B):- drink(A,B),not_contacting(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:8 FN:1713 TN:1236 FP:0
+add_holding(A,B):- eat(A,B),not_contacting(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.01 TP:13 FN:1708 TN:1236 FP:0
+add_holding(A,B):- tidy(A,B),not_contacting(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:6 FN:1715 TN:1236 FP:0
+add_holding(A,B):- watch(A,B),not_contacting(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.04 TP:64 FN:1657 TN:1236 FP:0
+add_holding(A,B):- myopen(A,B),not_contacting(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:4 FN:1717 TN:1236 FP:0
+add_holding(A,B):- throw(A,B),not_contacting(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:1.00 Recall:0.00 TP:6 FN:1715 TN:1236 FP:0
+add_holding(A,B):- put(A,B),other_relationship(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.64 Recall:0.01 TP:9 FN:1712 TN:1231 FP:5
+add_holding(A,B):- put(A,B),touching(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.75 Recall:0.00 TP:6 FN:1715 TN:1234 FP:2
+add_holding(A,B):- throw(A,B),touching(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precision:0.67 Recall:0.01 TP:20 FN:1701 TN:1226 FP:10
+add_holding(A,B):- myopen(A,B),touching(A,B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

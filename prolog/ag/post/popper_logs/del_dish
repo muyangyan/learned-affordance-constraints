@@ -1,2 +1,20 @@
-14:57:05 Generating programs of size: 3
-NO SOLUTION
+02:01:12 Generating programs of size: 3
+02:06:18 Generating programs of size: 4
+02:07:46 ********************
+02:07:46 New best hypothesis:
+02:07:46 tp:9 fn:84 tn:263 fp:4 size:4 mdl:92
+02:07:46 del_dish(A):- holding(C,A),person(B),stand(C,B).
+02:07:46 ********************
+02:07:46 ********************
+02:07:46 New best hypothesis:
+02:07:46 tp:13 fn:80 tn:262 fp:5 size:4 mdl:89
+02:07:46 del_dish(A):- stand(C,B),in_front_of(A,C),person(B).
+02:07:46 ********************
+02:11:28 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:0.72 Recall:0.14 TP:13 FN:80 TN:262 FP:5 Size:4 MDL:89
+del_dish(A):- stand(C,B),in_front_of(A,C),person(B).
+******************************
+Precision:0.72 Recall:0.14 TP:13 FN:80 TN:262 FP:5
+del_dish(A):- stand(C,B),in_front_of(A,C),person(B).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
