@@ -521,7 +521,7 @@ def test_routine_stateleapr(cfg, run_name, test_run_name, trainer, model, datase
             print(f"Saved predictions for {constraint_mode} mode")
 
 def test_stateleapr(cfg, run_name, test_run_name):
-    """Test StateLeaPR model - compatible with main.py interface"""
+    """Test StateLeaPR residual prediction model - compatible with main.py interface"""
     
     # Load checkpoint (assume it exists)
     checkpoints_folder = os.path.join(cfg.runs_folder, run_name, 'checkpoints')

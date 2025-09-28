@@ -29,7 +29,7 @@ def get_datasets(cfg):
     return train_set, val_set
 
 def init_stateleapr_model(cfg, train_set):
-    """Initialize StateLeaPR model with appropriate parameters"""
+    """Initialize StateLeaPR model with appropriate parameters for residual state prediction"""
     num_obj_classes = len(train_set.object_classes)
     num_rel_classes = len(train_set.relationship_classes)
     num_action_classes = len(train_set.action_classes)
@@ -59,19 +59,21 @@ def init_stateleapr_model(cfg, train_set):
     print(f"  Verb classes: {len(verb_classes)}")
     print(f"  Effect classes (relationships): {len(effect_classes)}")
     
+    print(f"Residual Learning: Model will predict changes/residuals to add to previous state")
+    
     model = StateLeaPR(cfg, model_params, verb_classes, effect_classes, verb_priors, effect_priors, relationship_priors)
     return model
 
 def train_stateleapr(cfg, run_name):
     """
-    Train StateLeaPR model for state prediction
+    Train StateLeaPR model for residual state prediction
     saving logs to runs/run_name/logs/
     saving checkpoints to runs/run_name/checkpoints/
     """
     
     train_set, val_set = get_datasets(cfg)
     
-    print('StateLeaPR Training Setup:')
+    print('StateLeaPR Residual Training Setup:')
     print(f'  Train set length: {len(train_set)}')
     print(f'  Val set length: {len(val_set)}')
     print(f'  Object classes: {len(train_set.object_classes)}')
@@ -119,6 +121,8 @@ def train_stateleapr(cfg, run_name):
         callbacks=[checkpoint_callback],
         logger=logger,
         log_every_n_steps=50,
+        gradient_clip_val=1.0,  # Add gradient clipping to prevent exploding gradients
+        gradient_clip_algorithm='norm',
     )
     
     print(f"Starting training for {cfg.train.epochs} epochs...")

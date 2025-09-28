@@ -9,6 +9,7 @@ import json
 from models.modules import get_model
 from util.rule_utils import get_rule_precisions_recalls, logit_weighted_sum
 from util.data_utils import extract_edge_probs_and_pairs
+from torch_geometric.data import Data, Batch
 import pytorch_lightning as L 
 
 from torchmetrics import MetricCollection
@@ -23,8 +24,9 @@ def make_key(batch_vec, edge_pairs, i):
 
 class StateLeaPR(L.LightningModule):
     """
-    LeaPR for state prediction - predicts next state given previous state and action.
+    LeaPR for residual state prediction - predicts residual changes to be added to previous state.
     Inherits directly from LightningModule and is designed specifically for state transitions.
+    Uses residual learning: predicted_next_state = previous_state + predicted_residuals
     """
     
     def __init__(self, cfg, model_params, verb_classes, effect_classes, verb_priors, effect_priors, relationship_priors):
@@ -257,6 +259,151 @@ class StateLeaPR(L.LightningModule):
         self.constraint_mode = constraint_mode
         self.constraint_weight = constraint_weight
 
+    def combine_residuals_with_previous_state(self, residual_logits, prev_scene_graphs):
+        """
+        Combine residual logits with previous state to get predicted next state.
+        
+        Args:
+            residual_logits: PyG Batch with edge_attr containing residual logits
+            prev_scene_graphs: PyG Batch with previous state (edge_attr contains one-hot edge types)
+            
+        Returns:
+            PyG Batch with combined state (previous + residuals)
+        """
+        # Extract edge types (one-hot) from previous state
+        prev_edge_types, prev_edge_pairs, prev_edge_batch_vec = extract_edge_probs_and_pairs(prev_scene_graphs)
+        
+        # Extract residual logits and pairs
+        residual_edge_logits, residual_edge_pairs, residual_edge_batch_vec = extract_edge_probs_and_pairs(residual_logits)
+        
+        # Handle empty cases
+        if len(residual_edge_logits) == 0:
+            # No edges to process, return empty graphs
+            return residual_logits
+        
+        if len(prev_edge_types) == 0:
+            # No previous edges, just return residual logits as-is (starting from neutral state)
+            return residual_logits
+        
+        # Convert previous one-hot edge types to logits in a numerically stable way
+        # For one-hot encoding: 1 -> positive logit, 0 -> negative logit
+        # Use a reasonable scale to avoid extreme values
+        logit_scale = 5.0  # Corresponds to ~99.3% probability for existing edges
+        prev_edge_logits = prev_edge_types * logit_scale + (1 - prev_edge_types) * (-logit_scale)
+        
+        # Ensure dimensionality consistency
+        if prev_edge_logits.shape[1] != residual_edge_logits.shape[1]:
+            print(f"Warning: Dimension mismatch - prev: {prev_edge_logits.shape[1]}, residual: {residual_edge_logits.shape[1]}")
+            # Pad with zeros if needed
+            max_relations = max(prev_edge_logits.shape[1], residual_edge_logits.shape[1])
+            if prev_edge_logits.shape[1] < max_relations:
+                padding = torch.zeros(prev_edge_logits.shape[0], max_relations - prev_edge_logits.shape[1], device=prev_edge_logits.device)
+                prev_edge_logits = torch.cat([prev_edge_logits, padding], dim=1)
+            if residual_edge_logits.shape[1] < max_relations:
+                padding = torch.zeros(residual_edge_logits.shape[0], max_relations - residual_edge_logits.shape[1], device=residual_edge_logits.device)
+                residual_edge_logits = torch.cat([residual_edge_logits, padding], dim=1)
+        
+        # Create a mapping from (batch_idx, obj_pair) to edge index for previous state
+        prev_edge_map = {}
+        for i, (batch_idx, obj_pair) in enumerate(zip(prev_edge_batch_vec, prev_edge_pairs)):
+            key = (batch_idx.item(), tuple(obj_pair.tolist()))
+            prev_edge_map[key] = i
+        
+        # Combine residuals with previous state
+        combined_edge_logits = []
+        combined_edge_pairs = []
+        combined_batch_vec = []
+        
+        # Process residual edges and add to previous state
+        for i, (batch_idx, obj_pair) in enumerate(zip(residual_edge_batch_vec, residual_edge_pairs)):
+            key = (batch_idx.item(), tuple(obj_pair.tolist()))
+            
+            # Get the residual logits for this edge
+            residual_logit = residual_edge_logits[i]
+            
+            # Clamp residual logits to prevent extreme values
+            residual_logit = torch.clamp(residual_logit, -10.0, 10.0)
+            
+            # Check if this edge pair exists in previous state
+            if key in prev_edge_map:
+                # Add residual to previous logits
+                prev_idx = prev_edge_map[key]
+                prev_logit = prev_edge_logits[prev_idx]
+                combined_logit = prev_logit + residual_logit
+            else:
+                # New edge pair, start from zero logit (50% probability) and add residual
+                combined_logit = residual_logit
+            
+            # Clamp final combined logits to prevent overflow
+            combined_logit = torch.clamp(combined_logit, -20.0, 20.0)
+            
+            combined_edge_logits.append(combined_logit)
+            combined_edge_pairs.append(obj_pair)
+            combined_batch_vec.append(batch_idx)
+        
+        # Stack the combined logits
+        if combined_edge_logits:
+            combined_edge_logits = torch.stack(combined_edge_logits)
+            combined_edge_pairs = torch.stack(combined_edge_pairs)
+            combined_batch_vec = torch.stack(combined_batch_vec)
+        else:
+            # Handle empty case
+            device = residual_logits.x.device
+            combined_edge_logits = torch.empty((0, self.nn_model.num_relations), device=device)
+            combined_edge_pairs = torch.empty((0, 2), dtype=torch.long, device=device)
+            combined_batch_vec = torch.empty((0,), dtype=torch.long, device=device)
+        
+        # Create the combined scene graphs by modifying the residual graph structure
+        # We'll reuse the same node structure but replace edge_attr with combined logits
+        residual_graphs = residual_logits.to_data_list()
+        combined_graphs = []
+        
+        # Process each graph in the batch
+        for graph_idx, graph in enumerate(residual_graphs):
+            # Find edges belonging to this graph
+            graph_mask = combined_batch_vec == graph_idx
+            graph_edge_logits = combined_edge_logits[graph_mask]
+            graph_edge_pairs = combined_edge_pairs[graph_mask]
+            
+            # Create new edge_index and edge_attr for this graph
+            if len(graph_edge_logits) > 0:
+                # Convert object type pairs back to node indices
+                # Assumes one-hot node features where position indicates object type
+                node_types = torch.argmax(graph.x, dim=1)
+                type_to_node = {node_type.item(): node_idx for node_idx, node_type in enumerate(node_types)}
+                
+                new_edge_index = []
+                new_edge_attr = []
+                
+                for edge_idx, (src_type, tgt_type) in enumerate(graph_edge_pairs):
+                    src_type, tgt_type = src_type.item(), tgt_type.item()
+                    if src_type in type_to_node and tgt_type in type_to_node:
+                        src_node = type_to_node[src_type]
+                        tgt_node = type_to_node[tgt_type]
+                        new_edge_index.append([src_node, tgt_node])
+                        new_edge_attr.append(graph_edge_logits[edge_idx])
+                
+                if new_edge_index:
+                    new_edge_index = torch.tensor(new_edge_index, device=graph.x.device).t()
+                    new_edge_attr = torch.stack(new_edge_attr)
+                else:
+                    new_edge_index = torch.empty((2, 0), dtype=torch.long, device=graph.x.device)
+                    new_edge_attr = torch.empty((0, self.nn_model.num_relations), device=graph.x.device)
+            else:
+                new_edge_index = torch.empty((2, 0), dtype=torch.long, device=graph.x.device)
+                new_edge_attr = torch.empty((0, self.nn_model.num_relations), device=graph.x.device)
+            
+            # Create new graph with combined edge attributes
+            combined_graph = Data(
+                x=graph.x,
+                edge_index=new_edge_index,
+                edge_attr=new_edge_attr,
+                node_type=graph.node_type
+            )
+            combined_graphs.append(combined_graph)
+        
+        return Batch.from_data_list(combined_graphs)
+
     def compute_edge_classification_loss(self, edge_logits_data, prev_graph, target_graph, num_relations):
         """
         Compute BCEWithLogitsLoss for multi-label edge classification using object-type based matching.
@@ -311,7 +458,19 @@ class StateLeaPR(L.LightningModule):
         if self.criterion is None:
             raise ValueError("Loss criterion not initialized. Call set_loss_weights() first.")
         
-        return self.criterion(all_logits, target_labels)
+        # Check for NaN/inf in logits before loss computation
+        if torch.isnan(all_logits).any() or torch.isinf(all_logits).any():
+            print(f"Warning: NaN/inf detected in edge logits before loss computation")
+            all_logits = torch.nan_to_num(all_logits, nan=0.0, posinf=10.0, neginf=-10.0)
+        
+        loss = self.criterion(all_logits, target_labels)
+        
+        # Check for NaN/inf in loss
+        if torch.isnan(loss) or torch.isinf(loss):
+            print(f"Warning: NaN/inf detected in loss computation")
+            loss = torch.tensor(0.0, requires_grad=True, device=all_logits.device)
+        
+        return loss
     
     def compute_edge_metrics(self, edge_logits_data, prev_graph, target_graph, phase='train'):
         """Compute interpretable multi-label edge prediction metrics using object-type based matching"""
@@ -420,13 +579,31 @@ class StateLeaPR(L.LightningModule):
         print("-" * 50)
 
     def forward(self, prev_images, prev_scene_graphs, action):
-        """Forward pass for state prediction - predicts next scene graph only"""
+        """Forward pass for residual state prediction - predicts residuals and adds to previous state"""
         inputs = {
             'prev_images': prev_images, 
             'prev_scene_graphs': prev_scene_graphs, 
             'action': action
         }
-        return self.nn_model(inputs)  # Returns single PyG Data with edge_attr containing logits
+        # Get residual logits from neural network
+        residual_logits = self.nn_model(inputs)  # Returns PyG Data with edge_attr containing residual logits
+        
+        # Check for NaN/inf in residual logits
+        if torch.isnan(residual_logits.edge_attr).any() or torch.isinf(residual_logits.edge_attr).any():
+            print(f"Warning: NaN/inf detected in residual logits")
+            # Replace NaN/inf with zeros
+            residual_logits.edge_attr = torch.nan_to_num(residual_logits.edge_attr, nan=0.0, posinf=10.0, neginf=-10.0)
+        
+        # Combine residuals with previous state to get predicted next state
+        predicted_next_state = self.combine_residuals_with_previous_state(residual_logits, prev_scene_graphs)
+        
+        # Check for NaN/inf in final output
+        if torch.isnan(predicted_next_state.edge_attr).any() or torch.isinf(predicted_next_state.edge_attr).any():
+            print(f"Warning: NaN/inf detected in final predicted state")
+            # Replace NaN/inf with zeros
+            predicted_next_state.edge_attr = torch.nan_to_num(predicted_next_state.edge_attr, nan=0.0, posinf=10.0, neginf=-10.0)
+        
+        return predicted_next_state
         
     def training_step(self, batch, batch_idx):
         prev_images = batch['pre_images']
